@@ -33,8 +33,6 @@
             return parseFloat(random.toFixed(precision));
         }
 
-        var circleRadius = 1;
-        var lineThickness = 1;
 
         var margin = {
             top: 60,
@@ -44,6 +42,9 @@
         };
 
         function render(data) {
+        var lineThickness = 0.0008*width;
+        var circleRadius = lineThickness;
+
 
             // Min and max dates
             data.minDate = d3.min(data, function(d) {
@@ -68,11 +69,12 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+            // Tooltip details
             var tooltip = d3.tip()
                 .attr("class", "d3-tip")
                 .offset([-10, 0])
                 .html(function(d) {
-                    return d.name + ": " + d3.timeFormat("%Y")(d.term_start) +
+                    return d.name + ": " + d3.timeFormat("%Y")(d.term_start) + d.byelection +
                     " - " + d3.timeFormat("%Y")(d.term_end);
                 })
 
@@ -108,25 +110,36 @@
             	.on("mouseover", tooltip.show)
                 .on("mouseout", tooltip.hide);
 
+            var clippedArea = wrapper.append("g")
+                .attr("id", "clippedArea")
+                .attr("clip-path", "url(#clip)")
+            	.style("pointer-events", "all")
 
-            var pointsGroup = wrapper
+            var pointsGroup = clippedArea
                 .append("g")
                 .attr("id", "points")
 
+            wrapper.append("clipPath")
+                .attr("id", "clip")
+                .append("rect")
+                .attr("width", width)
+                .attr("height", height);
             var instance = pointsGroup
                 .selectAll("g")
                 .data(data)
                 .enter()
                 .append("g")
 
-            wrapper.append("g")
+            var xAxis = d3.axisBottom(x)
+            var gX = wrapper.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
+                .call(xAxis);
 
-            wrapper.append("g")
+            var yAxis = d3.axisLeft(y)
+            var gY = wrapper.append("g")
                 .attr("class", "y axis")
-                .call(d3.axisLeft(y));
+                .call(yAxis);
             // Add line connecting start and end of term
             instance
                 .append("line")
@@ -188,6 +201,16 @@
                     return d.party
                 })
 
+            // Zoom
+            var zoom = d3.zoom()
+                .scaleExtent([0.9, 40])
+                .on("zoom", zoomed);
+            svg.call(zoom);
+            function zoomed() {
+              pointsGroup.attr("transform", d3.event.transform)
+              gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+              gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+            }
             // Exit
             instance.exit().remove();
         }
@@ -199,13 +222,15 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
 
-        var data = d3.csv("mps_over_time.csv", function(d) {
+        d3.csv("mps_over_time.csv", function(d) {
             var parseDate = d3.timeParse("%Y-%m-%d");
             return {
                 name: d.name,
+                constituency: d.constituency,
                 term_start: parseDate(d.term_start),
                 term_end: parseDate(d.term_end),
                 party: d.party,
+                byelection: (d.byelection == "TRUE"),
                 clean_name: d.clean_name,
                 stream: +d.stream
             };
