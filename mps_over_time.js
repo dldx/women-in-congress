@@ -1,19 +1,8 @@
-Number.random = function (minimum, maximum, precision) {
-    minimum = minimum === undefined ? 0 : minimum;
-    maximum = maximum === undefined ? 9007199254740992 : maximum;
-    precision = precision === undefined ? 0 : precision;
-
-    var random = Math.random() * (maximum - minimum) + minimum;
-
-    return parseFloat(random.toFixed(precision));
-}
-
-
 var margin = {
     top: 60,
     right: 50,
     bottom: 60,
-    left: 50
+    left: 100
 };
 
 var colors = {
@@ -24,6 +13,10 @@ var colors = {
     "LD": "#F37A48",
     "Green": "#A1C181",
     "Other": "#50514F"
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function render(data) {
@@ -63,9 +56,10 @@ function render(data) {
     var tooltip = d3.tip()
         .attr("class", "d3-tip")
         // .offset([-10, 0])
+        .direction('s')
         .html(function (d) {
             return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1><div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div>`;
+            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party">${d.party}</div>`;
         })
 
     wrapper.call(tooltip);
@@ -147,9 +141,11 @@ function render(data) {
     // Tooltip target location
     var target = wrapper
         .append("circle")
+        .attr("id", "target-loc")
         .attr("cx", Math.max(100, margin.left + 0.2 * width))
         .attr("cy", Math.max(margin.top, margin.top + 0.2 * height))
-        // .attr("r", 5)
+        .attr("r", 5)
+        .attr("opacity", 1)
         .node()
 
     // Add line connecting start and end of term
@@ -167,8 +163,24 @@ function render(data) {
         .attr("r", circleRadius)
         .attr("class", "term-start")
         .on("mouseover", function (d) {
-            tooltip.show(d, target)
+            d3.select(this)
+                .moveToFront()
+            d3.select(this)
+                .transition()
+                .ease(d3.easeExp)
+                .duration(1000)
+                .attr("r", 5)
+                .attr("cx", d3.select("#target-loc").attr("cx"))
+                .attr("cy", d3.select("#target-loc").attr("cy"))
+                .on("end", function (j) {
+                    tooltip.show(d, target)
+                })
+                .transition()
+                .attr("r", circleRadius)
+                .attr("cx", x(d.term_start))
+                .attr("cy", y(d.stream))
         })
+
     // .on("mouseout", tooltip.hide);
     instance
         .append("circle")
@@ -244,6 +256,22 @@ function render(data) {
 
 var svg = d3.select(timeline).append("svg")
 
+// https://github.com/wbkd/d3-extended
+    d3.selection.prototype.moveToFront = function() {
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+    d3.selection.prototype.moveToBack = function() {
+        return this.each(function() {
+            var firstChild = this.parentNode.firstChild;
+            if (firstChild) {
+                this.parentNode.insertBefore(this, firstChild);
+            }
+        });
+    };
+
+
 function draw_graph() {
     d3.selectAll("g").remove()
     d3.select(".d3-tip").remove()
@@ -264,6 +292,7 @@ function draw_graph() {
             term_end: parseDate(d.term_end),
             party: d.party,
             byelection: (d.byelection == "TRUE"),
+            notes: d.notes,
             clean_name: d.clean_name,
             stream: +d.stream
         };

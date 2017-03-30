@@ -1,516 +1,516 @@
-"name","constituency","term_start","term_end","party","byelection","clean_name","stream"
-"Constance, Countess MARKIEVICZ","Dublin, St Patrick's",1918-12-14,1922-01-01,"SF",FALSE,"constancemarkievicz",1
-"Nancy, Viscountess ASTOR, CH","Plymouth, Sutton",1919-11-15,1945-01-01,"Con",TRUE,"nancyastorch",2
-"Mrs Margaret WINTRINGHAM","Lincolnshire, Louth",1921-09-22,1924-01-01,"Lib",TRUE,"margaretwintringham",3
-"Mrs Mabel PHILIPSON","Berwick-upon-Tweed",1923-05-31,1929-01-01,"Con",TRUE,"mabelphilipson",1
-"Katharine, Duchess of ATHOLL, DBE","Perth & Kinross, Kinross & Western",1923-12-06,1938-01-01,"Con",FALSE,"katharineduchessofatholldbe",4
-"Rt Hon Margaret BONDFIELD, CH","Northampton",1923-12-06,1924-01-01,"Lab",FALSE,"margaretbondfieldch",5
-"Miss Dorothea JEWSON","Norwich",1923-12-06,1924-01-01,"Lab",FALSE,"dorotheajewson",6
-"Miss Arabella Susan LAWRENCE","East Ham, North",1923-12-06,1924-01-01,"Lab",FALSE,"arabellasusanlawrence",7
-"Lady Vera TERRINGTON","Buckinghamshire, Wycombe",1923-12-06,1924-01-01,"Lib",FALSE,"veraterrington",8
-"Rt Hon Ellen WILKINSON","Middlesbrough, East",1924-10-29,1931-01-01,"Lab",FALSE,"ellenwilkinson",3
-"Rt Hon Margaret BONDFIELD, CH","Wallsend",1926-01-01,1931-01-01,"Lab",TRUE,"margaretbondfieldch",5
-"Miss Arabella Susan LAWRENCE","East Ham, North",1926-01-01,1931-01-01,"Lab",TRUE,"arabellasusanlawrence",6
-"Gwendolen, Countess of IVEAGH, CBE","Southend-on-Sea",1927-11-19,1935-01-01,"Con",TRUE,"gwendolenofiveaghcbe",7
-"Hilda RUNCIMAN (later Viscountess)","Cornwall, St Ives",1928-03-06,1929-01-01,"Lib",TRUE,"hildarunciman(later)",8
-"Mrs Florence DALTON","Durham, Bishop Auckland",1929-02-07,1929-01-01,"Lab",TRUE,"florencedalton",1
-"Rt Hon Miss Jennie LEE (Mrs A Bevan)","Lanarkshire, Northern",1929-03-21,1931-01-01,"Lab",TRUE,"jennielee(abevan)",1
-"Dr Ethel BENTHAM","Islington, East",1929-05-30,1931-01-01,"Lab",FALSE,"ethelbentham",8
-"Mrs Mary HAMILTON,","Blackburn",1929-05-30,1931-01-01,"Lab",FALSE,"maryhamilton",9
-"Lady Megan LLOYD GEORGE","Anglesey",1929-05-30,1951-01-01,"Lib",FALSE,"meganlloydgeorge",10
-"Lady Cynthia MOSLEY","Stoke-on-Trent, Stoke",1929-05-30,1931-01-01,"Lab",FALSE,"cynthiamosley",11
-"Dr Marion PHILLIPS","Sunderland",1929-05-30,1931-01-01,"Lab",FALSE,"marionphillips",12
-"Miss Edith PICTON-TURBERVILL, OBE","Shropshire, The Wrekin",1929-05-30,1931-01-01,"Lab",FALSE,"edithpictonturbervillobe",13
-"Miss Eleanor RATHBONE","Combined English Universities",1929-05-30,1946-01-01,"Ind",FALSE,"eleanorrathbone",14
-"Lady Lucy NOEL-BUXTON","Norfolk, North",1930-07-09,1931-01-01,"Lab",TRUE,"lucynoelbuxton",15
-"Mrs Leah MANNING","Islington, East",1931-02-19,1931-01-01,"Lab",TRUE,"leahmanning",1
-"Mrs Thelma CAZALET-KEIR, CBE","Islington, East",1931-10-27,1945-01-01,"Con",FALSE,"thelmacazaletkeircbe",1
-"Mrs Ida COPELAND","Stoke-on-Trent, Stoke",1931-10-27,1935-01-01,"Con",FALSE,"idacopeland",3
-"Miss Marjorie GRAVES","Hackney, South",1931-10-27,1935-01-01,"Con",FALSE,"marjoriegraves",5
-"Rt Hon Dame Florence HORSBURGH","Dundee",1931-10-27,1945-01-01,"Con",FALSE,"florencehorsburgh",6
-"The Hon Mary PICKFORD, CBE","Hammersmith, North",1931-10-27,1934-01-01,"Con",FALSE,"marypickfordcbe",8
-"Mrs Norah RUNGE, OBE","Bermondsey, Rotherhithe",1931-10-27,1935-01-01,"Con",FALSE,"norahrungeobe",9
-"Mrs Helen SHAW, MBE","Lanarkshire, Bothwell",1931-10-27,1935-01-01,"Con",FALSE,"helenshawmbe",11
-"Mrs Mavis TATE","Willesden, West",1931-10-27,1935-01-01,"Con",FALSE,"mavistate",12
-"Dame Irene WARD, CH","Wallsend",1931-10-27,1945-01-01,"Con",FALSE,"irenewardch",13
-"Mrs Sarah WARD","Staffordshire, Cannock",1931-10-27,1935-01-01,"Con",FALSE,"sarahward",15
-"Rt Hon Ellen WILKINSON","Jarrow",1935-11-14,1947-01-01,"Lab",FALSE,"ellenwilkinson",3
-"Mrs Mavis TATE","Somerset, Frome",1935-11-14,1945-01-01,"Con",FALSE,"mavistate",5
-"Frances, Viscountess DAVIDSON","Hertfordshire, Hemel Hempstead",1937-06-22,1959-01-01,"Con",TRUE,"francesdavidson",7
-"Mrs Agnes HARDIE","Glasgow, Springburn",1937-09-07,1945-01-01,"Lab",TRUE,"agneshardie",8
-"Rt Hon Dr Edith SUMMERSKILL, CH","Fulham",1938-04-06,1955-01-01,"Lab",FALSE,"edithsummerskillch",4
-"Mrs Jennie ADAMSON","Dartford",1938-11-07,1945-01-01,"Lab",FALSE,"jennieadamson",9
-"Mrs Beatrice WRIGHT","Cornwall, Bodmin",1941-03-11,1945-01-01,"Con",TRUE,"beatricewright",11
-"Lady Violet APSLEY,","Bristol, Central",1943-02-18,1945-01-01,"Con",TRUE,"violetapsley",12
-"Rt Hon Alice BACON, CBE","Leeds, North East",1945-07-05,1955-01-01,"Lab",FALSE,"alicebaconcbe",1
-"Mrs Bessie BRADDOCK","Liverpool, Exchange",1945-07-05,1970-01-01,"Lab",FALSE,"bessiebraddock",2
-"Rt Hon Barbara CASTLE","Blackburn",1945-07-05,1950-01-01,"Lab",FALSE,"barbaracastle",5
-"Miss Grace COLMAN","Tynemouth",1945-07-05,1950-01-01,"Lab",FALSE,"gracecolman",6
-"Mrs Freda CORBET","Camberwell, North-West",1945-07-05,1950-01-01,"Lab",FALSE,"fredacorbet",8
-"Mrs Caroline GANLEY","Battersea, South",1945-07-05,1951-01-01,"Lab",FALSE,"carolineganley",9
-"Mrs Barbara GOULD","Hendon, North",1945-07-05,1950-01-01,"Lab",FALSE,"barbaragould",11
-"Rt Hon Miss Margaret HERBISON","Lanarkshire, North",1945-07-05,1970-01-01,"Lab",FALSE,"margaretherbison",12
-"Mrs Jean MANN","Lanarkshire, Coatbridge",1945-07-05,1950-01-01,"Lab",FALSE,"jeanmann",13
-"Mrs Lucy MIDDLETON","Plymouth, Sutton",1945-07-05,1951-01-01,"Lab",FALSE,"lucymiddleton",15
-"Mrs Muriel NICHOL","Bradford, North",1945-07-05,1950-01-01,"Lab",FALSE,"murielnichol",16
-"Mrs Florence PATON","Nottinghamshire, Rushcliffe",1945-07-05,1950-01-01,"Lab",FALSE,"florencepaton",17
-"Mrs Mabel RIDEALGH","Ilford, North",1945-07-05,1950-01-01,"Lab",FALSE,"mabelridealgh",18
-"Mrs Clarice SHAW","Ayrshire & Bute, Kilmarnock",1945-07-05,1946-01-01,"Lab",FALSE,"clariceshaw",19
-"Mrs Edith WILLS","Birmingham, Duddeston",1945-07-05,1950-01-01,"Lab",FALSE,"edithwills",20
-"Rt Hon Miss Jennie LEE (Mrs A Bevan)","Staffordshire, Cannock",1945-07-05,1970-01-01,"Lab",FALSE,"jennielee(abevan)",21
-"Lady Lucy NOEL-BUXTON","Norwich",1945-07-05,1950-01-01,"Lab",FALSE,"lucynoelbuxton",22
-"Mrs Leah MANNING","Essex, Epping",1945-07-05,1950-01-01,"Lab",FALSE,"leahmanning",23
-"Mrs Jennie ADAMSON","Bexley",1945-07-05,1946-01-01,"Lab",FALSE,"jennieadamson",24
-"Priscilla, Lady TWEEDSMUIR","Aberdeen, South",1946-11-26,1966-01-01,"Con",TRUE,"priscillatweedsmuir",14
-"Mrs Alice CULLEN","Glasgow, Gorbals",1948-09-30,1969-01-01,"Lab",TRUE,"alicecullen",3
-"Miss Elaine BURTON","Coventry, South",1950-02-23,1959-01-01,"Lab",FALSE,"elaineburton",5
-"Mrs Eveline HILL","Manchester, Wythenshawe",1950-02-23,1964-01-01,"Con",FALSE,"evelinehill",6
-"Rt Hon Dame Patricia HORNSBY-SMITH, DBE","Kent, Chislehurst",1950-02-23,1966-01-01,"Con",FALSE,"patriciahornsbysmithdbe",8
-"Mrs Dorothy REES","Glamorgan, Barry",1950-02-23,1951-01-01,"Lab",FALSE,"dorothyrees",11
-"Mrs Eirene WHITE","Flintshire, East",1950-02-23,1970-01-01,"Lab",FALSE,"eirenewhite",13
-"Rt Hon Dame Florence HORSBURGH","Manchester, Moss-Side",1950-02-23,1959-01-01,"Con",FALSE,"florencehorsburgh",16
-"Dame Irene WARD, CH","Tynemouth",1950-02-23,1974-02-01,"Con",FALSE,"irenewardch",17
-"Rt Hon Barbara CASTLE","Blackburn East",1950-02-23,1955-01-01,"Lab",FALSE,"barbaracastle",18
-"Mrs Freda CORBET","Camberwell, Peckham",1950-02-23,1974-01-01,"Lab",FALSE,"fredacorbet",19
-"Mrs Jean MANN","Coatbridge and Airdire",1950-02-23,1959-01-01,"Lab",FALSE,"jeanmann",20
-"Mrs Harriet SLATER","Stoke-on-Trent, North",1953-03-31,1966-01-01,"Lab",TRUE,"harrietslater",9
-"Mrs Patricia FORD","Down, North",1953-04-15,1955-01-01,"UU",TRUE,"patriciaford",10
-"Dame Edith PITT, DBE","Birmingham, Edgbaston",1953-07-02,1966-01-01,"Con",TRUE,"edithpittdbe",11
-"Mrs Lena JEGER","Holborn & St Pancras, South",1953-11-19,1959-01-01,"Lab",TRUE,"lenajeger",15
-"Mrs Joyce BUTLER","Wood Green",1955-05-26,1979-01-01,"Lab",FALSE,"joycebutler",1
-"The Hon Mrs Evelyn EMMET","East Sussex, East Grinstead",1955-05-26,1964-01-01,"Con",FALSE,"evelynemmet",4
-"Mrs Patricia McLAUGHLIN","Belfast, West",1955-05-26,1964-01-01,"UU",FALSE,"patriciamclaughlin",10
-"Dame Joan VICKERS, DBE","Plymouth, Devonport",1955-05-26,1974-02-01,"Con",FALSE,"joanvickersdbe",18
-"Rt Hon Dr Edith SUMMERSKILL, CH","Warrington",1955-05-26,1961-01-01,"Lab",FALSE,"edithsummerskillch",22
-"Rt Hon Alice BACON, CBE","Leeds, South East",1955-05-26,1970-01-01,"Lab",FALSE,"alicebaconcbe",23
-"Rt Hon Barbara CASTLE","Blackburn",1955-05-26,1979-01-01,"Lab",FALSE,"barbaracastle",24
-"Miss Mervyn PIKE","Leicestershire, Melton",1956-12-19,1974-02-01,"Con",TRUE,"mervynpike",25
-"Lady Megan LLOYD GEORGE","Carmarthen",1957-01-01,1966-01-01,"Lib",TRUE,"meganlloydgeorge",26
-"Lady Muriel GAMMANS","Hornsey",1957-05-30,1966-01-01,"Con",TRUE,"murielgammans",27
-"Mrs Mary McALISTER","Glasgow, Kelvingrove",1958-03-13,1959-01-01,"Lab",TRUE,"marymcalister",28
-"Rt Hon Betty HARVIE ANDERSON OBE, TD","Renfrewshire, East",1959-10-08,1979-01-01,"Con",FALSE,"bettyharvieandersonobetd",5
-"Rt Hon Dame Judith HART, DBE","Lanark",1959-10-08,1983-01-01,"Lab",FALSE,"judithhartdbe",7
-"Rt Hon Margaret THATCHER","Finchley",1959-10-08,1992-01-01,"Con",FALSE,"margaretthatcher",15
-"Miss Joan QUENNELL MBE","Petersfield",1960-11-16,1974-10-01,"Con",TRUE,"joanquennellmbe",16
-"Mrs Anne KERR","Rochester & Chatham",1964-10-15,1970-01-01,"Lab",FALSE,"annekerr",4
-"Mrs Margaret McKAY","Wandsworth, Clapham",1964-10-15,1970-01-01,"Lab",FALSE,"margaretmckay",6
-"Mrs Renee SHORT","Wolverhampton, North-East",1964-10-15,1987-01-01,"Lab",FALSE,"reneeshort",10
-"Dr the Hon Shirley SUMMERSKILL","Halifax",1964-10-15,1983-01-01,"Lab",FALSE,"theshirleysummerskill",20
-"Rt Hon Shirley WILLIAMS","Hertfordshire, Hitchin",1964-10-15,1974-02-01,"Lab",FALSE,"shirleywilliams",22
-"Mrs Lena JEGER","Holborn & St Pancras, South",1964-10-15,1979-01-01,"Lab",FALSE,"lenajeger",28
-"Mrs Gwyneth DUNWOODY","Exeter",1966-03-31,1970-01-01,"Lab",FALSE,"gwynethdunwoody",8
-"Dame Jill KNIGHT, DBE","Birmingham, Edgbaston",1966-03-31,1997-01-01,"Con",FALSE,"jillknightdbe",9
-"Miss Joan LESTOR","Eton & Slough",1966-03-31,1983-01-01,"Lab",FALSE,"joanlestor",11
-"Mrs Winifred EWING","Lanarkshire, Hamilton",1967-11-02,1970-01-01,"SNP",TRUE,"winifredewing",14
-"Miss Bernadette DEVLIN","Mid-Ulster",1969-04-17,1974-02-01,"Ind. Unity",TRUE,"bernadettedevlin",3
-"Dame Peggy FENNER, DBE","Rochester & Chatham",1970-06-18,1974-10-01,"Con",FALSE,"peggyfennerdbe",2
-"Mrs Doris FISHER","Birmingham, Ladywood",1970-06-18,1974-02-01,"Lab",FALSE,"dorisfisher",4
-"Dame Janet FOOKES, DBE","Merton & Morden",1970-06-18,1974-02-01,"Con",FALSE,"janetfookesdbe",6
-"Miss Joan HALL","Keighley",1970-06-18,1974-02-01,"Con",FALSE,"joanhall",8
-"Miss Mary HOLT","Preston, North",1970-06-18,1974-02-01,"Con",FALSE,"maryholt",12
-"Dame Elaine KELLETT-BOWMAN, DBE","Lancaster",1970-06-18,1997-01-01,"Con",FALSE,"elainekellettbowmandbe",13
-"Mrs Constance MONKS OBE","Chorley",1970-06-18,1974-02-01,"Con",FALSE,"constancemonksobe",14
-"Rt Hon Sally OPPENHEIM","Gloucester",1970-06-18,1987-01-01,"Con",FALSE,"sallyoppenheim",21
-"Rt Hon Dame Patricia HORNSBY-SMITH, DBE","Kent, Chislehurst",1970-06-18,1974-02-01,"Con",FALSE,"patriciahornsbysmithdbe",23
-"Rt Hon Betty BOOTHROYD","West Bromwich",1973-05-24,2020-01-01,"Lab",FALSE,"bettyboothroyd",26
-"Rt Hon Betty BOOTHROYD","West Bromwich, West",1973-05-24,2020-01-01,"Lab",FALSE,"bettyboothroyd",27
-"Mrs Margo MACDONALD","Glasgow, Govan",1973-11-08,1974-02-01,"SNP",TRUE,"margomacdonald",29
-"Rt Hon Lynda CHALKER","Wallasey",1974-02-28,1992-01-01,"Con",FALSE,"lyndachalker",3
-"Mrs Maureen COLQUHOUN","Northampton, North",1974-02-28,1979-01-01,"Lab",FALSE,"maureencolquhoun",4
-"Jo RICHARDSON","Barking",1974-02-28,1994-01-01,"Lab",FALSE,"jorichardson",6
-"Audrey WISE","Coventry, South-West",1974-02-28,1979-01-01,"Lab",FALSE,"audreywise",8
-"Rt Hon Shirley WILLIAMS","Hertford & Stevenage",1974-02-28,1979-01-01,"Lab",FALSE,"shirleywilliams",12
-"Mrs Gwyneth DUNWOODY","Crewe",1974-02-28,2008-01-01,"Lab",FALSE,"gwynethdunwoody",14
-"Mrs Winifred EWING","Moray & Nairn",1974-02-28,1979-01-01,"SNP",FALSE,"winifredewing",17
-"Dame Janet FOOKES, DBE","Plymouth, Drake",1974-02-28,1997-01-01,"Con",FALSE,"janetfookesdbe",18
-"Mrs Margaret BAIN","East Dunbartonshire",1974-10-10,1979-01-01,"SNP",FALSE,"margaretbain",2
-"Mrs Helene HAYMAN","Welwyn & Hatfield",1974-10-10,1979-01-01,"Lab",FALSE,"helenehayman",16
-"Rt Hon Dame Margaret BECKETT","Lincoln",1974-10-10,1979-01-01,"Lab",FALSE,"margaretbeckett",19
-"Miss Joan MAYNARD","Sheffield, Brightside",1974-10-10,1987-01-01,"Lab",FALSE,"joanmaynard",22
-"Mrs Millie MILLER","Ilford North",1974-10-10,1977-01-01,"Lab",FALSE,"milliemiller",23
-"Rt Hon Ann TAYLOR","Bolton, West",1974-10-10,1983-01-01,"Lab",FALSE,"anntaylor",25
-"Dr Oonagh McDONALD","Thurrock",1976-07-15,1987-01-01,"Lab",TRUE,"oonaghmcdonald",29
-"Mrs Sheila FAITH","Belper",1979-05-03,1983-01-01,"Con",FALSE,"sheilafaith",1
-"Miss Sheila WRIGHT","Birmingham, Handsworth",1979-05-03,1983-01-01,"Lab",FALSE,"sheilawright",2
-"Dame Peggy FENNER, DBE","Medway",1979-05-03,1997-01-01,"Con",FALSE,"peggyfennerdbe",4
-"Dame Angela RUMBOLD, DBE","Merton, Mitcham and Morden",1982-06-03,1983-01-01,"Con",FALSE,"angelarumbolddbe",5
-"Rt Hon Harriet HARMAN","Peckham",1982-10-28,1997-01-01,"Lab",TRUE,"harrietharman",8
-"Mrs Helen McELHONE","Glasgow, Queen's Park",1982-12-02,1983-01-01,"Lab",TRUE,"helenmcelhone",12
-"Mrs Edwina CURRIE","South Derbyshire",1983-06-09,1997-01-01,"Con",FALSE,"edwinacurrie",1
-"Mrs Anna McCURLEY","Renfrew West & Inverclyde",1983-06-09,1987-01-01,"Con",FALSE,"annamccurley",2
-"Mrs Elizabeth PEACOCK","Batley & Spen",1983-06-09,1997-01-01,"Con",FALSE,"elizabethpeacock",5
-"Mrs Marion ROE","Broxbourne",1983-06-09,2005-01-01,"Con",FALSE,"marionroe",7
-"Rt Hon Clare SHORT","Birmingham, Ladywood",1983-06-09,2010-01-01,"Lab",FALSE,"clareshort",11
-"Mrs Ann WINTERTON","Congleton",1983-06-09,2010-01-01,"Con",FALSE,"annwinterton",12
-"Rt Hon Dame Judith HART, DBE","Clydesdale",1983-06-09,1987-01-01,"Lab",FALSE,"judithhartdbe",16
-"Rt Hon Dame Margaret BECKETT","Derby, South",1983-06-09,2020-01-01,"Lab",FALSE,"margaretbeckett",17
-"Dame Angela RUMBOLD, DBE","Mitcham and Morden",1983-06-09,1997-01-01,"Con",FALSE,"angelarumbolddbe",19
-"Rt Hon Virginia BOTTOMLEY","South West Surrey",1984-05-03,2005-01-01,"Con",TRUE,"virginiabottomley",20
-"Rt Hon Ann CLWYD","Cynon Valley",1984-05-03,2020-01-01,"Lab",TRUE,"annclwyd",23
-"Mrs Elizabeth SHIELDS","Ryedale",1986-05-08,1987-01-01,"Lib",TRUE,"elizabethshields",24
-"Mrs Llin GOLDING","Newcastle-under-Lyme",1986-07-17,2001-01-01,"Lab",TRUE,"llingolding",25
-"Mrs Rosie BARNES","Greenwich",1987-02-26,1992-01-01,"SDP",TRUE,"rosiebarnes",2
-"Miss Diane ABBOTT","Hackney North & Stoke Newington",1987-06-11,2020-01-01,"Lab",FALSE,"dianeabbott",10
-"Rt Hon Hilary ARMSTRONG","North West Durham",1987-06-11,2010-01-01,"Lab",FALSE,"hilaryarmstrong",16
-"Mrs Maria FYFE","Glasgow, Maryhill",1987-06-11,2001-01-01,"Lab",FALSE,"mariafyfe",21
-"Mrs Mildred GORDON","Bow & Poplar",1987-06-11,1997-01-01,"Lab",FALSE,"mildredgordon",22
-"Mrs Teresa GORMAN","Billericay",1987-06-11,2001-01-01,"Con",FALSE,"teresagorman",24
-"Mrs Maureen HICKS","Wolverhampton, North East",1987-06-11,1992-01-01,"Con",FALSE,"maureenhicks",28
-"Mrs Alice MAHON","Halifax",1987-06-11,2005-01-01,"Lab",FALSE,"alicemahon",29
-"Mrs Ray MICHIE","Argyll & Bute",1987-06-11,2001-01-01,"LD",FALSE,"raymichie",30
-"Rt Hon Marjorie MOWLAM","Redcar",1987-06-11,2001-01-01,"Lab",FALSE,"marjoriemowlam",31
-"Emma NICHOLSON","Devon, West & Torridge",1987-06-11,1997-01-01,"Con",FALSE,"emmanicholson",32
-"Rt Hon Dame Dawn PRIMAROLO","Bristol South",1987-06-11,2020-01-01,"Lab",FALSE,"dawnprimarolo",33
-"Rt Hon Joyce QUIN","Gateshead, East",1987-06-11,1997-01-01,"Lab",FALSE,"joycequin",34
-"Rt Hon Dame Joan RUDDOCK","Lewisham, Deptford",1987-06-11,2015-03-30,"Lab",FALSE,"joanruddock",35
-"Rt Hon Gillian SHEPHARD","South West Norfolk",1987-06-11,2005-01-01,"Con",FALSE,"gillianshephard",36
-"Ms Joan WALLEY","Stoke-on-Trent North",1987-06-11,2015-03-30,"Lab",FALSE,"joanwalley",37
-"Rt Hon Ann WIDDECOMBE","Maidstone",1987-06-11,2020-01-01,"Con",FALSE,"annwiddecombe",38
-"Miss Joan LESTOR","Eccles",1987-06-11,1997-01-01,"Lab",FALSE,"joanlestor",39
-"Audrey WISE","Preston",1987-06-11,2000-01-01,"Lab",FALSE,"audreywise",40
-"Mrs Margaret BAIN","Moray",1987-06-11,2001-01-01,"SNP",FALSE,"margaretbain",41
-"Rt Hon Ann TAYLOR","Dewsbury",1987-06-11,2005-01-01,"Lab",FALSE,"anntaylor",42
-"Miss Kate HOEY","Vauxhall",1989-06-15,2020-01-01,"Lab",TRUE,"katehoey",43
-"Mrs Sylvia HEAL","Mid-Staffordshire",1990-03-22,1992-01-01,"Lab",TRUE,"sylviaheal",44
-"Irene ADAMS","Paisley North",1990-11-29,2005-01-01,"Lab",TRUE,"ireneadams",45
-"Janet ANDERSON","Rossendale & Darwen",1992-04-09,2010-01-01,"Lab",FALSE,"janetanderson",2
-"Mrs Angela BROWNING","Tiverton",1992-04-09,1997-01-01,"Con",FALSE,"angelabrowning",3
-"Mrs Anne CAMPBELL","Cambridge",1992-04-09,2005-01-01,"Lab",FALSE,"annecampbell",15
-"Mrs Judith CHAPLIN","Newbury",1992-04-09,1993-01-01,"Con",FALSE,"judithchaplin",28
-"Ms Ann COFFEY","Stockport",1992-04-09,2020-01-01,"Lab",FALSE,"anncoffey",44
-"Rt Hon Jean CORSTON","Bristol East",1992-04-09,2005-01-01,"Lab",FALSE,"jeancorston",46
-"Angela EAGLE","Wallasey",1992-04-09,2020-01-01,"Lab",FALSE,"angelaeagle",47
-"Rt Hon Cheryl GILLAN","Chesham & Amersham",1992-04-09,2020-01-01,"Con",FALSE,"cherylgillan",48
-"Ms Glenda JACKSON","Hampstead & Highgate",1992-04-09,2010-01-01,"Lab",FALSE,"glendajackson",49
-"Helen JACKSON","Sheffield, Hillsborough",1992-04-09,2005-01-01,"Lab",FALSE,"helenjackson",50
-"Dr Lynne JONES","Birmingham, Selly Oak",1992-04-09,2010-01-01,"Lab",FALSE,"lynnejones",51
-"Rt Hon Dame Tessa JOWELL","Dulwich",1992-04-09,1997-01-01,"Lab",FALSE,"tessajowell",52
-"Rt Hon Jane KENNEDY","Liverpool, Broad Green",1992-04-09,2020-01-01,"Lab",FALSE,"janekennedy",53
-"Mrs Angela KNIGHT","Erewash",1992-04-09,1997-01-01,"Con",FALSE,"angelaknight",54
-"Mrs Jacqui LAIT","Hastings & Rye",1992-04-09,1997-01-01,"Con",FALSE,"jacquilait",55
-"Ms Liz LYNNE","Rochdale",1992-04-09,1997-01-01,"LD",FALSE,"lizlynne",56
-"Lady Olga MAITLAND","Sutton & Cheam",1992-04-09,1997-01-01,"Con",FALSE,"olgamaitland",57
-"Rt Hon Estelle MORRIS","Birmingham, Yardley",1992-04-09,2005-01-01,"Lab",FALSE,"estellemorris",58
-"Ms Bridget PRENTICE","Lewisham East",1992-04-09,2010-01-01,"Lab",FALSE,"bridgetprentice",59
-"Mrs Barbara ROCHE","Hornsey & Wood Green",1992-04-09,2005-01-01,"Lab",FALSE,"barbararoche",60
-"Ms Rachel SQUIRE","Dunfermline West",1992-04-09,2020-01-01,"Lab",FALSE,"rachelsquire",61
-"Mrs Diana MADDOCK","Christchurch",1993-07-29,1997-01-01,"LD",TRUE,"dianamaddock",28
-"Ms Judith CHURCH","Dagenham",1994-06-09,2001-01-01,"Lab",TRUE,"judithchurch",6
-"Rt Hon Margaret HODGE","Barking",1994-06-09,2020-01-01,"Lab",TRUE,"margarethodge",62
-"Rt Hon Helen LIDDELL","Monklands East",1994-06-30,1997-01-01,"Lab",TRUE,"helenliddell",63
-"Ms Roseanna CUNNINGHAM","Perth & Kinross",1995-06-25,2020-01-01,"SNP",FALSE,"roseannacunningham",64
-"Mrs Jacqui LAIT","Beckenham",1997-01-01,2010-01-01,"Con",TRUE,"jacquilait",1
-"Ms  Candy ATHERTON","Falmouth and Camborne",1997-05-01,2005-01-01,"Lab",FALSE,"candyatherton",3
-"Ms Charlotte ATKINS","Staffordshire Moorlands",1997-05-01,2010-01-01,"Lab",FALSE,"charlotteatkins",4
-"Mrs Jackie BALLARD","Taunton",1997-05-01,2001-01-01,"LD",FALSE,"jackieballard",5
-"Dame Anne BEGG","Aberdeen South",1997-05-01,2015-03-30,"Lab",FALSE,"annebegg",8
-"Mrs Liz BLACKMAN","Erewash",1997-05-01,2010-01-01,"Lab",FALSE,"lizblackman",9
-"Rt Hon Hazel BLEARS","Salford",1997-05-01,2010-01-01,"Lab",FALSE,"hazelblears",13
-"Mrs Helen BRINTON","Peterborough",1997-05-01,2005-01-01,"Lab",FALSE,"helenbrinton",18
-"Ms Karen BUCK","Regent's Park and Kensington North",1997-05-01,2010-01-01,"Lab",FALSE,"karenbuck",19
-"Mrs Christine BUTLER","Castle Point",1997-05-01,2001-01-01,"Lab",FALSE,"christinebutler",22
-"Dr Lynda CLARK, QC","Edinburgh, Pentlands",1997-05-01,2005-01-01,"Lab",FALSE,"lyndaclarkqc",28
-"Rt Hon Yvette COOPER","Pontefract and Castleford",1997-05-01,2010-01-01,"Lab",FALSE,"yvettecooper",32
-"Mrs Ann CRYER","Keighley",1997-05-01,2010-01-01,"Lab",FALSE,"anncryer",34
-"Ms Claire CURTIS-THOMAS","Crosby",1997-05-01,2010-01-01,"Lab",FALSE,"clairecurtisthomas",39
-"Valerie DAVEY","Bristol West",1997-05-01,2005-01-01,"Lab",FALSE,"valeriedavey",52
-"Mrs Janet DEAN","Burton",1997-05-01,2010-01-01,"Lab",FALSE,"janetdean",54
-"Julia DROWN","South Swindon",1997-05-01,2005-01-01,"Lab",FALSE,"juliadrown",55
-"Maria EAGLE","Liverpool, Garston",1997-05-01,2010-01-01,"Lab",FALSE,"mariaeagle",56
-"Mrs Louise ELLMAN","Liverpool, Riverside",1997-05-01,2020-01-01,"Lab",FALSE,"louiseellman",57
-"Ms Lorna FITZSIMONS","Rochdale",1997-05-01,2005-01-01,"Lab",FALSE,"lornafitzsimons",63
-"Rt Hon Caroline FLINT","Don Valley",1997-05-01,2020-01-01,"Lab",FALSE,"carolineflint",65
-"Ms Barbara FOLLETT","Stevenage",1997-05-01,2010-01-01,"Lab",FALSE,"barbarafollett",66
-"Mrs Linda GILROY","Plymouth, Sutton",1997-05-01,2010-01-01,"Lab",FALSE,"lindagilroy",67
-"Eileen GORDON","Romford",1997-05-01,2001-01-01,"Lab",FALSE,"eileengordon",68
-"Jane GRIFFITHS","Reading East",1997-05-01,2005-01-01,"Lab",FALSE,"janegriffiths",69
-"Rt Hon Patricia HEWITT","Leicester West",1997-05-01,2010-01-01,"Lab",FALSE,"patriciahewitt",70
-"Rt Hon Beverley HUGHES","Stretford and Urmston",1997-05-01,2010-01-01,"Lab",FALSE,"beverleyhughes",71
-"Mrs Joan HUMBLE","Blackpool North and Fleetwood",1997-05-01,2010-01-01,"Lab",FALSE,"joanhumble",72
-"Miss Melanie JOHNSON","Welwyn Hatfield",1997-05-01,2005-01-01,"Lab",FALSE,"melaniejohnson",73
-"Mrs Fiona JONES","Newark",1997-05-01,2001-01-01,"Lab",FALSE,"fionajones",74
-"Helen JONES","Warrington North",1997-05-01,2020-01-01,"Lab",FALSE,"helenjones",75
-"Ms Jenny JONES","Wolverhampton South West",1997-05-01,2001-01-01,"Lab",FALSE,"jennyjones",76
-"Ms Sally KEEBLE","Northampton North",1997-05-01,2010-01-01,"Lab",FALSE,"sallykeeble",77
-"Ann KEEN","Brentford and Isleworth",1997-05-01,2010-01-01,"Lab",FALSE,"annkeen",78
-"Rt Hon Ruth KELLY","Bolton West",1997-05-01,2010-01-01,"Lab",FALSE,"ruthkelly",79
-"Ms Oona KING","Bethnal Green and Bow",1997-05-01,2005-01-01,"Lab",FALSE,"oonaking",80
-"Ms Tess KINGHAM","Gloucester",1997-05-01,2001-01-01,"Lab",FALSE,"tesskingham",81
-"Miss Julie KIRKBRIDE","Bromsgrove",1997-05-01,2010-01-01,"Con",FALSE,"juliekirkbride",82
-"Mrs Eleanor LAING","Epping Forest",1997-05-01,2020-01-01,"Con",FALSE,"eleanorlaing",83
-"Ms Jackie LAWRENCE","Preseli Pembrokeshire",1997-05-01,2005-01-01,"Lab",FALSE,"jackielawrence",84
-"Fiona MACTAGGART","Slough",1997-05-01,2020-01-01,"Lab",FALSE,"fionamactaggart",85
-"Judy MALLABER","Amber Valley",1997-05-01,2010-01-01,"Lab",FALSE,"judymallaber",86
-"Rt Hon Theresa MAY","Maidenhead",1997-05-01,2020-01-01,"Con",FALSE,"theresamay",87
-"Ms Chris McCAFFERTY","Calder Valley",1997-05-01,2010-01-01,"Lab",FALSE,"chrismccafferty",88
-"Ms Siobhain McDONAGH","Mitcham and Morden",1997-05-01,2020-01-01,"Lab",FALSE,"siobhainmcdonagh",89
-"Rt Hon Anne McGUIRE","Stirling",1997-05-01,2015-03-30,"Lab",FALSE,"annemcguire",90
-"Anne McINTOSH","Vale of York",1997-05-01,2010-01-01,"Con",FALSE,"annemcintosh",91
-"Shona McISAAC","Cleethorpes",1997-05-01,2010-01-01,"Lab",FALSE,"shonamcisaac",92
-"Mrs Rosemary McKENNA, CBE","Cumbernauld and Kilsyth",1997-05-01,2005-01-01,"Lab",FALSE,"rosemarymckennacbe",93
-"Ms Gillian MERRON","Lincoln",1997-05-01,2010-01-01,"Lab",FALSE,"gillianmerron",94
-"Laura MOFFATT","Crawley",1997-05-01,2010-01-01,"Lab",FALSE,"lauramoffatt",95
-"Ms Margaret MORAN","Luton South",1997-05-01,2010-01-01,"Lab",FALSE,"margaretmoran",96
-"Ms Julie MORGAN","Cardiff North",1997-05-01,2010-01-01,"Lab",FALSE,"juliemorgan",97
-"Ms Kali MOUNTFORD","Colne Valley",1997-05-01,2010-01-01,"Lab",FALSE,"kalimountford",98
-"Mrs Diana ORGAN","Forest of Dean",1997-05-01,2005-01-01,"Lab",FALSE,"dianaorgan",99
-"Ms Sandra OSBORNE","Ayr",1997-05-01,2005-01-01,"Lab",FALSE,"sandraosborne",100
-"Ms Linda PERHAM","Ilford North",1997-05-01,2005-01-01,"Lab",FALSE,"lindaperham",101
-"Christine RUSSELL","Chester, City of",1997-05-01,2010-01-01,"Lab",FALSE,"christinerussell",102
-"Joan RYAN","Enfield North",1997-05-01,2010-01-01,"Lab",FALSE,"joanryan",103
-"Ms Debra SHIPLEY","Stourbridge",1997-05-01,2005-01-01,"Lab",FALSE,"debrashipley",104
-"Rt Hon Angela E SMITH","Basildon",1997-05-01,2010-01-01,"Lab",FALSE,"angelaesmith",105
-"Miss Geraldine SMITH","Morecambe and Lunesdale",1997-05-01,2010-01-01,"Lab",FALSE,"geraldinesmith",106
-"Rt Hon Jacqui SMITH","Redditch",1997-05-01,2010-01-01,"Lab",FALSE,"jacquismith",107
-"Ms Helen SOUTHWORTH","Warrington South",1997-05-01,2010-01-01,"Lab",FALSE,"helensouthworth",108
-"Rt Hon Caroline SPELMAN","Meriden",1997-05-01,2020-01-01,"Con",FALSE,"carolinespelman",109
-"Dr Phyllis STARKEY","Milton Keynes South West",1997-05-01,2010-01-01,"Lab",FALSE,"phyllisstarkey",110
-"Ms Gisela STUART","Birmingham, Edgbaston",1997-05-01,2020-01-01,"Lab",FALSE,"giselastuart",111
-"Ms Dari TAYLOR","Stockton South",1997-05-01,2010-01-01,"Lab",FALSE,"daritaylor",112
-"Dr Jenny TONGE","Richmond Park",1997-05-01,2005-01-01,"LD",FALSE,"jennytonge",113
-"Ms Claire WARD","Watford",1997-05-01,2010-01-01,"Lab",FALSE,"claireward",114
-"Mrs Betty WILLIAMS","Conwy",1997-05-01,2010-01-01,"Lab",FALSE,"bettywilliams",115
-"Rt Hon Rosie WINTERTON","Doncaster Central",1997-05-01,2020-01-01,"Lab",FALSE,"rosiewinterton",116
-"Rt Hon Harriet HARMAN","Camberwell & Peckham",1997-05-01,2020-01-01,"Lab",FALSE,"harrietharman",117
-"Rt Hon Joyce QUIN","Gateshead East and Washington West",1997-05-01,2005-01-01,"Lab",FALSE,"joycequin",118
-"Rt Hon Ann WIDDECOMBE","Maidstone and the Weald",1997-05-01,2010-01-01,"Con",FALSE,"annwiddecombe",119
-"Mrs Sylvia HEAL","Halesowen and Rowley Regis",1997-05-01,2010-01-01,"Lab",FALSE,"sylviaheal",120
-"Mrs Angela BROWNING","Tiverton & Honiton",1997-05-01,2010-01-01,"Con",FALSE,"angelabrowning",121
-"Rt Hon Dame Tessa JOWELL","Dulwich & West Norwood",1997-05-01,2020-01-01,"Lab",FALSE,"tessajowell",122
-"Rt Hon Jane KENNEDY","Liverpool Wavertree",1997-05-01,2010-01-01,"Lab",FALSE,"janekennedy",123
-"Rt Hon Helen LIDDELL","Airdrie and Shotts",1997-05-01,2005-01-01,"Lab",FALSE,"helenliddell",124
-"Ms Roseanna CUNNINGHAM","Perth",1997-05-01,2001-01-01,"SNP",FALSE,"roseannacunningham",125
-"Sandra GIDLEY","Romsey",2000-05-04,2010-01-01,"LD",TRUE,"sandragidley",40
-"Vera BAIRD","Redcar",2001-06-07,2010-01-01,"Lab",FALSE,"verabaird",5
-"Annette BROOKE","Mid Dorset & North Poole",2001-06-07,2015-03-30,"LD",FALSE,"annettebrooke",6
-"Patsy CALTON","Cheadle",2001-06-07,2005-01-01,"LD",FALSE,"patsycalton",21
-"Sue DOUGHTY","Guildford",2001-06-07,2005-01-01,"LD",FALSE,"suedoughty",22
-"Annabelle EWING","Perth",2001-06-07,2005-01-01,"SNP",FALSE,"annabelleewing",24
-"Michelle GILDERNEW","Fermanagh & South Tyrone",2001-06-07,2015-03-30,"SF",FALSE,"michellegildernew",25
-"Lady Sylvia HERMON","North Down",2001-06-07,2020-01-01,"UU",FALSE,"sylviahermon",30
-"Ann McKECHIN","Glasgow Maryhill",2001-06-07,2005-01-01,"Lab",FALSE,"annmckechin",31
-"Meg MUNN","Sheffield, Heeley",2001-06-07,2015-03-30,"Lab",FALSE,"megmunn",41
-"Anne PICKING (2005 = Moffat)","East Lothian",2001-06-07,2010-01-01,"Lab",FALSE,"annepicking(2005=moffat)",68
-"Iris ROBINSON","Strangford",2001-06-07,2010-01-01,"DU",FALSE,"irisrobinson",74
-"Angela WATKINSON","Upminster",2001-06-07,2010-01-01,"Con",FALSE,"angelawatkinson",76
-"Sarah TEATHER","Brent East",2003-09-18,2010-01-01,"LD",TRUE,"sarahteather",81
-"Celia BARLOW","Hove",2005-05-05,2010-01-01,"Lab",FALSE,"celiabarlow",3
-"Roberta BLACKMAN-WOODS","Durham, City of",2005-05-05,2020-01-01,"Lab",FALSE,"robertablackmanwoods",7
-"Lyn BROWN","West Ham",2005-05-05,2020-01-01,"Lab",FALSE,"lynbrown",15
-"Lorely BURT","Solihull",2005-05-05,2020-01-01,"LD",FALSE,"lorelyburt",18
-"Dawn BUTLER","Brent South (2005-10)",2005-05-05,2010-01-01,"Lab",FALSE,"dawnbutler",20
-"Katy CLARK","North Ayrshire and Arran",2005-05-05,2015-03-30,"Lab",FALSE,"katyclark",21
-"Rosie COOPER","West Lancashire",2005-05-05,2020-01-01,"Lab",FALSE,"rosiecooper",22
-"Mary CREAGH","Wakefield",2005-05-05,2020-01-01,"Lab",FALSE,"marycreagh",24
-"Nadine DORRIES","Mid Bedfordshire",2005-05-05,2020-01-01,"Con",FALSE,"nadinedorries",28
-"Natascha ENGEL","North East Derbyshire",2005-05-05,2020-01-01,"Lab",FALSE,"nataschaengel",29
-"Lynne FEATHERSTONE","Hornsey and Wood Green",2005-05-05,2020-01-01,"LD",FALSE,"lynnefeatherstone",31
-"Julia GOLDSWORTHY","Falmouth & Camborne",2005-05-05,2010-01-01,"LD",FALSE,"juliagoldsworthy",36
-"Helen GOODMAN","Bishop Auckland",2005-05-05,2020-01-01,"Lab",FALSE,"helengoodman",42
-"Rt Hon Justine GREENING","Putney",2005-05-05,2020-01-01,"Con",FALSE,"justinegreening",45
-"Nia GRIFFITH","Llanelli",2005-05-05,2020-01-01,"Lab",FALSE,"niagriffith",46
-"Meg HILLIER","Hackney South and Shoreditch",2005-05-05,2020-01-01,"Lab",FALSE,"meghillier",50
-"Sharon HODGSON","Gateshead East & Washington West",2005-05-05,2010-01-01,"Lab",FALSE,"sharonhodgson",52
-"Sian C JAMES","Swansea East",2005-05-05,2015-03-30,"Lab",FALSE,"siancjames",55
-"Diana R JOHNSON","Kingston upon Hull North",2005-05-05,2020-01-01,"Lab",FALSE,"dianarjohnson",58
-"Barbara KEELEY","Worsley",2005-05-05,2010-01-01,"Lab",FALSE,"barbarakeeley",60
-"Susan KRAMER","Richmond Park",2005-05-05,2010-01-01,"LD",FALSE,"susankramer",63
-"Kerry McCARTHY","Bristol East",2005-05-05,2020-01-01,"Lab",FALSE,"kerrymccarthy",69
-"Sarah McCARTHY-FRY","Portsmouth North",2005-05-05,2010-01-01,"Lab",FALSE,"sarahmccarthyfry",73
-"Anne MAIN","St Albans",2005-05-05,2020-01-01,"Con",FALSE,"annemain",80
-"Rt Hon Maria MILLER","Basingstoke",2005-05-05,2020-01-01,"Con",FALSE,"mariamiller",84
-"Anne MILTON","Guildford",2005-05-05,2020-01-01,"Con",FALSE,"annemilton",93
-"Madeleine MOON","Bridgend",2005-05-05,2020-01-01,"Lab",FALSE,"madeleinemoon",99
-"Jessica MORDEN","Newport East",2005-05-05,2020-01-01,"Lab",FALSE,"jessicamorden",100
-"Linda RIORDAN","Halifax",2005-05-05,2015-03-30,"Lab",FALSE,"lindariordan",101
-"Alison SEABECK","Plymouth, Devonport",2005-05-05,2010-01-01,"Lab",FALSE,"alisonseabeck",104
-"Angela C SMITH","Sheffield, Hillsborough",2005-05-05,2010-01-01,"Lab",FALSE,"angelacsmith",113
-"Anne SNELGROVE","South Swindon",2005-05-05,2010-01-01,"Lab",FALSE,"annesnelgrove",118
-"Jo SWINSON","East Dunbartonshire",2005-05-05,2015-03-30,"LD",FALSE,"joswinson",124
-"Emily THORNBERRY","Islington South & Finsbury",2005-05-05,2020-01-01,"Lab",FALSE,"emilythornberry",125
-"Kitty USSHER","Burnley",2005-05-05,2010-01-01,"Lab",FALSE,"kittyussher",126
-"Rt Hon Theresa VILLIERS","Chipping Barnet",2005-05-05,2020-01-01,"Con",FALSE,"theresavilliers",127
-"Lynda WALTHO","Stourbridge",2005-05-05,2010-01-01,"Lab",FALSE,"lyndawaltho",128
-"Jenny WILLOTT","Cardiff Central",2005-05-05,2015-03-30,"LD",FALSE,"jennywillott",129
-"Ms Rachel SQUIRE","Dunfermline and West Fife",2005-05-05,2006-01-01,"Lab",FALSE,"rachelsquire",130
-"Mrs Rosemary McKENNA, CBE","Cumbernauld, Kilsyth and Kirkintilloch East",2005-05-05,2010-01-01,"Lab",FALSE,"rosemarymckennacbe",131
-"Ms Sandra OSBORNE","Ayr, Carrick and Cumnock",2005-05-05,2015-03-30,"Lab",FALSE,"sandraosborne",132
-"Ann McKECHIN","Glasgow North",2005-05-05,2015-03-30,"Lab",FALSE,"annmckechin",133
-"Chloe SMITH","Norwich North",2009-07-23,2020-01-01,"Con",TRUE,"chloesmith",14
-"Heidi ALEXANDER","Lewisham East",2010-05-06,2020-01-01,"Lab",FALSE,"heidialexander",1
-"Rushanara ALI","Bethnal Green and Bow",2010-05-06,2020-01-01,"Lab",FALSE,"rushanaraali",2
-"Ms Louise BAGSHAWE","Corby",2010-05-06,2012-01-01,"Con",FALSE,"louisebagshawe",3
-"Harriett BALDWIN","West Worcestershire",2010-05-06,2020-01-01,"Con",FALSE,"harriettbaldwin",4
-"Luciana BERGER","Liverpool, Wavertree",2010-05-06,2020-01-01,"Lab",FALSE,"lucianaberger",5
-"Nicola BLACKWOOD","Oxford West and Abingdon",2010-05-06,2020-01-01,"Con",FALSE,"nicolablackwood",9
-"Karen BRADLEY","Staffordshire Moorlands",2010-05-06,2020-01-01,"Con",FALSE,"karenbradley",11
-"Angie BRAY","Ealing Central and Acton",2010-05-06,2015-03-30,"Con",FALSE,"angiebray",12
-"Fiona BRUCE","Congleton",2010-05-06,2020-01-01,"Con",FALSE,"fionabruce",13
-"Mrs Jenny CHAPMAN","Darlington",2010-05-06,2020-01-01,"Lab",FALSE,"jennychapman",16
-"Dr Thérèse COFFEY","Suffolk Coastal",2010-05-06,2020-01-01,"Con",FALSE,"theresecoffey",19
-"Stella CREASY","Walthamstow",2010-05-06,2020-01-01,"Lab",FALSE,"stellacreasy",20
-"Tracey CROUCH","Chatham and Aylesford",2010-05-06,2020-01-01,"Con",FALSE,"traceycrouch",32
-"Margaret CURRAN","Glasgow East",2010-05-06,2015-03-30,"Lab",FALSE,"margaretcurran",34
-"Gloria DE PIERO","Ashfield",2010-05-06,2020-01-01,"Lab",FALSE,"gloriadepiero",36
-"Caroline DINENAGE","Gosport",2010-05-06,2020-01-01,"Con",FALSE,"carolinedinenage",39
-"Gemma DOYLE","West Dunbartonshire",2010-05-06,2015-03-30,"Lab",FALSE,"gemmadoyle",40
-"Jackie DOYLE-PRICE","Thurrock",2010-05-06,2020-01-01,"Con",FALSE,"jackiedoyleprice",49
-"Julie ELLIOTT","Sunderland Central",2010-05-06,2020-01-01,"Lab",FALSE,"julieelliott",51
-"Jane ELLISON","Battersea",2010-05-06,2020-01-01,"Con",FALSE,"janeellison",52
-"Yvonne FOVARGUE","Makerfield",2010-05-06,2020-01-01,"Lab",FALSE,"yvonnefovargue",54
-"Lorraine FULLBROOK","South Ribble",2010-05-06,2015-03-30,"Con",FALSE,"lorrainefullbrook",56
-"Sheila GILMORE","Edinburgh East",2010-05-06,2015-03-30,"Lab",FALSE,"sheilagilmore",59
-"Pat GLASS","North West Durham",2010-05-06,2020-01-01,"Lab",FALSE,"patglass",60
-"Mrs Mary GLINDON","North Tyneside",2010-05-06,2020-01-01,"Lab",FALSE,"maryglindon",63
-"Mrs Helen GRANT","Maidstone and The Weald",2010-05-06,2020-01-01,"Con",FALSE,"helengrant",66
-"Kate GREEN","Stretford and Urmston",2010-05-06,2020-01-01,"Lab",FALSE,"kategreen",67
-"Lilian GREENWOOD","Nottingham South",2010-05-06,2020-01-01,"Lab",FALSE,"liliangreenwood",68
-"Rebecca HARRIS","Castle Point",2010-05-06,2020-01-01,"Con",FALSE,"rebeccaharris",70
-"Julie HILLING","Bolton West",2010-05-06,2015-03-30,"Lab",FALSE,"juliehilling",71
-"Margot JAMES","Stourbridge",2010-05-06,2020-01-01,"Con",FALSE,"margotjames",72
-"Cathy JAMIESON","Kilmarnock and Loudoun",2010-05-06,2015-03-30,"Lab",FALSE,"cathyjamieson",73
-"Susan Elan JONES","Clwyd South",2010-05-06,2020-01-01,"Lab",FALSE,"susanelanjones",74
-"Liz KENDALL","Leicester West",2010-05-06,2020-01-01,"Lab",FALSE,"lizkendall",76
-"Pauline LATHAM","Mid Derbyshire",2010-05-06,2020-01-01,"Con",FALSE,"paulinelatham",77
-"Andrea LEADSOM","South Northamptonshire",2010-05-06,2020-01-01,"Con",FALSE,"andrealeadsom",78
-"Jessica LEE","Erewash",2010-05-06,2015-03-30,"Con",FALSE,"jessicalee",79
-"Charlotte LESLIE","Bristol North West",2010-05-06,2020-01-01,"Con",FALSE,"charlotteleslie",81
-"Naomi LONG","Belfast East",2010-05-06,2015-03-30,"Alliance",FALSE,"naomilong",82
-"Caroline LUCAS","Brighton, Pavilion",2010-05-06,2020-01-01,"Green",FALSE,"carolinelucas",86
-"Karen LUMLEY","Redditch",2010-05-06,2020-01-01,"Con",FALSE,"karenlumley",88
-"Mary MACLEOD","Brentford and Isleworth",2010-05-06,2015-03-30,"Con",FALSE,"marymacleod",91
-"Shabana MAHMOOD","Birmingham, Ladywood",2010-05-06,2020-01-01,"Lab",FALSE,"shabanamahmood",92
-"Alison MCGOVERN","Wirral South",2010-05-06,2020-01-01,"Lab",FALSE,"alisonmcgovern",94
-"Catherine MCKINNELL","Newcastle upon Tyne North",2010-05-06,2020-01-01,"Lab",FALSE,"catherinemckinnell",95
-"Rt Hon Esther MCVEY","Wirral West",2010-05-06,2015-03-30,"Con",FALSE,"esthermcvey",96
-"Penny MORDAUNT","Portsmouth North",2010-05-06,2020-01-01,"Con",FALSE,"pennymordaunt",97
-"Rt Hon Nicky MORGAN","Loughborough",2010-05-06,2020-01-01,"Con",FALSE,"nickymorgan",98
-"Anne Marie MORRIS","Newton Abbot",2010-05-06,2020-01-01,"Con",FALSE,"annemariemorris",102
-"Tessa MUNT","Wells",2010-05-06,2015-03-30,"LD",FALSE,"tessamunt",103
-"Sheryll MURRAY","South East Cornwall",2010-05-06,2020-01-01,"Con",FALSE,"sheryllmurray",104
-"Lisa NANDY","Wigan",2010-05-06,2020-01-01,"Lab",FALSE,"lisanandy",105
-"Pamela NASH","Airdrie and Shotts",2010-05-06,2015-03-30,"Lab",FALSE,"pamelanash",106
-"Sarah NEWTON","Truro and Falmouth",2010-05-06,2020-01-01,"Con",FALSE,"sarahnewton",107
-"Caroline NOKES","Romsey and Southampton North",2010-05-06,2020-01-01,"Con",FALSE,"carolinenokes",108
-"Fiona O’DONNELL","East Lothian",2010-05-06,2015-03-30,"Lab",FALSE,"fionaodonnell",110
-"Chi ONWURAH","Newcastle upon Tyne Central",2010-05-06,2020-01-01,"Lab",FALSE,"chionwurah",112
-"Priti PATEL","Witham",2010-05-06,2020-01-01,"Con",FALSE,"pritipatel",113
-"Teresa PEARCE","Erith and Thamesmead",2010-05-06,2020-01-01,"Lab",FALSE,"teresapearce",114
-"Claire PERRY","Devizes",2010-05-06,2020-01-01,"Con",FALSE,"claireperry",115
-"Bridget PHILLIPSON","Houghton and Sunderland South",2010-05-06,2020-01-01,"Lab",FALSE,"bridgetphillipson",118
-"Yasmin QURESHI","Bolton South East",2010-05-06,2020-01-01,"Lab",FALSE,"yasminqureshi",119
-"Rachel REEVES","Leeds West",2010-05-06,2020-01-01,"Lab",FALSE,"rachelreeves",120
-"Emma REYNOLDS","Wolverhampton North East",2010-05-06,2020-01-01,"Lab",FALSE,"emmareynolds",121
-"Ms Margaret RITCHIE","South Down",2010-05-06,2020-01-01,"SDLP",FALSE,"margaretritchie",123
-"Amber RUDD","Hastings and Rye",2010-05-06,2020-01-01,"Con",FALSE,"amberrudd",126
-"Laura SANDYS","South Thanet",2010-05-06,2015-03-30,"Con",FALSE,"laurasandys",128
-"Anna SOUBRY","Broxtowe",2010-05-06,2020-01-01,"Con",FALSE,"annasoubry",130
-"Rt Hon Elizabeth TRUSS","South West Norfolk",2010-05-06,2020-01-01,"Con",FALSE,"elizabethtruss",131
-"Valerie VAZ","Walsall South",2010-05-06,2020-01-01,"Lab",FALSE,"valerievaz",134
-"Heather WHEELER","South Derbyshire",2010-05-06,2020-01-01,"Con",FALSE,"heatherwheeler",135
-"Dr Eilidh WHITEFORD","Banff and Buchan",2010-05-06,2020-01-01,"SNP",FALSE,"eilidhwhiteford",136
-"Dr Sarah WOLLASTON","Totnes",2010-05-06,2020-01-01,"Con",FALSE,"sarahwollaston",137
-"Ms Glenda JACKSON","Hampstead and Kilburn",2010-05-06,2015-03-30,"Lab",FALSE,"glendajackson",138
-"Rt Hon Hazel BLEARS","Salford and Eccles",2010-05-06,2015-03-30,"Lab",FALSE,"hazelblears",139
-"Ms Karen BUCK","Westminster North",2010-05-06,2020-01-01,"Lab",FALSE,"karenbuck",140
-"Rt Hon Yvette COOPER","Normanton, Pontefract and Castleford",2010-05-06,2020-01-01,"Lab",FALSE,"yvettecooper",141
-"Maria EAGLE","Garston and Halewood",2010-05-06,2020-01-01,"Lab",FALSE,"mariaeagle",142
-"Anne McINTOSH","Thirsk And Malton",2010-05-06,2020-01-01,"Con",FALSE,"annemcintosh",143
-"Angela WATKINSON","Hornchurch and Upminster",2010-05-06,2020-01-01,"Con",FALSE,"angelawatkinson",144
-"Sarah TEATHER","Brent Central",2010-05-06,2015-03-30,"LD",FALSE,"sarahteather",145
-"Sharon HODGSON","Washington and Sunderland West",2010-05-06,2020-01-01,"Lab",FALSE,"sharonhodgson",146
-"Barbara KEELEY","Worsley and Eccles South",2010-05-06,2020-01-01,"Lab",FALSE,"barbarakeeley",147
-"Alison SEABECK","Plymouth, Moor View",2010-05-06,2015-03-30,"Lab",FALSE,"alisonseabeck",148
-"Angela C SMITH","Penistone and Stocksbridge",2010-05-06,2020-01-01,"Lab",FALSE,"angelacsmith",149
-"Debbie ABRAHAMS","Oldham East and Saddleworth",2011-01-13,2020-01-01,"Lab",TRUE,"debbieabrahams",150
-"Seema MALHOTRA","Feltham and Heston",2011-12-15,2020-01-01,"Lab",TRUE,"seemamalhotra",151
-"Lucy POWELL","Manchester Central",2012-11-15,2020-01-01,"Lab",TRUE,"lucypowell",3
-"Sarah CHAMPION","Rotherham",2012-11-29,2020-01-01,"Lab",TRUE,"sarahchampion",152
-"Emma LEWELL-BUCK","South Shields",2013-05-02,2020-01-01,"Lab",TRUE,"emmalewellbuck",153
-"Liz MCINNES","Heywood and Middleton",2014-10-09,2020-01-01,"Lab",TRUE,"lizmcinnes",154
-"Tasmina AHMED-SHEIKH","Ochil and South Perthshire",2015-05-07,2020-01-01,"SNP",FALSE,"tasminaahmedsheikh",6
-"Lucy ALLAN","Telford",2015-05-07,2020-01-01,"Con",FALSE,"lucyallan",8
-"Heidi ALLEN","South Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,"heidiallen",12
-"Caroline ANSELL","Eastbourne",2015-05-07,2020-01-01,"Con",FALSE,"carolineansell",21
-"Victoria ATKINS","Louth and Horncastle",2015-05-07,2020-01-01,"Con",FALSE,"victoriaatkins",25
-"Hannah BARDELL","Livingston",2015-05-07,2020-01-01,"SNP",FALSE,"hannahbardell",34
-"Mhairi BLACK","Paisley and Renfrewshire South",2015-05-07,2020-01-01,"SNP",FALSE,"mhairiblack",35
-"Kirsty BLACKMAN","Aberdeen North",2015-05-07,2020-01-01,"SNP",FALSE,"kirstyblackman",37
-"Victoria BORWICK","Kensington",2015-05-07,2020-01-01,"Con",FALSE,"victoriaborwick",40
-"Deidre BROCK","Edinburgh North and Leith",2015-05-07,2020-01-01,"SNP",FALSE,"deidrebrock",41
-"Ruth CADBURY","Brentford and Isleworth",2015-05-07,2020-01-01,"Lab",FALSE,"ruthcadbury",55
-"Lisa CAMERON","East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,"SNP",FALSE,"lisacameron",56
-"Maria CAULFIELD","Lewes",2015-05-07,2020-01-01,"Con",FALSE,"mariacaulfield",59
-"Joanna CHERRY","Edinburgh South West",2015-05-07,2020-01-01,"SNP",FALSE,"joannacherry",71
-"Jo CHURCHILL","Bury St Edmunds",2015-05-07,2020-01-01,"Con",FALSE,"jochurchill",73
-"Julie COOPER","Burnley",2015-05-07,2020-01-01,"Lab",FALSE,"juliecooper",79
-"Jo COX","Batley and Spen",2015-05-07,2016-01-01,"Lab",FALSE,"jocox",82
-"Angela CRAWLEY","Lanark and Hamilton East",2015-05-07,2020-01-01,"SNP",FALSE,"angelacrawley",90
-"Judith CUMMINS","Bradford South",2015-05-07,2020-01-01,"Lab",FALSE,"judithcummins",91
-"Mims DAVIES","Eastleigh",2015-05-07,2020-01-01,"Con",FALSE,"mimsdavies",96
-"Thangam DEBBONAIRE","Bristol West",2015-05-07,2020-01-01,"Lab",FALSE,"thangamdebbonaire",101
-"Michelle DONELAN","Chippenham",2015-05-07,2020-01-01,"Con",FALSE,"michelledonelan",103
-"Flick DRUMMOND","Portsmouth South",2015-05-07,2020-01-01,"Con",FALSE,"flickdrummond",106
-"Marion FELLOWS","Motherwell and Wishaw",2015-05-07,2020-01-01,"SNP",FALSE,"marionfellows",110
-"Suella FERNANDES","Fareham",2015-05-07,2020-01-01,"Con",FALSE,"suellafernandes",124
-"Margaret FERRIER","Rutherglen and Hamilton West",2015-05-07,2020-01-01,"SNP",FALSE,"margaretferrier",128
-"Colleen FLETCHER","Coventry North East",2015-05-07,2020-01-01,"Lab",FALSE,"colleenfletcher",129
-"Vicky FOXCROFT","Lewisham, Deptford",2015-05-07,2020-01-01,"Lab",FALSE,"vickyfoxcroft",132
-"Lucy FRAZER","South East Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,"lucyfrazer",133
-"Nusrat GHANI","Wealden",2015-05-07,2020-01-01,"Con",FALSE,"nusratghani",138
-"Patricia GIBSON","North Ayrshire and Arran",2015-05-07,2020-01-01,"SNP",FALSE,"patriciagibson",139
-"Margaret GREENWOOD","Wirral West",2015-05-07,2020-01-01,"Lab",FALSE,"margaretgreenwood",145
-"Louise HAIGH","Sheffield, Heeley",2015-05-07,2020-01-01,"Lab",FALSE,"louisehaigh",148
-"Carolyn HARRIS","Swansea East",2015-05-07,2020-01-01,"Lab",FALSE,"carolynharris",155
-"Helen HAYES","Dulwich and West Norwood",2015-05-07,2020-01-01,"Lab",FALSE,"helenhayes",156
-"Sue HAYMAN","Workington",2015-05-07,2020-01-01,"Lab",FALSE,"suehayman",157
-"Kate HOLLERN","Blackburn",2015-05-07,2020-01-01,"Lab",FALSE,"katehollern",158
-"Rupa HUQ","Ealing Central and Acton",2015-05-07,2020-01-01,"Lab",FALSE,"rupahuq",159
-"Andrea  JENKYNS","Morley and Outwood",2015-05-07,2020-01-01,"Con",FALSE,"andreajenkyns",160
-"Seema KENNEDY","South Ribble",2015-05-07,2020-01-01,"Con",FALSE,"seemakennedy",161
-"Rebecca LONG BAILEY","Salford and Eccles",2015-05-07,2020-01-01,"Lab",FALSE,"rebeccalongbailey",162
-"Holly LYNCH","Halifax",2015-05-07,2020-01-01,"Lab",FALSE,"hollylynch",163
-"Rachael MASKELL","York Central",2015-05-07,2020-01-01,"Lab",FALSE,"rachaelmaskell",164
-"Tania MATHIAS","Twickenham",2015-05-07,2020-01-01,"Con",FALSE,"taniamathias",165
-"Natalie McGARRY","Glasgow East",2015-05-07,2020-01-01,"SNP",FALSE,"nataliemcgarry",166
-"Anne McLAUGHLIN","Glasgow North East",2015-05-07,2020-01-01,"SNP",FALSE,"annemclaughlin",167
-"Amanda MILLING","Cannock Chase",2015-05-07,2020-01-01,"Con",FALSE,"amandamilling",168
-"Carol MONAGHAN","Glasgow North West",2015-05-07,2020-01-01,"SNP",FALSE,"carolmonaghan",169
-"Wendy MORTON","Aldridge-Brownhills",2015-05-07,2020-01-01,"Con",FALSE,"wendymorton",170
-"Melanie ONN","Great Grimsby",2015-05-07,2020-01-01,"Lab",FALSE,"melanieonn",171
-"Kate OSAMOR","Edmonton",2015-05-07,2020-01-01,"Lab",FALSE,"kateosamor",172
-"Kirsten OSWALD","East Renfrewshire",2015-05-07,2020-01-01,"SNP",FALSE,"kirstenoswald",173
-"Jess PHILLIPS","Birmingham, Yardley",2015-05-07,2020-01-01,"Lab",FALSE,"jessphillips",174
-"Rebecca POW","Taunton Deane",2015-05-07,2020-01-01,"Con",FALSE,"rebeccapow",175
-"Victoria PRENTIS","Banbury",2015-05-07,2020-01-01,"Con",FALSE,"victoriaprentis",176
-"Angela RAYNER","Ashton-Under-Lyne",2015-05-07,2020-01-01,"Lab",FALSE,"angelarayner",177
-"Christina REES","Neath",2015-05-07,2020-01-01,"Lab",FALSE,"christinarees",178
-"Marie RIMMER","St Helens South and Whiston",2015-05-07,2020-01-01,"Lab",FALSE,"marierimmer",179
-"Mary ROBINSON","Cheadle",2015-05-07,2020-01-01,"Con",FALSE,"maryrobinson",180
-"Antoinette SANDBACH","Eddisbury",2015-05-07,2020-01-01,"Con",FALSE,"antoinettesandbach",181
-"Liz SAVILLE-ROBERTS","Dwyfor Meirionnydd",2015-05-07,2020-01-01,"PC",FALSE,"lizsavilleroberts",182
-"Naz SHAH","Bradford West",2015-05-07,2020-01-01,"Lab",FALSE,"nazshah",183
-"Paula SHERRIFF","Dewsbury",2015-05-07,2020-01-01,"Lab",FALSE,"paulasherriff",184
-"Tulip SIDDIQ","Hampstead and Kilburn",2015-05-07,2020-01-01,"Lab",FALSE,"tulipsiddiq",185
-"Ruth SMEETH","Stoke-On-Trent North",2015-05-07,2020-01-01,"Lab",FALSE,"ruthsmeeth",186
-"Cat SMITH","Lancaster and Fleetwood",2015-05-07,2020-01-01,"Lab",FALSE,"catsmith",187
-"Karin SMYTH","Bristol South",2015-05-07,2020-01-01,"Lab",FALSE,"karinsmyth",188
-"Amanda SOLLOWAY","Derby North",2015-05-07,2020-01-01,"Con",FALSE,"amandasolloway",189
-"Jo STEVENS","Cardiff Central",2015-05-07,2020-01-01,"Lab",FALSE,"jostevens",190
-"Alison THEWLISS","Glasgow Central",2015-05-07,2020-01-01,"SNP",FALSE,"alisonthewliss",191
-"Michelle THOMSON","Edinburgh West",2015-05-07,2020-01-01,"SNP",FALSE,"michellethomson",192
-"Maggie THROUP","Erewash",2015-05-07,2020-01-01,"Con",FALSE,"maggiethroup",193
-"Kelly TOLHURST","Rochester and Strood",2015-05-07,2020-01-01,"Con",FALSE,"kellytolhurst",194
-"Anne-Marie TREVELYAN","Berwick-Upon-Tweed",2015-05-07,2020-01-01,"Con",FALSE,"annemarietrevelyan",195
-"Anna TURLEY","Redcar",2015-05-07,2020-01-01,"Lab",FALSE,"annaturley",196
-"Catherine WEST","Hornsey and Wood Green",2015-05-07,2020-01-01,"Lab",FALSE,"catherinewest",197
-"Helen WHATELY","Faversham and Mid Kent",2015-05-07,2020-01-01,"Con",FALSE,"helenwhately",198
-"Philippa WHITFORD","Central Ayrshire",2015-05-07,2020-01-01,"SNP",FALSE,"philippawhitford",199
-"Corri WILSON","Ayr, Carrick and Cumnock",2015-05-07,2020-01-01,"SNP",FALSE,"corriwilson",200
-"Dawn BUTLER","Brent Central",2015-05-07,2020-01-01,"Lab",FALSE,"dawnbutler",201
-"Gill FURNISS","Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,"Lab",TRUE,"gillfurniss",82
-"Dr Rosena ALLIN-KHAN","Tooting",2016-06-16,2020-01-01,"Lab",TRUE,"rosenaallinkhan",202
-"Tracy Brabin","Batley and Spen",2016-10-20,2020-01-01,"Lab",TRUE,"tracybrabin",203
-"Sarah Olney","Richmond Park",2016-12-01,2020-01-01,"Lib Dem",TRUE,"saraholney",204
-"Caroline Johnson","Sleaford and North Hykeham",2016-12-08,2020-01-01,"Con",TRUE,"carolinejohnson",205
-"Trudy Harrison","Copeland",2017-02-23,2020-01-01,"Con",TRUE,"trudyharrison",206
+"name","constituency","term_start","term_end","party","byelection","notes","clean_name","stream"
+"Constance, Countess MARKIEVICZ","Dublin, St Patrick's",1918-12-14,1922-01-01,"SF",FALSE,"Did not take seat","constancemarkievicz",1
+"Nancy, Viscountess ASTOR, CH","Plymouth, Sutton",1919-11-15,1945-01-01,"Con",TRUE,NA,"nancyastorch",2
+"Mrs Margaret WINTRINGHAM","Lincolnshire, Louth",1921-09-22,1924-01-01,"Lib",TRUE,NA,"margaretwintringham",3
+"Mrs Mabel PHILIPSON","Berwick-upon-Tweed",1923-05-31,1929-01-01,"Con",TRUE,NA,"mabelphilipson",1
+"Katharine, Duchess of ATHOLL, DBE","Perth & Kinross, Kinross & Western",1923-12-06,1938-01-01,"Con",FALSE,NA,"katharineduchessofatholldbe",4
+"Rt Hon Margaret BONDFIELD, CH","Northampton",1923-12-06,1924-01-01,"Lab",FALSE,"(First woman Cabinet Minister)","margaretbondfieldch",5
+"Miss Dorothea JEWSON","Norwich",1923-12-06,1924-01-01,"Lab",FALSE,NA,"dorotheajewson",6
+"Miss Arabella Susan LAWRENCE","East Ham, North",1923-12-06,1924-01-01,"Lab",FALSE,NA,"arabellasusanlawrence",7
+"Lady Vera TERRINGTON","Buckinghamshire, Wycombe",1923-12-06,1924-01-01,"Lib",FALSE,NA,"veraterrington",8
+"Rt Hon Ellen WILKINSON","Middlesbrough, East",1924-10-29,1931-01-01,"Lab",FALSE,NA,"ellenwilkinson",3
+"Rt Hon Margaret BONDFIELD, CH","Wallsend",1926-01-01,1931-01-01,"Lab",TRUE,"(First woman Cabinet Minister)","margaretbondfieldch",5
+"Miss Arabella Susan LAWRENCE","East Ham, North",1926-01-01,1931-01-01,"Lab",TRUE,NA,"arabellasusanlawrence",6
+"Gwendolen, Countess of IVEAGH, CBE","Southend-on-Sea",1927-11-19,1935-01-01,"Con",TRUE,NA,"gwendolenofiveaghcbe",7
+"Hilda RUNCIMAN (later Viscountess)","Cornwall, St Ives",1928-03-06,1929-01-01,"Lib",TRUE,NA,"hildarunciman(later)",8
+"Mrs Florence DALTON","Durham, Bishop Auckland",1929-02-07,1929-01-01,"Lab",TRUE,NA,"florencedalton",1
+"Rt Hon Miss Jennie LEE (Mrs A Bevan)","Lanarkshire, Northern",1929-03-21,1931-01-01,"Lab",TRUE,NA,"jennielee(abevan)",1
+"Dr Ethel BENTHAM","Islington, East",1929-05-30,1931-01-01,"Lab",FALSE,NA,"ethelbentham",8
+"Mrs Mary HAMILTON,","Blackburn",1929-05-30,1931-01-01,"Lab",FALSE,NA,"maryhamilton",9
+"Lady Megan LLOYD GEORGE","Anglesey",1929-05-30,1951-01-01,"Lib",FALSE,NA,"meganlloydgeorge",10
+"Lady Cynthia MOSLEY","Stoke-on-Trent, Stoke",1929-05-30,1931-01-01,"Lab",FALSE,NA,"cynthiamosley",11
+"Dr Marion PHILLIPS","Sunderland",1929-05-30,1931-01-01,"Lab",FALSE,NA,"marionphillips",12
+"Miss Edith PICTON-TURBERVILL, OBE","Shropshire, The Wrekin",1929-05-30,1931-01-01,"Lab",FALSE,NA,"edithpictonturbervillobe",13
+"Miss Eleanor RATHBONE","Combined English Universities",1929-05-30,1946-01-01,"Ind",FALSE,NA,"eleanorrathbone",14
+"Lady Lucy NOEL-BUXTON","Norfolk, North",1930-07-09,1931-01-01,"Lab",TRUE,NA,"lucynoelbuxton",15
+"Mrs Leah MANNING","Islington, East",1931-02-19,1931-01-01,"Lab",TRUE,NA,"leahmanning",1
+"Mrs Thelma CAZALET-KEIR, CBE","Islington, East",1931-10-27,1945-01-01,"Con",FALSE,NA,"thelmacazaletkeircbe",1
+"Mrs Ida COPELAND","Stoke-on-Trent, Stoke",1931-10-27,1935-01-01,"Con",FALSE,NA,"idacopeland",3
+"Miss Marjorie GRAVES","Hackney, South",1931-10-27,1935-01-01,"Con",FALSE,NA,"marjoriegraves",5
+"Rt Hon Dame Florence HORSBURGH","Dundee",1931-10-27,1945-01-01,"Con",FALSE,"(First woman to move the Address in reply to the King's speech)","florencehorsburgh",6
+"The Hon Mary PICKFORD, CBE","Hammersmith, North",1931-10-27,1934-01-01,"Con",FALSE,NA,"marypickfordcbe",8
+"Mrs Norah RUNGE, OBE","Bermondsey, Rotherhithe",1931-10-27,1935-01-01,"Con",FALSE,NA,"norahrungeobe",9
+"Mrs Helen SHAW, MBE","Lanarkshire, Bothwell",1931-10-27,1935-01-01,"Con",FALSE,NA,"helenshawmbe",11
+"Mrs Mavis TATE","Willesden, West",1931-10-27,1935-01-01,"Con",FALSE,NA,"mavistate",12
+"Dame Irene WARD, CH","Wallsend",1931-10-27,1945-01-01,"Con",FALSE,NA,"irenewardch",13
+"Mrs Sarah WARD","Staffordshire, Cannock",1931-10-27,1935-01-01,"Con",FALSE,NA,"sarahward",15
+"Rt Hon Ellen WILKINSON","Jarrow",1935-11-14,1947-01-01,"Lab",FALSE,NA,"ellenwilkinson",3
+"Mrs Mavis TATE","Somerset, Frome",1935-11-14,1945-01-01,"Con",FALSE,NA,"mavistate",5
+"Frances, Viscountess DAVIDSON","Hertfordshire, Hemel Hempstead",1937-06-22,1959-01-01,"Con",TRUE,NA,"francesdavidson",7
+"Mrs Agnes HARDIE","Glasgow, Springburn",1937-09-07,1945-01-01,"Lab",TRUE,NA,"agneshardie",8
+"Rt Hon Dr Edith SUMMERSKILL, CH","Fulham",1938-04-06,1955-01-01,"Lab",FALSE,NA,"edithsummerskillch",4
+"Mrs Jennie ADAMSON","Dartford",1938-11-07,1945-01-01,"Lab",FALSE,NA,"jennieadamson",9
+"Mrs Beatrice WRIGHT","Cornwall, Bodmin",1941-03-11,1945-01-01,"Con",TRUE,NA,"beatricewright",11
+"Lady Violet APSLEY,","Bristol, Central",1943-02-18,1945-01-01,"Con",TRUE,NA,"violetapsley",12
+"Rt Hon Alice BACON, CBE","Leeds, North East",1945-07-05,1955-01-01,"Lab",FALSE,NA,"alicebaconcbe",1
+"Mrs Bessie BRADDOCK","Liverpool, Exchange",1945-07-05,1970-01-01,"Lab",FALSE,NA,"bessiebraddock",2
+"Rt Hon Barbara CASTLE","Blackburn",1945-07-05,1950-01-01,"Lab",FALSE,NA,"barbaracastle",5
+"Miss Grace COLMAN","Tynemouth",1945-07-05,1950-01-01,"Lab",FALSE,NA,"gracecolman",6
+"Mrs Freda CORBET","Camberwell, North-West",1945-07-05,1950-01-01,"Lab",FALSE,NA,"fredacorbet",8
+"Mrs Caroline GANLEY","Battersea, South",1945-07-05,1951-01-01,"Lab",FALSE,NA,"carolineganley",9
+"Mrs Barbara GOULD","Hendon, North",1945-07-05,1950-01-01,"Lab",FALSE,NA,"barbaragould",11
+"Rt Hon Miss Margaret HERBISON","Lanarkshire, North",1945-07-05,1970-01-01,"Lab",FALSE,NA,"margaretherbison",12
+"Mrs Jean MANN","Lanarkshire, Coatbridge",1945-07-05,1950-01-01,"Lab",FALSE,NA,"jeanmann",13
+"Mrs Lucy MIDDLETON","Plymouth, Sutton",1945-07-05,1951-01-01,"Lab",FALSE,NA,"lucymiddleton",15
+"Mrs Muriel NICHOL","Bradford, North",1945-07-05,1950-01-01,"Lab",FALSE,NA,"murielnichol",16
+"Mrs Florence PATON","Nottinghamshire, Rushcliffe",1945-07-05,1950-01-01,"Lab",FALSE,NA,"florencepaton",17
+"Mrs Mabel RIDEALGH","Ilford, North",1945-07-05,1950-01-01,"Lab",FALSE,NA,"mabelridealgh",18
+"Mrs Clarice SHAW","Ayrshire & Bute, Kilmarnock",1945-07-05,1946-01-01,"Lab",FALSE,NA,"clariceshaw",19
+"Mrs Edith WILLS","Birmingham, Duddeston",1945-07-05,1950-01-01,"Lab",FALSE,NA,"edithwills",20
+"Rt Hon Miss Jennie LEE (Mrs A Bevan)","Staffordshire, Cannock",1945-07-05,1970-01-01,"Lab",FALSE,NA,"jennielee(abevan)",21
+"Lady Lucy NOEL-BUXTON","Norwich",1945-07-05,1950-01-01,"Lab",FALSE,NA,"lucynoelbuxton",22
+"Mrs Leah MANNING","Essex, Epping",1945-07-05,1950-01-01,"Lab",FALSE,NA,"leahmanning",23
+"Mrs Jennie ADAMSON","Bexley",1945-07-05,1946-01-01,"Lab",FALSE,NA,"jennieadamson",24
+"Priscilla, Lady TWEEDSMUIR","Aberdeen, South",1946-11-26,1966-01-01,"Con",TRUE,"(as Lady Grant of Monymusk to 1948)","priscillatweedsmuir",14
+"Mrs Alice CULLEN","Glasgow, Gorbals",1948-09-30,1969-01-01,"Lab",TRUE,NA,"alicecullen",3
+"Miss Elaine BURTON","Coventry, South",1950-02-23,1959-01-01,"Lab",FALSE,NA,"elaineburton",5
+"Mrs Eveline HILL","Manchester, Wythenshawe",1950-02-23,1964-01-01,"Con",FALSE,NA,"evelinehill",6
+"Rt Hon Dame Patricia HORNSBY-SMITH, DBE","Kent, Chislehurst",1950-02-23,1966-01-01,"Con",FALSE,NA,"patriciahornsbysmithdbe",8
+"Mrs Dorothy REES","Glamorgan, Barry",1950-02-23,1951-01-01,"Lab",FALSE,NA,"dorothyrees",11
+"Mrs Eirene WHITE","Flintshire, East",1950-02-23,1970-01-01,"Lab",FALSE,NA,"eirenewhite",13
+"Rt Hon Dame Florence HORSBURGH","Manchester, Moss-Side",1950-02-23,1959-01-01,"Con",FALSE,"(First woman to move the Address in reply to the King's speech)","florencehorsburgh",16
+"Dame Irene WARD, CH","Tynemouth",1950-02-23,1974-02-01,"Con",FALSE,NA,"irenewardch",17
+"Rt Hon Barbara CASTLE","Blackburn East",1950-02-23,1955-01-01,"Lab",FALSE,NA,"barbaracastle",18
+"Mrs Freda CORBET","Camberwell, Peckham",1950-02-23,1974-01-01,"Lab",FALSE,NA,"fredacorbet",19
+"Mrs Jean MANN","Coatbridge and Airdire",1950-02-23,1959-01-01,"Lab",FALSE,NA,"jeanmann",20
+"Mrs Harriet SLATER","Stoke-on-Trent, North",1953-03-31,1966-01-01,"Lab",TRUE,"(First woman Whip)","harrietslater",9
+"Mrs Patricia FORD","Down, North",1953-04-15,1955-01-01,"UU",TRUE,NA,"patriciaford",10
+"Dame Edith PITT, DBE","Birmingham, Edgbaston",1953-07-02,1966-01-01,"Con",TRUE,NA,"edithpittdbe",11
+"Mrs Lena JEGER","Holborn & St Pancras, South",1953-11-19,1959-01-01,"Lab",TRUE,NA,"lenajeger",15
+"Mrs Joyce BUTLER","Wood Green",1955-05-26,1979-01-01,"Lab",FALSE,NA,"joycebutler",1
+"The Hon Mrs Evelyn EMMET","East Sussex, East Grinstead",1955-05-26,1964-01-01,"Con",FALSE,NA,"evelynemmet",4
+"Mrs Patricia McLAUGHLIN","Belfast, West",1955-05-26,1964-01-01,"UU",FALSE,NA,"patriciamclaughlin",10
+"Dame Joan VICKERS, DBE","Plymouth, Devonport",1955-05-26,1974-02-01,"Con",FALSE,NA,"joanvickersdbe",18
+"Rt Hon Dr Edith SUMMERSKILL, CH","Warrington",1955-05-26,1961-01-01,"Lab",FALSE,NA,"edithsummerskillch",22
+"Rt Hon Alice BACON, CBE","Leeds, South East",1955-05-26,1970-01-01,"Lab",FALSE,NA,"alicebaconcbe",23
+"Rt Hon Barbara CASTLE","Blackburn",1955-05-26,1979-01-01,"Lab",FALSE,NA,"barbaracastle",24
+"Miss Mervyn PIKE","Leicestershire, Melton",1956-12-19,1974-02-01,"Con",TRUE,NA,"mervynpike",25
+"Lady Megan LLOYD GEORGE","Carmarthen",1957-01-01,1966-01-01,"Lib",TRUE,NA,"meganlloydgeorge",26
+"Lady Muriel GAMMANS","Hornsey",1957-05-30,1966-01-01,"Con",TRUE,NA,"murielgammans",27
+"Mrs Mary McALISTER","Glasgow, Kelvingrove",1958-03-13,1959-01-01,"Lab",TRUE,NA,"marymcalister",28
+"Rt Hon Betty HARVIE ANDERSON OBE, TD","Renfrewshire, East",1959-10-08,1979-01-01,"Con",FALSE,"(Deputy Chairman of Ways and Means)","bettyharvieandersonobetd",5
+"Rt Hon Dame Judith HART, DBE","Lanark",1959-10-08,1983-01-01,"Lab",FALSE,NA,"judithhartdbe",7
+"Rt Hon Margaret THATCHER","Finchley",1959-10-08,1992-01-01,"Con",FALSE,"(First woman Prime Minister)","margaretthatcher",15
+"Miss Joan QUENNELL MBE","Petersfield",1960-11-16,1974-10-01,"Con",TRUE,NA,"joanquennellmbe",16
+"Mrs Anne KERR","Rochester & Chatham",1964-10-15,1970-01-01,"Lab",FALSE,NA,"annekerr",4
+"Mrs Margaret McKAY","Wandsworth, Clapham",1964-10-15,1970-01-01,"Lab",FALSE,NA,"margaretmckay",6
+"Mrs Renee SHORT","Wolverhampton, North-East",1964-10-15,1987-01-01,"Lab",FALSE,NA,"reneeshort",10
+"Dr the Hon Shirley SUMMERSKILL","Halifax",1964-10-15,1983-01-01,"Lab",FALSE,NA,"theshirleysummerskill",20
+"Rt Hon Shirley WILLIAMS","Hertfordshire, Hitchin",1964-10-15,1974-02-01,"Lab",FALSE,NA,"shirleywilliams",22
+"Mrs Lena JEGER","Holborn & St Pancras, South",1964-10-15,1979-01-01,"Lab",FALSE,NA,"lenajeger",28
+"Mrs Gwyneth DUNWOODY","Exeter",1966-03-31,1970-01-01,"Lab",FALSE,NA,"gwynethdunwoody",8
+"Dame Jill KNIGHT, DBE","Birmingham, Edgbaston",1966-03-31,1997-01-01,"Con",FALSE,NA,"jillknightdbe",9
+"Miss Joan LESTOR","Eton & Slough",1966-03-31,1983-01-01,"Lab",FALSE,NA,"joanlestor",11
+"Mrs Winifred EWING","Lanarkshire, Hamilton",1967-11-02,1970-01-01,"SNP",TRUE,NA,"winifredewing",14
+"Miss Bernadette DEVLIN","Mid-Ulster",1969-04-17,1974-02-01,"Ind. Unity",TRUE,"(Youngest woman MP at 21 yrs)","bernadettedevlin",3
+"Dame Peggy FENNER, DBE","Rochester & Chatham",1970-06-18,1974-10-01,"Con",FALSE,NA,"peggyfennerdbe",2
+"Mrs Doris FISHER","Birmingham, Ladywood",1970-06-18,1974-02-01,"Lab",FALSE,NA,"dorisfisher",4
+"Dame Janet FOOKES, DBE","Merton & Morden",1970-06-18,1974-02-01,"Con",FALSE,"(Second Deputy Chairman of Ways and Means)","janetfookesdbe",6
+"Miss Joan HALL","Keighley",1970-06-18,1974-02-01,"Con",FALSE,NA,"joanhall",8
+"Miss Mary HOLT","Preston, North",1970-06-18,1974-02-01,"Con",FALSE,NA,"maryholt",12
+"Dame Elaine KELLETT-BOWMAN, DBE","Lancaster",1970-06-18,1997-01-01,"Con",FALSE,NA,"elainekellettbowmandbe",13
+"Mrs Constance MONKS OBE","Chorley",1970-06-18,1974-02-01,"Con",FALSE,NA,"constancemonksobe",14
+"Rt Hon Sally OPPENHEIM","Gloucester",1970-06-18,1987-01-01,"Con",FALSE,NA,"sallyoppenheim",21
+"Rt Hon Dame Patricia HORNSBY-SMITH, DBE","Kent, Chislehurst",1970-06-18,1974-02-01,"Con",FALSE,NA,"patriciahornsbysmithdbe",23
+"Rt Hon Betty BOOTHROYD","West Bromwich",1973-05-24,2020-01-01,"Lab",FALSE,"(First woman Speaker)","bettyboothroyd",26
+"Rt Hon Betty BOOTHROYD","West Bromwich, West",1973-05-24,2020-01-01,"Lab",FALSE,"(First woman Speaker)","bettyboothroyd",27
+"Mrs Margo MACDONALD","Glasgow, Govan",1973-11-08,1974-02-01,"SNP",TRUE,NA,"margomacdonald",29
+"Rt Hon Lynda CHALKER","Wallasey",1974-02-28,1992-01-01,"Con",FALSE,NA,"lyndachalker",3
+"Mrs Maureen COLQUHOUN","Northampton, North",1974-02-28,1979-01-01,"Lab",FALSE,NA,"maureencolquhoun",4
+"Jo RICHARDSON","Barking",1974-02-28,1994-01-01,"Lab",FALSE,NA,"jorichardson",6
+"Audrey WISE","Coventry, South-West",1974-02-28,1979-01-01,"Lab",FALSE,NA,"audreywise",8
+"Rt Hon Shirley WILLIAMS","Hertford & Stevenage",1974-02-28,1979-01-01,"Lab",FALSE,NA,"shirleywilliams",12
+"Mrs Gwyneth DUNWOODY","Crewe",1974-02-28,2008-01-01,"Lab",FALSE,NA,"gwynethdunwoody",14
+"Mrs Winifred EWING","Moray & Nairn",1974-02-28,1979-01-01,"SNP",FALSE,NA,"winifredewing",17
+"Dame Janet FOOKES, DBE","Plymouth, Drake",1974-02-28,1997-01-01,"Con",FALSE,"(Second Deputy Chairman of Ways and Means)","janetfookesdbe",18
+"Mrs Margaret BAIN","East Dunbartonshire",1974-10-10,1979-01-01,"SNP",FALSE,"(later Mrs EWING)","margaretbain",2
+"Mrs Helene HAYMAN","Welwyn & Hatfield",1974-10-10,1979-01-01,"Lab",FALSE,NA,"helenehayman",16
+"Rt Hon Dame Margaret BECKETT","Lincoln",1974-10-10,1979-01-01,"Lab",FALSE,"(later Mrs BECKETT, then Rt Hon Dame Margaret BECKETT)","margaretbeckett",19
+"Miss Joan MAYNARD","Sheffield, Brightside",1974-10-10,1987-01-01,"Lab",FALSE,NA,"joanmaynard",22
+"Mrs Millie MILLER","Ilford North",1974-10-10,1977-01-01,"Lab",FALSE,NA,"milliemiller",23
+"Rt Hon Ann TAYLOR","Bolton, West",1974-10-10,1983-01-01,"Lab",FALSE,"(First woman Chief Whip)","anntaylor",25
+"Dr Oonagh McDONALD","Thurrock",1976-07-15,1987-01-01,"Lab",TRUE,NA,"oonaghmcdonald",29
+"Mrs Sheila FAITH","Belper",1979-05-03,1983-01-01,"Con",FALSE,NA,"sheilafaith",1
+"Miss Sheila WRIGHT","Birmingham, Handsworth",1979-05-03,1983-01-01,"Lab",FALSE,NA,"sheilawright",2
+"Dame Peggy FENNER, DBE","Medway",1979-05-03,1997-01-01,"Con",FALSE,NA,"peggyfennerdbe",4
+"Dame Angela RUMBOLD, DBE","Merton, Mitcham and Morden",1982-06-03,1983-01-01,"Con",FALSE,NA,"angelarumbolddbe",5
+"Rt Hon Harriet HARMAN","Peckham",1982-10-28,1997-01-01,"Lab",TRUE,NA,"harrietharman",8
+"Mrs Helen McELHONE","Glasgow, Queen's Park",1982-12-02,1983-01-01,"Lab",TRUE,NA,"helenmcelhone",12
+"Mrs Edwina CURRIE","South Derbyshire",1983-06-09,1997-01-01,"Con",FALSE,NA,"edwinacurrie",1
+"Mrs Anna McCURLEY","Renfrew West & Inverclyde",1983-06-09,1987-01-01,"Con",FALSE,NA,"annamccurley",2
+"Mrs Elizabeth PEACOCK","Batley & Spen",1983-06-09,1997-01-01,"Con",FALSE,NA,"elizabethpeacock",5
+"Mrs Marion ROE","Broxbourne",1983-06-09,2005-01-01,"Con",FALSE,NA,"marionroe",7
+"Rt Hon Clare SHORT","Birmingham, Ladywood",1983-06-09,2010-01-01,"Lab",FALSE,NA,"clareshort",11
+"Mrs Ann WINTERTON","Congleton",1983-06-09,2010-01-01,"Con",FALSE,NA,"annwinterton",12
+"Rt Hon Dame Judith HART, DBE","Clydesdale",1983-06-09,1987-01-01,"Lab",FALSE,NA,"judithhartdbe",16
+"Rt Hon Dame Margaret BECKETT","Derby, South",1983-06-09,2020-01-01,"Lab",FALSE,"(later Mrs BECKETT, then Rt Hon Dame Margaret BECKETT)","margaretbeckett",17
+"Dame Angela RUMBOLD, DBE","Mitcham and Morden",1983-06-09,1997-01-01,"Con",FALSE,NA,"angelarumbolddbe",19
+"Rt Hon Virginia BOTTOMLEY","South West Surrey",1984-05-03,2005-01-01,"Con",TRUE,NA,"virginiabottomley",20
+"Rt Hon Ann CLWYD","Cynon Valley",1984-05-03,2020-01-01,"Lab",TRUE,NA,"annclwyd",23
+"Mrs Elizabeth SHIELDS","Ryedale",1986-05-08,1987-01-01,"Lib",TRUE,NA,"elizabethshields",24
+"Mrs Llin GOLDING","Newcastle-under-Lyme",1986-07-17,2001-01-01,"Lab",TRUE,NA,"llingolding",25
+"Mrs Rosie BARNES","Greenwich",1987-02-26,1992-01-01,"SDP",TRUE,NA,"rosiebarnes",2
+"Miss Diane ABBOTT","Hackney North & Stoke Newington",1987-06-11,2020-01-01,"Lab",FALSE,NA,"dianeabbott",10
+"Rt Hon Hilary ARMSTRONG","North West Durham",1987-06-11,2010-01-01,"Lab",FALSE,NA,"hilaryarmstrong",16
+"Mrs Maria FYFE","Glasgow, Maryhill",1987-06-11,2001-01-01,"Lab",FALSE,NA,"mariafyfe",21
+"Mrs Mildred GORDON","Bow & Poplar",1987-06-11,1997-01-01,"Lab",FALSE,NA,"mildredgordon",22
+"Mrs Teresa GORMAN","Billericay",1987-06-11,2001-01-01,"Con",FALSE,NA,"teresagorman",24
+"Mrs Maureen HICKS","Wolverhampton, North East",1987-06-11,1992-01-01,"Con",FALSE,NA,"maureenhicks",28
+"Mrs Alice MAHON","Halifax",1987-06-11,2005-01-01,"Lab",FALSE,NA,"alicemahon",29
+"Mrs Ray MICHIE","Argyll & Bute",1987-06-11,2001-01-01,"LD",FALSE,NA,"raymichie",30
+"Rt Hon Marjorie MOWLAM","Redcar",1987-06-11,2001-01-01,"Lab",FALSE,NA,"marjoriemowlam",31
+"Emma NICHOLSON","Devon, West & Torridge",1987-06-11,1997-01-01,"Con",FALSE,NA,"emmanicholson",32
+"Rt Hon Dame Dawn PRIMAROLO","Bristol South",1987-06-11,2020-01-01,"Lab",FALSE,"(Second Deputy Chairman of Ways and Means)","dawnprimarolo",33
+"Rt Hon Joyce QUIN","Gateshead, East",1987-06-11,1997-01-01,"Lab",FALSE,NA,"joycequin",34
+"Rt Hon Dame Joan RUDDOCK","Lewisham, Deptford",1987-06-11,2015-03-30,"Lab",FALSE,NA,"joanruddock",35
+"Rt Hon Gillian SHEPHARD","South West Norfolk",1987-06-11,2005-01-01,"Con",FALSE,NA,"gillianshephard",36
+"Ms Joan WALLEY","Stoke-on-Trent North",1987-06-11,2015-03-30,"Lab",FALSE,NA,"joanwalley",37
+"Rt Hon Ann WIDDECOMBE","Maidstone",1987-06-11,2020-01-01,"Con",FALSE,NA,"annwiddecombe",38
+"Miss Joan LESTOR","Eccles",1987-06-11,1997-01-01,"Lab",FALSE,NA,"joanlestor",39
+"Audrey WISE","Preston",1987-06-11,2000-01-01,"Lab",FALSE,NA,"audreywise",40
+"Mrs Margaret BAIN","Moray",1987-06-11,2001-01-01,"SNP",FALSE,"(later Mrs EWING)","margaretbain",41
+"Rt Hon Ann TAYLOR","Dewsbury",1987-06-11,2005-01-01,"Lab",FALSE,"(First woman Chief Whip)","anntaylor",42
+"Miss Kate HOEY","Vauxhall",1989-06-15,2020-01-01,"Lab",TRUE,NA,"katehoey",43
+"Mrs Sylvia HEAL","Mid-Staffordshire",1990-03-22,1992-01-01,"Lab",TRUE,"(Deputy Chairman of Ways and Means)","sylviaheal",44
+"Irene ADAMS","Paisley North",1990-11-29,2005-01-01,"Lab",TRUE,NA,"ireneadams",45
+"Janet ANDERSON","Rossendale & Darwen",1992-04-09,2010-01-01,"Lab",FALSE,NA,"janetanderson",2
+"Mrs Angela BROWNING","Tiverton",1992-04-09,1997-01-01,"Con",FALSE,NA,"angelabrowning",3
+"Mrs Anne CAMPBELL","Cambridge",1992-04-09,2005-01-01,"Lab",FALSE,NA,"annecampbell",15
+"Mrs Judith CHAPLIN","Newbury",1992-04-09,1993-01-01,"Con",FALSE,NA,"judithchaplin",28
+"Ms Ann COFFEY","Stockport",1992-04-09,2020-01-01,"Lab",FALSE,NA,"anncoffey",44
+"Rt Hon Jean CORSTON","Bristol East",1992-04-09,2005-01-01,"Lab",FALSE,NA,"jeancorston",46
+"Angela EAGLE","Wallasey",1992-04-09,2020-01-01,"Lab",FALSE,NA,"angelaeagle",47
+"Rt Hon Cheryl GILLAN","Chesham & Amersham",1992-04-09,2020-01-01,"Con",FALSE,NA,"cherylgillan",48
+"Ms Glenda JACKSON","Hampstead & Highgate",1992-04-09,2010-01-01,"Lab",FALSE,NA,"glendajackson",49
+"Helen JACKSON","Sheffield, Hillsborough",1992-04-09,2005-01-01,"Lab",FALSE,NA,"helenjackson",50
+"Dr Lynne JONES","Birmingham, Selly Oak",1992-04-09,2010-01-01,"Lab",FALSE,NA,"lynnejones",51
+"Rt Hon Dame Tessa JOWELL","Dulwich",1992-04-09,1997-01-01,"Lab",FALSE,NA,"tessajowell",52
+"Rt Hon Jane KENNEDY","Liverpool, Broad Green",1992-04-09,2020-01-01,"Lab",FALSE,NA,"janekennedy",53
+"Mrs Angela KNIGHT","Erewash",1992-04-09,1997-01-01,"Con",FALSE,NA,"angelaknight",54
+"Mrs Jacqui LAIT","Hastings & Rye",1992-04-09,1997-01-01,"Con",FALSE,NA,"jacquilait",55
+"Ms Liz LYNNE","Rochdale",1992-04-09,1997-01-01,"LD",FALSE,NA,"lizlynne",56
+"Lady Olga MAITLAND","Sutton & Cheam",1992-04-09,1997-01-01,"Con",FALSE,NA,"olgamaitland",57
+"Rt Hon Estelle MORRIS","Birmingham, Yardley",1992-04-09,2005-01-01,"Lab",FALSE,NA,"estellemorris",58
+"Ms Bridget PRENTICE","Lewisham East",1992-04-09,2010-01-01,"Lab",FALSE,NA,"bridgetprentice",59
+"Mrs Barbara ROCHE","Hornsey & Wood Green",1992-04-09,2005-01-01,"Lab",FALSE,NA,"barbararoche",60
+"Ms Rachel SQUIRE","Dunfermline West",1992-04-09,2020-01-01,"Lab",FALSE,NA,"rachelsquire",61
+"Mrs Diana MADDOCK","Christchurch",1993-07-29,1997-01-01,"LD",TRUE,NA,"dianamaddock",28
+"Ms Judith CHURCH","Dagenham",1994-06-09,2001-01-01,"Lab",TRUE,NA,"judithchurch",6
+"Rt Hon Margaret HODGE","Barking",1994-06-09,2020-01-01,"Lab",TRUE,NA,"margarethodge",62
+"Rt Hon Helen LIDDELL","Monklands East",1994-06-30,1997-01-01,"Lab",TRUE,NA,"helenliddell",63
+"Ms Roseanna CUNNINGHAM","Perth & Kinross",1995-06-25,2020-01-01,"SNP",FALSE,NA,"roseannacunningham",64
+"Mrs Jacqui LAIT","Beckenham",1997-01-01,2010-01-01,"Con",TRUE,NA,"jacquilait",1
+"Ms  Candy ATHERTON","Falmouth and Camborne",1997-05-01,2005-01-01,"Lab",FALSE,NA,"candyatherton",3
+"Ms Charlotte ATKINS","Staffordshire Moorlands",1997-05-01,2010-01-01,"Lab",FALSE,NA,"charlotteatkins",4
+"Mrs Jackie BALLARD","Taunton",1997-05-01,2001-01-01,"LD",FALSE,NA,"jackieballard",5
+"Dame Anne BEGG","Aberdeen South",1997-05-01,2015-03-30,"Lab",FALSE,NA,"annebegg",8
+"Mrs Liz BLACKMAN","Erewash",1997-05-01,2010-01-01,"Lab",FALSE,NA,"lizblackman",9
+"Rt Hon Hazel BLEARS","Salford",1997-05-01,2010-01-01,"Lab",FALSE,NA,"hazelblears",13
+"Mrs Helen BRINTON","Peterborough",1997-05-01,2005-01-01,"Lab",FALSE,"(Later Mrs Helen Clark)","helenbrinton",18
+"Ms Karen BUCK","Regent's Park and Kensington North",1997-05-01,2010-01-01,"Lab",FALSE,NA,"karenbuck",19
+"Mrs Christine BUTLER","Castle Point",1997-05-01,2001-01-01,"Lab",FALSE,NA,"christinebutler",22
+"Dr Lynda CLARK, QC","Edinburgh, Pentlands",1997-05-01,2005-01-01,"Lab",FALSE,NA,"lyndaclarkqc",28
+"Rt Hon Yvette COOPER","Pontefract and Castleford",1997-05-01,2010-01-01,"Lab",FALSE,NA,"yvettecooper",32
+"Mrs Ann CRYER","Keighley",1997-05-01,2010-01-01,"Lab",FALSE,NA,"anncryer",34
+"Ms Claire CURTIS-THOMAS","Crosby",1997-05-01,2010-01-01,"Lab",FALSE,NA,"clairecurtisthomas",39
+"Valerie DAVEY","Bristol West",1997-05-01,2005-01-01,"Lab",FALSE,NA,"valeriedavey",52
+"Mrs Janet DEAN","Burton",1997-05-01,2010-01-01,"Lab",FALSE,NA,"janetdean",54
+"Julia DROWN","South Swindon",1997-05-01,2005-01-01,"Lab",FALSE,NA,"juliadrown",55
+"Maria EAGLE","Liverpool, Garston",1997-05-01,2010-01-01,"Lab",FALSE,NA,"mariaeagle",56
+"Mrs Louise ELLMAN","Liverpool, Riverside",1997-05-01,2020-01-01,"Lab",FALSE,NA,"louiseellman",57
+"Ms Lorna FITZSIMONS","Rochdale",1997-05-01,2005-01-01,"Lab",FALSE,NA,"lornafitzsimons",63
+"Rt Hon Caroline FLINT","Don Valley",1997-05-01,2020-01-01,"Lab",FALSE,NA,"carolineflint",65
+"Ms Barbara FOLLETT","Stevenage",1997-05-01,2010-01-01,"Lab",FALSE,NA,"barbarafollett",66
+"Mrs Linda GILROY","Plymouth, Sutton",1997-05-01,2010-01-01,"Lab",FALSE,NA,"lindagilroy",67
+"Eileen GORDON","Romford",1997-05-01,2001-01-01,"Lab",FALSE,NA,"eileengordon",68
+"Jane GRIFFITHS","Reading East",1997-05-01,2005-01-01,"Lab",FALSE,NA,"janegriffiths",69
+"Rt Hon Patricia HEWITT","Leicester West",1997-05-01,2010-01-01,"Lab",FALSE,NA,"patriciahewitt",70
+"Rt Hon Beverley HUGHES","Stretford and Urmston",1997-05-01,2010-01-01,"Lab",FALSE,NA,"beverleyhughes",71
+"Mrs Joan HUMBLE","Blackpool North and Fleetwood",1997-05-01,2010-01-01,"Lab",FALSE,NA,"joanhumble",72
+"Miss Melanie JOHNSON","Welwyn Hatfield",1997-05-01,2005-01-01,"Lab",FALSE,NA,"melaniejohnson",73
+"Mrs Fiona JONES","Newark",1997-05-01,2001-01-01,"Lab",FALSE,NA,"fionajones",74
+"Helen JONES","Warrington North",1997-05-01,2020-01-01,"Lab",FALSE,NA,"helenjones",75
+"Ms Jenny JONES","Wolverhampton South West",1997-05-01,2001-01-01,"Lab",FALSE,NA,"jennyjones",76
+"Ms Sally KEEBLE","Northampton North",1997-05-01,2010-01-01,"Lab",FALSE,NA,"sallykeeble",77
+"Ann KEEN","Brentford and Isleworth",1997-05-01,2010-01-01,"Lab",FALSE,NA,"annkeen",78
+"Rt Hon Ruth KELLY","Bolton West",1997-05-01,2010-01-01,"Lab",FALSE,NA,"ruthkelly",79
+"Ms Oona KING","Bethnal Green and Bow",1997-05-01,2005-01-01,"Lab",FALSE,NA,"oonaking",80
+"Ms Tess KINGHAM","Gloucester",1997-05-01,2001-01-01,"Lab",FALSE,NA,"tesskingham",81
+"Miss Julie KIRKBRIDE","Bromsgrove",1997-05-01,2010-01-01,"Con",FALSE,NA,"juliekirkbride",82
+"Mrs Eleanor LAING","Epping Forest",1997-05-01,2020-01-01,"Con",FALSE,NA,"eleanorlaing",83
+"Ms Jackie LAWRENCE","Preseli Pembrokeshire",1997-05-01,2005-01-01,"Lab",FALSE,NA,"jackielawrence",84
+"Fiona MACTAGGART","Slough",1997-05-01,2020-01-01,"Lab",FALSE,NA,"fionamactaggart",85
+"Judy MALLABER","Amber Valley",1997-05-01,2010-01-01,"Lab",FALSE,NA,"judymallaber",86
+"Rt Hon Theresa MAY","Maidenhead",1997-05-01,2020-01-01,"Con",FALSE,NA,"theresamay",87
+"Ms Chris McCAFFERTY","Calder Valley",1997-05-01,2010-01-01,"Lab",FALSE,NA,"chrismccafferty",88
+"Ms Siobhain McDONAGH","Mitcham and Morden",1997-05-01,2020-01-01,"Lab",FALSE,NA,"siobhainmcdonagh",89
+"Rt Hon Anne McGUIRE","Stirling",1997-05-01,2015-03-30,"Lab",FALSE,NA,"annemcguire",90
+"Anne McINTOSH","Vale of York",1997-05-01,2010-01-01,"Con",FALSE,NA,"annemcintosh",91
+"Shona McISAAC","Cleethorpes",1997-05-01,2010-01-01,"Lab",FALSE,NA,"shonamcisaac",92
+"Mrs Rosemary McKENNA, CBE","Cumbernauld and Kilsyth",1997-05-01,2005-01-01,"Lab",FALSE,NA,"rosemarymckennacbe",93
+"Ms Gillian MERRON","Lincoln",1997-05-01,2010-01-01,"Lab",FALSE,NA,"gillianmerron",94
+"Laura MOFFATT","Crawley",1997-05-01,2010-01-01,"Lab",FALSE,NA,"lauramoffatt",95
+"Ms Margaret MORAN","Luton South",1997-05-01,2010-01-01,"Lab",FALSE,NA,"margaretmoran",96
+"Ms Julie MORGAN","Cardiff North",1997-05-01,2010-01-01,"Lab",FALSE,NA,"juliemorgan",97
+"Ms Kali MOUNTFORD","Colne Valley",1997-05-01,2010-01-01,"Lab",FALSE,NA,"kalimountford",98
+"Mrs Diana ORGAN","Forest of Dean",1997-05-01,2005-01-01,"Lab",FALSE,NA,"dianaorgan",99
+"Ms Sandra OSBORNE","Ayr",1997-05-01,2005-01-01,"Lab",FALSE,NA,"sandraosborne",100
+"Ms Linda PERHAM","Ilford North",1997-05-01,2005-01-01,"Lab",FALSE,NA,"lindaperham",101
+"Christine RUSSELL","Chester, City of",1997-05-01,2010-01-01,"Lab",FALSE,NA,"christinerussell",102
+"Joan RYAN","Enfield North",1997-05-01,2010-01-01,"Lab",FALSE,NA,"joanryan",103
+"Ms Debra SHIPLEY","Stourbridge",1997-05-01,2005-01-01,"Lab",FALSE,NA,"debrashipley",104
+"Rt Hon Angela E SMITH","Basildon",1997-05-01,2010-01-01,"Lab",FALSE,NA,"angelaesmith",105
+"Miss Geraldine SMITH","Morecambe and Lunesdale",1997-05-01,2010-01-01,"Lab",FALSE,NA,"geraldinesmith",106
+"Rt Hon Jacqui SMITH","Redditch",1997-05-01,2010-01-01,"Lab",FALSE,NA,"jacquismith",107
+"Ms Helen SOUTHWORTH","Warrington South",1997-05-01,2010-01-01,"Lab",FALSE,NA,"helensouthworth",108
+"Rt Hon Caroline SPELMAN","Meriden",1997-05-01,2020-01-01,"Con",FALSE,NA,"carolinespelman",109
+"Dr Phyllis STARKEY","Milton Keynes South West",1997-05-01,2010-01-01,"Lab",FALSE,NA,"phyllisstarkey",110
+"Ms Gisela STUART","Birmingham, Edgbaston",1997-05-01,2020-01-01,"Lab",FALSE,NA,"giselastuart",111
+"Ms Dari TAYLOR","Stockton South",1997-05-01,2010-01-01,"Lab",FALSE,NA,"daritaylor",112
+"Dr Jenny TONGE","Richmond Park",1997-05-01,2005-01-01,"LD",FALSE,NA,"jennytonge",113
+"Ms Claire WARD","Watford",1997-05-01,2010-01-01,"Lab",FALSE,NA,"claireward",114
+"Mrs Betty WILLIAMS","Conwy",1997-05-01,2010-01-01,"Lab",FALSE,NA,"bettywilliams",115
+"Rt Hon Rosie WINTERTON","Doncaster Central",1997-05-01,2020-01-01,"Lab",FALSE,NA,"rosiewinterton",116
+"Rt Hon Harriet HARMAN","Camberwell & Peckham",1997-05-01,2020-01-01,"Lab",FALSE,NA,"harrietharman",117
+"Rt Hon Joyce QUIN","Gateshead East and Washington West",1997-05-01,2005-01-01,"Lab",FALSE,NA,"joycequin",118
+"Rt Hon Ann WIDDECOMBE","Maidstone and the Weald",1997-05-01,2010-01-01,"Con",FALSE,NA,"annwiddecombe",119
+"Mrs Sylvia HEAL","Halesowen and Rowley Regis",1997-05-01,2010-01-01,"Lab",FALSE,"(Deputy Chairman of Ways and Means)","sylviaheal",120
+"Mrs Angela BROWNING","Tiverton & Honiton",1997-05-01,2010-01-01,"Con",FALSE,NA,"angelabrowning",121
+"Rt Hon Dame Tessa JOWELL","Dulwich & West Norwood",1997-05-01,2020-01-01,"Lab",FALSE,NA,"tessajowell",122
+"Rt Hon Jane KENNEDY","Liverpool Wavertree",1997-05-01,2010-01-01,"Lab",FALSE,NA,"janekennedy",123
+"Rt Hon Helen LIDDELL","Airdrie and Shotts",1997-05-01,2005-01-01,"Lab",FALSE,NA,"helenliddell",124
+"Ms Roseanna CUNNINGHAM","Perth",1997-05-01,2001-01-01,"SNP",FALSE,NA,"roseannacunningham",125
+"Sandra GIDLEY","Romsey",2000-05-04,2010-01-01,"LD",TRUE,NA,"sandragidley",40
+"Vera BAIRD","Redcar",2001-06-07,2010-01-01,"Lab",FALSE,NA,"verabaird",5
+"Annette BROOKE","Mid Dorset & North Poole",2001-06-07,2015-03-30,"LD",FALSE,NA,"annettebrooke",6
+"Patsy CALTON","Cheadle",2001-06-07,2005-01-01,"LD",FALSE,NA,"patsycalton",21
+"Sue DOUGHTY","Guildford",2001-06-07,2005-01-01,"LD",FALSE,NA,"suedoughty",22
+"Annabelle EWING","Perth",2001-06-07,2005-01-01,"SNP",FALSE,NA,"annabelleewing",24
+"Michelle GILDERNEW","Fermanagh & South Tyrone",2001-06-07,2015-03-30,"SF",FALSE,"Did not take seat","michellegildernew",25
+"Lady Sylvia HERMON","North Down",2001-06-07,2020-01-01,"UU",FALSE,NA,"sylviahermon",30
+"Ann McKECHIN","Glasgow Maryhill",2001-06-07,2005-01-01,"Lab",FALSE,NA,"annmckechin",31
+"Meg MUNN","Sheffield, Heeley",2001-06-07,2015-03-30,"Lab",FALSE,NA,"megmunn",41
+"Anne PICKING (2005 = Moffat)","East Lothian",2001-06-07,2010-01-01,"Lab",FALSE,NA,"annepicking(2005=moffat)",68
+"Iris ROBINSON","Strangford",2001-06-07,2010-01-01,"DU",FALSE,NA,"irisrobinson",74
+"Angela WATKINSON","Upminster",2001-06-07,2010-01-01,"Con",FALSE,NA,"angelawatkinson",76
+"Sarah TEATHER","Brent East",2003-09-18,2010-01-01,"LD",TRUE,NA,"sarahteather",81
+"Celia BARLOW","Hove",2005-05-05,2010-01-01,"Lab",FALSE,NA,"celiabarlow",3
+"Roberta BLACKMAN-WOODS","Durham, City of",2005-05-05,2020-01-01,"Lab",FALSE,NA,"robertablackmanwoods",7
+"Lyn BROWN","West Ham",2005-05-05,2020-01-01,"Lab",FALSE,NA,"lynbrown",15
+"Lorely BURT","Solihull",2005-05-05,2020-01-01,"LD",FALSE,NA,"lorelyburt",18
+"Dawn BUTLER","Brent South (2005-10)",2005-05-05,2010-01-01,"Lab",FALSE,NA,"dawnbutler",20
+"Katy CLARK","North Ayrshire and Arran",2005-05-05,2015-03-30,"Lab",FALSE,NA,"katyclark",21
+"Rosie COOPER","West Lancashire",2005-05-05,2020-01-01,"Lab",FALSE,NA,"rosiecooper",22
+"Mary CREAGH","Wakefield",2005-05-05,2020-01-01,"Lab",FALSE,NA,"marycreagh",24
+"Nadine DORRIES","Mid Bedfordshire",2005-05-05,2020-01-01,"Con",FALSE,NA,"nadinedorries",28
+"Natascha ENGEL","North East Derbyshire",2005-05-05,2020-01-01,"Lab",FALSE,NA,"nataschaengel",29
+"Lynne FEATHERSTONE","Hornsey and Wood Green",2005-05-05,2020-01-01,"LD",FALSE,NA,"lynnefeatherstone",31
+"Julia GOLDSWORTHY","Falmouth & Camborne",2005-05-05,2010-01-01,"LD",FALSE,NA,"juliagoldsworthy",36
+"Helen GOODMAN","Bishop Auckland",2005-05-05,2020-01-01,"Lab",FALSE,NA,"helengoodman",42
+"Rt Hon Justine GREENING","Putney",2005-05-05,2020-01-01,"Con",FALSE,NA,"justinegreening",45
+"Nia GRIFFITH","Llanelli",2005-05-05,2020-01-01,"Lab",FALSE,NA,"niagriffith",46
+"Meg HILLIER","Hackney South and Shoreditch",2005-05-05,2020-01-01,"Lab",FALSE,NA,"meghillier",50
+"Sharon HODGSON","Gateshead East & Washington West",2005-05-05,2010-01-01,"Lab",FALSE,NA,"sharonhodgson",52
+"Sian C JAMES","Swansea East",2005-05-05,2015-03-30,"Lab",FALSE,NA,"siancjames",55
+"Diana R JOHNSON","Kingston upon Hull North",2005-05-05,2020-01-01,"Lab",FALSE,NA,"dianarjohnson",58
+"Barbara KEELEY","Worsley",2005-05-05,2010-01-01,"Lab",FALSE,NA,"barbarakeeley",60
+"Susan KRAMER","Richmond Park",2005-05-05,2010-01-01,"LD",FALSE,NA,"susankramer",63
+"Kerry McCARTHY","Bristol East",2005-05-05,2020-01-01,"Lab",FALSE,NA,"kerrymccarthy",69
+"Sarah McCARTHY-FRY","Portsmouth North",2005-05-05,2010-01-01,"Lab",FALSE,NA,"sarahmccarthyfry",73
+"Anne MAIN","St Albans",2005-05-05,2020-01-01,"Con",FALSE,NA,"annemain",80
+"Rt Hon Maria MILLER","Basingstoke",2005-05-05,2020-01-01,"Con",FALSE,NA,"mariamiller",84
+"Anne MILTON","Guildford",2005-05-05,2020-01-01,"Con",FALSE,NA,"annemilton",93
+"Madeleine MOON","Bridgend",2005-05-05,2020-01-01,"Lab",FALSE,NA,"madeleinemoon",99
+"Jessica MORDEN","Newport East",2005-05-05,2020-01-01,"Lab",FALSE,NA,"jessicamorden",100
+"Linda RIORDAN","Halifax",2005-05-05,2015-03-30,"Lab",FALSE,NA,"lindariordan",101
+"Alison SEABECK","Plymouth, Devonport",2005-05-05,2010-01-01,"Lab",FALSE,NA,"alisonseabeck",104
+"Angela C SMITH","Sheffield, Hillsborough",2005-05-05,2010-01-01,"Lab",FALSE,NA,"angelacsmith",113
+"Anne SNELGROVE","South Swindon",2005-05-05,2010-01-01,"Lab",FALSE,NA,"annesnelgrove",118
+"Jo SWINSON","East Dunbartonshire",2005-05-05,2015-03-30,"LD",FALSE,NA,"joswinson",124
+"Emily THORNBERRY","Islington South & Finsbury",2005-05-05,2020-01-01,"Lab",FALSE,NA,"emilythornberry",125
+"Kitty USSHER","Burnley",2005-05-05,2010-01-01,"Lab",FALSE,NA,"kittyussher",126
+"Rt Hon Theresa VILLIERS","Chipping Barnet",2005-05-05,2020-01-01,"Con",FALSE,NA,"theresavilliers",127
+"Lynda WALTHO","Stourbridge",2005-05-05,2010-01-01,"Lab",FALSE,NA,"lyndawaltho",128
+"Jenny WILLOTT","Cardiff Central",2005-05-05,2015-03-30,"LD",FALSE,NA,"jennywillott",129
+"Ms Rachel SQUIRE","Dunfermline and West Fife",2005-05-05,2006-01-01,"Lab",FALSE,NA,"rachelsquire",130
+"Mrs Rosemary McKENNA, CBE","Cumbernauld, Kilsyth and Kirkintilloch East",2005-05-05,2010-01-01,"Lab",FALSE,NA,"rosemarymckennacbe",131
+"Ms Sandra OSBORNE","Ayr, Carrick and Cumnock",2005-05-05,2015-03-30,"Lab",FALSE,NA,"sandraosborne",132
+"Ann McKECHIN","Glasgow North",2005-05-05,2015-03-30,"Lab",FALSE,NA,"annmckechin",133
+"Chloe SMITH","Norwich North",2009-07-23,2020-01-01,"Con",TRUE,NA,"chloesmith",14
+"Heidi ALEXANDER","Lewisham East",2010-05-06,2020-01-01,"Lab",FALSE,NA,"heidialexander",1
+"Rushanara ALI","Bethnal Green and Bow",2010-05-06,2020-01-01,"Lab",FALSE,NA,"rushanaraali",2
+"Ms Louise BAGSHAWE","Corby",2010-05-06,2012-01-01,"Con",FALSE,"(later Mrs Louise MENSCH)","louisebagshawe",3
+"Harriett BALDWIN","West Worcestershire",2010-05-06,2020-01-01,"Con",FALSE,NA,"harriettbaldwin",4
+"Luciana BERGER","Liverpool, Wavertree",2010-05-06,2020-01-01,"Lab",FALSE,NA,"lucianaberger",5
+"Nicola BLACKWOOD","Oxford West and Abingdon",2010-05-06,2020-01-01,"Con",FALSE,NA,"nicolablackwood",9
+"Karen BRADLEY","Staffordshire Moorlands",2010-05-06,2020-01-01,"Con",FALSE,NA,"karenbradley",11
+"Angie BRAY","Ealing Central and Acton",2010-05-06,2015-03-30,"Con",FALSE,NA,"angiebray",12
+"Fiona BRUCE","Congleton",2010-05-06,2020-01-01,"Con",FALSE,NA,"fionabruce",13
+"Mrs Jenny CHAPMAN","Darlington",2010-05-06,2020-01-01,"Lab",FALSE,NA,"jennychapman",16
+"Dr Thérèse COFFEY","Suffolk Coastal",2010-05-06,2020-01-01,"Con",FALSE,NA,"theresecoffey",19
+"Stella CREASY","Walthamstow",2010-05-06,2020-01-01,"Lab",FALSE,NA,"stellacreasy",20
+"Tracey CROUCH","Chatham and Aylesford",2010-05-06,2020-01-01,"Con",FALSE,NA,"traceycrouch",32
+"Margaret CURRAN","Glasgow East",2010-05-06,2015-03-30,"Lab",FALSE,NA,"margaretcurran",34
+"Gloria DE PIERO","Ashfield",2010-05-06,2020-01-01,"Lab",FALSE,NA,"gloriadepiero",36
+"Caroline DINENAGE","Gosport",2010-05-06,2020-01-01,"Con",FALSE,NA,"carolinedinenage",39
+"Gemma DOYLE","West Dunbartonshire",2010-05-06,2015-03-30,"Lab",FALSE,NA,"gemmadoyle",40
+"Jackie DOYLE-PRICE","Thurrock",2010-05-06,2020-01-01,"Con",FALSE,NA,"jackiedoyleprice",49
+"Julie ELLIOTT","Sunderland Central",2010-05-06,2020-01-01,"Lab",FALSE,NA,"julieelliott",51
+"Jane ELLISON","Battersea",2010-05-06,2020-01-01,"Con",FALSE,NA,"janeellison",52
+"Yvonne FOVARGUE","Makerfield",2010-05-06,2020-01-01,"Lab",FALSE,NA,"yvonnefovargue",54
+"Lorraine FULLBROOK","South Ribble",2010-05-06,2015-03-30,"Con",FALSE,NA,"lorrainefullbrook",56
+"Sheila GILMORE","Edinburgh East",2010-05-06,2015-03-30,"Lab",FALSE,NA,"sheilagilmore",59
+"Pat GLASS","North West Durham",2010-05-06,2020-01-01,"Lab",FALSE,NA,"patglass",60
+"Mrs Mary GLINDON","North Tyneside",2010-05-06,2020-01-01,"Lab",FALSE,NA,"maryglindon",63
+"Mrs Helen GRANT","Maidstone and The Weald",2010-05-06,2020-01-01,"Con",FALSE,NA,"helengrant",66
+"Kate GREEN","Stretford and Urmston",2010-05-06,2020-01-01,"Lab",FALSE,NA,"kategreen",67
+"Lilian GREENWOOD","Nottingham South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"liliangreenwood",68
+"Rebecca HARRIS","Castle Point",2010-05-06,2020-01-01,"Con",FALSE,NA,"rebeccaharris",70
+"Julie HILLING","Bolton West",2010-05-06,2015-03-30,"Lab",FALSE,NA,"juliehilling",71
+"Margot JAMES","Stourbridge",2010-05-06,2020-01-01,"Con",FALSE,NA,"margotjames",72
+"Cathy JAMIESON","Kilmarnock and Loudoun",2010-05-06,2015-03-30,"Lab",FALSE,NA,"cathyjamieson",73
+"Susan Elan JONES","Clwyd South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"susanelanjones",74
+"Liz KENDALL","Leicester West",2010-05-06,2020-01-01,"Lab",FALSE,NA,"lizkendall",76
+"Pauline LATHAM","Mid Derbyshire",2010-05-06,2020-01-01,"Con",FALSE,NA,"paulinelatham",77
+"Andrea LEADSOM","South Northamptonshire",2010-05-06,2020-01-01,"Con",FALSE,NA,"andrealeadsom",78
+"Jessica LEE","Erewash",2010-05-06,2015-03-30,"Con",FALSE,NA,"jessicalee",79
+"Charlotte LESLIE","Bristol North West",2010-05-06,2020-01-01,"Con",FALSE,NA,"charlotteleslie",81
+"Naomi LONG","Belfast East",2010-05-06,2015-03-30,"Alliance",FALSE,NA,"naomilong",82
+"Caroline LUCAS","Brighton, Pavilion",2010-05-06,2020-01-01,"Green",FALSE,NA,"carolinelucas",86
+"Karen LUMLEY","Redditch",2010-05-06,2020-01-01,"Con",FALSE,NA,"karenlumley",88
+"Mary MACLEOD","Brentford and Isleworth",2010-05-06,2015-03-30,"Con",FALSE,NA,"marymacleod",91
+"Shabana MAHMOOD","Birmingham, Ladywood",2010-05-06,2020-01-01,"Lab",FALSE,NA,"shabanamahmood",92
+"Alison MCGOVERN","Wirral South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"alisonmcgovern",94
+"Catherine MCKINNELL","Newcastle upon Tyne North",2010-05-06,2020-01-01,"Lab",FALSE,NA,"catherinemckinnell",95
+"Rt Hon Esther MCVEY","Wirral West",2010-05-06,2015-03-30,"Con",FALSE,NA,"esthermcvey",96
+"Penny MORDAUNT","Portsmouth North",2010-05-06,2020-01-01,"Con",FALSE,NA,"pennymordaunt",97
+"Rt Hon Nicky MORGAN","Loughborough",2010-05-06,2020-01-01,"Con",FALSE,NA,"nickymorgan",98
+"Anne Marie MORRIS","Newton Abbot",2010-05-06,2020-01-01,"Con",FALSE,NA,"annemariemorris",102
+"Tessa MUNT","Wells",2010-05-06,2015-03-30,"LD",FALSE,NA,"tessamunt",103
+"Sheryll MURRAY","South East Cornwall",2010-05-06,2020-01-01,"Con",FALSE,NA,"sheryllmurray",104
+"Lisa NANDY","Wigan",2010-05-06,2020-01-01,"Lab",FALSE,NA,"lisanandy",105
+"Pamela NASH","Airdrie and Shotts",2010-05-06,2015-03-30,"Lab",FALSE,NA,"pamelanash",106
+"Sarah NEWTON","Truro and Falmouth",2010-05-06,2020-01-01,"Con",FALSE,NA,"sarahnewton",107
+"Caroline NOKES","Romsey and Southampton North",2010-05-06,2020-01-01,"Con",FALSE,NA,"carolinenokes",108
+"Fiona O’DONNELL","East Lothian",2010-05-06,2015-03-30,"Lab",FALSE,NA,"fionaodonnell",110
+"Chi ONWURAH","Newcastle upon Tyne Central",2010-05-06,2020-01-01,"Lab",FALSE,NA,"chionwurah",112
+"Priti PATEL","Witham",2010-05-06,2020-01-01,"Con",FALSE,NA,"pritipatel",113
+"Teresa PEARCE","Erith and Thamesmead",2010-05-06,2020-01-01,"Lab",FALSE,NA,"teresapearce",114
+"Claire PERRY","Devizes",2010-05-06,2020-01-01,"Con",FALSE,NA,"claireperry",115
+"Bridget PHILLIPSON","Houghton and Sunderland South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"bridgetphillipson",118
+"Yasmin QURESHI","Bolton South East",2010-05-06,2020-01-01,"Lab",FALSE,NA,"yasminqureshi",119
+"Rachel REEVES","Leeds West",2010-05-06,2020-01-01,"Lab",FALSE,NA,"rachelreeves",120
+"Emma REYNOLDS","Wolverhampton North East",2010-05-06,2020-01-01,"Lab",FALSE,NA,"emmareynolds",121
+"Ms Margaret RITCHIE","South Down",2010-05-06,2020-01-01,"SDLP",FALSE,NA,"margaretritchie",123
+"Amber RUDD","Hastings and Rye",2010-05-06,2020-01-01,"Con",FALSE,NA,"amberrudd",126
+"Laura SANDYS","South Thanet",2010-05-06,2015-03-30,"Con",FALSE,NA,"laurasandys",128
+"Anna SOUBRY","Broxtowe",2010-05-06,2020-01-01,"Con",FALSE,NA,"annasoubry",130
+"Rt Hon Elizabeth TRUSS","South West Norfolk",2010-05-06,2020-01-01,"Con",FALSE,NA,"elizabethtruss",131
+"Valerie VAZ","Walsall South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"valerievaz",134
+"Heather WHEELER","South Derbyshire",2010-05-06,2020-01-01,"Con",FALSE,NA,"heatherwheeler",135
+"Dr Eilidh WHITEFORD","Banff and Buchan",2010-05-06,2020-01-01,"SNP",FALSE,NA,"eilidhwhiteford",136
+"Dr Sarah WOLLASTON","Totnes",2010-05-06,2020-01-01,"Con",FALSE,NA,"sarahwollaston",137
+"Ms Glenda JACKSON","Hampstead and Kilburn",2010-05-06,2015-03-30,"Lab",FALSE,NA,"glendajackson",138
+"Rt Hon Hazel BLEARS","Salford and Eccles",2010-05-06,2015-03-30,"Lab",FALSE,NA,"hazelblears",139
+"Ms Karen BUCK","Westminster North",2010-05-06,2020-01-01,"Lab",FALSE,NA,"karenbuck",140
+"Rt Hon Yvette COOPER","Normanton, Pontefract and Castleford",2010-05-06,2020-01-01,"Lab",FALSE,NA,"yvettecooper",141
+"Maria EAGLE","Garston and Halewood",2010-05-06,2020-01-01,"Lab",FALSE,NA,"mariaeagle",142
+"Anne McINTOSH","Thirsk And Malton",2010-05-06,2020-01-01,"Con",FALSE,NA,"annemcintosh",143
+"Angela WATKINSON","Hornchurch and Upminster",2010-05-06,2020-01-01,"Con",FALSE,NA,"angelawatkinson",144
+"Sarah TEATHER","Brent Central",2010-05-06,2015-03-30,"LD",FALSE,NA,"sarahteather",145
+"Sharon HODGSON","Washington and Sunderland West",2010-05-06,2020-01-01,"Lab",FALSE,NA,"sharonhodgson",146
+"Barbara KEELEY","Worsley and Eccles South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"barbarakeeley",147
+"Alison SEABECK","Plymouth, Moor View",2010-05-06,2015-03-30,"Lab",FALSE,NA,"alisonseabeck",148
+"Angela C SMITH","Penistone and Stocksbridge",2010-05-06,2020-01-01,"Lab",FALSE,NA,"angelacsmith",149
+"Debbie ABRAHAMS","Oldham East and Saddleworth",2011-01-13,2020-01-01,"Lab",TRUE,NA,"debbieabrahams",150
+"Seema MALHOTRA","Feltham and Heston",2011-12-15,2020-01-01,"Lab",TRUE,NA,"seemamalhotra",151
+"Lucy POWELL","Manchester Central",2012-11-15,2020-01-01,"Lab",TRUE,NA,"lucypowell",3
+"Sarah CHAMPION","Rotherham",2012-11-29,2020-01-01,"Lab",TRUE,NA,"sarahchampion",152
+"Emma LEWELL-BUCK","South Shields",2013-05-02,2020-01-01,"Lab",TRUE,NA,"emmalewellbuck",153
+"Liz MCINNES","Heywood and Middleton",2014-10-09,2020-01-01,"Lab",TRUE,NA,"lizmcinnes",154
+"Tasmina AHMED-SHEIKH","Ochil and South Perthshire",2015-05-07,2020-01-01,"SNP",FALSE,NA,"tasminaahmedsheikh",6
+"Lucy ALLAN","Telford",2015-05-07,2020-01-01,"Con",FALSE,NA,"lucyallan",8
+"Heidi ALLEN","South Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,NA,"heidiallen",12
+"Caroline ANSELL","Eastbourne",2015-05-07,2020-01-01,"Con",FALSE,NA,"carolineansell",21
+"Victoria ATKINS","Louth and Horncastle",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaatkins",25
+"Hannah BARDELL","Livingston",2015-05-07,2020-01-01,"SNP",FALSE,NA,"hannahbardell",34
+"Mhairi BLACK","Paisley and Renfrewshire South",2015-05-07,2020-01-01,"SNP",FALSE,NA,"mhairiblack",35
+"Kirsty BLACKMAN","Aberdeen North",2015-05-07,2020-01-01,"SNP",FALSE,NA,"kirstyblackman",37
+"Victoria BORWICK","Kensington",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaborwick",40
+"Deidre BROCK","Edinburgh North and Leith",2015-05-07,2020-01-01,"SNP",FALSE,NA,"deidrebrock",41
+"Ruth CADBURY","Brentford and Isleworth",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthcadbury",55
+"Lisa CAMERON","East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,"SNP",FALSE,NA,"lisacameron",56
+"Maria CAULFIELD","Lewes",2015-05-07,2020-01-01,"Con",FALSE,NA,"mariacaulfield",59
+"Joanna CHERRY","Edinburgh South West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"joannacherry",71
+"Jo CHURCHILL","Bury St Edmunds",2015-05-07,2020-01-01,"Con",FALSE,NA,"jochurchill",73
+"Julie COOPER","Burnley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"juliecooper",79
+"Jo COX","Batley and Spen",2015-05-07,2016-01-01,"Lab",FALSE,NA,"jocox",82
+"Angela CRAWLEY","Lanark and Hamilton East",2015-05-07,2020-01-01,"SNP",FALSE,NA,"angelacrawley",90
+"Judith CUMMINS","Bradford South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"judithcummins",91
+"Mims DAVIES","Eastleigh",2015-05-07,2020-01-01,"Con",FALSE,NA,"mimsdavies",96
+"Thangam DEBBONAIRE","Bristol West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"thangamdebbonaire",101
+"Michelle DONELAN","Chippenham",2015-05-07,2020-01-01,"Con",FALSE,NA,"michelledonelan",103
+"Flick DRUMMOND","Portsmouth South",2015-05-07,2020-01-01,"Con",FALSE,NA,"flickdrummond",106
+"Marion FELLOWS","Motherwell and Wishaw",2015-05-07,2020-01-01,"SNP",FALSE,NA,"marionfellows",110
+"Suella FERNANDES","Fareham",2015-05-07,2020-01-01,"Con",FALSE,NA,"suellafernandes",124
+"Margaret FERRIER","Rutherglen and Hamilton West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"margaretferrier",128
+"Colleen FLETCHER","Coventry North East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"colleenfletcher",129
+"Vicky FOXCROFT","Lewisham, Deptford",2015-05-07,2020-01-01,"Lab",FALSE,NA,"vickyfoxcroft",132
+"Lucy FRAZER","South East Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,NA,"lucyfrazer",133
+"Nusrat GHANI","Wealden",2015-05-07,2020-01-01,"Con",FALSE,NA,"nusratghani",138
+"Patricia GIBSON","North Ayrshire and Arran",2015-05-07,2020-01-01,"SNP",FALSE,NA,"patriciagibson",139
+"Margaret GREENWOOD","Wirral West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"margaretgreenwood",145
+"Louise HAIGH","Sheffield, Heeley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"louisehaigh",148
+"Carolyn HARRIS","Swansea East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"carolynharris",155
+"Helen HAYES","Dulwich and West Norwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"helenhayes",156
+"Sue HAYMAN","Workington",2015-05-07,2020-01-01,"Lab",FALSE,NA,"suehayman",157
+"Kate HOLLERN","Blackburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"katehollern",158
+"Rupa HUQ","Ealing Central and Acton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rupahuq",159
+"Andrea  JENKYNS","Morley and Outwood",2015-05-07,2020-01-01,"Con",FALSE,NA,"andreajenkyns",160
+"Seema KENNEDY","South Ribble",2015-05-07,2020-01-01,"Con",FALSE,NA,"seemakennedy",161
+"Rebecca LONG BAILEY","Salford and Eccles",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rebeccalongbailey",162
+"Holly LYNCH","Halifax",2015-05-07,2020-01-01,"Lab",FALSE,NA,"hollylynch",163
+"Rachael MASKELL","York Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rachaelmaskell",164
+"Tania MATHIAS","Twickenham",2015-05-07,2020-01-01,"Con",FALSE,NA,"taniamathias",165
+"Natalie McGARRY","Glasgow East",2015-05-07,2020-01-01,"SNP",FALSE,NA,"nataliemcgarry",166
+"Anne McLAUGHLIN","Glasgow North East",2015-05-07,2020-01-01,"SNP",FALSE,NA,"annemclaughlin",167
+"Amanda MILLING","Cannock Chase",2015-05-07,2020-01-01,"Con",FALSE,NA,"amandamilling",168
+"Carol MONAGHAN","Glasgow North West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"carolmonaghan",169
+"Wendy MORTON","Aldridge-Brownhills",2015-05-07,2020-01-01,"Con",FALSE,NA,"wendymorton",170
+"Melanie ONN","Great Grimsby",2015-05-07,2020-01-01,"Lab",FALSE,NA,"melanieonn",171
+"Kate OSAMOR","Edmonton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"kateosamor",172
+"Kirsten OSWALD","East Renfrewshire",2015-05-07,2020-01-01,"SNP",FALSE,NA,"kirstenoswald",173
+"Jess PHILLIPS","Birmingham, Yardley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jessphillips",174
+"Rebecca POW","Taunton Deane",2015-05-07,2020-01-01,"Con",FALSE,NA,"rebeccapow",175
+"Victoria PRENTIS","Banbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaprentis",176
+"Angela RAYNER","Ashton-Under-Lyne",2015-05-07,2020-01-01,"Lab",FALSE,NA,"angelarayner",177
+"Christina REES","Neath",2015-05-07,2020-01-01,"Lab",FALSE,NA,"christinarees",178
+"Marie RIMMER","St Helens South and Whiston",2015-05-07,2020-01-01,"Lab",FALSE,NA,"marierimmer",179
+"Mary ROBINSON","Cheadle",2015-05-07,2020-01-01,"Con",FALSE,NA,"maryrobinson",180
+"Antoinette SANDBACH","Eddisbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"antoinettesandbach",181
+"Liz SAVILLE-ROBERTS","Dwyfor Meirionnydd",2015-05-07,2020-01-01,"PC",FALSE,NA,"lizsavilleroberts",182
+"Naz SHAH","Bradford West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"nazshah",183
+"Paula SHERRIFF","Dewsbury",2015-05-07,2020-01-01,"Lab",FALSE,NA,"paulasherriff",184
+"Tulip SIDDIQ","Hampstead and Kilburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"tulipsiddiq",185
+"Ruth SMEETH","Stoke-On-Trent North",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthsmeeth",186
+"Cat SMITH","Lancaster and Fleetwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catsmith",187
+"Karin SMYTH","Bristol South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"karinsmyth",188
+"Amanda SOLLOWAY","Derby North",2015-05-07,2020-01-01,"Con",FALSE,NA,"amandasolloway",189
+"Jo STEVENS","Cardiff Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jostevens",190
+"Alison THEWLISS","Glasgow Central",2015-05-07,2020-01-01,"SNP",FALSE,NA,"alisonthewliss",191
+"Michelle THOMSON","Edinburgh West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"michellethomson",192
+"Maggie THROUP","Erewash",2015-05-07,2020-01-01,"Con",FALSE,NA,"maggiethroup",193
+"Kelly TOLHURST","Rochester and Strood",2015-05-07,2020-01-01,"Con",FALSE,NA,"kellytolhurst",194
+"Anne-Marie TREVELYAN","Berwick-Upon-Tweed",2015-05-07,2020-01-01,"Con",FALSE,NA,"annemarietrevelyan",195
+"Anna TURLEY","Redcar",2015-05-07,2020-01-01,"Lab",FALSE,NA,"annaturley",196
+"Catherine WEST","Hornsey and Wood Green",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catherinewest",197
+"Helen WHATELY","Faversham and Mid Kent",2015-05-07,2020-01-01,"Con",FALSE,NA,"helenwhately",198
+"Philippa WHITFORD","Central Ayrshire",2015-05-07,2020-01-01,"SNP",FALSE,NA,"philippawhitford",199
+"Corri WILSON","Ayr, Carrick and Cumnock",2015-05-07,2020-01-01,"SNP",FALSE,NA,"corriwilson",200
+"Dawn BUTLER","Brent Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"dawnbutler",201
+"Gill FURNISS","Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,"Lab",TRUE,NA,"gillfurniss",82
+"Dr Rosena ALLIN-KHAN","Tooting",2016-06-16,2020-01-01,"Lab",TRUE,NA,"rosenaallinkhan",202
+"Tracy Brabin","Batley and Spen",2016-10-20,2020-01-01,"Lab",TRUE,NA,"tracybrabin",203
+"Sarah Olney","Richmond Park",2016-12-01,2020-01-01,"Lib Dem",TRUE,NA,"saraholney",204
+"Caroline Johnson","Sleaford and North Hykeham",2016-12-08,2020-01-01,"Con",TRUE,NA,"carolinejohnson",205
+"Trudy Harrison","Copeland",2017-02-23,2020-01-01,"Con",TRUE,NA,"trudyharrison",206
