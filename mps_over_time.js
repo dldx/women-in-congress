@@ -230,7 +230,7 @@ function render(data) {
     var zoom = d3.zoom()
         .scaleExtent([0.98, 40])
         .on("zoom", zoomed);
-    wrapper.call(zoom);
+    //wrapper.call(zoom);
     svg.call(zoom);
 
     function zoomed() {
