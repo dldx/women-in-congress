@@ -42,9 +42,8 @@
         };
 
         function render(data) {
-        var lineThickness = 0.0008*width;
-        var circleRadius = lineThickness;
-
+            var lineThickness = 0.0012 * height;
+            var circleRadius = lineThickness;
 
             // Min and max dates
             data.minDate = d3.min(data, function(d) {
@@ -66,8 +65,8 @@
 
             // Enter
             var wrapper = svg
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             // Tooltip details
             var tooltip = d3.tip()
@@ -75,7 +74,7 @@
                 .offset([-10, 0])
                 .html(function(d) {
                     return d.name + ": " + d3.timeFormat("%Y")(d.term_start) + d.byelection +
-                    " - " + d3.timeFormat("%Y")(d.term_end);
+                        " - " + d3.timeFormat("%Y")(d.term_end);
                 })
 
             wrapper.call(tooltip);
@@ -89,31 +88,45 @@
             //The clip extent will make the boundaries end nicely along the chart area instead of splitting up the entire SVG
             //(if you do not do this it would mean that you already see a tooltip when your mouse is still in the axis area, which is confusing)
             var voronoi = d3.voronoi()
-            	.x(function(d) { return x(d.term_start); })
-            	.y(function(d) { return y(d.stream); })
-            	.extent([[0, 0], [width, height]]);
+                .x(function(d) {
+                    return x(d.term_start);
+                })
+                .y(function(d) {
+                    return y(d.stream);
+                })
+                .extent([
+                    [0, 0],
+                    [width, height]
+                ]);
 
             //Initiate a group element to place the voronoi diagram in
             var voronoiGroup = wrapper.append("g")
-            	.attr("class", "voronoiWrapper");
+                .attr("class", "voronoiWrapper");
             //Create the Voronoi diagram
             voronoiGroup.selectAll("path")
-            	.data(voronoi(data)) //Use vononoi() with your dataset inside
-            	.enter().append("path")
-            	.attr("d", function(d, i) { return "M" + d.join("L") + "Z"; })
-            	.datum(function(d, i) { console.log(d.point);return d.point; })
-            	//Give each cell a unique class where the unique part corresponds to the circle classes
-            	.attr("class", function(d,i) { return "voronoi " + d.clean_name; })
-            	.style("stroke", "#2074A0") //I use this to look at how the cells are dispersed as a check
-            	.style("fill", "none")
-            	.style("pointer-events", "all")
-            	.on("mouseover", tooltip.show)
+                .data(voronoi(data)) //Use vononoi() with your dataset inside
+                .enter().append("path")
+                .attr("d", function(d, i) {
+                    return "M" + d.join("L") + "Z";
+                })
+                .datum(function(d, i) {
+                    console.log(d.point);
+                    return d.point;
+                })
+                //Give each cell a unique class where the unique part corresponds to the circle classes
+                .attr("class", function(d, i) {
+                    return "voronoi " + d.clean_name;
+                })
+                .style("stroke", "#2074A0") //I use this to look at how the cells are dispersed as a check
+                .style("fill", "none")
+                .style("pointer-events", "all")
+                .on("mouseover", tooltip.show)
                 .on("mouseout", tooltip.hide);
 
             var clippedArea = wrapper.append("g")
                 .attr("id", "clippedArea")
                 .attr("clip-path", "url(#clip)")
-            	.style("pointer-events", "all")
+                .style("pointer-events", "all")
 
             var pointsGroup = clippedArea
                 .append("g")
@@ -206,37 +219,45 @@
                 .scaleExtent([0.9, 40])
                 .on("zoom", zoomed);
             svg.call(zoom);
+
             function zoomed() {
-              pointsGroup.attr("transform", d3.event.transform)
-              gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-              gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+                pointsGroup.attr("transform", d3.event.transform)
+                gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+                gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
             }
             // Exit
             instance.exit().remove();
         }
-        var timeline = document.getElementById("timeline")
-            // Chart dimensions - use parent div size
-        width = timeline.clientWidth - margin.left - margin.right,
-            height = timeline.clientHeight - margin.top - margin.bottom;
+
         var svg = d3.select(timeline).append("svg")
+        function draw_graph() {
+            d3.selectAll("g > *").remove()
+            var timeline = document.getElementById("timeline")
+                // Chart dimensions - use parent div size
+            width = timeline.clientWidth - margin.left - margin.right,
+            height = timeline.clientHeight - margin.top - margin.bottom;
+            svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-
-        d3.csv("mps_over_time.csv", function(d) {
-            var parseDate = d3.timeParse("%Y-%m-%d");
-            return {
-                name: d.name,
-                constituency: d.constituency,
-                term_start: parseDate(d.term_start),
-                term_end: parseDate(d.term_end),
-                party: d.party,
-                byelection: (d.byelection == "TRUE"),
-                clean_name: d.clean_name,
-                stream: +d.stream
-            };
-        }, function(data) {
-            render(data);
-        });
+            console.log("resize")
+            d3.csv("mps_over_time.csv", function(d) {
+                var parseDate = d3.timeParse("%Y-%m-%d");
+                return {
+                    name: d.name,
+                    constituency: d.constituency,
+                    term_start: parseDate(d.term_start),
+                    term_end: parseDate(d.term_end),
+                    party: d.party,
+                    byelection: (d.byelection == "TRUE"),
+                    clean_name: d.clean_name,
+                    stream: +d.stream
+                };
+            }, function(data) {
+                render(data);
+            });
+        }
+        draw_graph()
+        window.addEventListener('resize', draw_graph);
     </script>
 </body>
 
