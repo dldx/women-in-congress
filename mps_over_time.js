@@ -42,10 +42,12 @@ function render(data) {
         .range([height, 0]);
 
     // Enter
+    // Wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    // Bounding box to clip points so that they aren't visible outside the chart area
     var boundingBox = wrapper
         .append("rect")
         .attr("opacity", 0.0)
@@ -59,7 +61,8 @@ function render(data) {
         .direction('s')
         .html(function (d) {
             return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1><div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party">${d.party}</div>`;
+            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
+            <svg role="img"><use xlink:href="./party_logos/party_logos.svg#${d.party}"/></svg>`;
         })
 
     wrapper.call(tooltip);
@@ -222,6 +225,13 @@ function render(data) {
         .attr("fill", function (d) {
             return colorParty(d.party);
         })
+
+    wrapper.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .attr("class", "chart-title")
+        .text("Women MPs in the House of Commons")
 
     // Zoom
     var zoom = d3.zoom()
