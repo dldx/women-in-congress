@@ -143,9 +143,9 @@ function render(data) {
         .append("circle")
         .attr("id", "target-loc")
         .attr("cx", Math.max(100, margin.left + 0.2 * width))
-        .attr("cy", Math.max(margin.top, margin.top + 0.2 * height))
+        .attr("cy", 0.1 * height)
         .attr("r", 5)
-        .attr("opacity", 1)
+        .attr("opacity", 0)
         .node()
 
     // Add line connecting start and end of term
@@ -163,22 +163,7 @@ function render(data) {
         .attr("r", circleRadius)
         .attr("class", "term-start")
         .on("mouseover", function (d) {
-            d3.select(this)
-                .moveToFront()
-            d3.select(this)
-                .transition()
-                .ease(d3.easeExp)
-                .duration(1000)
-                .attr("r", 5)
-                .attr("cx", d3.select("#target-loc").attr("cx"))
-                .attr("cy", d3.select("#target-loc").attr("cy"))
-                .on("end", function (j) {
-                    tooltip.show(d, target)
-                })
-                .transition()
-                .attr("r", circleRadius)
-                .attr("cx", x(d.term_start))
-                .attr("cy", y(d.stream))
+            tooltip.show(d, target)
         })
 
     // .on("mouseout", tooltip.hide);
@@ -257,19 +242,19 @@ function render(data) {
 var svg = d3.select(timeline).append("svg")
 
 // https://github.com/wbkd/d3-extended
-    d3.selection.prototype.moveToFront = function() {
-      return this.each(function(){
+d3.selection.prototype.moveToFront = function () {
+    return this.each(function () {
         this.parentNode.appendChild(this);
-      });
-    };
-    d3.selection.prototype.moveToBack = function() {
-        return this.each(function() {
-            var firstChild = this.parentNode.firstChild;
-            if (firstChild) {
-                this.parentNode.insertBefore(this, firstChild);
-            }
-        });
-    };
+    });
+};
+d3.selection.prototype.moveToBack = function () {
+    return this.each(function () {
+        var firstChild = this.parentNode.firstChild;
+        if (firstChild) {
+            this.parentNode.insertBefore(this, firstChild);
+        }
+    });
+};
 
 
 function draw_graph() {

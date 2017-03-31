@@ -9,7 +9,7 @@
             /* Make the chart container fill the page using CSS. */
 
             body {
-                background-color: #252525;
+                background-color: #131313;
                 font-family: 'Quicksand', sans-serif;
                 font-weight: 400;
             }
@@ -31,11 +31,14 @@
             }
 
             #timeline {
+                background-color: #252525;
                 position: fixed;
                 left: 0px;
                 right: 0px;
                 top: 0px;
                 bottom: 0px;
+                margin: 10px;
+                border-radius: 10px;
             }
 
             .d3-tip {
@@ -47,8 +50,14 @@
                 border-radius: 5px;
                 pointer-events: none;
                 width: 20em;
-                height: 10em;
+                padding-bottom: 2em;
                 overflow: hidden;
+            }
+
+            @media screen and (min-height: 500px) {
+                .d3-tip {
+                    padding-bottom: 10em;
+                }
             }
 
             .d3-tip h1 {
