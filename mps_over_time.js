@@ -75,48 +75,6 @@ function render(data) {
 
     wrapper.call(tooltip);
 
-    //////////////////////////////////////////////////////////////
-    //////////////////////// Voronoi /////////////////////////////
-    //////////////////////////////////////////////////////////////
-
-    //Initiate the voronoi function
-    //Use the same variables of the data in the .x and .y as used in the cx and cy of the circle call
-    //The clip extent will make the boundaries end nicely along the chart area instead of splitting up the entire SVG
-    //(if you do not do this it would mean that you already see a tooltip when your mouse is still in the axis area, which is confusing)
-    var voronoi = d3.voronoi()
-        .x(function (d) {
-            return x(d.term_start);
-        })
-        .y(function (d) {
-            return y(d.stream);
-        })
-        .extent([
-            [0, 0],
-            [width, height]
-        ]);
-
-    //Initiate a group element to place the voronoi diagram in
-    var voronoiGroup = wrapper.append("g")
-        .attr("class", "voronoiWrapper");
-    //Create the Voronoi diagram
-    voronoiGroup.selectAll("path")
-        .data(voronoi(data)) //Use vononoi() with your dataset inside
-        .enter().append("path")
-        .attr("d", function (d, i) {
-            return "M" + d.join("L") + "Z";
-        })
-        .datum(function (d, i) {
-            console.log(d.point);
-            return d.point;
-        })
-        //Give each cell a unique class where the unique part corresponds to the circle classes
-        .attr("class", function (d, i) {
-            return "voronoi " + d.clean_name;
-        })
-        .style("stroke", "#2074A0") //I use this to look at how the cells are dispersed as a check
-        .style("fill", "none")
-        .style("pointer-events", "all")
-
     var clippedArea = wrapper.append("g")
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
@@ -131,11 +89,7 @@ function render(data) {
         .append("rect")
         .attr("width", width)
         .attr("height", height);
-    var instance = pointsGroup
-        .selectAll("g")
-        .data(data)
-        .enter()
-        .append("g")
+
 
     var xAxis = d3.axisBottom(x)
     var gX = wrapper.append("g")
@@ -159,33 +113,31 @@ function render(data) {
         .attr("opacity", 0)
         .node()
 
+    var instance = pointsGroup
+        .selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+
     // Add line connecting start and end of term
     instance
         .append("line")
         .attr("class", "line-connect")
         .style("stroke-width", lineThickness)
-        .on("mouseover", function (d) {
-            tooltip.show(d, target)
-        })
-    // .on("mouseout", tooltip.hide);
     // Add circle for start and end
     instance
         .append("circle")
         .attr("r", circleRadius)
         .attr("class", "term-start")
-        .on("mouseover", function (d) {
-            tooltip.show(d, target)
-        })
 
-    // .on("mouseout", tooltip.hide);
     instance
         .append("circle")
         .attr("r", circleRadius)
         .attr("class", "term-end")
-        .on("mouseover", function (d) {
-            tooltip.show(d, target)
-        })
-    // .on("mouseout", tooltip.hide);
+
+    instance
+        .append("rect")
+        .attr("class", "hover-rect")
 
     function colorParty(party) {
         if (colors[party] != undefined) {
@@ -196,6 +148,7 @@ function render(data) {
     }
 
     // Update
+
     instance.selectAll(".line-connect")
         .attr("x1", function (d) {
             return x(d.term_start)
@@ -234,6 +187,31 @@ function render(data) {
         .attr("fill", function (d) {
             return colorParty(d.party);
         })
+
+    instance
+        .on("mouseover", function (d) {
+            tooltip.show(d, target)
+            d3.select(this)
+                .selectAll(".line-connect").attr("stroke", "white")
+            d3.select(this)
+                .selectAll(".term-start").attr("fill", "white")
+            d3.select(this)
+                .selectAll(".term-end").attr("fill", "white")
+        })
+        .on("mouseout", function (d) {
+            d3.select(this)
+                .transition()
+                .duration(500)
+                .selectAll(".line-connect").attr("stroke", colorParty(d.party))
+            d3.select(this)
+                .transition()
+                .duration(500)
+                .selectAll(".term-start").attr("fill", colorParty(d.party))
+            d3.select(this)
+                .transition()
+                .duration(500)
+                .selectAll(".term-end").attr("fill", colorParty(d.party))
+        });
 
     wrapper.append("text")
         .attr("x", (width / 2))
