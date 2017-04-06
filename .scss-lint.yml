@@ -1,0 +1,6 @@
+linters:
+    EmptyLineBetweenBlocks:
+        enabled: false
+
+    PropertySortOrder:
+        enabled: false

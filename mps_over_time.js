@@ -131,13 +131,13 @@ function render(data) {
 
     var xAxis = d3.axisBottom(x)
     var gX = wrapper.append("g")
-        .attr("class", "xAxis")
+        .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     var yAxis = d3.axisLeft(y)
     var gY = wrapper.append("g")
-        .attr("class", "yAxis")
+        .attr("class", "y-axis")
         // .attr("opacity", 0)
         .call(yAxis);
 
