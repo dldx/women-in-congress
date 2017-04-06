@@ -1,7 +1,7 @@
 @import url("//fonts.googleapis.com/css?family=Quicksand:400,500");
 $body-background: #131313;
 $graph-background: #252525;
-$tip-background: rgb(5, 5, 5);
+$tip-background: $body-background;
 
 body {
   background-color: $body-background;
@@ -51,17 +51,17 @@ body {
 $tip-padding: 1;
 
 .d3-tip {
-  background: rgba($tip-background, .6);
+  background: rgba($tip-background, .8);
   border-radius: 5px;
   color: invert($tip-background);
   font-size: 1rem;
   font-weight: 500;
-  height: 15em;
+  height: 10rem;
   line-height: 1;
   overflow: hidden;
   padding: $tip-padding + em;
   pointer-events: none;
-  width: 20em;
+  width: 20rem;
 
   h1 {
     display: block;
@@ -72,22 +72,20 @@ $tip-padding: 1;
     text-align: center;
   }
 
-  .mp-term {
-    padding-left: 1em;
-  }
-
+// This is for parties that don't have a logo
   .mp-party {
     width: 4rem;
     height: 4rem;
-    font-size: 2em;
+    font-size: 2rem;
     font-weight: bolder;
-    background-color: #50514F;
+    background-color: #50514f;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     right: $tip-padding + rem;
     bottom: $tip-padding + rem;
+    word-break: break-all;
   }
 
   svg {
@@ -99,11 +97,10 @@ $tip-padding: 1;
   }
 }
 @media screen and (min-height: 500px) {
-  .d3-tip,
   .mp-party,
   svg {
     bottom: 1.5 * $tip-padding + em;
-    right: 1.5*$tip-padding + em;
+    right: 1.5 * $tip-padding + em;
   }
 }
 

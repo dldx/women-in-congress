@@ -12,8 +12,11 @@ var colors = {
     "Lib Dem": "#F37A48",
     "LD": "#F37A48",
     "Green": "#A1C181",
+    "SF": "#008e4b",
     "Other": "#50514F"
 }
+
+var partyHasSVG = Object.keys(colors);
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -60,9 +63,14 @@ function render(data) {
         // .offset([-10, 0])
         .direction('s')
         .html(function (d) {
+            if (partyHasSVG.indexOf(d.party) != -1) {
+                partySVG = 0
+            } else {
+                partySVG = 1
+            }
             return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1><div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
-            <svg role="img"><use xlink:href="./party_logos/party_logos.svg#${d.party}"/></svg>`;
+            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party" style="opacity: ${partySVG}">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
+            <svg role="img"><title>${d.party}</title><use xlink:href="./party_logos/party_logos.svg#${d.party}"/></svg>`;
         })
 
     wrapper.call(tooltip);
@@ -186,6 +194,7 @@ function render(data) {
             return colors["Other"];
         }
     }
+
     // Update
     instance.selectAll(".line-connect")
         .attr("x1", function (d) {

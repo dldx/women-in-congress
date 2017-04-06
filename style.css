@@ -38,17 +38,17 @@ body {
   top: 0; }
 
 .d3-tip {
-  background: rgba(5, 5, 5, 0.6);
+  background: rgba(19, 19, 19, 0.8);
   border-radius: 5px;
-  color: #fafafa;
+  color: #ececec;
   font-size: 1rem;
   font-weight: 500;
-  height: 15em;
+  height: 10rem;
   line-height: 1;
   overflow: hidden;
   padding: 1em;
   pointer-events: none;
-  width: 20em; }
+  width: 20rem; }
   .d3-tip h1 {
     display: block;
     font-size: 1rem;
@@ -56,20 +56,19 @@ body {
     margin-top: 0;
     padding: 5px;
     text-align: center; }
-  .d3-tip .mp-term {
-    padding-left: 1em; }
   .d3-tip .mp-party {
     width: 4rem;
     height: 4rem;
-    font-size: 2em;
+    font-size: 2rem;
     font-weight: bolder;
-    background-color: #50514F;
+    background-color: #50514f;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     right: 1rem;
-    bottom: 1rem; }
+    bottom: 1rem;
+    word-break: break-all; }
   .d3-tip svg {
     width: 4rem;
     height: 4rem;
@@ -78,7 +77,6 @@ body {
     bottom: 1em; }
 
 @media screen and (min-height: 500px) {
-  .d3-tip,
   .mp-party,
   svg {
     bottom: 1.5em;
