@@ -136,7 +136,7 @@ function render(data) {
         .attr("r", circleRadius)
         .attr("class", "term-end")
 
-// Use a hidden rect to catch mouseovers more easily
+    // Use a hidden rect to catch mouseovers more easily
     instance
         .append("rect")
         .attr("class", "hover-rect")
@@ -192,15 +192,15 @@ function render(data) {
 
     instance.selectAll(".hover-rect")
         .attr("x", function (d) {
-            return x(d.term_start) - circleRadius/2
+            return x(d.term_start) - circleRadius / 2
         })
         .attr("y", function (d) {
-            return y(d.stream) - (y(1)-y(2))/2
+            return y(d.stream) - (y(1) - y(2)) / 2
         })
         .attr("width", function (d) {
             return x(d.term_end) - x(d.term_start) + circleRadius
         })
-        .attr("height", y(1)-y(2))
+        .attr("height", y(1) - y(2))
 
     instance
         .on("mouseover", function (d) {
@@ -211,6 +211,40 @@ function render(data) {
                 .selectAll(".term-start").attr("fill", colors["Hover"])
             d3.select(this)
                 .selectAll(".term-end").attr("fill", colors["Hover"])
+            pointsGroup.selectAll("g")
+                .attr("opacity", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.0 : 0.5
+                })
+            pointsGroup.selectAll(".line-connect")
+                .style("stroke-width", function (a) {
+                    return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
+                })
+            pointsGroup.selectAll(".term-start")
+                .attr("r", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius: circleRadius
+                })
+            pointsGroup.selectAll(".term-end")
+                .attr("r", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius: circleRadius
+                })
+        })
+        .on("click", function (d) {
+            pointsGroup.selectAll("g")
+                .attr("opacity", function (a) {
+                    return (d.party == a.party) ? 1.0 : 0.1
+                })
+            pointsGroup.selectAll(".line-connect")
+                .style("stroke-width", function (a) {
+                    return (d.party == a.party) ? 2 * lineThickness : lineThickness
+                })
+            pointsGroup.selectAll(".term-start")
+                .attr("r", function (a) {
+                    return (d.party == a.party) ? 1.5 * circleRadius: circleRadius
+                })
+            pointsGroup.selectAll(".term-end")
+                .attr("r", function (a) {
+                    return (d.party == a.party) ? 1.5 * circleRadius: circleRadius
+                })
         })
         .on("mouseout", function (d) {
             d3.select(this)
@@ -225,6 +259,14 @@ function render(data) {
                 .transition()
                 .duration(500)
                 .selectAll(".term-end").attr("fill", colorParty(d.party))
+            pointsGroup.selectAll("g")
+                .attr("opacity", 1.0)
+            pointsGroup.selectAll(".line-connect")
+                .style("stroke-width", lineThickness)
+            pointsGroup.selectAll(".term-start")
+                .attr("r", circleRadius)
+            pointsGroup.selectAll(".term-end")
+                .attr("r", circleRadius)
         });
 
     wrapper.append("text")
