@@ -13,7 +13,8 @@ var colors = {
     "LD": "#F37A48",
     "Green": "#A1C181",
     "SF": "#008e4b",
-    "Other": "#50514F"
+    "Other": "#50514F",
+    "Hover": "#e5e5e5",
 }
 
 var partyHasSVG = Object.keys(colors);
@@ -135,9 +136,11 @@ function render(data) {
         .attr("r", circleRadius)
         .attr("class", "term-end")
 
+// Use a hidden rect to catch mouseovers more easily
     instance
         .append("rect")
         .attr("class", "hover-rect")
+        .attr("opacity", 0)
 
     function colorParty(party) {
         if (colors[party] != undefined) {
@@ -148,7 +151,6 @@ function render(data) {
     }
 
     // Update
-
     instance.selectAll(".line-connect")
         .attr("x1", function (d) {
             return x(d.term_start)
@@ -188,15 +190,27 @@ function render(data) {
             return colorParty(d.party);
         })
 
+    instance.selectAll(".hover-rect")
+        .attr("x", function (d) {
+            return x(d.term_start) - circleRadius/2
+        })
+        .attr("y", function (d) {
+            return y(d.stream) - (y(1)-y(2))/2
+        })
+        .attr("width", function (d) {
+            return x(d.term_end) - x(d.term_start) + circleRadius
+        })
+        .attr("height", y(1)-y(2))
+
     instance
         .on("mouseover", function (d) {
             tooltip.show(d, target)
             d3.select(this)
-                .selectAll(".line-connect").attr("stroke", "white")
+                .selectAll(".line-connect").attr("stroke", colors["Hover"])
             d3.select(this)
-                .selectAll(".term-start").attr("fill", "white")
+                .selectAll(".term-start").attr("fill", colors["Hover"])
             d3.select(this)
-                .selectAll(".term-end").attr("fill", "white")
+                .selectAll(".term-end").attr("fill", colors["Hover"])
         })
         .on("mouseout", function (d) {
             d3.select(this)
