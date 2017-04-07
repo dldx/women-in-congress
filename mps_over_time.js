@@ -23,15 +23,15 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function render(data) {
+function render(data_timeline, data_total_mps) {
     var lineThickness = 0.0018 * height;
     var circleRadius = lineThickness;
 
     // Min and max dates
-    data.minDate = d3.min(data, function (d) {
+    data_timeline.minDate = d3.min(data_timeline, function (d) {
         return d.term_start;
     });
-    data.maxDate = d3.max(data, function (d) {
+    data_timeline.maxDate = d3.max(data_timeline, function (d) {
         return d.term_end;
     });
 
@@ -40,7 +40,7 @@ function render(data) {
         .range([0, width]);
 
     var y = d3.scaleLinear()
-        .domain([0, d3.max(data, function (d) {
+        .domain([0, d3.max(data_timeline, function (d) {
             return d.stream;
         })])
         .range([height, 0]);
@@ -114,9 +114,47 @@ function render(data) {
         .attr("opacity", 0)
         .node()
 
+    // Curve to show max number of MPs over time
+    var max_mp_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_mps)
+        })
+        .curve(d3.curveMonotoneX)
+
+    var max_mps_path = pointsGroup.append("path")
+        .datum(data_total_mps)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("d", max_mp_line);
+
+    // Curve to show total number of women MPs over time
+    var total_women_mps_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_women_mps)
+        })
+        .curve(d3.curveBasis)
+
+    var total_women_mps_path = pointsGroup.append("path")
+        .datum(data_total_mps)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("d", total_women_mps_line);
+
     var instance = pointsGroup
         .selectAll("g")
-        .data(data)
+        .data(data_timeline)
         .enter()
         .append("g")
 
@@ -205,12 +243,12 @@ function render(data) {
     instance
         .on("mouseover", function (d) {
             tooltip.show(d, target)
-            d3.select(this)
-                .selectAll(".line-connect").attr("stroke", colors["Hover"])
-            d3.select(this)
-                .selectAll(".term-start").attr("fill", colors["Hover"])
-            d3.select(this)
-                .selectAll(".term-end").attr("fill", colors["Hover"])
+            // d3.select(this)
+            //     .selectAll(".line-connect").attr("stroke", colors["Hover"])
+            // d3.select(this)
+            //     .selectAll(".term-start").attr("fill", colors["Hover"])
+            // d3.select(this)
+            //     .selectAll(".term-end").attr("fill", colors["Hover"])
             pointsGroup.selectAll("g")
                 .attr("opacity", function (a) {
                     return (d.clean_name == a.clean_name) ? 1.0 : 0.5
@@ -221,11 +259,11 @@ function render(data) {
                 })
             pointsGroup.selectAll(".term-start")
                 .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius: circleRadius
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
                 })
             pointsGroup.selectAll(".term-end")
                 .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius: circleRadius
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
                 })
         })
         .on("click", function (d) {
@@ -239,26 +277,26 @@ function render(data) {
                 })
             pointsGroup.selectAll(".term-start")
                 .attr("r", function (a) {
-                    return (d.party == a.party) ? 1.5 * circleRadius: circleRadius
+                    return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
                 })
             pointsGroup.selectAll(".term-end")
                 .attr("r", function (a) {
-                    return (d.party == a.party) ? 1.5 * circleRadius: circleRadius
+                    return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
                 })
         })
         .on("mouseout", function (d) {
-            d3.select(this)
-                .transition()
-                .duration(500)
-                .selectAll(".line-connect").attr("stroke", colorParty(d.party))
-            d3.select(this)
-                .transition()
-                .duration(500)
-                .selectAll(".term-start").attr("fill", colorParty(d.party))
-            d3.select(this)
-                .transition()
-                .duration(500)
-                .selectAll(".term-end").attr("fill", colorParty(d.party))
+            // d3.select(this)
+            //     .transition()
+            //     .duration(500)
+            //     .selectAll(".line-connect").attr("stroke", colorParty(d.party))
+            // d3.select(this)
+            //     .transition()
+            //     .duration(500)
+            //     .selectAll(".term-start").attr("fill", colorParty(d.party))
+            // d3.select(this)
+            //     .transition()
+            //     .duration(500)
+            //     .selectAll(".term-end").attr("fill", colorParty(d.party))
             pointsGroup.selectAll("g")
                 .attr("opacity", 1.0)
             pointsGroup.selectAll(".line-connect")
@@ -321,22 +359,34 @@ function draw_graph() {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
 
-    d3.csv("mps_over_time.csv", function (d) {
-        var parseDate = d3.timeParse("%Y-%m-%d");
-        return {
-            name: d.name,
-            constituency: d.constituency,
-            term_start: parseDate(d.term_start),
-            term_end: parseDate(d.term_end),
-            party: d.party,
-            byelection: (d.byelection == "TRUE"),
-            notes: d.notes,
-            clean_name: d.clean_name,
-            stream: +d.stream
-        };
-    }, function (data) {
-        render(data);
-    });
+    d3.queue()
+        .defer(d3.csv, "mps_over_time.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d");
+            return {
+                name: d.name,
+                constituency: d.constituency,
+                term_start: parseDate(d.term_start),
+                term_end: parseDate(d.term_end),
+                party: d.party,
+                byelection: (d.byelection == "TRUE"),
+                notes: d.notes,
+                clean_name: d.clean_name,
+                stream: +d.stream
+            };
+        })
+        .defer(d3.csv, "number_women_over_time.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d");
+            return {
+                year: parseDate(d.Year),
+                total_women_mps: +d.Total,
+                total_mps: +d.total_mps
+            }
+        })
+        .await(analyze);
+
+    function analyze(error, mps_over_time, number_women_over_time) {
+        render(mps_over_time, number_women_over_time)
+    };
 }
 draw_graph()
 window.addEventListener('resize', draw_graph);
