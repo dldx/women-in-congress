@@ -23,7 +23,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function render(data_timeline, data_total_mps) {
+function render(data_timeline, data_total_women_mps, data_total_mps) {
     var lineThickness = 0.0018 * height;
     var circleRadius = lineThickness;
 
@@ -58,6 +58,7 @@ function render(data_timeline, data_total_mps) {
         .attr("width", width)
         .attr("height", height)
 
+    var stage = 1
     // Tooltip details
     var tooltip = d3.tip()
         .attr("class", "d3-tip")
@@ -115,14 +116,14 @@ function render(data_timeline, data_total_mps) {
         .node()
 
     // Curve to show max number of MPs over time
-    var max_mp_line = d3.line()
+    var max_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
         })
         .y(function (d) {
             return y(d.total_mps)
         })
-        .curve(d3.curveMonotoneX)
+        .curve(d3.curveBasis)
 
     var max_mps_path = pointsGroup.append("path")
         .datum(data_total_mps)
@@ -131,7 +132,46 @@ function render(data_timeline, data_total_mps) {
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
-        .attr("d", max_mp_line);
+        .attr("d", max_mps_line);
+
+    // define the area
+    var max_mps_area = d3.area()
+        .curve(d3.curveBasis)
+        .x(function (d) {
+            return x(d.year);
+        })
+        .y0(height)
+        .y1(function (d) {
+            return y(d.total_mps);
+        });
+
+    // add the area path
+    var max_mps_path_area = pointsGroup.append("path")
+        .data([data_total_mps])
+        .attr("class", "area")
+        .attr("d", max_mps_area)
+        .attr("fill", colors["Lab"])
+        .attr("opacity", 0)
+
+        // 50% line
+        var half_max_mps_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_mps/2)
+        })
+        .curve(d3.curveBasis)
+
+        var half_max_mps_path = pointsGroup.append("path")
+        .datum(data_total_mps)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", "5,10")
+        .attr("d", half_max_mps_line);
 
     // Curve to show total number of women MPs over time
     var total_women_mps_line = d3.line()
@@ -143,14 +183,41 @@ function render(data_timeline, data_total_mps) {
         })
         .curve(d3.curveBasis)
 
+    // define the area
+    var total_women_mps_area = d3.area()
+        .curve(d3.curveBasis)
+        .x(function (d) {
+            return x(d.year);
+        })
+        .y0(height)
+        .y1(function (d) {
+            return y(d.total_women_mps);
+        });
+
+    // add the area path
+    var total_women_mps_path_area = pointsGroup.append("path")
+        .data([data_total_women_mps])
+        .attr("class", "area")
+        .attr("d", total_women_mps_area)
+        .attr("fill", colors["Hover"])
+        .attr("opacity", 0)
+
+    // add the line path
     var total_women_mps_path = pointsGroup.append("path")
-        .datum(data_total_mps)
+        .datum(data_total_women_mps)
         .attr("fill", "none")
         .attr("stroke", colors["Hover"])
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("d", total_women_mps_line);
+        .attr("stroke-width", 1.5 * circleRadius)
+        .attr("d", total_women_mps_line)
+        .attr("stroke-dasharray", function (d) {
+            return this.getTotalLength()
+        })
+        .attr("stroke-dashoffset", function (d) {
+            return this.getTotalLength()
+        })
+    // .attr("opacity", 0)
 
     var instance = pointsGroup
         .selectAll("g")
@@ -241,7 +308,7 @@ function render(data_timeline, data_total_mps) {
         .attr("height", y(1) - y(2))
 
     instance
-        .on("mouseover", function (d) {
+        .on("mouseover", stage == 1 ? function (d) {
             tooltip.show(d, target)
             // d3.select(this)
             //     .selectAll(".line-connect").attr("stroke", colors["Hover"])
@@ -265,26 +332,111 @@ function render(data_timeline, data_total_mps) {
                 .attr("r", function (a) {
                     return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
                 })
-        })
-        .on("click", function (d) {
+        } : null)
+        .on("click", stage == 1 ? function (d) {
             pointsGroup.selectAll("g")
                 .attr("opacity", function (a) {
                     return (d.party == a.party) ? 1.0 : 0.1
                 })
+            tooltip.hide()
+            bisect = d3.bisector(function (a) {
+                return a.year
+            }).left
             pointsGroup.selectAll(".line-connect")
+                .transition()
+                .duration(1000)
+                .attr("x2", function (a) {
+                    return x(a.term_start)
+                })
+                //.attr("opacity", 0)
                 .style("stroke-width", function (a) {
                     return (d.party == a.party) ? 2 * lineThickness : lineThickness
                 })
             pointsGroup.selectAll(".term-start")
-                .attr("r", function (a) {
-                    return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+                // .attr("r", function (a) {
+                //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+                // })
+                .transition()
+                .delay(1000)
+                .duration(1000)
+                .attr("cx", function (a) {
+                    return x(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].year)
                 })
+                .attr("cy", function (a) {
+                    return y(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].total_women_mps)
+                })
+                .attr("opacity", 0)
             pointsGroup.selectAll(".term-end")
-                .attr("r", function (a) {
-                    return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+                // .attr("r", function (a) {
+                //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+                // })
+                .transition()
+                .duration(1000)
+                .attr("cx", function (a) {
+                    return x(a.term_start)
                 })
-        })
-        .on("mouseout", function (d) {
+                .transition()
+                .attr("r", function (a) {
+                    return 3 * circleRadius
+                })
+                .attr("cy", function (a) {
+                    return y(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].total_women_mps)
+                })
+                .transition()
+                .delay(3000)
+                .attr("r", 0)
+
+            total_women_mps_path
+                .transition()
+                .delay(2000)
+                .duration(500)
+                .transition()
+                .ease(d3.easeCubic)
+                .duration(3000)
+                .attr("stroke-dashoffset", 0)
+
+            y.domain([0, 800])
+
+            gY
+            .transition()
+                .delay(6000)
+                .duration(2000)
+                .call(yAxis)
+            total_women_mps_path
+                .transition()
+                .delay(6000)
+                .duration(2000)
+                .attr("d", total_women_mps_line)
+
+            total_women_mps_path_area
+            .transition()
+                .delay(6000)
+                .duration(2000)
+                .attr("d", total_women_mps_area)
+                .attr("opacity", 1)
+
+            max_mps_path
+            .transition()
+                .delay(6000)
+                .duration(2000)
+                .attr("d", max_mps_line)
+
+            max_mps_path_area
+            .transition()
+                .delay(6000)
+                .duration(2000)
+                .attr("d", max_mps_area)
+                .attr("opacity", 1)
+            half_max_mps_path
+            .transition()
+                .delay(6000)
+                .duration(2000)
+                .attr("d", half_max_mps_line)
+
+            var stage = 2
+
+        } : null)
+        .on("mouseout", stage == 1 ? function (d) {
             // d3.select(this)
             //     .transition()
             //     .duration(500)
@@ -305,7 +457,7 @@ function render(data_timeline, data_total_mps) {
                 .attr("r", circleRadius)
             pointsGroup.selectAll(".term-end")
                 .attr("r", circleRadius)
-        });
+        } : null);
 
     wrapper.append("text")
         .attr("x", (width / 2))
@@ -330,7 +482,6 @@ function render(data_timeline, data_total_mps) {
     instance.exit().remove();
 }
 
-var svg = d3.select(timeline).append("svg")
 
 // https://github.com/wbkd/d3-extended
 d3.selection.prototype.moveToFront = function () {
@@ -347,11 +498,12 @@ d3.selection.prototype.moveToBack = function () {
     });
 };
 
+var timeline = document.getElementById("timeline")
+var svg = d3.select(timeline).append("svg")
 
 function draw_graph() {
     d3.selectAll("g").remove()
     d3.select(".d3-tip").remove()
-    var timeline = document.getElementById("timeline")
     // Chart dimensions - use parent div size
     width = timeline.clientWidth - margin.left - margin.right,
         height = timeline.clientHeight - margin.top - margin.bottom;
@@ -382,10 +534,17 @@ function draw_graph() {
                 total_mps: +d.total_mps
             }
         })
+        .defer(d3.csv, "total_mps_over_time.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d");
+            return {
+                year: parseDate(d.Year),
+                total_mps: +d.total_mps
+            }
+        })
         .await(analyze);
 
-    function analyze(error, mps_over_time, number_women_over_time) {
-        render(mps_over_time, number_women_over_time)
+    function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time) {
+        render(mps_over_time, number_women_over_time, total_mps_over_time)
     };
 }
 draw_graph()
