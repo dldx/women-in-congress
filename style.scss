@@ -10,6 +10,50 @@ body {
   font-weight: 400;
 }
 
+.tracker {
+  position: relative;
+  z-index: 2;
+  height: 60px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 60px;
+    margin: auto;
+  }
+  .nav-prev {
+    margin: auto;
+  }
+  .nav-next {
+    margin: auto;
+  }
+}
+
+  .nav-prev, .nav-next{
+  	-moz-box-shadow:inset 0px 34px 0px -15px #b54b3a;
+  	-webkit-box-shadow:inset 0px 34px 0px -15px #b54b3a;
+  	box-shadow:inset 0px 34px 0px -15px #b54b3a;
+  	background-color:#a73f2d;
+  	border:1px solid #241d13;
+  	display:inline-block;
+  	cursor:pointer;
+  	color:#ffffff;
+  	font-size:0.8rem;
+  	font-weight:bold;
+  	padding: 5px;
+  	text-decoration:none;
+  	text-shadow:0px -1px 0px #7a2a1d;
+  }
+  .nav-prev:hover, .nav-next:hover {
+  	background-color:#b34332;
+  }
+  .nav-prev:active, .nav-next:active {
+  	position:relative;
+  	top:1px;
+  }
+
 .x-axis line,
 .x-axis path,
 .y-axis line,

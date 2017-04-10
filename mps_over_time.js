@@ -15,12 +15,152 @@ var colors = {
     "SF": "#008e4b",
     "Other": "#50514F",
     "Hover": "#e5e5e5",
+    "Active": "#A1C181"
 }
+var new_slide = 0
+var current_slide = -1
+var tracker_data = [{
+        section: "Intro",
+    },
+    {
+        section: "All MPs",
+    },
+    {
+        section: "Next",
+    },
+    {
+        section: "Down",
+    },
+    {
+        section: "Down",
+    },
+    {
+        section: "Down",
+    },
+]
+var tracker_colors = ["#5c5c5c", "#424242"]
 
 var partyHasSVG = Object.keys(colors);
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function update_state() {
+    // Only update if we are actually changing states
+    if (current_slide != new_slide) {
+        console.log(`Going from ${current_slide} to ${new_slide}`)
+        current_slide = new_slide
+    }
+    // Lastly update the hexagon tracker colours
+    d3.selectAll(".arc").selectAll("path")
+        .attr("fill", function (a) {
+            return a.index == current_slide ? colors["Active"] : tracker_colors[a.index % 2];
+        })
+}
+
+function create_tracker() {
+    var tracker_outer_radius = 30
+    var tracker_inner_radius = 0
+    d3.select(".tracker").remove()
+    var tracker_div = d3.select("body")
+        .append("div")
+        .attr("class", "tracker")
+
+    // Prev button
+    tracker_div
+        .append("button")
+        .attr("type", "button")
+        .attr("class", "nav-prev")
+        .text("Prev")
+        .on("click", function () {
+            new_slide = Math.max(0, current_slide - 1)
+            update_colors()
+        })
+    // Tracker hexagon wrapper
+    var tracker_wrapper = tracker_div
+        .append("svg")
+        .append("g")
+        .attr("class", "tracker-wrapper")
+        .attr("transform", `translate(${tracker_outer_radius},${tracker_outer_radius})`)
+
+    // Next button
+    tracker_div
+        .append("button")
+        .attr("type", "button")
+        .attr("class", "nav-next")
+        .text("Next")
+        .on("click", function () {
+            new_slide = Math.min(5, current_slide + 1)
+            update_state()
+        })
+
+    var pie = d3.pie()
+        .value(1) // Same fraction for every slice
+
+    var path = d3.arc()
+        .outerRadius(tracker_outer_radius)
+        .innerRadius(tracker_inner_radius)
+
+    // var label = d3.arc()
+    //     .outerRadius(tracker_outer_radius)
+    //     .innerRadius(tracker_inner_radius)
+
+    var arc = tracker_wrapper.selectAll(".arc")
+        .data(pie(tracker_data))
+        .enter().append("g")
+        .attr("class", "arc")
+
+    arc.append("path")
+        .attr("d", path)
+        .on("mouseover", function (d) {
+            d3.select(this)
+                .attr("fill", colors["Hover"])
+        })
+        .on("mouseout", function (d) {
+            update_state()
+        })
+        .on("click", function (d) {
+            new_slide = d.index
+            update_state()
+        })
+    update_state()
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////// Hexagon ///////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+
+    var SQRT3 = Math.sqrt(3),
+        hexRadius = tracker_outer_radius,
+        hexWidth = SQRT3 * hexRadius,
+        hexHeight = 2 * hexRadius;
+    var hexagonPoly = [
+        [0, -1],
+        [SQRT3 / 2, 0.5],
+        [0, 1],
+        [-SQRT3 / 2, 0.5],
+        [-SQRT3 / 2, -0.5],
+        [0, -1],
+        [SQRT3 / 2, -0.5]
+    ];
+    var hexagonPath = "m" + hexagonPoly.map(function (p) {
+        return [p[0] * hexRadius, p[1] * hexRadius].join(',');
+    }).join('l') + "z";
+
+    //Place a hexagon on the scene
+    tracker_wrapper.append("path")
+        .attr("class", "tracker-hexagon")
+        .attr("d", hexagonPath)
+        .style("stroke", colors["Active"])
+        .style("stroke-width", "8px")
+        .style("fill", "none")
+
+    var defs = svg.append("defs")
+    var mask = tracker_wrapper.append("clipPath")
+        .attr("id", "hex-mask")
+        .append("path")
+        .attr("fill", "none")
+        .attr("d", hexagonPath)
+
+    d3.select('.tracker-wrapper')
+        .attr("clip-path", "url(#hex-mask)")
+
 }
 
 function render(data_timeline, data_total_women_mps, data_total_mps) {
@@ -49,12 +189,15 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
     // Wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
+        .attr("class", "timeline-wrapper")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    // Create hexagon tracker
+    create_tracker()
     // Bounding box to clip points so that they aren't visible outside the chart area
     var boundingBox = wrapper
         .append("rect")
-        .attr("opacity", 0.0)
+        .style("opacity", 0.0)
         .attr("width", width)
         .attr("height", height)
 
@@ -112,7 +255,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("cx", Math.max(100, margin.left + 0.2 * width))
         .attr("cy", 0.1 * height)
         .attr("r", 5)
-        .attr("opacity", 0)
+        .style("opacity", 0)
         .node()
 
     // Curve to show max number of MPs over time
@@ -151,19 +294,19 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("class", "area")
         .attr("d", max_mps_area)
         .attr("fill", colors["Lab"])
-        .attr("opacity", 0)
+        .style("opacity", 0)
 
-        // 50% line
-        var half_max_mps_line = d3.line()
+    // 50% line
+    var half_max_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
         })
         .y(function (d) {
-            return y(d.total_mps/2)
+            return y(d.total_mps / 2)
         })
         .curve(d3.curveBasis)
 
-        var half_max_mps_path = pointsGroup.append("path")
+    var half_max_mps_path = pointsGroup.append("path")
         .datum(data_total_mps)
         .attr("fill", "none")
         .attr("stroke", colors["Hover"])
@@ -200,7 +343,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("class", "area")
         .attr("d", total_women_mps_area)
         .attr("fill", colors["Hover"])
-        .attr("opacity", 0)
+        .style("opacity", 0)
 
     // add the line path
     var total_women_mps_path = pointsGroup.append("path")
@@ -245,7 +388,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
     instance
         .append("rect")
         .attr("class", "hover-rect")
-        .attr("opacity", 0)
+        .style("opacity", 0)
 
     function colorParty(party) {
         if (colors[party] != undefined) {
@@ -317,7 +460,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
             // d3.select(this)
             //     .selectAll(".term-end").attr("fill", colors["Hover"])
             pointsGroup.selectAll("g")
-                .attr("opacity", function (a) {
+                .style("opacity", function (a) {
                     return (d.clean_name == a.clean_name) ? 1.0 : 0.5
                 })
             pointsGroup.selectAll(".line-connect")
@@ -335,7 +478,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         } : null)
         .on("click", stage == 1 ? function (d) {
             pointsGroup.selectAll("g")
-                .attr("opacity", function (a) {
+                .style("opacity", function (a) {
                     return (d.party == a.party) ? 1.0 : 0.1
                 })
             tooltip.hide()
@@ -365,7 +508,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
                 .attr("cy", function (a) {
                     return y(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].total_women_mps)
                 })
-                .attr("opacity", 0)
+                .style("opacity", 0)
             pointsGroup.selectAll(".term-end")
                 // .attr("r", function (a) {
                 //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
@@ -395,10 +538,10 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
                 .duration(3000)
                 .attr("stroke-dashoffset", 0)
 
-            y.domain([0, 800])
+            y.domain([0, 750])
 
             gY
-            .transition()
+                .transition()
                 .delay(6000)
                 .duration(2000)
                 .call(yAxis)
@@ -409,26 +552,26 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
                 .attr("d", total_women_mps_line)
 
             total_women_mps_path_area
-            .transition()
+                .transition()
                 .delay(6000)
                 .duration(2000)
                 .attr("d", total_women_mps_area)
-                .attr("opacity", 1)
+                .style("opacity", 1)
 
             max_mps_path
-            .transition()
+                .transition()
                 .delay(6000)
                 .duration(2000)
                 .attr("d", max_mps_line)
 
             max_mps_path_area
-            .transition()
+                .transition()
                 .delay(6000)
                 .duration(2000)
                 .attr("d", max_mps_area)
-                .attr("opacity", 1)
+                .style("opacity", 1)
             half_max_mps_path
-            .transition()
+                .transition()
                 .delay(6000)
                 .duration(2000)
                 .attr("d", half_max_mps_line)
@@ -450,7 +593,7 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
             //     .duration(500)
             //     .selectAll(".term-end").attr("fill", colorParty(d.party))
             pointsGroup.selectAll("g")
-                .attr("opacity", 1.0)
+                .style("opacity", 1.0)
             pointsGroup.selectAll(".line-connect")
                 .style("stroke-width", lineThickness)
             pointsGroup.selectAll(".term-start")
@@ -510,7 +653,6 @@ function draw_graph() {
     svg
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-
     d3.queue()
         .defer(d3.csv, "mps_over_time.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d");
