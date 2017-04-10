@@ -1,3 +1,8 @@
+// ----------------------------------------------------------------------------
+// DEFINE KEY SETTINGS FOR TIMELINE
+// ----------------------------------------------------------------------------
+
+// These are the margins for the SVG
 var margin = {
     top: 60,
     right: 50,
@@ -5,6 +10,8 @@ var margin = {
     left: 100
 };
 
+// These are the colours used to identify each political party as well as
+// a few additional functions
 var colors = {
     "Lab": "#C61148",
     "Con": "#0096DB",
@@ -13,12 +20,17 @@ var colors = {
     "LD": "#F37A48",
     "Green": "#A1C181",
     "SF": "#008e4b",
-    "Other": "#50514F",
-    "Hover": "#e5e5e5",
-    "Active": "#A1C181"
+    "Other": "#50514F", // Used as fallback when no party colour has been defined
+    "Hover": "#e5e5e5", // Used when hovering over an item
+    "Active": "#A1C181" // Used for the active slide on the tracker
 }
+
+// Track the current and desired slides for transitioning
 var new_slide = 0
 var current_slide = -1
+var partyToggled = false
+
+// These are the labels for each slide
 var tracker_data = [{
         section: "Intro",
     },
@@ -38,27 +50,53 @@ var tracker_data = [{
         section: "Down",
     },
 ]
+
+// These are the colours to be used on repeat for the tracker hexagon
 var tracker_colors = ["#5c5c5c", "#424242"]
 
-var partyHasSVG = Object.keys(colors);
+// If a political party has a colour defined,
+// then it also has an SVG logo that we can use
+var partyHasLogo = Object.keys(colors);
 
+// ----------------------------------------------------------------------------
+// WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
+// IF PARTY WASN'T FOUND
+// ----------------------------------------------------------------------------
+function colorParty(party) {
+    if (colors[party] != undefined) {
+        return colors[party];
+    } else {
+        return colors["Other"];
+    }
+}
+// ----------------------------------------------------------------------------
+// UPDATE GRAPH WHEN USER MOVES TO A NEW SLIDE
+// ----------------------------------------------------------------------------
 function update_state() {
     // Only update if we are actually changing states
     if (current_slide != new_slide) {
-        console.log(`Going from ${current_slide} to ${new_slide}`)
+        // Go from slide 0 to slide 1
+        if (current_slide == 0 & new_slide == 1) {
+            second_slide()
+        }
         current_slide = new_slide
     }
     // Lastly update the hexagon tracker colours
-    d3.selectAll(".arc").selectAll("path")
+    d3.selectAll(".arc")
+        .selectAll("path")
         .attr("fill", function (a) {
-            return a.index == current_slide ? colors["Active"] : tracker_colors[a.index % 2];
+            return a.index == current_slide ? colors["Active"] : tracker_colors[a.index % tracker_colors.length];
         })
 }
 
-function create_tracker() {
+// ----------------------------------------------------------------------------
+// INITIALISE THE HEXAGON TRACKER TO IDENTIFY AND SWITCH BETWEEN SLIDES
+// ----------------------------------------------------------------------------
+function initialise_tracker() {
     var tracker_outer_radius = 30
     var tracker_inner_radius = 0
-    d3.select(".tracker").remove()
+    d3.select(".tracker")
+        .remove()
     var tracker_div = d3.select("body")
         .append("div")
         .attr("class", "tracker")
@@ -71,7 +109,7 @@ function create_tracker() {
         .text("Prev")
         .on("click", function () {
             new_slide = Math.max(0, current_slide - 1)
-            update_colors()
+            update_state()
         })
     // Tracker hexagon wrapper
     var tracker_wrapper = tracker_div
@@ -87,7 +125,7 @@ function create_tracker() {
         .attr("class", "nav-next")
         .text("Next")
         .on("click", function () {
-            new_slide = Math.min(5, current_slide + 1)
+            new_slide = Math.min(tracker_data.length - 1, current_slide + 1)
             update_state()
         })
 
@@ -98,13 +136,10 @@ function create_tracker() {
         .outerRadius(tracker_outer_radius)
         .innerRadius(tracker_inner_radius)
 
-    // var label = d3.arc()
-    //     .outerRadius(tracker_outer_radius)
-    //     .innerRadius(tracker_inner_radius)
-
     var arc = tracker_wrapper.selectAll(".arc")
         .data(pie(tracker_data))
-        .enter().append("g")
+        .enter()
+        .append("g")
         .attr("class", "arc")
 
     arc.append("path")
@@ -140,8 +175,9 @@ function create_tracker() {
         [SQRT3 / 2, -0.5]
     ];
     var hexagonPath = "m" + hexagonPoly.map(function (p) {
-        return [p[0] * hexRadius, p[1] * hexRadius].join(',');
-    }).join('l') + "z";
+            return [p[0] * hexRadius, p[1] * hexRadius].join(',');
+        })
+        .join('l') + "z";
 
     //Place a hexagon on the scene
     tracker_wrapper.append("path")
@@ -158,43 +194,35 @@ function create_tracker() {
         .attr("fill", "none")
         .attr("d", hexagonPath)
 
+    // Attach hexagon clip mask to tracker wrapper
     d3.select('.tracker-wrapper')
         .attr("clip-path", "url(#hex-mask)")
-
 }
 
-function render(data_timeline, data_total_women_mps, data_total_mps) {
-    var lineThickness = 0.0018 * height;
-    var circleRadius = lineThickness;
-
-    // Min and max dates
-    data_timeline.minDate = d3.min(data_timeline, function (d) {
-        return d.term_start;
-    });
-    data_timeline.maxDate = d3.max(data_timeline, function (d) {
-        return d.term_end;
-    });
-
-    var x = d3.scaleTime()
+// ----------------------------------------------------------------------------
+// SET UP FOR THE FIRST SLIDE: ALL WOMEN MPS OVER TIME
+// ----------------------------------------------------------------------------
+function initial_render() {
+    // INITIALISE THE X AND Y AXIS SCALES AND RANGES
+    x = d3.scaleTime()
         .domain([new Date(1915, 01, 01), new Date(2020, 01, 01)])
         .range([0, width]);
 
-    var y = d3.scaleLinear()
-        .domain([0, d3.max(data_timeline, function (d) {
-            return d.stream;
-        })])
+    y = d3.scaleLinear()
+        .domain([0, 200]) // Almost 200 MPs by 2020
         .range([height, 0]);
 
-    // Enter
-    // Wrapper that contains the whole graph
+    // Add the group wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
         .attr("class", "timeline-wrapper")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Create hexagon tracker
-    create_tracker()
-    // Bounding box to clip points so that they aren't visible outside the chart area
+    // Initialise the hexagon tracker that tracks the state of the graph
+    initialise_tracker()
+
+    // Add a bounding box to clip points so that they aren't visible outside
+    // the chart area when we zoom in
     var boundingBox = wrapper
         .append("rect")
         .style("opacity", 0.0)
@@ -202,53 +230,57 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("height", height)
 
     var stage = 1
-    // Tooltip details
-    var tooltip = d3.tip()
+
+    // Initialise the tooltip
+    tooltip = d3.tip()
         .attr("class", "d3-tip")
         // .offset([-10, 0])
         .direction('s')
         .html(function (d) {
-            if (partyHasSVG.indexOf(d.party) != -1) {
-                partySVG = 0
+            if (partyHasLogo.indexOf(d.party) != -1) {
+                partyLogo = 0
             } else {
-                partySVG = 1
+                partyLogo = 1
             }
             return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1><div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party" style="opacity: ${partySVG}">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
+            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
             <svg role="img"><title>${d.party}</title><use xlink:href="./party_logos/party_logos.svg#${d.party}"/></svg>`;
         })
 
     wrapper.call(tooltip);
 
+    // Add a group and clip it to a rectangle defined below
     var clippedArea = wrapper.append("g")
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
 
-
-    var pointsGroup = clippedArea
+    // Add the points group that will hold all our data points
+    // pointsGroup is a GLOBAL variable
+    pointsGroup = clippedArea
         .append("g")
         .attr("id", "points")
 
+    // Create the clip rectangle used for the graph
     wrapper.append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", width)
         .attr("height", height);
 
-
+    // Add the x axis to the bottom of the graph
     var xAxis = d3.axisBottom(x)
     var gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-    var yAxis = d3.axisLeft(y)
-    var gY = wrapper.append("g")
+    // Add the y axis to the left of the graph
+    yAxis = d3.axisLeft(y)
+    gY = wrapper.append("g")
         .attr("class", "y-axis")
-        // .attr("opacity", 0)
         .call(yAxis);
 
-    // Tooltip target location
+    // Tooltip target location, defined as a circle in svg
     var target = wrapper
         .append("circle")
         .attr("id", "target-loc")
@@ -258,122 +290,14 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .style("opacity", 0)
         .node()
 
-    // Curve to show max number of MPs over time
-    var max_mps_line = d3.line()
-        .x(function (d) {
-            return x(d.year)
-        })
-        .y(function (d) {
-            return y(d.total_mps)
-        })
-        .curve(d3.curveBasis)
-
-    var max_mps_path = pointsGroup.append("path")
-        .datum(data_total_mps)
-        .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("d", max_mps_line);
-
-    // define the area
-    var max_mps_area = d3.area()
-        .curve(d3.curveBasis)
-        .x(function (d) {
-            return x(d.year);
-        })
-        .y0(height)
-        .y1(function (d) {
-            return y(d.total_mps);
-        });
-
-    // add the area path
-    var max_mps_path_area = pointsGroup.append("path")
-        .data([data_total_mps])
-        .attr("class", "area")
-        .attr("d", max_mps_area)
-        .attr("fill", colors["Lab"])
-        .style("opacity", 0)
-
-    // 50% line
-    var half_max_mps_line = d3.line()
-        .x(function (d) {
-            return x(d.year)
-        })
-        .y(function (d) {
-            return y(d.total_mps / 2)
-        })
-        .curve(d3.curveBasis)
-
-    var half_max_mps_path = pointsGroup.append("path")
-        .datum(data_total_mps)
-        .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("stroke-dasharray", "5,10")
-        .attr("d", half_max_mps_line);
-
-    // Curve to show total number of women MPs over time
-    var total_women_mps_line = d3.line()
-        .x(function (d) {
-            return x(d.year)
-        })
-        .y(function (d) {
-            return y(d.total_women_mps)
-        })
-        .curve(d3.curveBasis)
-
-    // define the area
-    var total_women_mps_area = d3.area()
-        .curve(d3.curveBasis)
-        .x(function (d) {
-            return x(d.year);
-        })
-        .y0(height)
-        .y1(function (d) {
-            return y(d.total_women_mps);
-        });
-
-    // add the area path
-    var total_women_mps_path_area = pointsGroup.append("path")
-        .data([data_total_women_mps])
-        .attr("class", "area")
-        .attr("d", total_women_mps_area)
-        .attr("fill", colors["Hover"])
-        .style("opacity", 0)
-
-    // add the line path
-    var total_women_mps_path = pointsGroup.append("path")
-        .datum(data_total_women_mps)
-        .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5 * circleRadius)
-        .attr("d", total_women_mps_line)
-        .attr("stroke-dasharray", function (d) {
-            return this.getTotalLength()
-        })
-        .attr("stroke-dashoffset", function (d) {
-            return this.getTotalLength()
-        })
-    // .attr("opacity", 0)
-
-    var instance = pointsGroup
+    // Add a group to contain each data point and bind to timeline data
+    instance = pointsGroup
         .selectAll("g")
-        .data(data_timeline)
+        .data(mps_over_time_data)
         .enter()
         .append("g")
 
-    // Add line connecting start and end of term
-    instance
-        .append("line")
-        .attr("class", "line-connect")
-        .style("stroke-width", lineThickness)
-    // Add circle for start and end
+    // Add circle to signify start and end of term
     instance
         .append("circle")
         .attr("r", circleRadius)
@@ -384,38 +308,19 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("r", circleRadius)
         .attr("class", "term-end")
 
-    // Use a hidden rect to catch mouseovers more easily
+    // Add a line connecting start and end of term
+    instance
+        .append("line")
+        .attr("class", "line-connect")
+        .style("stroke-width", lineThickness)
+
+    // Use a hidden rect to catch mouseovers more easily (similar to voronoi mouseover grid)
     instance
         .append("rect")
         .attr("class", "hover-rect")
         .style("opacity", 0)
 
-    function colorParty(party) {
-        if (colors[party] != undefined) {
-            return colors[party];
-        } else {
-            return colors["Other"];
-        }
-    }
-
-    // Update
-    instance.selectAll(".line-connect")
-        .attr("x1", function (d) {
-            return x(d.term_start)
-        })
-        .attr("x2", function (d) {
-            return x(d.term_end)
-        })
-        .attr("y1", function (d) {
-            return y(d.stream)
-        })
-        .attr("y2", function (d) {
-            return y(d.stream)
-        })
-        .attr("stroke", function (d) {
-            return colorParty(d.party);
-        })
-
+    // For each start and end point, set position and colour
     instance.selectAll(".term-start")
         .attr("cx", function (d) {
             return x(d.term_start)
@@ -438,6 +343,26 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
             return colorParty(d.party);
         })
 
+    // For each MP line, set position and stroke colour
+    instance.selectAll(".line-connect")
+        .attr("x1", function (d) {
+            return x(d.term_start)
+        })
+        .attr("x2", function (d) {
+            return x(d.term_end)
+        })
+        .attr("y1", function (d) {
+            return y(d.stream)
+        })
+        .attr("y2", function (d) {
+            return y(d.stream)
+        })
+        .attr("stroke", function (d) {
+            return colorParty(d.party);
+        })
+
+    // For each hidden rectangle belonging to a point, set position and size
+    // so that it covers the space between points
     instance.selectAll(".hover-rect")
         .attr("x", function (d) {
             return x(d.term_start) - circleRadius / 2
@@ -448,160 +373,59 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("width", function (d) {
             return x(d.term_end) - x(d.term_start) + circleRadius
         })
-        .attr("height", y(1) - y(2))
+        .attr("height", y(1) - y(2)) // height of rectangle is one unit of the y axis
 
+    // For each point group, set tooltip to display on mouseover
+    // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
     instance
-        .on("mouseover", stage == 1 ? function (d) {
-            tooltip.show(d, target)
-            // d3.select(this)
-            //     .selectAll(".line-connect").attr("stroke", colors["Hover"])
-            // d3.select(this)
-            //     .selectAll(".term-start").attr("fill", colors["Hover"])
-            // d3.select(this)
-            //     .selectAll(".term-end").attr("fill", colors["Hover"])
-            pointsGroup.selectAll("g")
-                .style("opacity", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.0 : 0.5
-                })
-            pointsGroup.selectAll(".line-connect")
-                .style("stroke-width", function (a) {
-                    return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
-                })
-            pointsGroup.selectAll(".term-start")
-                .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                })
-            pointsGroup.selectAll(".term-end")
-                .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                })
-        } : null)
-        .on("click", stage == 1 ? function (d) {
-            pointsGroup.selectAll("g")
-                .style("opacity", function (a) {
-                    return (d.party == a.party) ? 1.0 : 0.1
-                })
-            tooltip.hide()
-            bisect = d3.bisector(function (a) {
-                return a.year
-            }).left
-            pointsGroup.selectAll(".line-connect")
-                .transition()
-                .duration(1000)
-                .attr("x2", function (a) {
-                    return x(a.term_start)
-                })
-                //.attr("opacity", 0)
-                .style("stroke-width", function (a) {
-                    return (d.party == a.party) ? 2 * lineThickness : lineThickness
-                })
-            pointsGroup.selectAll(".term-start")
-                // .attr("r", function (a) {
-                //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-                // })
-                .transition()
-                .delay(1000)
-                .duration(1000)
-                .attr("cx", function (a) {
-                    return x(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].year)
-                })
-                .attr("cy", function (a) {
-                    return y(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].total_women_mps)
-                })
-                .style("opacity", 0)
-            pointsGroup.selectAll(".term-end")
-                // .attr("r", function (a) {
-                //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-                // })
-                .transition()
-                .duration(1000)
-                .attr("cx", function (a) {
-                    return x(a.term_start)
-                })
-                .transition()
-                .attr("r", function (a) {
-                    return 3 * circleRadius
-                })
-                .attr("cy", function (a) {
-                    return y(data_total_women_mps[bisect(data_total_women_mps, a.term_start)].total_women_mps)
-                })
-                .transition()
-                .delay(3000)
-                .attr("r", 0)
+        .on("mouseover", function (d) {
+            // Only show mouseover if MP is in toggled party or if no party is filtered
+            if (partyToggled == false | d.party == partyToggled) {
+                tooltip.show(d, target)
 
-            total_women_mps_path
-                .transition()
-                .delay(2000)
-                .duration(500)
-                .transition()
-                .ease(d3.easeCubic)
-                .duration(3000)
-                .attr("stroke-dashoffset", 0)
-
-            y.domain([0, 750])
-
-            gY
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .call(yAxis)
-            total_women_mps_path
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .attr("d", total_women_mps_line)
-
-            total_women_mps_path_area
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .attr("d", total_women_mps_area)
-                .style("opacity", 1)
-
-            max_mps_path
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .attr("d", max_mps_line)
-
-            max_mps_path_area
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .attr("d", max_mps_area)
-                .style("opacity", 1)
-            half_max_mps_path
-                .transition()
-                .delay(6000)
-                .duration(2000)
-                .attr("d", half_max_mps_line)
-
-            var stage = 2
-
-        } : null)
-        .on("mouseout", stage == 1 ? function (d) {
-            // d3.select(this)
-            //     .transition()
-            //     .duration(500)
-            //     .selectAll(".line-connect").attr("stroke", colorParty(d.party))
-            // d3.select(this)
-            //     .transition()
-            //     .duration(500)
-            //     .selectAll(".term-start").attr("fill", colorParty(d.party))
-            // d3.select(this)
-            //     .transition()
-            //     .duration(500)
-            //     .selectAll(".term-end").attr("fill", colorParty(d.party))
-            pointsGroup.selectAll("g")
-                .style("opacity", 1.0)
-            pointsGroup.selectAll(".line-connect")
+                // Increase line thickness of all terms of the same MP
+                pointsGroup.selectAll(".line-connect")
+                    .style("stroke-width", function (a) {
+                        return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
+                    })
+                // Also make the start and end circles bigger
+                pointsGroup.selectAll(".term-start")
+                    .attr("r", function (a) {
+                        return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+                    })
+                pointsGroup.selectAll(".term-end")
+                    .attr("r", function (a) {
+                        return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+                    })
+            }
+        })
+        // On mouse out, change everything back
+        .on("mouseout", function (d) {
+            pointsGroup
+                .selectAll(".line-connect")
                 .style("stroke-width", lineThickness)
-            pointsGroup.selectAll(".term-start")
+            pointsGroup
+                .selectAll(".term-start")
                 .attr("r", circleRadius)
-            pointsGroup.selectAll(".term-end")
+            pointsGroup
+                .selectAll(".term-end")
                 .attr("r", circleRadius)
-        } : null);
+        })
+        // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
+        .on("click", function (d) {
+            if (partyToggled == false) {
+                // Store toggled party
+                partyToggled = d.party
+            } else {
+                partyToggled = false
+            }
+            pointsGroup.selectAll("g")
+                .style("opacity", function (a) {
+                    return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
+                })
+        })
 
+    // Add chart title
     wrapper.append("text")
         .attr("x", (width / 2))
         .attr("y", 0 - (margin.top / 2))
@@ -609,11 +433,10 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         .attr("class", "chart-title")
         .text("Women MPs in the House of Commons")
 
-    // Zoom
+    // Add zoom capabilities for the points
     var zoom = d3.zoom()
-        .scaleExtent([0.98, 40])
+        .scaleExtent([0.95, 40])
         .on("zoom", zoomed);
-    //wrapper.call(zoom);
     svg.call(zoom);
 
     function zoomed() {
@@ -621,35 +444,275 @@ function render(data_timeline, data_total_women_mps, data_total_mps) {
         gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
         gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
     }
+
     // Exit
-    instance.exit().remove();
+    instance
+        .exit()
+        .remove();
+
+    // Update current slide number
+    current_slide = 0
+
 }
 
+// ----------------------------------------------------------------------------
+// SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
+// ----------------------------------------------------------------------------
+function second_slide() {
+    // Delete all objects belonging to this slide so that we don't duplicate them
+    d3.select(".max-mps-line").remove()
+    d3.select(".max-mps-area").remove()
+    d3.select(".half-max-mps-path").remove()
+    d3.select(".total-women-mps-path").remove()
+    d3.select(".total-women-mps-area").remove()
+    // Add interpolation line for total mps ove time
+    var max_mps_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_mps)
+        })
+        .curve(d3.curveBasis)
 
-// https://github.com/wbkd/d3-extended
-d3.selection.prototype.moveToFront = function () {
-    return this.each(function () {
-        this.parentNode.appendChild(this);
-    });
-};
-d3.selection.prototype.moveToBack = function () {
-    return this.each(function () {
-        var firstChild = this.parentNode.firstChild;
-        if (firstChild) {
-            this.parentNode.insertBefore(this, firstChild);
-        }
-    });
-};
+    // Add the svg path to display this line
+    var max_mps_path = pointsGroup.append("path")
+        .datum(total_mps_over_time_data)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("d", max_mps_line)
+        .attr("class", "max-mps-line")
 
+    // Also add an area curve to shade the whole region below the max mp line
+    var max_mps_area = d3.area()
+        .curve(d3.curveBasis)
+        .x(function (d) {
+            return x(d.year);
+        })
+        .y0(height)
+        .y1(function (d) {
+            return y(d.total_mps);
+        });
+
+    // Add the svg path for this shaded region
+    var max_mps_path_area = pointsGroup.append("path")
+        .data([total_mps_over_time_data])
+        .attr("d", max_mps_area)
+        .attr("fill", colors["Lab"])
+        .style("opacity", 0)
+        .attr("class", "max-mps-area")
+
+    // Add a 50% line to show halfway mark for gender
+    var half_max_mps_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_mps / 2)
+        })
+        .curve(d3.curveBasis)
+
+    // Add this in svg
+    var half_max_mps_path = pointsGroup.append("path")
+        .datum(total_mps_over_time_data)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", "5,10")
+        .attr("d", half_max_mps_line)
+        .attr("class", "half-max-mps-path")
+
+    // Curve to show total number of women MPs over time
+    var total_women_mps_line = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_women_mps)
+        })
+        .curve(d3.curveBasis)
+
+    // add the line path
+    var total_women_mps_path = pointsGroup.append("path")
+        .datum(number_women_over_time_data)
+        .attr("fill", "none")
+        .attr("stroke", colors["Hover"])
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 1.5 * circleRadius)
+        .attr("d", total_women_mps_line)
+        .attr("stroke-dasharray", function (d) {
+            return this.getTotalLength()
+        })
+        .attr("stroke-dashoffset", function (d) {
+            return this.getTotalLength()
+        })
+        .attr("class", "total-women-mps-path")
+
+    // Area curve for total number of women MPs
+    var total_women_mps_area = d3.area()
+        .curve(d3.curveBasis)
+        .x(function (d) {
+            return x(d.year);
+        })
+        .y0(height)
+        .y1(function (d) {
+            return y(d.total_women_mps);
+        });
+
+    // Add the area path
+    var total_women_mps_path_area = pointsGroup.append("path")
+        .data([number_women_over_time_data])
+        .attr("d", total_women_mps_area)
+        .attr("fill", colors["Hover"])
+        .style("opacity", 0)
+        .attr("class", "total-women-mps-area")
+
+    // ----------------------------------------------------------------------------
+    // START THE TRANSITION FROM MP POINTS TO LINE GRAPH
+    // ------------------------------------------------------------------------
+
+    // Hide the tooltip
+    tooltip.hide()
+    // Create a bisector method to find the nearest point in the total mp data
+    bisect = d3.bisector(function (a) {
+            return a.year
+        })
+        .left
+    pointsGroup.selectAll(".line-connect")
+        .transition()
+        .duration(1000)
+        .attr("x2", function (a) {
+            return x(a.term_start)
+        })
+    pointsGroup.selectAll(".term-start")
+        // .attr("r", function (a) {
+        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+        // })
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .attr("cx", function (a) {
+            return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
+        })
+        .attr("cy", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+        .style("opacity", 0)
+    pointsGroup.selectAll(".term-end")
+        // .attr("r", function (a) {
+        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+        // })
+        .transition()
+        .duration(1000)
+        .attr("cx", function (a) {
+            return x(a.term_start)
+        })
+        .transition()
+        .attr("r", function (a) {
+            return 3 * circleRadius
+        })
+        .attr("cy", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+        .transition()
+        .delay(3000)
+        .attr("r", 0)
+
+    total_women_mps_path
+        .transition()
+        .delay(2000)
+        .duration(500)
+        .transition()
+        .ease(d3.easeCubic)
+        .duration(3000)
+        .attr("stroke-dashoffset", 0)
+
+    y.domain([0, 750])
+
+    gY
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .call(yAxis)
+    total_women_mps_path
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .attr("d", total_women_mps_line)
+
+    total_women_mps_path_area
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .attr("d", total_women_mps_area)
+        .style("opacity", 1)
+
+    max_mps_path
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .attr("d", max_mps_line)
+
+    max_mps_path_area
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .attr("d", max_mps_area)
+        .style("opacity", 1)
+    half_max_mps_path
+        .transition()
+        .delay(6000)
+        .duration(2000)
+        .attr("d", half_max_mps_line)
+
+    instance
+        .on("mouseover", null)
+        .on("mouseout", null)
+        .on("click", null)
+}
+
+// ----------------------------------------------------------------------------
+// FIND TIMELINE DIV AND ADD SVG
+// ----------------------------------------------------------------------------
 var timeline = document.getElementById("timeline")
-var svg = d3.select(timeline).append("svg")
+var svg = d3.select(timeline)
+    .append("svg")
 
+// ----------------------------------------------------------------------------
+// GLOBAL VARIABLES TO STORE SPECIFIC SELECTORS AND DATA
+// ----------------------------------------------------------------------------
+var pointsGroup,
+    instance,
+    x, y,
+    yAxis, gY,
+    tooltip,
+    lineThickness,
+    circleRadius,
+    mps_over_time_data,
+    number_women_over_time_data,
+    total_mps_over_time_data
+
+// ----------------------------------------------------------------------------
+// GET DATA AND DRAW INITIAL GRAPH, WHILE RESIZING TO FIT WITHIN WINDOW
+// ----------------------------------------------------------------------------
 function draw_graph() {
-    d3.selectAll("g").remove()
-    d3.select(".d3-tip").remove()
+    d3.selectAll("g")
+        .remove()
+    d3.select(".d3-tip")
+        .remove()
     // Chart dimensions - use parent div size
     width = timeline.clientWidth - margin.left - margin.right,
         height = timeline.clientHeight - margin.top - margin.bottom;
+    // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
+    lineThickness = 0.0018 * height;
+    // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
+    circleRadius = lineThickness;
     svg
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -686,8 +749,17 @@ function draw_graph() {
         .await(analyze);
 
     function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time) {
-        render(mps_over_time, number_women_over_time, total_mps_over_time)
+        // Make global
+        mps_over_time_data = mps_over_time
+        number_women_over_time_data = number_women_over_time
+        total_mps_over_time_data = total_mps_over_time
+        initial_render()
     };
 }
+
+// INITIAL DRAW
 draw_graph()
+// ----------------------------------------------------------------------------
+// REDRAW GRAPH ON WINDOW RESIZE
+// ----------------------------------------------------------------------------
 window.addEventListener('resize', draw_graph);
