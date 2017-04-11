@@ -133,8 +133,14 @@ function update_state() {
     }
     // Lastly update the hexagon tracker colours
     d3.selectAll(".arc")
+        .classed("c-1", function(a) {
+            return a.index % 2 == 0
+        })
+        .classed("c-2", function(a) {
+            return a.index % 2 == 1
+        })
         .classed("active", function (a) {
-            return a.index == current_slide// ? colors["Active"] : tracker_colors[a.index % tracker_colors.length];
+            return a.index == current_slide
         })
 }
 

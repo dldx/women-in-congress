@@ -12,6 +12,8 @@ $colors: (
     Hover: #e5e5e5, // Used when hovering over an item
     Active: #a1c181 // Used for the active slide on the tracker
 );
+$tracker-colors: #5c5c5c, #424242;
+
 $body-background: #131313;
 $graph-background: #252525;
 $tip-background: $body-background;
@@ -20,6 +22,7 @@ $female: map-get($colors, Hover);
 $male: map-get($colors, Lab);
 
 $slide2-header-color: map-get($colors, Green);
+$info-bubble-header-color: map-get($colors, Con);
 
 body {
   background-color: $body-background;
@@ -51,35 +54,41 @@ body {
   }
 
   .arc {
-    &.hover {
-      fill: map-get($colors, Hover);
+    @each $item in $tracker-colors {
+      &.c-#{index($tracker-colors, $item)} {
+        fill: $item;
+      }
     }
     &.active {
       fill: map-get($colors, Active);
     }
+    &.hover {
+      fill: map-get($colors, Hover);
+    }
   }
 }
 
+$nav-button-bg: map-get($colors, Lab);
+$nav-button-fg: lighten(map-get($colors, Hover), 50);
+
 .nav-next,
 .nav-prev {
-  -moz-box-shadow: inset 0 34px 0 -15px #b54b3a;
-  -webkit-box-shadow: inset 0 34px 0 -15px #b54b3a;
-  box-shadow: inset 0 34px 0 -15px #b54b3a;
-  background-color: #a73f2d;
-  border: 1px solid #241d13;
+  box-shadow: inset 0 34px 0 -15px $nav-button-bg;
+  background-color: lighten($nav-button-bg, 3);
+  border: 1px solid darken($nav-button-bg, 30);
   display: inline-block;
   cursor: pointer;
-  color: #ffffff;
+  color: $nav-button-fg;
   font-size: .8rem;
   font-weight: bold;
   padding: 5px;
   text-decoration: none;
-  text-shadow: 0 -1px 0 #7a2a1d;
+  text-shadow: 1px 1px 1px darken($nav-button-fg, 50);
 }
 
 .nav-next:hover,
 .nav-prev:hover {
-  background-color: #b34332;
+  background-color: lighten($nav-button-bg, 20);
 }
 
 .nav-next:active,
@@ -128,11 +137,11 @@ body {
 }
 
 .info-bubble {
-  fill: map-get($colors, Con);
-  stroke: lighten(map-get($colors, Con), 20);
+  fill: $info-bubble-header-color;
+  stroke: lighten($info-bubble-header-color, 20);
   &.hover {
-    fill: lighten(map-get($colors, Con), 50);
-    stroke: lighten(map-get($colors, Con), 20);
+    fill: lighten($info-bubble-header-color, 30);
+    stroke: lighten($info-bubble-header-color, 50);
   }
 }
 
