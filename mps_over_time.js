@@ -71,6 +71,24 @@ function colorParty(party) {
 }
 
 // ----------------------------------------------------------------------------
+// FORMAT DATE AS Jan 2016
+// ----------------------------------------------------------------------------
+function formatDate(date) {
+    var monthNames = [
+        "Jan", "Feb", "March",
+        "Apr", "May", "Jun", "Jul",
+        "Aug", "Sept", "Oct",
+        "Nov", "Dec"
+    ];
+
+    // var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return monthNames[monthIndex] + ' ' + year;
+}
+
+// ----------------------------------------------------------------------------
 // RESET THE GRAPH IF ZOOMED IN AND REMOVE ANY EVENT CALLBACKS
 // ----------------------------------------------------------------------------
 function reset_zoom(callback) {
@@ -219,7 +237,6 @@ function initialise_tracker() {
         .style("stroke-width", "8px")
         .style("fill", "none")
 
-    var defs = svg.append("defs")
     var mask = tracker_wrapper.append("clipPath")
         .attr("id", "hex-mask")
         .append("path")
@@ -244,6 +261,7 @@ function initial_render() {
         .domain([0, 200]) // Almost 200 MPs by 2020
         .range([height, 0]);
 
+    defs = svg.append("defs")
     // Add the group wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
@@ -266,16 +284,6 @@ function initial_render() {
         .attr("class", "d3-tip")
         // .offset([-10, 0])
         .direction('s')
-        .html(function (d) {
-            if (partyHasLogo.indexOf(d.party) != -1) {
-                partyLogo = 0
-            } else {
-                partyLogo = 1
-            }
-            return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1><div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div><div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div><div class="mp-constituency">${d.constituency}</div>
-            <svg role="img"><title>${d.party}</title><use xlink:href="./party_logos/party_logos.svg#${d.party}"/></svg>`;
-        })
 
     wrapper.call(tooltip);
 
@@ -368,11 +376,37 @@ d3.selection.prototype.moveToBack = function () {
 function first_slide() {
     d3.select("#slide1-group")
         .remove()
+    d3.select("#election-rects")
+        .remove()
+
+    // Add rectangles in the background to identify parliamentary terms
+    electionRects = zoomedArea
+        .append("g")
+        .attr("id", "election-rects")
+        .selectAll("rect")
+        .data(total_mps_over_time_data)
+        .enter()
+        .append("rect")
+        .attr("class", "election-rect")
+        .style("opacity", 0.1)
+        .attr("fill", function (d, i) {
+            return tracker_colors[i % tracker_colors.length]
+        })
+        .attr("x", function (d) {
+            return x(d.year)
+        })
+        .attr("y", y(800))
+        .attr("width", function (d, i) {
+            var first_election = d.year
+            var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
+            return x(second_election) - x(first_election)
+        })
+        .attr("height", y(0) - y(2000)) // height of rectangle is one unit of the y axis
+
     // Add the points group that will hold all our data points
     pointsGroup = zoomedArea
         .append("g")
         .attr("id", "slide1-group")
-
     // Add a group to contain each data point and bind to timeline data
     instance = pointsGroup
         .selectAll("g")
@@ -459,11 +493,28 @@ function first_slide() {
         .attr("height", y(1) - y(2)) // height of rectangle is one unit of the y axis
 
     // For each point group, set tooltip to display on mouseover
+
+    tooltip.html(function (d) {
+        if (partyHasLogo.indexOf(d.party) != -1) {
+            partyLogo = 0
+        } else {
+            partyLogo = 1
+        }
+        return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
+            <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
+            ${d3.timeFormat("%Y")(d.term_end)}</div>
+            <div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div>
+            <div class="mp-constituency">${d.constituency}</div>
+            <svg role="img">
+                <title>${d.party}</title>
+                <use xlink:href="./party_logos/party_logos.svg#${d.party}"/>
+            </svg>`;
+    })
     // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
     instance
         .on("mouseover", function (d) {
             // Only show mouseover if MP is in toggled party or if no party is filtered
-            if (partyToggled == false | d.party == partyToggled) {
+            if (partyToggled == false || d.party == partyToggled) {
                 d3.select(this)
                     .moveToFront()
                 tooltip.show(d, target)
@@ -508,6 +559,7 @@ function first_slide() {
                 .style("opacity", function (a) {
                     return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
                 })
+                .moveToFront()
         })
 
     // Exit
@@ -531,6 +583,11 @@ function to_first_slide() {
     t0.select("#slide2-group")
         .style("opacity", 0)
         .remove()
+    // Remove election rect events and tooltip
+    tooltip.hide()
+    d3.selectAll(".election-rect")
+        .on("mouseover", null)
+        .on("mouseout", null)
 
     // Change domain to include all MPs and rescale y axis
     y.domain([0, 200])
@@ -598,6 +655,18 @@ function second_slide() {
         .attr("d", max_mps_area)
         .attr("fill", colors["Lab"])
         .style("opacity", 0)
+
+            // Mask election rectangles with the total area path
+            var mask = slide2Group
+                .append("clipPath")
+                .attr("id", "slide2-hover-mask")
+                .append("path")
+                .data([total_mps_over_time_data])
+                .attr("d", max_mps_area)
+
+            d3.select("#election-rects")
+                .attr("clip-path", "url(#slide2-hover-mask)")
+                .moveToFront()
 
     // Add a 50% line to show halfway mark for gender
     var half_max_mps_line = d3.line()
@@ -667,6 +736,8 @@ function second_slide() {
         .attr("fill", colors["Hover"])
         .style("opacity", 0)
 
+
+
     // ----------------------------------------------------------------------------
     // START THE TRANSITION FROM MP POINTS TO LINE GRAPH
     // ------------------------------------------------------------------------
@@ -683,9 +754,9 @@ function second_slide() {
 
     // Create a bisector method to find the nearest point in the total mp data
     bisect = d3.bisector(function (a) {
-        return a.year
-    })
-    .left
+            return a.year
+        })
+        .left
 
     pointsGroup.selectAll(".line-connect")
         .transition()
@@ -779,6 +850,13 @@ function second_slide() {
         .duration(750)
         .attr("d", max_mps_area)
         .style("opacity", 1)
+
+    mask
+        .transition()
+        .delay(4000)
+        .duration(750)
+        .attr("d", max_mps_area)
+
     half_max_mps_path
         .transition()
         .delay(4000)
@@ -789,6 +867,39 @@ function second_slide() {
         .on("mouseover", null)
         .on("mouseout", null)
         .on("click", null)
+
+    svg.transition()
+        .delay(4000)
+        .on("end", () => {
+            // Reconfigure tooltip to show different information
+            tooltip.html(function (d, i) {
+                var first_election = d.year
+                var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
+                var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
+                var gender_ratio = d.total_mps / num_women - 1
+                return `<div class="slide2-tooltip"><h1 style="background-color: ${colors["Green"]};">${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+            ${num_women > 0 ? `For every <span style="color: ${colors["Hover"]}">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male" style="color: ${colors["Lab"]}">male</span> MPs.` :
+                            `There were no women in the House of Commons yet :(`}
+                                </div>
+            `;
+            })
+
+            // Use election rects to catch mouseovers and display information
+            electionRects
+                .on("mouseover", function (d, i) {
+                    d3.select(this)
+                        .style("opacity", 0.5)
+                        .attr("fill", colors["Hover"])
+                    tooltip.show(d, i, target)
+                })
+                .on("mouseout", function (d, i) {
+                    d3.select(this)
+                        .style("opacity", 0.1)
+                        .attr("fill", tracker_colors[i % tracker_colors.length])
+                })
+        })
+
 }
 
 // ----------------------------------------------------------------------------
@@ -802,6 +913,8 @@ var svg = d3.select(timeline)
 // GLOBAL VARIABLES TO STORE SPECIFIC SELECTORS AND DATA
 // ----------------------------------------------------------------------------
 var clippedArea,
+    electionRects,
+    defs,
     zoom,
     zoomedArea,
     pointsGroup,

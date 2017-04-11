@@ -116,6 +116,22 @@ $tip-padding: 1;
   position: absolute;
   left: 300px;
 
+  .slide2-tooltip {
+    font-size: 1rem;
+    font-weight: 200;
+    text-align: center;
+
+    span {
+      font-weight: bold;
+      .male {
+        float: right;
+      }
+    }
+    .gender-ratio {
+      font-size: 5rem;
+    }
+  }
+
   h1 {
     display: block;
     font-size: 1rem;

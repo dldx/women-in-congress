@@ -21,25 +21,28 @@ body {
   .tracker .nav-next {
     margin: auto; }
 
-.nav-prev, .nav-next {
-  -moz-box-shadow: inset 0px 34px 0px -15px #b54b3a;
-  -webkit-box-shadow: inset 0px 34px 0px -15px #b54b3a;
-  box-shadow: inset 0px 34px 0px -15px #b54b3a;
+.nav-next,
+.nav-prev {
+  -moz-box-shadow: inset 0 34px 0 -15px #b54b3a;
+  -webkit-box-shadow: inset 0 34px 0 -15px #b54b3a;
+  box-shadow: inset 0 34px 0 -15px #b54b3a;
   background-color: #a73f2d;
   border: 1px solid #241d13;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: .8rem;
   font-weight: bold;
   padding: 5px;
   text-decoration: none;
-  text-shadow: 0px -1px 0px #7a2a1d; }
+  text-shadow: 0 -1px 0 #7a2a1d; }
 
-.nav-prev:hover, .nav-next:hover {
+.nav-next:hover,
+.nav-prev:hover {
   background-color: #b34332; }
 
-.nav-prev:active, .nav-next:active {
+.nav-next:active,
+.nav-prev:active {
   position: relative;
   top: 1px; }
 
@@ -86,7 +89,19 @@ body {
   overflow: hidden;
   padding: 1em;
   pointer-events: none;
-  width: 20rem; }
+  width: 20rem;
+  position: absolute;
+  left: 300px; }
+  .d3-tip .slide2-tooltip {
+    font-size: 1rem;
+    font-weight: 200;
+    text-align: center; }
+    .d3-tip .slide2-tooltip span {
+      font-weight: bold; }
+      .d3-tip .slide2-tooltip span .male {
+        float: right; }
+    .d3-tip .slide2-tooltip .gender-ratio {
+      font-size: 5rem; }
   .d3-tip h1 {
     display: block;
     font-size: 1rem;
