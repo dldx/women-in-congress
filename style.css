@@ -86,15 +86,31 @@ body {
 
 .info-bubble {
   fill: #0096db;
-  stroke: #42c3ff; }
-  .info-bubble.hover {
+  stroke: #42c3ff;
+  animation: pulse 5s infinite; }
+@keyframes pulse {
+  0% {
+    fill: #0096db;
+    stroke: #42c3ff; }
+  50% {
     fill: #75d4ff;
-    stroke: #dbf4ff; }
+    stroke: #a8e4ff; }
+  0% {
+    fill: #0096db;
+    stroke: #42c3ff; } }
+  .info-bubble.hover {
+    fill: #a8e4ff;
+    stroke: white;
+    animation: none; }
 
 .election-rect {
-  opacity: .1; }
+  opacity: .15; }
+  .election-rect.c-1 {
+    fill: #5c5c5c; }
+  .election-rect.c-2 {
+    fill: #424242; }
   .election-rect.hover {
-    opacity: .5;
+    opacity: .2;
     fill: #e5e5e5; }
 
 .d3-tip {
@@ -117,14 +133,23 @@ body {
     text-align: center; }
     .d3-tip .slide2-tooltip span {
       font-weight: bold; }
-    .d3-tip .slide2-tooltip span.female {
+    .d3-tip .slide2-tooltip .female {
       color: #e5e5e5; }
-    .d3-tip .slide2-tooltip span.male {
+    .d3-tip .slide2-tooltip .male {
       color: #c61148; }
     .d3-tip .slide2-tooltip .gender-ratio {
       font-size: 5rem; }
     .d3-tip .slide2-tooltip h1 {
       background-color: #a1c181; }
+  .d3-tip .info-bubble-tip {
+    font-size: .8rem;
+    font-weight: 200; }
+    .d3-tip .info-bubble-tip h1 {
+      background-color: #0096db; }
+    .d3-tip .info-bubble-tip .date {
+      font-weight: bold; }
+    .d3-tip .info-bubble-tip .body {
+      margin-top: .8em; }
   .d3-tip h1 {
     display: block;
     font-size: 1rem;

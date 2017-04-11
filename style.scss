@@ -139,16 +139,37 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .info-bubble {
   fill: $info-bubble-header-color;
   stroke: lighten($info-bubble-header-color, 20);
+  animation: pulse 5s infinite;
+  @keyframes pulse {
+    0% {
+      fill: $info-bubble-header-color;
+      stroke: lighten($info-bubble-header-color, 20);
+      }
+    50% {
+      fill: lighten($info-bubble-header-color, 30);
+      stroke: lighten($info-bubble-header-color, 40);
+    }
+    0% {
+      fill: $info-bubble-header-color;
+      stroke: lighten($info-bubble-header-color, 20);
+      }
+}
   &.hover {
-    fill: lighten($info-bubble-header-color, 30);
-    stroke: lighten($info-bubble-header-color, 50);
+    fill: lighten($info-bubble-header-color, 40);
+    stroke: lighten($info-bubble-header-color, 60);
+    animation: none;
   }
 }
 
 .election-rect {
-  opacity: .1;
+  opacity: .15;
+  @each $item in $tracker-colors {
+    &.c-#{index($tracker-colors, $item)} {
+      fill: $item;
+    }
+  }
   &.hover {
-    opacity: .5;
+    opacity: .2;
     fill: map-get($colors, Hover);
   }
 }
@@ -177,18 +198,32 @@ $tip-padding: 1;
     span {
       font-weight: bold;
     }
-    span.female {
-        color: $female;
-      }
-    span.male {
-        color: $male;
-      }
+    .female {
+      color: $female;
+    }
+    .male {
+      color: $male;
+    }
     .gender-ratio {
       font-size: 5rem;
     }
 
     h1 {
       background-color: $slide2-header-color;
+    }
+  }
+
+  .info-bubble-tip {
+    font-size: .8rem;
+    font-weight: 200;
+    h1 {
+      background-color: $info-bubble-header-color;
+    }
+    .date {
+      font-weight: bold;
+    }
+    .body {
+      margin-top: .8em;
     }
   }
 

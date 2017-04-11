@@ -133,10 +133,10 @@ function update_state() {
     }
     // Lastly update the hexagon tracker colours
     d3.selectAll(".arc")
-        .classed("c-1", function(a) {
+        .classed("c-1", function (a) {
             return a.index % 2 == 0
         })
-        .classed("c-2", function(a) {
+        .classed("c-2", function (a) {
             return a.index % 2 == 1
         })
         .classed("active", function (a) {
@@ -394,8 +394,11 @@ function first_slide() {
         .enter()
         .append("rect")
         .attr("class", "election-rect")
-        .attr("fill", function (d, i) {
-            return tracker_colors[i % tracker_colors.length]
+        .classed("c-1", function (d, i) {
+            return i % 2 == 0
+        })
+        .classed("c-2", function (d, i) {
+            return i % 2 == 1
         })
         .attr("x", function (d) {
             return x(d.year)
@@ -635,7 +638,7 @@ function second_slide() {
     var max_mps_path = slide2Group.append("path")
         .attr("class", "max-mps-path slide2")
         .datum(total_mps_over_time_data)
-        .attr("stroke-width", 1.5*lineThickness)
+        .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", max_mps_line)
 
     // Also add an area curve to shade the whole region below the max mp line
@@ -902,7 +905,8 @@ function second_slide() {
             // first add larger hidden circle to catch hover events
             infoBubbles
                 .append("circle")
-                .attr("r", 20 * circleRadius)
+                .attr("r", 50 * circleRadius)
+                .attr("class", "info-bubble-hidden")
                 .style("opacity", 0)
                 .attr("cx", function (d) {
                     return x(parseDate(d.x))
@@ -930,8 +934,12 @@ function second_slide() {
 
                     tooltip
                         .html(function (d) {
-                            return `<h1 style="background-color: ${colors["Con"]};">${d.head}</h1>
-                        ${d.body}`;
+                            return `
+                            <div class="info-bubble-tip">
+                                <h1>${d.head}</h1>
+                                <div class="date">${formatDate(parseDate(d.x))}</div>
+                                <div class="body">${d.body}</div>
+                            </div>`;
                         })
                         .show(d)
                 })
@@ -939,7 +947,7 @@ function second_slide() {
                     d3.select(this)
                         .select(".info-bubble")
                         .classed("hover", false)
-                    })
+                })
         })
 
 }
