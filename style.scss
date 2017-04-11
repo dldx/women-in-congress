@@ -1,7 +1,25 @@
 @import url("//fonts.googleapis.com/css?family=Quicksand:400,500");
+
+$colors: (
+    Lab: #c61148,
+    Con: #0096db,
+    SNP: #fcca46,
+    LibDem: #f37a48,
+    LD: #f37a48,
+    Green: #a1c181,
+    SF: #008e4b,
+    Other: #50514f, // Used as fallback when no party colour has been defined
+    Hover: #e5e5e5, // Used when hovering over an item
+    Active: #a1c181 // Used for the active slide on the tracker
+);
 $body-background: #131313;
 $graph-background: #252525;
 $tip-background: $body-background;
+
+$female: map-get($colors, Hover);
+$male: map-get($colors, Lab);
+
+$slide2-header-color: map-get($colors, Green);
 
 body {
   background-color: $body-background;
@@ -30,6 +48,15 @@ body {
 
   .nav-next {
     margin: auto;
+  }
+
+  .arc {
+    &.hover {
+      fill: map-get($colors, Hover);
+    }
+    &.active {
+      fill: map-get($colors, Active);
+    }
   }
 }
 
@@ -99,8 +126,25 @@ body {
   right: 0;
   top: 0;
 }
-$tip-padding: 1;
 
+.info-bubble {
+  fill: map-get($colors, Con);
+  stroke: lighten(map-get($colors, Con), 20);
+  &.hover {
+    fill: lighten(map-get($colors, Con), 50);
+    stroke: lighten(map-get($colors, Con), 20);
+  }
+}
+
+.election-rect {
+  opacity: .1;
+  &.hover {
+    opacity: .5;
+    fill: map-get($colors, Hover);
+  }
+}
+
+$tip-padding: 1;
 .d3-tip {
   background: rgba($tip-background, .8);
   border-radius: 5px;
@@ -123,12 +167,19 @@ $tip-padding: 1;
 
     span {
       font-weight: bold;
-      .male {
-        float: right;
-      }
     }
+    span.female {
+        color: $female;
+      }
+    span.male {
+        color: $male;
+      }
     .gender-ratio {
       font-size: 5rem;
+    }
+
+    h1 {
+      background-color: $slide2-header-color;
     }
   }
 
@@ -147,7 +198,7 @@ $tip-padding: 1;
     height: 4rem;
     font-size: 2rem;
     font-weight: bolder;
-    background-color: #50514f;
+    background-color: map-get($colors, Other);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -188,4 +239,30 @@ $tip-padding: 1;
   .chart-title {
     font-size: 1rem;
   }
+}
+
+.total-women-mps-path,
+.half-max-mps-path,
+.max-mps-path {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.max-mps-path,
+.total-women-mps-path {
+  stroke: $female;
+}
+
+.half-max-mps-path {
+  stroke-dasharray: 5,10;
+  stroke: $female;
+}
+
+.total-women-mps-area {
+  fill: $female;
+}
+
+.max-mps-area {
+  fill: $male;
 }

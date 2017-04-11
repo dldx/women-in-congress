@@ -20,6 +20,10 @@ body {
     margin: auto; }
   .tracker .nav-next {
     margin: auto; }
+  .tracker .arc.hover {
+    fill: #e5e5e5; }
+  .tracker .arc.active {
+    fill: #a1c181; }
 
 .nav-next,
 .nav-prev {
@@ -78,6 +82,19 @@ body {
   right: 0;
   top: 0; }
 
+.info-bubble {
+  fill: #0096db;
+  stroke: #42c3ff; }
+  .info-bubble.hover {
+    fill: #dbf4ff;
+    stroke: #42c3ff; }
+
+.election-rect {
+  opacity: .1; }
+  .election-rect.hover {
+    opacity: .5;
+    fill: #e5e5e5; }
+
 .d3-tip {
   background: rgba(19, 19, 19, 0.8);
   border-radius: 5px;
@@ -98,10 +115,14 @@ body {
     text-align: center; }
     .d3-tip .slide2-tooltip span {
       font-weight: bold; }
-      .d3-tip .slide2-tooltip span .male {
-        float: right; }
+    .d3-tip .slide2-tooltip span.female {
+      color: #e5e5e5; }
+    .d3-tip .slide2-tooltip span.male {
+      color: #c61148; }
     .d3-tip .slide2-tooltip .gender-ratio {
       font-size: 5rem; }
+    .d3-tip .slide2-tooltip h1 {
+      background-color: #a1c181; }
   .d3-tip h1 {
     display: block;
     font-size: 1rem;
@@ -147,5 +168,25 @@ body {
 @media screen and (max-width: 500px) {
   .chart-title {
     font-size: 1rem; } }
+.total-women-mps-path,
+.half-max-mps-path,
+.max-mps-path {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  fill: none; }
+
+.max-mps-path,
+.total-women-mps-path {
+  stroke: #e5e5e5; }
+
+.half-max-mps-path {
+  stroke-dasharray: 5,10;
+  stroke: #e5e5e5; }
+
+.total-women-mps-area {
+  fill: #e5e5e5; }
+
+.max-mps-area {
+  fill: #c61148; }
 
 /*# sourceMappingURL=style.css.map */

@@ -133,9 +133,8 @@ function update_state() {
     }
     // Lastly update the hexagon tracker colours
     d3.selectAll(".arc")
-        .selectAll("path")
-        .attr("fill", function (a) {
-            return a.index == current_slide ? colors["Active"] : tracker_colors[a.index % tracker_colors.length];
+        .classed("active", function (a) {
+            return a.index == current_slide// ? colors["Active"] : tracker_colors[a.index % tracker_colors.length];
         })
 }
 
@@ -189,16 +188,17 @@ function initialise_tracker() {
     var arc = tracker_wrapper.selectAll(".arc")
         .data(pie(tracker_data))
         .enter()
-        .append("g")
+        .append("path")
         .attr("class", "arc")
 
-    arc.append("path")
-        .attr("d", path)
+    arc.attr("d", path)
         .on("mouseover", function (d) {
             d3.select(this)
-                .attr("fill", colors["Hover"])
+                .classed("hover", true)
         })
         .on("mouseout", function (d) {
+            d3.select(this)
+                .classed("hover", false)
             update_state()
         })
         .on("click", function (d) {
@@ -388,7 +388,6 @@ function first_slide() {
         .enter()
         .append("rect")
         .attr("class", "election-rect")
-        .style("opacity", 0.1)
         .attr("fill", function (d, i) {
             return tracker_colors[i % tracker_colors.length]
         })
@@ -492,24 +491,6 @@ function first_slide() {
         })
         .attr("height", y(1) - y(2)) // height of rectangle is one unit of the y axis
 
-    // For each point group, set tooltip to display on mouseover
-
-    tooltip.html(function (d) {
-        if (partyHasLogo.indexOf(d.party) != -1) {
-            partyLogo = 0
-        } else {
-            partyLogo = 1
-        }
-        return `<h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
-            <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-            ${d3.timeFormat("%Y")(d.term_end)}</div>
-            <div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div>
-            <div class="mp-constituency">${d.constituency}</div>
-            <svg role="img">
-                <title>${d.party}</title>
-                <use xlink:href="./party_logos/party_logos.svg#${d.party}"/>
-            </svg>`;
-    })
     // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
     instance
         .on("mouseover", function (d) {
@@ -517,7 +498,25 @@ function first_slide() {
             if (partyToggled == false || d.party == partyToggled) {
                 d3.select(this)
                     .moveToFront()
-                tooltip.show(d, target)
+                // For each point group, set tooltip to display on mouseover
+                tooltip.html(function (d) {
+                        if (partyHasLogo.indexOf(d.party) != -1) {
+                            partyLogo = 0
+                        } else {
+                            partyLogo = 1
+                        }
+                        return `
+                        <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
+                        <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
+                        ${d3.timeFormat("%Y")(d.term_end)}</div>
+                        <div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div>
+                        <div class="mp-constituency">${d.constituency}</div>
+                        <svg role="img">
+                            <title>${d.party}</title>
+                            <use xlink:href="./party_logos/party_logos.svg#${d.party}"/>
+                        </svg>`;
+                    })
+                    .show(d, target)
 
                 // Increase line thickness of all terms of the same MP
                 pointsGroup.selectAll(".line-connect")
@@ -607,7 +606,7 @@ function to_first_slide() {
 function second_slide() {
     // Set all points to full opacity in case they were filtered previously
     pointsGroup.selectAll("g")
-        .style("opacity", 1.0)
+        .style("opacity", 1)
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
         .remove()
@@ -624,22 +623,18 @@ function second_slide() {
         .y(function (d) {
             return y(d.total_mps)
         })
-        .curve(d3.curveBasis)
+        .curve(d3.curveCardinal)
 
     // Add the svg path to display this line
     var max_mps_path = slide2Group.append("path")
-        .attr("class", "max-mps-line slide2")
+        .attr("class", "max-mps-path slide2")
         .datum(total_mps_over_time_data)
-        .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
+        .attr("stroke-width", 1.5*lineThickness)
         .attr("d", max_mps_line)
 
     // Also add an area curve to shade the whole region below the max mp line
     var max_mps_area = d3.area()
-        .curve(d3.curveBasis)
+        .curve(d3.curveCardinal)
         .x(function (d) {
             return x(d.year);
         })
@@ -653,20 +648,19 @@ function second_slide() {
         .attr("class", "max-mps-area slide2")
         .data([total_mps_over_time_data])
         .attr("d", max_mps_area)
-        .attr("fill", colors["Lab"])
         .style("opacity", 0)
 
-            // Mask election rectangles with the total area path
-            var mask = slide2Group
-                .append("clipPath")
-                .attr("id", "slide2-hover-mask")
-                .append("path")
-                .data([total_mps_over_time_data])
-                .attr("d", max_mps_area)
+    // Mask election rectangles with the total area path
+    var mask = slide2Group
+        .append("clipPath")
+        .attr("id", "slide2-hover-mask")
+        .append("path")
+        .data([total_mps_over_time_data])
+        .attr("d", max_mps_area)
 
-            d3.select("#election-rects")
-                .attr("clip-path", "url(#slide2-hover-mask)")
-                .moveToFront()
+    d3.select("#election-rects")
+        .attr("clip-path", "url(#slide2-hover-mask)")
+        .moveToFront()
 
     // Add a 50% line to show halfway mark for gender
     var half_max_mps_line = d3.line()
@@ -682,12 +676,7 @@ function second_slide() {
     var half_max_mps_path = slide2Group.append("path")
         .attr("class", "half-max-mps-path slide2")
         .datum(total_mps_over_time_data)
-        .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5)
-        .attr("stroke-dasharray", "5,10")
+        .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", half_max_mps_line)
 
     // Curve to show total number of women MPs over time
@@ -705,10 +694,7 @@ function second_slide() {
         .attr("class", "total-women-mps-path slide2")
         .datum(number_women_over_time_data)
         .attr("fill", "none")
-        .attr("stroke", colors["Hover"])
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round")
-        .attr("stroke-width", 1.5 * circleRadius)
+        .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", total_women_mps_line)
         .attr("stroke-dasharray", function (d) {
             return this.getTotalLength()
@@ -733,7 +719,6 @@ function second_slide() {
         .attr("class", "total-women-mps-area slide2")
         .data([number_women_over_time_data])
         .attr("d", total_women_mps_area)
-        .attr("fill", colors["Hover"])
         .style("opacity", 0)
 
 
@@ -871,33 +856,84 @@ function second_slide() {
     svg.transition()
         .delay(4000)
         .on("end", () => {
-            // Reconfigure tooltip to show different information
-            tooltip.html(function (d, i) {
-                var first_election = d.year
-                var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
-                var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
-                var gender_ratio = d.total_mps / num_women - 1
-                return `<div class="slide2-tooltip"><h1 style="background-color: ${colors["Green"]};">${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
-            ${num_women > 0 ? `For every <span style="color: ${colors["Hover"]}">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male" style="color: ${colors["Lab"]}">male</span> MPs.` :
-                            `There were no women in the House of Commons yet :(`}
-                                </div>
-            `;
-            })
 
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
                     d3.select(this)
-                        .style("opacity", 0.5)
-                        .attr("fill", colors["Hover"])
-                    tooltip.show(d, i, target)
+                        .classed("hover", true)
+                    // Reconfigure tooltip to show different information
+                    tooltip
+                        .html(function (d, i) {
+                            var first_election = d.year
+                            var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
+                            var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
+                            var gender_ratio = d.total_mps / num_women - 1
+                            return `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+            ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
+                            `There were no women in the House of Commons yet :(`}
+                                </div>
+            `;
+                        })
+                        .show(d, i, target)
                 })
                 .on("mouseout", function (d, i) {
                     d3.select(this)
-                        .style("opacity", 0.1)
-                        .attr("fill", tracker_colors[i % tracker_colors.length])
+                        .classed("hover", false)
                 })
+
+            // Add info bubbles to show information at specific points
+            var parseDate = d3.timeParse("%Y-%m-%d");
+
+            infoBubbles = zoomedArea
+                .append("g")
+                .attr("id", "info-bubbles")
+                .selectAll("g")
+                .data(info_bubbles_data.slide2)
+                .enter()
+                .append("g")
+            // first add larger hidden circle to catch hover events
+            infoBubbles
+                .append("circle")
+                .attr("r", 20 * circleRadius)
+                .style("opacity", 0)
+                .attr("cx", function (d) {
+                    return x(parseDate(d.x))
+                })
+                .attr("cy", function (d) {
+                    return y(d.y)
+                })
+            // Then add visible circle
+            infoBubbles
+                .append("circle")
+                .attr("r", 5 * circleRadius)
+                .attr("class", "info-bubble")
+                .attr("stroke-width", 2 * circleRadius)
+                .attr("cx", function (d) {
+                    return x(parseDate(d.x))
+                })
+                .attr("cy", function (d) {
+                    return y(d.y)
+                })
+            infoBubbles
+                .on("mouseover", function (d) {
+                    d3.select(this)
+                        .select(".info-bubble")
+                        .classed("hover", true)
+
+                    tooltip
+                        .html(function (d) {
+                            return `<h1 style="background-color: ${colors["Con"]};">${d.head}</h1>
+                        ${d.body}`;
+                        })
+                        .show(d)
+                })
+                .on("mouseout", function (d) {
+                    d3.select(this)
+                        .select(".info-bubble")
+                        .classed("hover", false)
+                    })
         })
 
 }
@@ -929,7 +965,8 @@ var clippedArea,
     circleRadius,
     mps_over_time_data,
     number_women_over_time_data,
-    total_mps_over_time_data
+    total_mps_over_time_data,
+    info_bubbles_data
 
 // ----------------------------------------------------------------------------
 // GET DATA AND DRAW INITIAL GRAPH, WHILE RESIZING TO FIT WITHIN WINDOW
@@ -979,13 +1016,15 @@ function draw_graph() {
                 total_mps: +d.total_mps
             }
         })
+        .defer(d3.json, "info_bubbles.json")
         .await(analyze);
 
-    function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time) {
+    function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time, info_bubbles) {
         // Make global
         mps_over_time_data = mps_over_time
         number_women_over_time_data = number_women_over_time
         total_mps_over_time_data = total_mps_over_time
+        info_bubbles_data = info_bubbles
         new_slide = 0
         var current_slide = -1
         initial_render()
