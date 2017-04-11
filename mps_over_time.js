@@ -72,7 +72,7 @@ function colorParty(party) {
 
 function reset_zoom(callback) {
     svg.transition()
-        .duration(1000)
+        .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
         .on("end", () => {
             zoomedArea.attr("transform", null)
@@ -100,6 +100,7 @@ function update_state() {
     if (current_slide != new_slide) {
         // Go from slide 0 to slide 1
         if (current_slide == 0 & new_slide == 1) {
+            // Reset zoom, then load second slide
             reset_zoom(second_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
@@ -521,6 +522,8 @@ function to_first_slide() {
 // SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
 // ----------------------------------------------------------------------------
 function second_slide() {
+    // Set all points to full opacity in case they were filtered previously
+    pointsGroup.selectAll("g").style("opacity", 1.0)
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
         .remove()
@@ -648,6 +651,8 @@ function second_slide() {
             return a.year
         })
         .left
+    // Transition 0: squash line to start point
+    t0 = pointsGroup.transition()
     pointsGroup.selectAll(".line-connect")
         .transition()
         .duration(1000)
