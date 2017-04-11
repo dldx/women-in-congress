@@ -70,6 +70,9 @@ function colorParty(party) {
     }
 }
 
+// ----------------------------------------------------------------------------
+// RESET THE GRAPH IF ZOOMED IN AND REMOVE ANY EVENT CALLBACKS
+// ----------------------------------------------------------------------------
 function reset_zoom(callback) {
     svg.transition()
         .duration(500)
@@ -286,11 +289,6 @@ function initial_render() {
         .append("g")
         .attr("id", "zoomed-area")
 
-    // Add the points group that will hold all our data points
-    pointsGroup = zoomedArea
-        .append("g")
-        .attr("id", "points")
-
     // Create the clip rectangle used for the graph
     wrapper.append("clipPath")
         .attr("id", "clip")
@@ -337,18 +335,44 @@ function initial_render() {
 
 }
 
+// ----------------------------------------------------------------------------
+// ZOOM function
+// ----------------------------------------------------------------------------
 function zoomed() {
     zoomedArea.attr("transform", d3.event.transform)
     gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
     gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
 }
+
+// ----------------------------------------------------------------------------
+// FUNCTIONS TO MOVE OBJECTS TO FRONT AND BACK
+// https://github.com/wbkd/d3-extended
+// ----------------------------------------------------------------------------
+d3.selection.prototype.moveToFront = function () {
+    return this.each(function () {
+        this.parentNode.appendChild(this);
+    });
+};
+d3.selection.prototype.moveToBack = function () {
+    return this.each(function () {
+        var firstChild = this.parentNode.firstChild;
+        if (firstChild) {
+            this.parentNode.insertBefore(this, firstChild);
+        }
+    });
+};
+
 // ----------------------------------------------------------------------------
 // SET UP FOR THE FIRST SLIDE: ALL WOMEN MPS OVER TIME
 // ----------------------------------------------------------------------------
 function first_slide() {
-    pointsGroup
-        .selectAll("g")
+    d3.select("#slide1-group")
         .remove()
+    // Add the points group that will hold all our data points
+    pointsGroup = zoomedArea
+        .append("g")
+        .attr("id", "slide1-group")
+
     // Add a group to contain each data point and bind to timeline data
     instance = pointsGroup
         .selectAll("g")
@@ -440,6 +464,8 @@ function first_slide() {
         .on("mouseover", function (d) {
             // Only show mouseover if MP is in toggled party or if no party is filtered
             if (partyToggled == false | d.party == partyToggled) {
+                d3.select(this)
+                    .moveToFront()
                 tooltip.show(d, target)
 
                 // Increase line thickness of all terms of the same MP
@@ -499,7 +525,7 @@ function first_slide() {
 function to_first_slide() {
     t0 = svg
         .transition()
-        .duration(2000)
+        .duration(1000)
 
     // Fade all objects belonging to second slide
     t0.select("#slide2-group")
@@ -513,7 +539,7 @@ function to_first_slide() {
 
     first_slide()
     pointsGroup.style("opacity", 0)
-    t0.select("#points")
+    t0.select("#slide1-group")
         .style("opacity", 1)
 }
 
@@ -523,7 +549,8 @@ function to_first_slide() {
 // ----------------------------------------------------------------------------
 function second_slide() {
     // Set all points to full opacity in case they were filtered previously
-    pointsGroup.selectAll("g").style("opacity", 1.0)
+    pointsGroup.selectAll("g")
+        .style("opacity", 1.0)
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
         .remove()
@@ -644,41 +671,35 @@ function second_slide() {
     // START THE TRANSITION FROM MP POINTS TO LINE GRAPH
     // ------------------------------------------------------------------------
 
+    // ----------------------------------------------------------------------------
+    // ACT 0: HIDE THE TOOLTIP
+    // ----------------------------------------------------------------------------
     // Hide the tooltip
     tooltip.hide()
+
+    // ----------------------------------------------------------------------------
+    // ACT 1: SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
+    // ----------------------------------------------------------------------------
+
     // Create a bisector method to find the nearest point in the total mp data
     bisect = d3.bisector(function (a) {
-            return a.year
-        })
-        .left
-    // Transition 0: squash line to start point
-    t0 = pointsGroup.transition()
+        return a.year
+    })
+    .left
+
     pointsGroup.selectAll(".line-connect")
         .transition()
-        .duration(1000)
+        .duration(500)
         .attr("x2", function (a) {
             return x(a.term_start)
         })
-    pointsGroup.selectAll(".term-start")
-        // .attr("r", function (a) {
-        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-        // })
-        .transition()
-        .delay(1000)
-        .duration(1000)
-        .attr("cx", function (a) {
-            return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
-        })
-        .attr("cy", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
-        .style("opacity", 0)
+
     pointsGroup.selectAll(".term-end")
         // .attr("r", function (a) {
         //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
         // })
         .transition()
-        .duration(1000)
+        .duration(500)
         .attr("cx", function (a) {
             return x(a.term_start)
         })
@@ -690,55 +711,78 @@ function second_slide() {
             return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
         })
         .transition()
-        .delay(3000)
+        .delay(2500)
+        .duration(500)
         .attr("r", 0)
 
+    // ----------------------------------------------------------------------------
+    // ACT 2: MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
+    // ----------------------------------------------------------------------------
+    pointsGroup.selectAll(".term-start")
+        // .attr("r", function (a) {
+        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+        // })
+        .transition()
+        .delay(500)
+        .duration(500)
+        .attr("cx", function (a) {
+            return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
+        })
+        .attr("cy", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+        .style("opacity", 0)
+
+    // ----------------------------------------------------------------------------
+    // ACT 3: DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
+    // ----------------------------------------------------------------------------
     total_women_mps_path
         .transition()
-        .delay(2000)
-        .duration(500)
-        .transition()
+        .delay(1000)
         .ease(d3.easeCubic)
         .duration(3000)
         .attr("stroke-dashoffset", 0)
 
+    // ----------------------------------------------------------------------------
+    // ACT 4: RESCALE Y AXIS, FADE IN MP AREAS AND LINES
+    // ----------------------------------------------------------------------------
     // Change domain to include all MPs and rescale y axis
     y.domain([0, 750])
 
     gY
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .call(yAxis)
     total_women_mps_path
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .attr("d", total_women_mps_line)
 
     total_women_mps_path_area
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .attr("d", total_women_mps_area)
         .style("opacity", 1)
 
     max_mps_path
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .attr("d", max_mps_line)
 
     max_mps_path_area
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .attr("d", max_mps_area)
         .style("opacity", 1)
     half_max_mps_path
         .transition()
-        .delay(6000)
-        .duration(2000)
+        .delay(4000)
+        .duration(750)
         .attr("d", half_max_mps_line)
 
     instance
@@ -829,6 +873,8 @@ function draw_graph() {
         mps_over_time_data = mps_over_time
         number_women_over_time_data = number_women_over_time
         total_mps_over_time_data = total_mps_over_time
+        new_slide = 0
+        var current_slide = -1
         initial_render()
         first_slide()
     };
