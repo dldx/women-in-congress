@@ -60,7 +60,7 @@ var partyHasLogo = Object.keys(colors);
 
 // ----------------------------------------------------------------------------
 // WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
-// IF PARTY WASN'T FOUND
+// IF PARTY ISN'T FOUND
 // ----------------------------------------------------------------------------
 function colorParty(party) {
     if (colors[party] != undefined) {
@@ -68,6 +68,29 @@ function colorParty(party) {
     } else {
         return colors["Other"];
     }
+}
+
+function reset_zoom(callback) {
+    svg.transition()
+        .duration(1000)
+        .call(zoom.transform, d3.zoomIdentity)
+        .on("end", () => {
+            zoomedArea.attr("transform", null)
+            zoom.on("zoom", null)
+            svg.on("wheel.zoom", null)
+                .on("wheel.zoom", null)
+                .on("mousedown.zoom", null)
+                .on("dblclick.zoom", null)
+                .on("touchstart.zoom", null)
+                .on("touchmove.zoom", null)
+                .on("touchend.zoom touchcancel.zoom", null)
+
+            // Add the y axis to the left of the graph
+            yAxis = d3.axisLeft(y)
+            gY = d3.select(".y-axis")
+                .call(yAxis);
+            callback()
+        })
 }
 // ----------------------------------------------------------------------------
 // UPDATE GRAPH WHEN USER MOVES TO A NEW SLIDE
@@ -77,7 +100,12 @@ function update_state() {
     if (current_slide != new_slide) {
         // Go from slide 0 to slide 1
         if (current_slide == 0 & new_slide == 1) {
-            second_slide()
+            reset_zoom(second_slide)
+        } else if (current_slide != -1 & new_slide == 0) {
+            // Add zoom capabilities for the points
+            zoom.on("zoom", zoomed);
+            svg.call(zoom);
+            to_first_slide()
         }
         current_slide = new_slide
     }
@@ -200,7 +228,7 @@ function initialise_tracker() {
 }
 
 // ----------------------------------------------------------------------------
-// SET UP FOR THE FIRST SLIDE: ALL WOMEN MPS OVER TIME
+// INITIALISE GRAPH. CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
 // ----------------------------------------------------------------------------
 function initial_render() {
     // INITIALISE THE X AND Y AXIS SCALES AND RANGES
@@ -229,8 +257,6 @@ function initial_render() {
         .attr("width", width)
         .attr("height", height)
 
-    var stage = 1
-
     // Initialise the tooltip
     tooltip = d3.tip()
         .attr("class", "d3-tip")
@@ -250,13 +276,17 @@ function initial_render() {
     wrapper.call(tooltip);
 
     // Add a group and clip it to a rectangle defined below
-    var clippedArea = wrapper.append("g")
+    clippedArea = wrapper.append("g")
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
 
+    // Add a zoom area to hold all other groups
+    zoomedArea = clippedArea
+        .append("g")
+        .attr("id", "zoomed-area")
+
     // Add the points group that will hold all our data points
-    // pointsGroup is a GLOBAL variable
-    pointsGroup = clippedArea
+    pointsGroup = zoomedArea
         .append("g")
         .attr("id", "points")
 
@@ -268,8 +298,8 @@ function initial_render() {
         .attr("height", height);
 
     // Add the x axis to the bottom of the graph
-    var xAxis = d3.axisBottom(x)
-    var gX = wrapper.append("g")
+    xAxis = d3.axisBottom(x)
+    gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
@@ -281,7 +311,7 @@ function initial_render() {
         .call(yAxis);
 
     // Tooltip target location, defined as a circle in svg
-    var target = wrapper
+    target = wrapper
         .append("circle")
         .attr("id", "target-loc")
         .attr("cx", Math.max(100, margin.left + 0.2 * width))
@@ -290,6 +320,34 @@ function initial_render() {
         .style("opacity", 0)
         .node()
 
+    // Add chart title
+    wrapper.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .attr("class", "chart-title")
+        .text("Women MPs in the House of Commons")
+
+    // Add zoom capabilities for the points
+    zoom = d3.zoom()
+        .scaleExtent([0.95, 40])
+        .on("zoom", zoomed);
+    svg.call(zoom);
+
+}
+
+function zoomed() {
+    zoomedArea.attr("transform", d3.event.transform)
+    gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+    gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+}
+// ----------------------------------------------------------------------------
+// SET UP FOR THE FIRST SLIDE: ALL WOMEN MPS OVER TIME
+// ----------------------------------------------------------------------------
+function first_slide() {
+    pointsGroup
+        .selectAll("g")
+        .remove()
     // Add a group to contain each data point and bind to timeline data
     instance = pointsGroup
         .selectAll("g")
@@ -425,26 +483,6 @@ function initial_render() {
                 })
         })
 
-    // Add chart title
-    wrapper.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")
-        .attr("class", "chart-title")
-        .text("Women MPs in the House of Commons")
-
-    // Add zoom capabilities for the points
-    var zoom = d3.zoom()
-        .scaleExtent([0.95, 40])
-        .on("zoom", zoomed);
-    svg.call(zoom);
-
-    function zoomed() {
-        pointsGroup.attr("transform", d3.event.transform)
-        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-        gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
-    }
-
     // Exit
     instance
         .exit()
@@ -452,20 +490,46 @@ function initial_render() {
 
     // Update current slide number
     current_slide = 0
-
 }
+
+// ----------------------------------------------------------------------------
+// GO TO FIRST SLIDE FROM ANOTHER
+// ----------------------------------------------------------------------------
+function to_first_slide() {
+    t0 = svg
+        .transition()
+        .duration(2000)
+
+    // Fade all objects belonging to second slide
+    t0.select("#slide2-group")
+        .style("opacity", 0)
+        .remove()
+
+    // Change domain to include all MPs and rescale y axis
+    y.domain([0, 200])
+    t0.select(".y-axis")
+        .call(yAxis)
+
+    first_slide()
+    pointsGroup.style("opacity", 0)
+    t0.select("#points")
+        .style("opacity", 1)
+}
+
 
 // ----------------------------------------------------------------------------
 // SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
 // ----------------------------------------------------------------------------
 function second_slide() {
-    // Delete all objects belonging to this slide so that we don't duplicate them
-    d3.select(".max-mps-line").remove()
-    d3.select(".max-mps-area").remove()
-    d3.select(".half-max-mps-path").remove()
-    d3.select(".total-women-mps-path").remove()
-    d3.select(".total-women-mps-area").remove()
-    // Add interpolation line for total mps ove time
+    // Remove elements from this slide if already created
+    d3.select("#slide2-group")
+        .remove()
+    // Add group to hold second slide lines
+    slide2Group = zoomedArea
+        .append("g")
+        .attr("id", "slide2-group")
+
+    // Add interpolation line for total mps over time
     var max_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
@@ -476,7 +540,8 @@ function second_slide() {
         .curve(d3.curveBasis)
 
     // Add the svg path to display this line
-    var max_mps_path = pointsGroup.append("path")
+    var max_mps_path = slide2Group.append("path")
+        .attr("class", "max-mps-line slide2")
         .datum(total_mps_over_time_data)
         .attr("fill", "none")
         .attr("stroke", colors["Hover"])
@@ -484,7 +549,6 @@ function second_slide() {
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", max_mps_line)
-        .attr("class", "max-mps-line")
 
     // Also add an area curve to shade the whole region below the max mp line
     var max_mps_area = d3.area()
@@ -498,12 +562,12 @@ function second_slide() {
         });
 
     // Add the svg path for this shaded region
-    var max_mps_path_area = pointsGroup.append("path")
+    var max_mps_path_area = slide2Group.append("path")
+        .attr("class", "max-mps-area slide2")
         .data([total_mps_over_time_data])
         .attr("d", max_mps_area)
         .attr("fill", colors["Lab"])
         .style("opacity", 0)
-        .attr("class", "max-mps-area")
 
     // Add a 50% line to show halfway mark for gender
     var half_max_mps_line = d3.line()
@@ -516,7 +580,8 @@ function second_slide() {
         .curve(d3.curveBasis)
 
     // Add this in svg
-    var half_max_mps_path = pointsGroup.append("path")
+    var half_max_mps_path = slide2Group.append("path")
+        .attr("class", "half-max-mps-path slide2")
         .datum(total_mps_over_time_data)
         .attr("fill", "none")
         .attr("stroke", colors["Hover"])
@@ -525,7 +590,6 @@ function second_slide() {
         .attr("stroke-width", 1.5)
         .attr("stroke-dasharray", "5,10")
         .attr("d", half_max_mps_line)
-        .attr("class", "half-max-mps-path")
 
     // Curve to show total number of women MPs over time
     var total_women_mps_line = d3.line()
@@ -538,7 +602,8 @@ function second_slide() {
         .curve(d3.curveBasis)
 
     // add the line path
-    var total_women_mps_path = pointsGroup.append("path")
+    var total_women_mps_path = slide2Group.append("path")
+        .attr("class", "total-women-mps-path slide2")
         .datum(number_women_over_time_data)
         .attr("fill", "none")
         .attr("stroke", colors["Hover"])
@@ -552,7 +617,6 @@ function second_slide() {
         .attr("stroke-dashoffset", function (d) {
             return this.getTotalLength()
         })
-        .attr("class", "total-women-mps-path")
 
     // Area curve for total number of women MPs
     var total_women_mps_area = d3.area()
@@ -566,12 +630,12 @@ function second_slide() {
         });
 
     // Add the area path
-    var total_women_mps_path_area = pointsGroup.append("path")
+    var total_women_mps_path_area = slide2Group.append("path")
+        .attr("class", "total-women-mps-area slide2")
         .data([number_women_over_time_data])
         .attr("d", total_women_mps_area)
         .attr("fill", colors["Hover"])
         .style("opacity", 0)
-        .attr("class", "total-women-mps-area")
 
     // ----------------------------------------------------------------------------
     // START THE TRANSITION FROM MP POINTS TO LINE GRAPH
@@ -633,6 +697,7 @@ function second_slide() {
         .duration(3000)
         .attr("stroke-dashoffset", 0)
 
+    // Change domain to include all MPs and rescale y axis
     y.domain([0, 750])
 
     gY
@@ -687,11 +752,17 @@ var svg = d3.select(timeline)
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES TO STORE SPECIFIC SELECTORS AND DATA
 // ----------------------------------------------------------------------------
-var pointsGroup,
+var clippedArea,
+    zoom,
+    zoomedArea,
+    pointsGroup,
+    slide2Group,
     instance,
     x, y,
+    xAxis, gX,
     yAxis, gY,
     tooltip,
+    target,
     lineThickness,
     circleRadius,
     mps_over_time_data,
@@ -754,6 +825,7 @@ function draw_graph() {
         number_women_over_time_data = number_women_over_time
         total_mps_over_time_data = total_mps_over_time
         initial_render()
+        first_slide()
     };
 }
 
