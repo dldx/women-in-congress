@@ -277,6 +277,13 @@ function initial_render() {
     // Initialise the hexagon tracker that tracks the state of the graph
     initialise_tracker()
 
+    // Initialise info bubble
+    d3.select("#tooltip").remove()
+    d3.select("#timeline")
+        .append("div")
+        .attr("id", "tooltip")
+    tooltip = document.getElementById("tooltip")
+
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
     var boundingBox = wrapper
@@ -284,14 +291,6 @@ function initial_render() {
         .style("opacity", 0.0)
         .attr("width", width)
         .attr("height", height)
-
-    // Initialise the tooltip
-    tooltip = d3.tip()
-        .attr("class", "d3-tip")
-        // .offset([-10, 0])
-        .direction('s')
-
-    wrapper.call(tooltip);
 
     // Add a group and clip it to a rectangle defined below
     clippedArea = wrapper.append("g")
@@ -322,16 +321,6 @@ function initial_render() {
     gY = wrapper.append("g")
         .attr("class", "y-axis")
         .call(yAxis);
-
-    // Tooltip target location, defined as a circle in svg
-    target = wrapper
-        .append("circle")
-        .attr("id", "target-loc")
-        .attr("cx", Math.max(100, margin.left + 0.2 * width))
-        .attr("cy", 0.1 * height)
-        .attr("r", 5)
-        .style("opacity", 0)
-        .node()
 
     // Add chart title
     wrapper.append("text")
@@ -508,29 +497,31 @@ function first_slide() {
                 d3.select(this)
                     .moveToFront()
                 // For each point group, set tooltip to display on mouseover
-                tooltip.html(function (d) {
-                        partyLogo = partyHasLogo.indexOf(d.party) != -1
-                        return `
-                        <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
-                        <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-                        ${d3.timeFormat("%Y")(d.term_end)}</div>
-                        <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
-                        <div class="mp-constituency">${d.constituency}</div>
-                        <img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>`;
-                    })
-                    .show(d, target)
+                d3.select("#tooltip").style("opacity", 1)
+                partyLogo = partyHasLogo.indexOf(d.party) != -1
+                tooltip.innerHTML = `
+                    <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
+                    <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
+                    ${d3.timeFormat("%Y")(d.term_end)}</div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
+                    <div class="mp-constituency">${d.constituency}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ``}
+                    `;
 
                 // Increase line thickness of all terms of the same MP
-                pointsGroup.selectAll(".line-connect")
+                pointsGroup
+                    .selectAll(".line-connect")
                     .style("stroke-width", function (a) {
                         return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
                     })
                 // Also make the start and end circles bigger
-                pointsGroup.selectAll(".term-start")
+                pointsGroup
+                    .selectAll(".term-start")
                     .attr("r", function (a) {
                         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
                     })
-                pointsGroup.selectAll(".term-end")
+                pointsGroup
+                    .selectAll(".term-end")
                     .attr("r", function (a) {
                         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
                     })
@@ -585,7 +576,7 @@ function to_first_slide() {
         .style("opacity", 0)
         .remove()
     // Remove election rect events and tooltip
-    tooltip.hide()
+    d3.select("#tooltip").style("opacity", 0)
     d3.selectAll(".election-rect")
         .on("mouseover", null)
         .on("mouseout", null)
@@ -733,7 +724,7 @@ function second_slide() {
     // ACT 0: HIDE THE TOOLTIP
     // ----------------------------------------------------------------------------
     // Hide the tooltip
-    tooltip.hide()
+    d3.select("#tooltip").style("opacity", 0)
 
     // ----------------------------------------------------------------------------
     // ACT 1: SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
@@ -862,23 +853,20 @@ function second_slide() {
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
+                    d3.select("#tooltip").style("opacity", 1)
                     d3.select(this)
                         .classed("hover", true)
                     // Reconfigure tooltip to show different information
-                    tooltip
-                        .html(function (d, i) {
                             var first_election = d.year
                             var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
                             var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
                             var gender_ratio = d.total_mps / num_women - 1
-                            return `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+                tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
             ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
                             `There were no women in the House of Commons yet :(`}
                                 </div>
             `;
-                        })
-                        .show(d, i, target)
                 })
                 .on("mouseout", function (d, i) {
                     d3.select(this)
@@ -925,16 +913,13 @@ function second_slide() {
                         .select(".info-bubble")
                         .classed("hover", true)
 
-                    tooltip
-                        .html(function (d) {
-                            return `
+                    d3.select("#tooltip").style("opacity", 1)
+                    tooltip.innerHTML = `
                             <div class="info-bubble-tip">
                                 <h1>${d.head}</h1>
                                 <div class="date">${formatDate(parseDate(d.x))}</div>
                                 <div class="body">${d.body}</div>
                             </div>`;
-                        })
-                        .show(d)
                 })
                 .on("mouseout", function (d) {
                     d3.select(this)
@@ -967,7 +952,6 @@ var clippedArea,
     xAxis, gX,
     yAxis, gY,
     tooltip,
-    target,
     lineThickness,
     circleRadius,
     mps_over_time_data,
@@ -980,8 +964,6 @@ var clippedArea,
 // ----------------------------------------------------------------------------
 function draw_graph() {
     d3.selectAll("g")
-        .remove()
-    d3.select(".d3-tip")
         .remove()
     // Chart dimensions - use parent div size
     width = timeline.clientWidth - margin.left - margin.right,

@@ -112,44 +112,47 @@ body {
     opacity: .2;
     fill: #e5e5e5; }
 
-.d3-tip {
-  background: rgba(19, 19, 19, 0.8);
-  border-radius: 5px;
+#tooltip {
+  background-color: rgba(19, 19, 19, 0.8);
   color: #ececec;
+  border: solid 1px #131313;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(19, 19, 19, 0.8);
   font-size: 1rem;
   font-weight: 500;
   height: 12rem;
+  width: 20rem;
   line-height: 1;
   overflow: hidden;
   padding: 1em;
   pointer-events: none;
-  width: 20rem;
   position: absolute;
-  left: 300px; }
-  .d3-tip .slide2-tooltip {
+  left: 20%;
+  top: 10%; }
+  #tooltip .slide2-tooltip {
     font-size: 1rem;
     font-weight: 200;
     text-align: center; }
-    .d3-tip .slide2-tooltip span {
+    #tooltip .slide2-tooltip span {
       font-weight: bold; }
-    .d3-tip .slide2-tooltip .female {
+    #tooltip .slide2-tooltip .female {
       color: #e5e5e5; }
-    .d3-tip .slide2-tooltip .male {
+    #tooltip .slide2-tooltip .male {
       color: #c61148; }
-    .d3-tip .slide2-tooltip .gender-ratio {
+    #tooltip .slide2-tooltip .gender-ratio {
       font-size: 5rem; }
-    .d3-tip .slide2-tooltip h1 {
+    #tooltip .slide2-tooltip h1 {
       background-color: #a1c181; }
-  .d3-tip .info-bubble-tip {
+  #tooltip .info-bubble-tip {
     font-size: .8rem;
     font-weight: 200; }
-    .d3-tip .info-bubble-tip h1 {
+    #tooltip .info-bubble-tip h1 {
       background-color: #0096db; }
-    .d3-tip .info-bubble-tip .date {
+    #tooltip .info-bubble-tip .date {
       font-weight: bold; }
-    .d3-tip .info-bubble-tip .body {
+    #tooltip .info-bubble-tip .body {
       margin-top: .8em; }
-  .d3-tip h1 {
+  #tooltip h1 {
     display: block;
     font-size: 1rem;
     font-weight: bold;
@@ -157,7 +160,7 @@ body {
     padding: .5rem;
     text-align: center;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
-  .d3-tip .mp-party, .d3-tip .mp-party-logo {
+  #tooltip .mp-party, #tooltip .mp-party-logo {
     width: 4rem;
     height: 4rem;
     display: flex;
@@ -169,7 +172,7 @@ body {
     font-size: 2rem;
     font-weight: bolder;
     word-break: break-all; }
-  .d3-tip .mp-party {
+  #tooltip .mp-party {
     background-color: #50514f; }
 
 @media screen and (min-height: 500px) {

@@ -175,20 +175,23 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 }
 
 $tip-padding: 1;
-.d3-tip {
-  background: rgba($tip-background, .8);
-  border-radius: 5px;
+#tooltip {
+  background-color: rgba($tip-background, .8);
   color: invert($tip-background);
+  border: solid 1px $tip-background;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
   font-weight: 500;
   height: 12rem;
+  width: 20rem;
   line-height: 1;
   overflow: hidden;
   padding: $tip-padding + em;
   pointer-events: none;
-  width: 20rem;
   position: absolute;
-  left: 300px;
+  left: 20%;
+  top: 10%;
 
   .slide2-tooltip {
     font-size: 1rem;

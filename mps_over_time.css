@@ -1,37 +1,48 @@
 /*
-Error: The line was indented 2 levels deeper than the previous line.
-        on line 35 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js
+Error: Invalid CSS after "    right": expected ";", was ": 50,"
+        on line 8 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js
 
-30: var current_slide = -1
-31: var partyToggled = false
-32: 
-33: // These are the labels for each slide
-34: var tracker_data = [{
-35:         section: "Intro",
-36:     },
-37:     {
-38:         section: "All MPs",
-39:     },
-40:     {
+3: // ----------------------------------------------------------------------------
+4: 
+5: // These are the margins for the SVG
+6: var margin = {
+7:     top: 60,
+8:     right: 50,
+9:     bottom: 60,
+10:     left: 100
+11: };
+12: 
+13: // These are the colours used to identify each political party as well as
 
 Backtrace:
-/home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js:35
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:520:in `tree'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:409:in `_to_tree'
+/home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js:8
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1125:in `expected'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1120:in `tok!'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:777:in `block in try_declaration'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1165:in `rethrow'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:782:in `try_declaration'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:711:in `declaration_or_ruleset'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:649:in `ruleset'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:675:in `block_child'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:125:in `stylesheet'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:41:in `parse'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:406:in `_to_tree'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:381:in `_render_with_sourcemap'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/engine.rb:298:in `render_with_sourcemap'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:331:in `block in watch'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `on_change'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:391:in `run'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:52:in `parse'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/exec/base.rb:19:in `parse!'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:23:in `load'
+/usr/local/bin/sass:23:in `<main>'
 */
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: The line was indented 2 levels deeper than the previous line.\A         on line 35 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js\A \A 30: var current_slide = -1\A 31: var partyToggled = false\A 32: \A 33: // These are the labels for each slide\A 34: var tracker_data = [{\A 35:         section: \"Intro\",\A 36:     },\A 37:     {\A 38:         section: \"All MPs\",\A 39:     },\A 40:     {"; }
+  content: "Error: Invalid CSS after \"    right\": expected \";\", was \": 50,\"\A         on line 8 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js\A \A 3: // ----------------------------------------------------------------------------\A 4: \A 5: // These are the margins for the SVG\A 6: var margin = {\A 7:     top: 60,\A 8:     right: 50,\A 9:     bottom: 60,\A 10:     left: 100\A 11: };\A 12: \A 13: // These are the colours used to identify each political party as well as"; }
