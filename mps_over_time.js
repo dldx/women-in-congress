@@ -509,21 +509,14 @@ function first_slide() {
                     .moveToFront()
                 // For each point group, set tooltip to display on mouseover
                 tooltip.html(function (d) {
-                        if (partyHasLogo.indexOf(d.party) != -1) {
-                            partyLogo = 0
-                        } else {
-                            partyLogo = 1
-                        }
+                        partyLogo = partyHasLogo.indexOf(d.party) != -1
                         return `
                         <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
                         <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                         ${d3.timeFormat("%Y")(d.term_end)}</div>
-                        <div class="mp-party" style="opacity: ${partyLogo}">${d.party}</div>
+                        <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
                         <div class="mp-constituency">${d.constituency}</div>
-                        <svg role="img">
-                            <title>${d.party}</title>
-                            <use xlink:href="./party_logos/party_logos.svg#${d.party}"/>
-                        </svg>`;
+                        <img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>`;
                     })
                     .show(d, target)
 

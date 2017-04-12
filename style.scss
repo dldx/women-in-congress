@@ -139,7 +139,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .info-bubble {
   fill: $info-bubble-header-color;
   stroke: lighten($info-bubble-header-color, 20);
-  animation: pulse 5s infinite;
+  // animation: pulse 5s infinite;
   @keyframes pulse {
     0% {
       fill: $info-bubble-header-color;
@@ -237,28 +237,23 @@ $tip-padding: 1;
     text-shadow: 1px 1px 1px rgba(black, .5);
   }
   // This is for parties that don't have a logo
-  .mp-party {
+  .mp-party, .mp-party-logo {
     width: 4rem;
     height: 4rem;
-    font-size: 2rem;
-    font-weight: bolder;
-    background-color: map-get($colors, Other);
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     right: $tip-padding + rem;
     bottom: $tip-padding + rem;
+    font-size: 2rem;
+    font-weight: bolder;
     word-break: break-all;
   }
-
-  svg {
-    width: 4rem;
-    height: 4rem;
-    position: absolute;
-    right: $tip-padding + em;
-    bottom: $tip-padding + em;
+  .mp-party {
+    background-color: map-get($colors, Other);
   }
+
 }
 @media screen and (min-height: 500px) {
   .mp-party,
