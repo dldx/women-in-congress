@@ -127,7 +127,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 
 .d3-graph {
   background-color: $graph-background;
-  border-radius: 10px;
+  border-radius: 1px;
   bottom: 0;
   left: 0;
   margin: 10px;
@@ -139,25 +139,10 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .info-bubble {
   fill: $info-bubble-header-color;
   stroke: lighten($info-bubble-header-color, 20);
-  // animation: pulse 5s infinite;
-  @keyframes pulse {
-    0% {
-      fill: $info-bubble-header-color;
-      stroke: lighten($info-bubble-header-color, 20);
-      }
-    50% {
-      fill: lighten($info-bubble-header-color, 30);
-      stroke: lighten($info-bubble-header-color, 40);
-    }
-    0% {
-      fill: $info-bubble-header-color;
-      stroke: lighten($info-bubble-header-color, 20);
-      }
-}
+  transition: fill .5s stroke .5s ease-in-out;
   &.hover {
     fill: lighten($info-bubble-header-color, 40);
     stroke: lighten($info-bubble-header-color, 60);
-    animation: none;
   }
 }
 
@@ -183,7 +168,7 @@ $tip-padding: 1;
   box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
   font-weight: 500;
-  height: 12rem;
+  height: 10rem;
   width: 20rem;
   line-height: 1;
   overflow: hidden;
@@ -197,6 +182,7 @@ $tip-padding: 1;
     font-size: 1rem;
     font-weight: 200;
     text-align: center;
+    vertical-align: middle;
 
     span {
       font-weight: bold;
@@ -224,7 +210,7 @@ $tip-padding: 1;
     }
     .date {
       font-weight: bold;
-    }
+      }
     .body {
       margin-top: .8em;
     }

@@ -278,7 +278,8 @@ function initial_render() {
     initialise_tracker()
 
     // Initialise info bubble
-    d3.select("#tooltip").remove()
+    d3.select("#tooltip")
+        .remove()
     d3.select("#timeline")
         .append("div")
         .attr("id", "tooltip")
@@ -490,16 +491,16 @@ function first_slide() {
         .attr("height", y(1) - y(2)) // height of rectangle is one unit of the y axis
 
     // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
-    instance
-        .on("mouseover", function (d) {
-            // Only show mouseover if MP is in toggled party or if no party is filtered
-            if (partyToggled == false || d.party == partyToggled) {
-                d3.select(this)
-                    .moveToFront()
-                // For each point group, set tooltip to display on mouseover
-                d3.select("#tooltip").style("opacity", 1)
-                partyLogo = partyHasLogo.indexOf(d.party) != -1
-                tooltip.innerHTML = `
+    function mpMouseover(d) {
+        // Only show mouseover if MP is in toggled party or if no party is filtered
+        if (partyToggled == false || d.party == partyToggled) {
+            d3.select(this)
+                .moveToFront()
+            // For each point group, set tooltip to display on mouseover
+            d3.select("#tooltip")
+                .style("opacity", 1)
+            partyLogo = partyHasLogo.indexOf(d.party) != -1
+            tooltip.innerHTML = `
                     <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
                     <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(d.term_end)}</div>
@@ -508,27 +509,43 @@ function first_slide() {
                     ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ``}
                     `;
 
-                // Increase line thickness of all terms of the same MP
-                pointsGroup
-                    .selectAll(".line-connect")
-                    .style("stroke-width", function (a) {
-                        return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
-                    })
-                // Also make the start and end circles bigger
-                pointsGroup
-                    .selectAll(".term-start")
-                    .attr("r", function (a) {
-                        return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                    })
-                pointsGroup
-                    .selectAll(".term-end")
-                    .attr("r", function (a) {
-                        return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                    })
-            }
-        })
+            // Increase line thickness of all terms of the same MP
+            pointsGroup
+                .selectAll("g")
+                .style("opacity", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.0 : 0.6
+                })
+                .selectAll(".line-connect")
+                .style("stroke-width", function (a) {
+                    return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
+                })
+            // Also make the start and end circles bigger
+            pointsGroup
+                .selectAll(".term-start")
+                .attr("r", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+                })
+            pointsGroup
+                .selectAll(".term-end")
+                .attr("r", function (a) {
+                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+                })
+        }
+        d3.event.preventDefault()
+    }
+    instance
+        .on("mouseover", mpMouseover)
         // On mouse out, change everything back
         .on("mouseout", function (d) {
+            pointsGroup
+                .selectAll("g")
+                .style("opacity", function (a) {
+                    if (partyToggled == false) {
+                        return 1.0
+                    } else {
+                        return (partyToggled != a.party) ? 1.0 : 0.1
+                    }
+                })
             pointsGroup
                 .selectAll(".line-connect")
                 .style("stroke-width", lineThickness)
@@ -539,8 +556,9 @@ function first_slide() {
                 .selectAll(".term-end")
                 .attr("r", circleRadius)
         })
+        .on("touchend", mpMouseover)
         // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
-        .on("click", function (d) {
+        .on("mousedown", function (d) {
             if (partyToggled == false) {
                 // Store toggled party
                 partyToggled = d.party
@@ -576,7 +594,8 @@ function to_first_slide() {
         .style("opacity", 0)
         .remove()
     // Remove election rect events and tooltip
-    d3.select("#tooltip").style("opacity", 0)
+    d3.select("#tooltip")
+        .style("opacity", 0)
     d3.selectAll(".election-rect")
         .on("mouseover", null)
         .on("mouseout", null)
@@ -724,7 +743,8 @@ function second_slide() {
     // ACT 0: HIDE THE TOOLTIP
     // ----------------------------------------------------------------------------
     // Hide the tooltip
-    d3.select("#tooltip").style("opacity", 0)
+    d3.select("#tooltip")
+        .style("opacity", 0)
 
     // ----------------------------------------------------------------------------
     // ACT 1: SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
@@ -853,15 +873,16 @@ function second_slide() {
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
-                    d3.select("#tooltip").style("opacity", 1)
+                    d3.select("#tooltip")
+                        .style("opacity", 1)
                     d3.select(this)
                         .classed("hover", true)
                     // Reconfigure tooltip to show different information
-                            var first_election = d.year
-                            var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
-                            var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
-                            var gender_ratio = d.total_mps / num_women - 1
-                tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+                    var first_election = d.year
+                    var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
+                    var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
+                    var gender_ratio = d.total_mps / num_women - 1
+                    tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
             ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
                             `There were no women in the House of Commons yet :(`}
@@ -883,6 +904,21 @@ function second_slide() {
                 .data(info_bubbles_data.slide2)
                 .enter()
                 .append("g")
+            // Create a voronoi grid with clipPaths to use them to clip large circles
+            var voronoi = d3.voronoi()
+                .x(function(d) { return x(d3.timeParse("%Y-%m-%d")(d.x)) })
+                .y(function(d) { return y(d.y) })
+                .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
+
+            d3.select("#info-bubbles")
+                .append("defs")
+                .selectAll("clipPath")
+                .data(voronoi.polygons(info_bubbles_data.slide2))
+                .enter()
+                .append("clipPath")
+                .attr("id", function(d, i) { return `voronoi-clip-${i}`})
+                .append("path")
+                .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null})
             // first add larger hidden circle to catch hover events
             infoBubbles
                 .append("circle")
@@ -895,10 +931,12 @@ function second_slide() {
                 .attr("cy", function (d) {
                     return y(d.y)
                 })
+                .style("clip-path", function(d, i) { return `url(#voronoi-clip-${i})`})
+                .attr("clip-path", function(d, i) { return `url(#voronoi-clip-${i})`})
             // Then add visible circle
             infoBubbles
                 .append("circle")
-                .attr("r", 5 * circleRadius)
+                .attr("r", 0)
                 .attr("class", "info-bubble")
                 .attr("stroke-width", 2 * circleRadius)
                 .attr("cx", function (d) {
@@ -907,13 +945,29 @@ function second_slide() {
                 .attr("cy", function (d) {
                     return y(d.y)
                 })
+                .transition()
+                .delay(function (d, i) { return 1000 + i*250})
+                .duration(1000)
+                .ease(d3.easeExp)
+                .attr("r", 15 * circleRadius)
+                .transition()
+                .duration(500)
+                .ease(d3.easeBounce)
+                .attr("r", 5 * circleRadius)
             infoBubbles
                 .on("mouseover", function (d) {
+                    d3.select(this).moveToFront()
                     d3.select(this)
                         .select(".info-bubble")
                         .classed("hover", true)
+                        .transition()
+                        .duration(500)
+                        .ease(d3.easeBounce)
+                        .attr("r", 10 * circleRadius)
 
-                    d3.select("#tooltip").style("opacity", 1)
+                    d3.select("#tooltip")
+                        .style("opacity", 1)
+                    // Show relevant tooltip info
                     tooltip.innerHTML = `
                             <div class="info-bubble-tip">
                                 <h1>${d.head}</h1>
@@ -925,6 +979,10 @@ function second_slide() {
                     d3.select(this)
                         .select(".info-bubble")
                         .classed("hover", false)
+                        .transition()
+                        .duration(500)
+                        .ease(d3.easeBounce)
+                        .attr("r", 5 * circleRadius)
                 })
         })
 
@@ -937,9 +995,13 @@ var timeline = document.getElementById("timeline")
 var svg = d3.select(timeline)
     .append("svg")
 
+
 // ----------------------------------------------------------------------------
 // GLOBAL VARIABLES TO STORE SPECIFIC SELECTORS AND DATA
 // ----------------------------------------------------------------------------
+var width = 0,
+    height = 0
+
 var clippedArea,
     electionRects,
     defs,
@@ -966,59 +1028,64 @@ function draw_graph() {
     d3.selectAll("g")
         .remove()
     // Chart dimensions - use parent div size
-    width = timeline.clientWidth - margin.left - margin.right,
-        height = timeline.clientHeight - margin.top - margin.bottom;
-    // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
-    lineThickness = 0.0018 * height;
-    // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
-    circleRadius = lineThickness;
-    svg
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-    d3.queue()
-        .defer(d3.csv, "mps_over_time.csv", function (d) {
-            var parseDate = d3.timeParse("%Y-%m-%d");
-            return {
-                name: d.name,
-                constituency: d.constituency,
-                term_start: parseDate(d.term_start),
-                term_end: parseDate(d.term_end),
-                party: d.party,
-                byelection: (d.byelection == "TRUE"),
-                notes: d.notes,
-                clean_name: d.clean_name,
-                stream: +d.stream
-            };
-        })
-        .defer(d3.csv, "number_women_over_time.csv", function (d) {
-            var parseDate = d3.timeParse("%Y-%m-%d");
-            return {
-                year: parseDate(d.Year),
-                total_women_mps: +d.Total,
-                total_mps: +d.total_mps
-            }
-        })
-        .defer(d3.csv, "total_mps_over_time.csv", function (d) {
-            var parseDate = d3.timeParse("%Y-%m-%d");
-            return {
-                year: parseDate(d.Year),
-                total_mps: +d.total_mps
-            }
-        })
-        .defer(d3.json, "info_bubbles.json")
-        .await(analyze);
+    var new_width = timeline.clientWidth - margin.left - margin.right,
+        new_height = timeline.clientHeight - margin.top - margin.bottom;
 
-    function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time, info_bubbles) {
-        // Make global
-        mps_over_time_data = mps_over_time
-        number_women_over_time_data = number_women_over_time
-        total_mps_over_time_data = total_mps_over_time
-        info_bubbles_data = info_bubbles
-        new_slide = 0
-        var current_slide = -1
-        initial_render()
-        first_slide()
-    };
+    if (new_width != width | new_height != height) {
+        width = new_width;
+        height = new_height;
+        // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
+        lineThickness = 0.0018 * height;
+        // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
+        circleRadius = lineThickness;
+        svg
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        d3.queue()
+            .defer(d3.csv, "mps_over_time.csv", function (d) {
+                var parseDate = d3.timeParse("%Y-%m-%d");
+                return {
+                    name: d.name,
+                    constituency: d.constituency,
+                    term_start: parseDate(d.term_start),
+                    term_end: parseDate(d.term_end),
+                    party: d.party,
+                    byelection: (d.byelection == "TRUE"),
+                    notes: d.notes,
+                    clean_name: d.clean_name,
+                    stream: +d.stream
+                };
+            })
+            .defer(d3.csv, "number_women_over_time.csv", function (d) {
+                var parseDate = d3.timeParse("%Y-%m-%d");
+                return {
+                    year: parseDate(d.Year),
+                    total_women_mps: +d.Total,
+                    total_mps: +d.total_mps
+                }
+            })
+            .defer(d3.csv, "total_mps_over_time.csv", function (d) {
+                var parseDate = d3.timeParse("%Y-%m-%d");
+                return {
+                    year: parseDate(d.Year),
+                    total_mps: +d.total_mps
+                }
+            })
+            .defer(d3.json, "info_bubbles.json")
+            .await(analyze);
+
+        function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time, info_bubbles) {
+            // Make global
+            mps_over_time_data = mps_over_time
+            number_women_over_time_data = number_women_over_time
+            total_mps_over_time_data = total_mps_over_time
+            info_bubbles_data = info_bubbles
+            new_slide = 0
+            var current_slide = -1
+            initial_render()
+            first_slide()
+        };
+    }
 }
 
 // INITIAL DRAW

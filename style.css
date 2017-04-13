@@ -76,7 +76,7 @@ body {
     font-size: .8rem; } }
 .d3-graph {
   background-color: #252525;
-  border-radius: 10px;
+  border-radius: 1px;
   bottom: 0;
   left: 0;
   margin: 10px;
@@ -86,21 +86,11 @@ body {
 
 .info-bubble {
   fill: #0096db;
-  stroke: #42c3ff; }
-@keyframes pulse {
-  0% {
-    fill: #0096db;
-    stroke: #42c3ff; }
-  50% {
-    fill: #75d4ff;
-    stroke: #a8e4ff; }
-  0% {
-    fill: #0096db;
-    stroke: #42c3ff; } }
+  stroke: #42c3ff;
+  transition: fill .5s stroke .5s ease-in-out; }
   .info-bubble.hover {
     fill: #a8e4ff;
-    stroke: white;
-    animation: none; }
+    stroke: white; }
 
 .election-rect {
   opacity: .15; }
@@ -120,7 +110,7 @@ body {
   box-shadow: 1px 1px 5px rgba(19, 19, 19, 0.8);
   font-size: 1rem;
   font-weight: 500;
-  height: 12rem;
+  height: 10rem;
   width: 20rem;
   line-height: 1;
   overflow: hidden;
@@ -132,7 +122,8 @@ body {
   #tooltip .slide2-tooltip {
     font-size: 1rem;
     font-weight: 200;
-    text-align: center; }
+    text-align: center;
+    vertical-align: middle; }
     #tooltip .slide2-tooltip span {
       font-weight: bold; }
     #tooltip .slide2-tooltip .female {
