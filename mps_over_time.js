@@ -566,11 +566,7 @@ function first_slide() {
             pointsGroup
                 .selectAll("g")
                 .style("opacity", function (a) {
-                    if (partyToggled == false) {
                         return 1.0
-                    } else {
-                        return (partyToggled != a.party) ? 1.0 : 0.1
-                    }
                 })
             pointsGroup
                 .selectAll(".line-connect")
@@ -584,19 +580,19 @@ function first_slide() {
         })
         .on("touchend", mpMouseover)
         // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
-        .on("mousedown", function (d) {
-            if (partyToggled == false) {
-                // Store toggled party
-                partyToggled = d.party
-            } else {
-                partyToggled = false
-            }
-            pointsGroup.selectAll("g")
-                .style("opacity", function (a) {
-                    return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
-                })
-                .moveToFront()
-        })
+        // .on("mousedown", function (d) {
+        //     if (partyToggled == false) {
+        //         // Store toggled party
+        //         partyToggled = d.party
+        //     } else {
+        //         partyToggled = false
+        //     }
+        //     pointsGroup.selectAll("g")
+        //         .style("opacity", function (a) {
+        //             return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
+        //         })
+        //         .moveToFront()
+        // })
 
     // Exit
     instance
