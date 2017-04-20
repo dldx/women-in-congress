@@ -60,19 +60,33 @@ body {
   stroke-width: .5; }
 
 .x-axis text,
-.y-axis text {
+.y-axis text,
+.x-label,
+.y-label {
   fill: #dadada;
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
   font-weight: 500; }
 
+.x-label, .y-label {
+  text-anchor: middle;
+  font-size: 1.1rem;
+  font-weight: 500; }
+
+.x-label {
+  alignment-baseline: hanging; }
+
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 13 / 10), only screen and (min-resolution: 120dpi) {
   .x-axis text,
-  .y-axis text {
+  .y-axis text,
+  .x-label text,
+  .x-label text {
     font-size: 1rem; } }
 @media screen and (max-width: 500px) {
   .x-axis text,
-  .y-axis text {
+  .y-axis text,
+  .x-label text,
+  .x-label text {
     font-size: .8rem; } }
 .d3-graph {
   background-color: #252525;
@@ -203,5 +217,23 @@ body {
 
 .max-mps-area {
   fill: #c61148; }
+
+.men-label,
+.women-label,
+.i5050-label {
+  font-weight: 500;
+  text-anchor: middle; }
+
+.women-label {
+  alignment-baseline: ideographic;
+  fill: #c61148; }
+
+.men-label {
+  fill: #e5e5e5; }
+
+.i5050-label {
+  alignment-baseline: ideographic;
+  text-anchor: end;
+  fill: #e5e5e5; }
 
 /*# sourceMappingURL=style.css.map */

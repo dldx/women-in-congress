@@ -104,23 +104,36 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   stroke: invert($graph-background);
   stroke-width: .5;
 }
-
 .x-axis text,
-.y-axis text {
+.y-axis text,
+.x-label,
+.y-label {
   fill: invert($graph-background);
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
   font-weight: 500;
 }
+.x-label, .y-label {
+  text-anchor: middle;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.x-label {
+  alignment-baseline: hanging;
+}
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 13 / 10), only screen and (min-resolution: 120dpi) {
   .x-axis text,
-  .y-axis text {
+  .y-axis text,
+  .x-label text,
+  .x-label text {
     font-size: 1rem;
   }
 }
 @media screen and (max-width: 500px) {
   .x-axis text,
-  .y-axis text {
+  .y-axis text,
+  .x-label text,
+  .x-label text {
     font-size: .8rem;
   }
 }
@@ -293,4 +306,25 @@ $tip-padding: 1;
 
 .max-mps-area {
   fill: $male;
+}
+
+.men-label,
+.women-label,
+.i5050-label {
+  font-weight: 500;
+  text-anchor: middle;
+}
+.women-label {
+  alignment-baseline: ideographic;
+  fill: $male;
+}
+
+.men-label {
+  fill: $female;
+}
+
+.i5050-label {
+  alignment-baseline: ideographic;
+  text-anchor: end;
+  fill: $female;
 }

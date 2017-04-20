@@ -29,6 +29,7 @@ var colors = {
 var new_slide = 0
 var current_slide = -1
 var partyToggled = false
+var lastTransitioned = -1
 
 // These are the labels for each slide
 var tracker_data = [{
@@ -122,7 +123,7 @@ function update_state() {
         // Go from slide 0 to slide 1
         if (current_slide == 0 & new_slide == 1) {
             // Reset zoom, then load second slide
-            reset_zoom(second_slide)
+            reset_zoom(to_second_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed);
@@ -330,6 +331,20 @@ function initial_render() {
         .attr("text-anchor", "middle")
         .attr("class", "chart-title")
         .text("Women MPs in the House of Commons")
+
+    // Add axes labels
+    wrapper.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom / 2)
+        .attr("class", "x-label")
+        .text("Time")
+
+    wrapper.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left / 2)
+        .attr("x", 0 - (height / 2))
+        .attr("class", "y-label")
+        .text("Number of MPs")
 
     // Add zoom capabilities for the points
     zoom = d3.zoom()
@@ -585,12 +600,19 @@ function first_slide() {
 // GO TO FIRST SLIDE FROM ANOTHER
 // ----------------------------------------------------------------------------
 function to_first_slide() {
+    // Increment lastTransitioned counter if it is less than 0
+    if(lastTransitioned < 0) {
+        lastTransitioned = 0
+    }
     t0 = svg
         .transition()
         .duration(1000)
 
     // Fade all objects belonging to second slide
     t0.select("#slide2-group")
+        .style("opacity", 0)
+        .remove()
+    t0.select("#info-bubbles")
         .style("opacity", 0)
         .remove()
     // Remove election rect events and tooltip
@@ -610,12 +632,30 @@ function to_first_slide() {
     t0.select("#slide1-group")
         .style("opacity", 1)
 }
+// ----------------------------------------------------------------------------
+// TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_second_slide() {
+    if(lastTransitioned < 1) {
+        second_slide(no_transition=false)
+        // Update transition counter
+        lastTransitioned = 1
+    } else {
+        d3.select("#slide1-group")
+            .style("opacity", 1)
+            .transition()
+            .duration(1000)
+            .style("opacity", 0)
+            .remove()
+        second_slide(no_transition=true)
+    }
+}
 
 
 // ----------------------------------------------------------------------------
 // SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
 // ----------------------------------------------------------------------------
-function second_slide() {
+function second_slide(no_transition=false) {
     // Set all points to full opacity in case they were filtered previously
     pointsGroup.selectAll("g")
         .style("opacity", 1)
@@ -626,6 +666,15 @@ function second_slide() {
     slide2Group = zoomedArea
         .append("g")
         .attr("id", "slide2-group")
+
+    // Add a smooth but quick transition if no fancy transition is requested
+    if (no_transition) {
+        slide2Group
+            .style("opacity", 0)
+            .transition()
+            .duration(1000)
+            .style("opacity", 1)
+    }
 
     // Add interpolation line for total mps over time
     var max_mps_line = d3.line()
@@ -758,7 +807,8 @@ function second_slide() {
 
     pointsGroup.selectAll(".line-connect")
         .transition()
-        .duration(500)
+        .delay(no_transition ? 500 : 0)
+        .duration(no_transition ? 0: 500)
         .attr("x2", function (a) {
             return x(a.term_start)
         })
@@ -768,7 +818,8 @@ function second_slide() {
         //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
         // })
         .transition()
-        .duration(500)
+        .delay(no_transition ? 500 : 0)
+        .duration(no_transition ? 0: 500)
         .attr("cx", function (a) {
             return x(a.term_start)
         })
@@ -780,8 +831,8 @@ function second_slide() {
             return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
         })
         .transition()
-        .delay(2500)
-        .duration(500)
+        .delay(no_transition ? 0 : 2500)
+        .duration(no_transition ? 0 : 500)
         .attr("r", 0)
 
     // ----------------------------------------------------------------------------
@@ -792,8 +843,8 @@ function second_slide() {
         //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
         // })
         .transition()
-        .delay(500)
-        .duration(500)
+        .delay(no_transition ? 500 : 500)
+        .duration(no_transition ? 0 : 500)
         .attr("cx", function (a) {
             return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
         })
@@ -807,9 +858,9 @@ function second_slide() {
     // ----------------------------------------------------------------------------
     total_women_mps_path
         .transition()
-        .delay(1000)
+        .delay(no_transition ? 0 : 1000)
         .ease(d3.easeCubic)
-        .duration(3000)
+        .duration(no_transition ? 0 : 3000)
         .attr("stroke-dashoffset", 0)
 
     // ----------------------------------------------------------------------------
@@ -820,45 +871,45 @@ function second_slide() {
 
     gY
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 1000 : 750)
         .call(yAxis)
     total_women_mps_path
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", total_women_mps_line)
 
     total_women_mps_path_area
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", total_women_mps_area)
         .style("opacity", 1)
 
     max_mps_path
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_line)
 
     max_mps_path_area
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_area)
         .style("opacity", 1)
 
     mask
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_area)
 
     half_max_mps_path
         .transition()
-        .delay(4000)
-        .duration(750)
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
         .attr("d", half_max_mps_line)
 
     instance
@@ -867,8 +918,65 @@ function second_slide() {
         .on("click", null)
 
     svg.transition()
-        .delay(4000)
+        .delay(no_transition ? 0 : 4500)
         .on("end", () => {
+            // Add text labels for areas
+            slide2Group.append("text")
+                .attr("x", x(new Date(2010, 1, 1)))
+                .attr("y", y(0) - 10 * lineThickness)
+                .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
+                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
+                .attr("class", "women-label")
+                .text("Women")
+                .style("opacity", 0)
+                .transition()
+                .duration(no_transition ? 0 : 500)
+                .style("opacity", 1)
+
+            slide2Group.append("text")
+                .attr("x", x(new Date(2010, 1, 1)))
+                .attr("y", y(500))
+                .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
+                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
+                .attr("class", "men-label")
+                .text("Men")
+                .style("opacity", 0)
+                .transition()
+                .duration(no_transition ? 0 : 500)
+                .style("opacity", 1)
+
+            // Add a smoothed 50% line to show halfway mark for gender and place text label on it
+            var half_max_mps_line_smooth = d3.line()
+                .x(function (d) {
+                    return x(d.year)
+                })
+                .y(function (d) {
+                    return y(d.total_mps / 2)
+                })
+                .curve(d3.curveBundle.beta(0.75))
+            // Add path for text to follow
+            slide2Group
+                .append("defs")
+                .append("path")
+                .attr("id", "half-max-textpath")
+                .datum(total_mps_over_time_data)
+                .attr("d", half_max_mps_line_smooth)
+
+            slide2Group
+                .append("text")
+                .append("textPath")
+                // .attr("x", x(new Date(1970, 1, 1)))
+                // .attr("y", y(630/2))
+                .attr("startOffset", "75%")
+                .attr("xlink:href", "#half-max-textpath")
+                .attr("font-size", Math.max(lineThickness * 10, Math.min(lineThickness * 20,
+                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 6)))
+                .attr("class", "i5050-label")
+                .text("50:50 gender representation")
+                .style("opacity", 0)
+                .transition()
+                .duration(no_transition ? 0 : 500)
+                .style("opacity", 1)
 
             // Use election rects to catch mouseovers and display information
             electionRects
@@ -893,10 +1001,13 @@ function second_slide() {
                     d3.select(this)
                         .classed("hover", false)
                 })
-
+            // ----------------------------------------------------------------
             // Add info bubbles to show information at specific points
+            // ----------------------------------------------------------------
             var parseDate = d3.timeParse("%Y-%m-%d");
 
+            // Remove old info bubbles
+            d3.select("#info-bubbles").remove()
             infoBubbles = zoomedArea
                 .append("g")
                 .attr("id", "info-bubbles")
@@ -906,9 +1017,12 @@ function second_slide() {
                 .append("g")
             // Create a voronoi grid with clipPaths to use them to clip large circles
             var voronoi = d3.voronoi()
-                .x(function(d) { return x(d3.timeParse("%Y-%m-%d")(d.x)) })
-                .y(function(d) { return y(d.y) })
-                .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
+                .x(function (d) { return x(d3.timeParse("%Y-%m-%d")(d.x)) })
+                .y(function (d) { return y(d.y) })
+                .extent([
+                    [-margin.left, -margin.top],
+                    [width + margin.right, height + margin.bottom]
+                ])
 
             d3.select("#info-bubbles")
                 .append("defs")
@@ -916,10 +1030,10 @@ function second_slide() {
                 .data(voronoi.polygons(info_bubbles_data.slide2))
                 .enter()
                 .append("clipPath")
-                .attr("id", function(d, i) { return `voronoi-clip-${i}`})
+                .attr("id", function (d, i) { return `voronoi-clip-${i}` })
                 .append("path")
-                .attr("d", function(d) { return d ? "M" + d.join("L") + "Z" : null})
-            // first add larger hidden circle to catch hover events
+                .attr("d", function (d) { return d ? "M" + d.join("L") + "Z" : null })
+            // add large hidden circle to catch hover events
             infoBubbles
                 .append("circle")
                 .attr("r", 50 * circleRadius)
@@ -931,8 +1045,8 @@ function second_slide() {
                 .attr("cy", function (d) {
                     return y(d.y)
                 })
-                .style("clip-path", function(d, i) { return `url(#voronoi-clip-${i})`})
-                .attr("clip-path", function(d, i) { return `url(#voronoi-clip-${i})`})
+                .style("clip-path", function (d, i) { return `url(#voronoi-clip-${i})` })
+                .attr("clip-path", function (d, i) { return `url(#voronoi-clip-${i})` })
             // Then add visible circle
             infoBubbles
                 .append("circle")
@@ -946,17 +1060,15 @@ function second_slide() {
                     return y(d.y)
                 })
                 .transition()
-                .delay(function (d, i) { return 1000 + i*250})
-                .duration(1000)
-                .ease(d3.easeExp)
-                .attr("r", 15 * circleRadius)
-                .transition()
-                .duration(500)
+                .delay(no_transition ? 0 : function (d, i) { return 1000 + i * 250 })
+                .duration(no_transition ? 0 : 1000)
                 .ease(d3.easeBounce)
                 .attr("r", 5 * circleRadius)
+            // Add the mouseover effects
             infoBubbles
                 .on("mouseover", function (d) {
-                    d3.select(this).moveToFront()
+                    d3.select(this)
+                        .moveToFront()
                     d3.select(this)
                         .select(".info-bubble")
                         .classed("hover", true)
