@@ -33,22 +33,22 @@ var lastTransitioned = -1
 
 // These are the labels for each slide
 var tracker_data = [{
-        section: "Intro",
+        section: "1",
     },
     {
-        section: "All MPs",
+        section: "2",
     },
     {
-        section: "Next",
+        section: "3",
     },
     {
-        section: "Down",
+        section: "4",
     },
     {
-        section: "Down",
+        section: "5",
     },
     {
-        section: "Down",
+        section: "6",
     },
 ]
 
@@ -192,13 +192,26 @@ function initialise_tracker() {
         .outerRadius(tracker_outer_radius)
         .innerRadius(tracker_inner_radius)
 
-    var arc = tracker_wrapper.selectAll(".arc")
+    var labels = d3.arc()
+        .outerRadius(tracker_outer_radius)
+        .innerRadius(tracker_inner_radius)
+
+    var arcGroup = tracker_wrapper.selectAll(".arc")
         .data(pie(tracker_data))
         .enter()
-        .append("path")
+        .append("g")
         .attr("class", "arc")
 
-    arc.attr("d", path)
+    var arc = arcGroup
+        .append("path")
+        .attr("d", path)
+
+    var arcLabels = arcGroup
+        .append("text")
+        .attr("transform", function(d) { return "translate(" + labels.centroid(d) + ")"; })
+        .text(function(d) { return d.data.section; });
+
+    arcGroup
         .on("mouseover", function (d) {
             d3.select(this)
                 .classed("hover", true)
@@ -240,9 +253,7 @@ function initialise_tracker() {
     tracker_wrapper.append("path")
         .attr("class", "tracker-hexagon")
         .attr("d", hexagonPath)
-        .style("stroke", colors["Active"])
-        .style("stroke-width", "8px")
-        .style("fill", "none")
+
 
     var mask = tracker_wrapper.append("clipPath")
         .attr("id", "hex-mask")

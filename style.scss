@@ -53,6 +53,11 @@ body {
     margin: auto;
   }
 
+  .tracker-hexagon {
+    stroke: map-get($colors, Active);
+    stroke-width: 8px;
+    fill: none;
+  }
   .arc {
     @each $item in $tracker-colors {
       &.c-#{index($tracker-colors, $item)} {
@@ -61,10 +66,26 @@ body {
     }
     &.active {
       fill: map-get($colors, Active);
+      text {
+        fill: nth($tracker-colors, 1);
+      }
     }
     &.hover {
       fill: map-get($colors, Hover);
+      text {
+        fill: nth($tracker-colors, 1);
+      }
     }
+  }
+  text {
+    cursor: default;
+    user-select: none;
+    fill: map-get($colors, Green);
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-weight: bold;
+    font-size: 1.5em;
+
   }
 }
 

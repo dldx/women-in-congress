@@ -20,14 +20,30 @@ body {
     margin: auto; }
   .tracker .nav-next {
     margin: auto; }
+  .tracker .tracker-hexagon {
+    stroke: #a1c181;
+    stroke-width: 8px;
+    fill: none; }
   .tracker .arc.c-1 {
     fill: #5c5c5c; }
   .tracker .arc.c-2 {
     fill: #424242; }
   .tracker .arc.active {
     fill: #a1c181; }
+    .tracker .arc.active text {
+      fill: #5c5c5c; }
   .tracker .arc.hover {
     fill: #e5e5e5; }
+    .tracker .arc.hover text {
+      fill: #5c5c5c; }
+  .tracker text {
+    cursor: default;
+    user-select: none;
+    fill: #a1c181;
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-weight: bold;
+    font-size: 1.5em; }
 
 .nav-next,
 .nav-prev {
