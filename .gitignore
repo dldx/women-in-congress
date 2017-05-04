@@ -2,6 +2,8 @@
 mp_speeches.h5
 # Ignore config which contains API KEYS
 config.py
+# Ignore temp data
+intermediate
 # Created by https://www.gitignore.io/api/vim,linux,python
 node_modules
 ### Linux ###
