@@ -1,4 +1,7 @@
-
+# HDF5 files are too big to upload
+mp_speeches.h5
+# Ignore config which contains API KEYS
+config.py
 # Created by https://www.gitignore.io/api/vim,linux,python
 node_modules
 ### Linux ###
