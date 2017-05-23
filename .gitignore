@@ -1,5 +1,6 @@
 # HDF5 files are too big to upload
 mp_speeches.h5
+processed_speeches.h5
 # Ignore config which contains API KEYS
 config.py
 # Ignore temp data
