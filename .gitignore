@@ -1,10 +1,19 @@
 # HDF5 files are too big to upload
 mp_speeches.h5
+raw.h5
+raw_speeches.h5
+processed.h5
+processed_2.h5
 processed_speeches.h5
 # Ignore config which contains API KEYS
 config.py
 # Ignore temp data
 intermediate
+mps_to_download.pkl
+
+# Ignore speech data
+speeches
+
 # Created by https://www.gitignore.io/api/vim,linux,python
 node_modules
 ### Linux ###
