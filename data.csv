@@ -1,0 +1,2323 @@
+topic_id,value,full_name,is_female,Party
+nhs,0.049690116778988436,Irene Adams,True,Labour
+nhs,0.12438161250637689,Nick Ainger,False,Labour
+nhs,0.014199475572854035,Bob Ainsworth,False,Labour
+nhs,0.015847087469170924,Richard Allan,False,Liberal Democrat
+nhs,0.006655113693497861,Michael Ancram,False,Conservative
+nhs,0.00940701791231126,Donald Anderson,False,Labour
+nhs,0.08714887706424904,Janet Anderson,True,Labour
+nhs,0.019683447345289967,James Arbuthnot,False,Conservative
+nhs,0.032595958777813516,Hilary Armstrong,True,Labour
+nhs,0.011648014232639168,Paddy Ashdown,False,Liberal Democrat
+nhs,0.05275289726910533,Joe Ashton,False,Labour
+nhs,0.024498555298408945,Candy Atherton,True,Labour
+nhs,0.26252368535241505,Charlotte Atkins,True,Labour
+nhs,0.12007569347263432,David Atkinson,False,Conservative
+nhs,0.06317602959996187,Peter Atkinson,False,Conservative
+nhs,0.28634028151057506,John Austin,False,Labour
+nhs,0.030304626570857217,Norman Baker,False,Liberal Democrat
+nhs,0.08684128178888116,Tony Baldry,False,Conservative
+nhs,0.03136348930310576,Jackie Ballard,True,Liberal Democrat
+nhs,0.007980471630278263,Tony Banks,False,Labour
+nhs,0.01512320895995247,Harry Barnes,False,Labour
+nhs,0.022464487646661854,John Battle,False,Labour
+nhs,0.12069445707943031,Hugh Bayley,False,Labour
+nhs,0.031085763637279967,Nigel Beard,False,Labour
+nhs,0.0352327215141444,Anne Begg,True,Labour
+nhs,0.06234384160793493,Roy Beggs,False,UUP
+nhs,0.03434186840557833,Alan Beith,False,Liberal Democrat
+nhs,0.009057987802749617,Martin Bell,False,Independent
+nhs,0.014688470276813807,Stuart Bell,False,Labour
+nhs,0.008007445177919459,Tony Benn,False,Labour
+nhs,0.024511344776898515,Andrew Bennett,False,Labour
+nhs,0.21027586922531025,Joe Benton,False,Labour
+nhs,0.032152624314879634,Gerry Bermingham,False,Labour
+nhs,0.04948389101542261,Roger Berry,False,Labour
+nhs,0.0696243028816912,Harold Best,False,Labour
+nhs,0.12912470567704795,Liz Blackman,True,Labour
+nhs,0.07652561517868622,Tony Blair,False,Labour
+nhs,0.20799540427466134,Hazel Blears,True,Labour
+nhs,0.08203123089883603,Bob Blizzard,False,Labour
+nhs,0.034054909769771664,David Blunkett,False,Labour
+nhs,0.08766231909933116,Paul Boateng,False,Labour
+nhs,0.005713348585745799,Richard Body,False,Conservative
+nhs,0.05031767748992832,Betty Boothroyd,True,Speaker
+nhs,0.027982582223467292,David Borrow,False,Labour
+nhs,0.02409452768782785,Tim Boswell,False,Conservative
+nhs,0.4045287535822088,Virginia Bottomley,True,Conservative
+nhs,0.06266069251779306,Keith Bradley,False,Labour
+nhs,0.10125279141388796,Peter Bradley,False,Labour
+nhs,0.44306713958954563,Peter Brand,False,Liberal Democrat
+nhs,0.0417426274376092,Colin Breed,False,Liberal Democrat
+nhs,0.041696028586344656,Peter Brooke,False,Conservative
+nhs,0.032852987722508074,Gordon Brown,False,Labour
+nhs,0.036640797087356666,Russell Brown,False,Labour
+nhs,0.020568551936660864,Des Browne,False,Labour
+nhs,0.12217589866532745,Angela Browning,True,Conservative
+nhs,0.02510155565999384,Ian Bruce,False,Conservative
+nhs,0.01839467612043429,Malcolm Bruce,False,Liberal Democrat
+nhs,0.011881084515976345,Colin Burgon,False,Labour
+nhs,0.029361393963808494,John Burnett,False,Liberal Democrat
+nhs,0.4527397223731337,Paul Burstow,False,Liberal Democrat
+nhs,0.006704006581221021,Christine Butler,True,Labour
+nhs,0.03224940541636986,John Butterfill,False,Conservative
+nhs,0.007978359508798955,Stephen Byers,False,Labour
+nhs,0.021250854832753782,Vincent Cable,False,Liberal Democrat
+nhs,0.0030569151208556097,Richard Caborn,False,Labour
+nhs,0.038942243099169216,Anne Campbell,True,Labour
+nhs,0.002776520314441576,Menzies Campbell,False,Liberal Democrat
+nhs,0.02882084554583821,Dale Campbell-Savours,False,Labour
+nhs,0.028597553644519283,Dennis Canavan,False,Labour
+nhs,0.012103164568285673,Jamie Cann,False,Labour
+nhs,0.016160996645355967,Ivor Caplin,False,Labour
+nhs,0.08700929985045512,Roger Casale,False,Labour
+nhs,0.022665630154692862,Martin Caton,False,Labour
+nhs,0.034788129202550276,Ian Cawsey,False,Labour
+nhs,0.06024919332656523,Ben Chapman,False,Labour
+nhs,0.04789755462525595,Sydney Chapman,False,Conservative
+nhs,0.030975133650143052,David Chaytor,False,Labour
+nhs,0.04450375734831147,David Chidgey,False,Liberal Democrat
+nhs,0.12411069389092719,Malcolm Chisholm,False,Labour
+nhs,0.07172402549445663,Judith Church,True,Labour
+nhs,0.016822195570968455,Michael Clapham,False,Labour
+nhs,0.02488713423932595,James Clappison,False,Conservative
+nhs,0.003218667798098827,Alan Clark,False,Conservative
+nhs,0.011713675334236907,David Clark,False,Labour
+nhs,0.0586789449109221,Helen Clark,False,Labour
+nhs,0.011787006789342127,Lynda Clark,False,Labour
+nhs,0.056294730665914165,Michael Clark,False,Conservative
+nhs,0.009455850750853015,Paul Clark,False,Labour
+nhs,0.008128072853110744,Charles Clarke,False,Labour
+nhs,0.056916467153715206,Eric Clarke,False,Labour
+nhs,0.10889539088962433,Tom Clarke,False,Labour
+nhs,0.020524539966353457,Tony Clarke,False,Labour
+nhs,0.015024038767317048,David Clelland,False,Labour
+nhs,0.056251968232717234,Harry Cohen,False,Labour
+nhs,0.0057876572001026175,Iain Coleman,False,Labour
+nhs,0.02310845720706941,Tim Collins,False,Conservative
+nhs,0.14725259867907323,Tony Colman,False,Labour
+nhs,0.023291385668356743,Michael Colvin,False,Conservative
+nhs,0.023431856517622158,Michael Connarty,False,Labour
+nhs,0.058687601004164786,Frank Cook,False,Labour
+nhs,0.08327908506453495,Robin Cook,False,Labour
+nhs,0.06606337775949235,Robin Corbett,False,Labour
+nhs,0.027432258636794663,Patrick Cormack,False,Conservative
+nhs,0.08436652554430113,Jean Corston,True,Labour
+nhs,0.018930918083987128,Brian Cotter,False,Liberal Democrat
+nhs,0.09394466928194664,Jim Cousins,False,Labour
+nhs,0.055674280331726674,Tom Cox,False,Labour
+nhs,0.06207204151570145,James Cran,False,Conservative
+nhs,0.022300425020731325,Ross Cranston,False,Labour
+nhs,0.09287882763571724,Ann Cryer,True,Labour
+nhs,0.052548327640241296,John Cummings,False,Labour
+nhs,0.030069825670797464,Lawrence Cunliffe,False,Labour
+nhs,0.014047672409812514,Jack Cunningham,False,Labour
+nhs,0.05150537091550535,Roseanna Cunningham,True,Scottish National Party
+nhs,0.007297696450743787,David Curry,False,Conservative
+nhs,0.015322174625902173,Claire Curtis-Thomas,True,Labour
+nhs,0.04447002427774571,Cynog Dafis,False,Plaid Cymru
+nhs,0.020643646659229256,Tam Dalyell,False,Labour
+nhs,0.00987373492619253,Alistair Darling,False,Labour
+nhs,0.11502858816319946,Keith Darvill,False,Labour
+nhs,0.026402206888723273,Edward Davey,False,Liberal Democrat
+nhs,0.06030174569573327,Valerie Davey,True,Labour
+nhs,0.005739029205299424,Ian Davidson,False,Labour
+nhs,0.009600894861108905,Denzil Davies,False,Labour
+nhs,0.03353470904023235,Quentin Davies,False,Conservative
+nhs,0.03426256270519884,Ron Davies,False,Labour
+nhs,0.15469191502464621,Terry Davis,False,Labour
+nhs,0.05228899981016745,Hilton Dawson,False,Labour
+nhs,0.11961845949729293,Stephen Day,False,Conservative
+nhs,0.17128862686468474,Janet Dean,True,Labour
+nhs,0.18955820053455552,John Denham,False,Labour
+nhs,0.013630034887983311,Donald Dewar,False,Labour
+nhs,0.044219635843507146,Andrew Dismore,False,Labour
+nhs,0.1684244058813189,Jim Dobbin,False,Labour
+nhs,0.29417249070085005,Frank Dobson,False,Labour
+nhs,0.047027147563712825,Brian H Donohoe,False,Labour
+nhs,0.030902083759512415,Frank Doran,False,Labour
+nhs,0.30232773586689304,Stephen Dorrell,False,Conservative
+nhs,0.05869408798713205,David Drew,False,Labour/Co-operative
+nhs,0.21769459078146702,Julia Drown,True,Labour
+nhs,0.16752160701783755,Gwyneth Dunwoody,True,Labour
+nhs,0.09216089843957173,Huw Edwards,False,Labour
+nhs,0.015078189473283862,Peter Emery,False,Conservative
+nhs,0.04523493334727787,Jeff Ennis,False,Labour
+nhs,0.1180388457807776,Bill Etherington,False,Labour
+nhs,0.065765446187475,Margaret Ewing,False,Scottish National Party
+nhs,0.010480320981112599,David Faber,False,Conservative
+nhs,0.016980220667505264,Derek Fatchett,False,Labour
+nhs,0.18050382372323406,Ronnie Fearn,False,Liberal Democrat
+nhs,0.018576865376251868,Mark Fisher,False,Labour
+nhs,0.0245241573330571,Lorna Fitzsimons,True,Labour
+nhs,0.014274105993724093,Howard Flight,False,Conservative
+nhs,0.017166496939789354,Barbara Follett,True,Labour
+nhs,0.02198146475743028,Clifford Forsythe,False,UUP
+nhs,0.00903326237961767,Eric Forth,False,Conservative
+nhs,0.03202068388140038,Derek Foster,False,Labour
+nhs,0.011633789959873707,Don Foster,False,Liberal Democrat
+nhs,0.1060413994004197,Michael Foster,False,Labour
+nhs,0.1362318169565373,Michael Jabez Foster,False,Labour
+nhs,0.02536566848248665,George Foulkes,False,Labour/Co-operative
+nhs,0.15018084686886904,Norman Fowler,False,Conservative
+nhs,0.10055924216512765,Christopher Fraser,False,Conservative
+nhs,0.05443080751741581,Maria Fyfe,True,Labour
+nhs,0.39120264677171585,Sam Galbraith,False,Labour
+nhs,0.012524196856825702,George Galloway,False,Respect
+nhs,0.1786319685788012,Andrew George,False,Liberal Democrat
+nhs,0.013392351612754344,Bruce George,False,Labour
+nhs,0.056762081240029974,Neil Gerrard,False,Labour
+nhs,0.1312695298632022,Ian Gibson,False,Labour
+nhs,0.03502141848909942,Christopher Gill,False,Conservative
+nhs,0.06005280559818465,Linda Gilroy,True,Labour
+nhs,0.027764408141533616,Norman Godman,False,Labour
+nhs,0.035715323228099095,Paul Goggins,False,Labour
+nhs,0.03522362596123926,Llin Golding,True,Labour
+nhs,0.02407565787964471,Alastair Goodlad,False,Conservative
+nhs,0.27911286083720205,Eileen Gordon,True,Labour
+nhs,0.027402161635005227,Teresa Gorman,True,Conservative
+nhs,0.025339138208375227,Donald Gorrie,False,Liberal Democrat
+nhs,0.06083654192674353,Tommy Graham,False,Labour
+nhs,0.08206892458898833,Bernie Grant,False,Labour
+nhs,0.05861753553602488,John Greenway,False,Conservative
+nhs,0.05114180501054733,Jane Griffiths,True,Labour
+nhs,0.055106204932089384,Nigel Griffiths,False,Labour
+nhs,0.11465660381767487,Win Griffiths,False,Labour
+nhs,0.08504262609998617,Bruce Grocott,False,Labour
+nhs,0.04848001726097658,John Grogan,False,Labour
+nhs,0.014129470225594618,John Gummer,False,Conservative
+nhs,0.20214153374446955,John Gunnell,False,Labour
+nhs,0.02031869861582258,William Hague,False,Conservative
+nhs,0.04318960273672819,Peter Hain,False,Labour
+nhs,0.12925164097703176,Mike Hall,False,Labour
+nhs,0.2712798284104908,Patrick Hall,False,Labour
+nhs,0.010757269574917863,Archie Hamilton,False,Conservative
+nhs,0.016322455279946864,Mike Hancock,False,Liberal Democrat
+nhs,0.29520108050510324,Evan Harris,False,Liberal Democrat
+nhs,0.09891952141356772,Nick Harvey,False,Liberal Democrat
+nhs,0.020251694718043032,Nick Hawkins,False,Conservative
+nhs,0.18596370958479536,Sylvia Heal,True,Labour
+nhs,0.02494052249371335,David Heath,False,Liberal Democrat
+nhs,0.008606801098140361,Edward Heath,False,Conservative
+nhs,0.013253769985041615,David Heathcoat-Amory,False,Conservative
+nhs,0.016799215316008153,Doug Henderson,False,Labour
+nhs,0.244001349751295,Ivan Henderson,False,Labour
+nhs,0.25657491441505553,John Heppell,False,Labour
+nhs,0.006913083153303138,Michael Heseltine,False,Conservative
+nhs,0.17707161004326508,Stephen Hesford,False,Labour
+nhs,0.2648631382852505,Patricia Hewitt,True,Labour
+nhs,0.0034355856324791633,Keith Hill,False,Labour
+nhs,0.3997818336730488,David Hinchliffe,False,Labour
+nhs,0.010416833630298128,Douglas Hogg,False,Conservative
+nhs,0.01870144044017705,John Home Robertson,False,Labour
+nhs,0.036675413467455086,Jimmy Hood,False,Labour
+nhs,0.011712063774184132,Geoff Hoon,False,Labour
+nhs,0.155932701909532,Phil Hope,False,Labour
+nhs,0.1756150774008697,John Horam,False,Conservative
+nhs,0.02955298898422485,Michael Howard,False,Conservative
+nhs,0.017308109779150163,Alan Howarth,False,Labour
+nhs,0.02162947861869892,Kim Howells,False,Labour
+nhs,0.008554733676858666,Beverley Hughes,True,Labour
+nhs,0.35398210700625227,Kevin Hughes,False,Labour
+nhs,0.10812188907596122,Simon Hughes,False,Liberal Democrat
+nhs,0.11384310843291887,Joan Humble,True,Labour
+nhs,0.017586987986483175,John Hume,False,Social Democratic and Labour Party
+nhs,0.018074936408719405,Andrew Hunter,False,Conservative
+nhs,0.1253271640262391,Alan Hurst,False,Labour
+nhs,0.24791570404759322,John Hutton,False,Labour
+nhs,0.10901650255733007,Brian Iddon,False,Labour
+nhs,0.10589372493270513,Eric Illsley,False,Labour
+nhs,0.008914211448226985,Adam Ingram,False,Labour
+nhs,0.040421593252943276,Michael Jack,False,Conservative
+nhs,0.05065314248194246,Glenda Jackson,True,Labour
+nhs,0.05710928526814892,Helen Jackson,True,Labour
+nhs,0.011343341393685109,Robert Jackson,False,Conservative
+nhs,0.005625369344831594,David Jamieson,False,Labour
+nhs,0.10126190813754896,Brian Jenkins,False,Labour
+nhs,0.16854164838908262,Melanie Johnson,True,Labour
+nhs,0.06230291885219861,Geoffrey Johnson Smith,False,Conservative
+nhs,0.0625723131691655,Barry Jones,False,Labour
+nhs,0.10727557397207024,Fiona Jones,True,Labour
+nhs,0.12593295608692598,Ieuan Wyn Jones,False,Plaid Cymru
+nhs,0.041242700347624464,Jenny Jones,True,Labour
+nhs,0.142893064361987,Jon Owen Jones,False,Labour/Co-operative
+nhs,0.10155708892635364,Lynne Jones,True,Labour
+nhs,0.045465326741456334,Martyn Jones,False,Labour
+nhs,0.04909238493635897,Nigel Jones,False,Liberal Democrat
+nhs,0.2651229921956144,Tessa Jowell,True,Labour
+nhs,0.013253048241882542,Gerald Kaufman,False,Labour
+nhs,0.02949812735040978,Sally Keeble,True,Labour
+nhs,0.16199769685550094,Alan Keen,False,Labour
+nhs,0.588059749877867,Ann Keen,True,Labour
+nhs,0.01662000284131155,Paul Keetch,False,Liberal Democrat
+nhs,0.005993397775053287,Ruth Kelly,True,Labour
+nhs,0.04861555517311562,Fraser Kemp,False,Labour
+nhs,0.11182913478538625,Charles Kennedy,False,Liberal Democrat
+nhs,0.19171395770157734,Jane Kennedy,True,Labour
+nhs,0.018149319341566068,Robert Key,False,Conservative
+nhs,0.04251794544998632,Piara S Khabra,False,Labour
+nhs,0.060118270169406185,David Kidney,False,Labour
+nhs,0.03022686431383273,Peter Kilfoyle,False,Labour
+nhs,0.11939361751262594,Andy King,False,Labour
+nhs,0.039741727018763065,Oona King,True,Labour
+nhs,0.005447200876581697,Tom King,False,Conservative
+nhs,0.020913018517689935,Tess Kingham,True,Labour
+nhs,0.0666313665200881,Julie Kirkbride,True,Conservative
+nhs,0.07530699670620136,Archy Kirkwood,False,Liberal Democrat
+nhs,0.07314720440715765,Ashok Kumar,False,Labour
+nhs,0.2861559107203414,Stephen Ladyman,False,Labour
+nhs,0.4690366301735249,Andrew Lansley,False,Conservative
+nhs,0.029030000856073573,Jackie Lawrence,True,Labour
+nhs,0.15536626253773766,Bob Laxton,False,Labour
+nhs,0.03009500634200119,David Lepper,False,Labour
+nhs,0.07824921624008338,Tom Levitt,False,Labour
+nhs,0.12272195808145402,Terry Lewis,False,Labour
+nhs,0.021418721339125864,Helen Liddell,True,Labour
+nhs,0.052602103919049584,Martin Linton,False,Labour
+nhs,0.0010633297697166142,Ken Livingstone,False,Labour
+nhs,0.06417340178616718,Richard Livsey,False,Liberal Democrat
+nhs,0.012425432073679209,Peter Lloyd,False,Conservative
+nhs,0.03003950323928043,Tony Lloyd,False,Labour
+nhs,0.021280355350486727,Elfyn Llwyd,False,Plaid Cymru
+nhs,0.062562844487671,David Lock,False,Labour
+nhs,0.08569980688839214,Michael Lord,False,Conservative
+nhs,0.017038450230654468,Andrew Love,False,Labour
+nhs,0.05152258971865249,Peter Luff,False,Conservative
+nhs,0.022137206280523885,Nicholas Lyell,False,Conservative
+nhs,0.03781992242294218,John McAllion,False,Labour
+nhs,0.12639474998328187,Thomas McAvoy,False,Labour
+nhs,0.03391799870623572,Chris McCafferty,True,Labour
+nhs,0.055776124088959475,Ian McCartney,False,Labour
+nhs,0.008803972403359079,Robert McCartney,False,UKUP
+nhs,0.014724126000064097,Calum MacDonald,False,Labour
+nhs,0.02870806020338491,John McFall,False,Labour
+nhs,0.11995554125688147,Eddie McGrady,False,Social Democratic and Labour Party
+nhs,0.013442492536565806,John MacGregor,False,Conservative
+nhs,0.01868169998132469,Anne McGuire,True,Labour
+nhs,0.0546870876447934,Anne McIntosh,True,Conservative
+nhs,0.07524746719026562,Shona McIsaac,True,Labour
+nhs,0.04708210204492491,Andrew MacKay,False,Conservative
+nhs,0.01654870714501832,Rosemary McKenna,False,Labour
+nhs,0.03920386447779771,Andrew MacKinlay,False,Labour
+nhs,0.016419582548873445,David Maclean,False,Conservative
+nhs,0.12639487417958,Henry McLeish,False,Labour
+nhs,0.007259483638090119,Robert Maclennan,False,Liberal Democrat
+nhs,0.02632091192324883,Gordon McMaster,False,Labour
+nhs,0.007560902420830927,Kevin McNamara,False,Labour
+nhs,0.014665176196406525,Tony McNulty,False,Labour
+nhs,0.006422807952492521,Denis MacShane,False,Labour
+nhs,0.10118247681972252,Tony McWalter,False,Labour/Co-operative
+nhs,0.03792569070870754,John McWilliam,False,Labour
+nhs,0.010786134837483117,David Madel,False,Conservative
+nhs,0.030407524118155366,Ken Maginnis,False,UUP
+nhs,0.2010304681893335,Alice Mahon,True,Labour
+nhs,0.041660388174002166,John Major,False,Conservative
+nhs,0.01313042930753022,Humfrey Malins,False,Conservative
+nhs,0.045087366225712466,Judy Mallaber,True,Labour
+nhs,0.011966761367261394,Seamus Mallon,False,Social Democratic and Labour Party
+nhs,0.008078829856459795,Peter Mandelson,False,Labour
+nhs,0.06008534727568523,John Maples,False,Conservative
+nhs,0.08728919662929857,John Marek,False,Labour
+nhs,0.22902132014330756,Paul Marsden,False,Labour
+nhs,0.03782091994815679,David Marshall,False,Labour
+nhs,0.03474861075886508,Jim Marshall,False,Labour
+nhs,0.005621108824218487,Robert Marshall-Andrews,False,Labour
+nhs,0.10593731028432633,Michael Martin,False,Independent
+nhs,0.13653079710678964,Eric Martlew,False,Labour
+nhs,0.05329283438177247,Michael Mates,False,Conservative
+nhs,0.023065905781205664,Francis Maude,False,Conservative
+nhs,0.17245178403104025,Brian Mawhinney,False,Conservative
+nhs,0.05247974019740977,John Maxton,False,Labour
+nhs,0.04361481201072251,Michael Meacher,False,Labour
+nhs,0.10216979427071378,Piers Merchant,False,Conservative
+nhs,0.09175727148677838,Gillian Merron,True,Labour
+nhs,0.06080240185828064,Alun Michael,False,Labour
+nhs,0.05033019429501196,Bill Michie,False,Labour
+nhs,0.07243134818734719,Ray Michie,True,Liberal Democrat
+nhs,0.5315598729641251,Alan Milburn,False,Labour
+nhs,0.042704195080732615,Andrew Miller,False,Labour
+nhs,0.010438198101523112,Austin Mitchell,False,Labour
+nhs,0.304395609084792,Laura Moffatt,True,Labour
+nhs,0.07424533550402948,Lewis Moonie,False,Labour/Co-operative
+nhs,0.006662991345489583,Michael Moore,False,Liberal Democrat
+nhs,0.04711815785389049,Margaret Moran,True,Labour
+nhs,0.022323553383966504,Alasdair Morgan,False,Scottish National Party
+nhs,0.06584872726647897,Julie Morgan,True,Labour
+nhs,0.10864884982295503,Rhodri Morgan,False,Labour
+nhs,0.005293254380871121,Elliot Morley,False,Labour
+nhs,0.01838779454530316,Estelle Morris,True,Labour
+nhs,0.005286883950398752,John Morris,False,Labour
+nhs,0.10215472591526571,Malcolm Moss,False,Conservative
+nhs,0.09660762393044185,Kali Mountford,True,Labour
+nhs,0.027977662621130578,Mo Mowlam,False,Labour
+nhs,0.11626186712900834,George Mudie,False,Labour
+nhs,0.014421055698220851,Chris Mullin,False,Labour
+nhs,0.01558712530025344,Denis Murphy,False,Labour
+nhs,0.00891629300146507,Jim Murphy,False,Labour
+nhs,0.034718719741445296,Paul Murphy,False,Labour
+nhs,0.296580989620128,Doug Naysmith,False,Labour
+nhs,0.03223200716966635,Patrick Nicholls,False,Conservative
+nhs,0.1682012833511229,Archie Norman,False,Conservative
+nhs,0.17062417271055025,Dan Norris,False,Labour
+nhs,0.042013621816375975,Mark Oaten,False,Liberal Democrat
+nhs,0.12356856380489911,Bill O'Brien,False,Labour
+nhs,0.07033479380065151,Mike O'Brien,False,Labour
+nhs,0.03360229603732716,Edward O'Hara,False,Labour
+nhs,0.05980759892523054,Bill Olner,False,Labour
+nhs,0.005057978651172983,Martin O'Neill,False,Labour
+nhs,0.045319451446859775,Lembit Öpik,False,Liberal Democrat
+nhs,0.07602626588908208,Diana Organ,True,Labour
+nhs,0.020881628264746436,Sandra Osborne,True,Labour
+nhs,0.011377147932776223,Richard Ottaway,False,Conservative
+nhs,0.03005696007635512,Richard Page,False,Conservative
+nhs,0.012853239582543316,James Paice,False,Conservative
+nhs,0.05058520054318425,Nick Palmer,False,Labour
+nhs,0.0033660352953355332,Ian Pearson,False,Labour
+nhs,0.0610199463315707,Tom Pendry,False,Labour
+nhs,0.1446499699394238,Linda Perham,True,Labour
+nhs,0.012458835680350262,Colin Pickthall,False,Labour
+nhs,0.057186839865030176,Peter Pike,False,Labour
+nhs,0.018505601957345665,James Plaskitt,False,Labour
+nhs,0.2674237218102194,Kerry Pollard,False,Labour
+nhs,0.021787159710233817,Chris Pond,False,Labour
+nhs,0.06379255127530249,Greg Pope,False,Labour
+nhs,0.06772545606433722,Raymond Powell,False,Labour
+nhs,0.08605765685178861,Bridget Prentice,True,Labour
+nhs,0.08446328645758197,Gordon Prentice,False,Labour
+nhs,0.009681959967960254,John Prescott,False,Labour
+nhs,0.10482752483468451,Dawn Primarolo,True,Labour
+nhs,0.19685801243116074,David Prior,False,Conservative
+nhs,0.08040501296170421,Gwyn Prosser,False,Labour
+nhs,0.04857847650337015,Ken Purchase,False,Labour
+nhs,0.008976921838806586,Joyce Quin,True,Labour
+nhs,0.04791789575592985,Lawrie Quinn,False,Labour
+nhs,0.004745476470344719,Giles Radice,False,Labour
+nhs,0.01439137465487329,Bill Rammell,False,Labour
+nhs,0.03279229293038635,Syd Rapson,False,Labour
+nhs,0.017541207388246875,Nick Raynsford,False,Labour
+nhs,0.05407568177769051,Andy Reed,False,Labour
+nhs,0.10800036327869482,John Reid,False,Labour
+nhs,0.06012647218770028,David Rendel,False,Liberal Democrat
+nhs,0.037448044088223845,Andrew Robathan,False,Conservative
+nhs,0.016777514844363798,George Robertson,False,Labour
+nhs,0.02736180359643655,Peter Robinson,False,DUP
+nhs,0.037960317848166995,Barbara Roche,True,Labour
+nhs,0.2719165222917889,Marion Roe,True,Conservative
+nhs,0.05254372873493274,Allan Rogers,False,Labour
+nhs,0.034790553091624446,Jeff Rooker,False,Labour
+nhs,0.0328048814855603,Terry Rooney,False,Labour
+nhs,0.021301258898127028,Ernie Ross,False,Labour
+nhs,0.020923249643213505,William Ross,False,UUP
+nhs,0.08856869572919576,Andrew Rowe,False,Conservative
+nhs,0.021414248290856835,Ted Rowlands,False,Labour
+nhs,0.00716135698888703,Frank Roy,False,Labour
+nhs,0.03595391206540498,Chris Ruane,False,Labour
+nhs,0.04194998922238813,Joan Ruddock,True,Labour
+nhs,0.02604862962677067,David Ruffley,False,Conservative
+nhs,0.040577716385400454,Bob Russell,False,Liberal Democrat
+nhs,0.08406405105016325,Christine Russell,True,Labour
+nhs,0.048467031507688996,Nick St Aubyn,False,Conservative
+nhs,0.0611546063223421,Martin Salter,False,Labour
+nhs,0.04799576440398535,Adrian Sanders,False,Liberal Democrat
+nhs,0.013310210771022433,Mohammad Sarwar,False,Labour
+nhs,0.004662218259321333,Malcolm Savidge,False,Labour
+nhs,0.13932545428347537,Phil Sawford,False,Labour
+nhs,0.021436584660045416,Jonathan Sayeed,False,Conservative
+nhs,0.12285962718313503,Brian Sedgemore,False,Labour
+nhs,0.03729525982987602,Jonathan R Shaw,False,Labour
+nhs,0.010701695320558077,Robert Sheldon,False,Labour
+nhs,0.06656685355109705,Gillian Shephard,True,Conservative
+nhs,0.0057389292482260355,Richard Shepherd,False,Conservative
+nhs,0.08825005476610702,Michael Shersby,False,Conservative
+nhs,0.0351562672970948,Debra Shipley,True,Labour
+nhs,0.015193557902201133,Clare Short,True,Labour
+nhs,0.021622447347858717,Alan Simpson,False,Labour
+nhs,0.04971123471459286,Marsha Singh,False,Labour
+nhs,0.07018299600159492,Angela Smith,False,Labour
+nhs,0.07233628501733193,Chris Smith,False,Labour
+nhs,0.038825918867395295,Geraldine Smith,True,Labour
+nhs,0.15491675330281252,Jacqui Smith,True,Labour
+nhs,0.14822923780481403,Llew Smith,False,Labour
+nhs,0.01947296060036049,Robert Smith,False,Liberal Democrat
+nhs,0.2154196891758337,Martin Smyth,False,UUP
+nhs,0.0066784237819875756,Peter Snape,False,Labour
+nhs,0.022838132306441602,Clive Soley,False,Labour
+nhs,0.021415188329678328,Helen Southworth,True,Labour
+nhs,0.04410702051663421,Michael Spicer,False,Conservative
+nhs,0.060357281829315663,Richard Spring,False,Conservative
+nhs,0.08129765996688079,Rachel Squire,True,Labour
+nhs,0.018408146036925793,John Stanley,False,Conservative
+nhs,0.14725110095722724,Phyllis Starkey,True,Labour
+nhs,0.02765155858371129,Anthony Steen,False,Conservative
+nhs,0.1458480001612163,Gerry Steinberg,False,Labour
+nhs,0.03473452906779732,George Stevenson,False,Labour
+nhs,0.08079259140954279,David Stewart,False,Labour
+nhs,0.03370008998512211,Paul Stinchcombe,False,Labour
+nhs,0.6272372641001368,Howard Stoate,False,Labour
+nhs,0.022094248714433717,Roger Stott,False,Labour
+nhs,0.012615140827440906,Gavin Strang,False,Labour
+nhs,0.01616864736208608,Jack Straw,False,Labour
+nhs,0.019160291683503035,Andrew Stunell,False,Liberal Democrat
+nhs,0.04652632598742712,Gerry Sutcliffe,False,Labour
+nhs,0.01649672483993249,John Swinney,False,Scottish National Party
+nhs,0.005630024556945047,Peter Tapsell,False,Conservative
+nhs,0.02755780814649495,Ann Taylor,True,Labour
+nhs,0.09806239204744568,Dari Taylor,True,Labour
+nhs,0.11763556348819389,David Taylor,False,Labour
+nhs,0.012015392641189464,Ian Taylor,False,Conservative
+nhs,0.06502085972347464,Matthew Taylor,False,Liberal Democrat
+nhs,0.017107966474877292,Teddy Taylor,False,Conservative
+nhs,0.01187183347547914,Peter Temple-Morris,False,Conservative
+nhs,0.05783179890507222,Gareth Thomas,False,Labour
+nhs,0.024135128418176915,William Thompson,False,UUP
+nhs,0.0404583343161699,Paddy Tipping,False,Labour
+nhs,0.03224809987123786,Mark Todd,False,Labour
+nhs,0.1724563115760551,Jenny Tonge,True,Liberal Democrat
+nhs,0.1427262182669999,Don Touhig,False,Labour
+nhs,0.01446558915222356,John Townend,False,Conservative
+nhs,0.054198460972836864,Michael Trend,False,Conservative
+nhs,0.021985914027614507,David Trimble,False,UUP
+nhs,0.1936645611331023,Paul Truswell,False,Labour
+nhs,0.1541538353350677,Dennis Turner,False,Labour/Co-operative
+nhs,0.07569933895791701,Desmond Turner,False,Labour
+nhs,0.04434403722574546,George Turner,False,Labour
+nhs,0.031832755744408976,Paul Tyler,False,Liberal Democrat
+nhs,0.08179417632275343,Peter Viggers,False,Conservative
+nhs,0.02973085400607548,Rudi Vis,False,Labour
+nhs,0.01907698652848382,Cecil Walker,False,UUP
+nhs,0.009294839951438112,Jim Wallace,False,Liberal Democrat
+nhs,0.12726859248065298,Joan Walley,True,Labour
+nhs,0.028945377776192695,Robert Walter,False,Conservative
+nhs,0.012300950673227095,Claire Ward,True,Labour
+nhs,0.02705256390389801,Charles Wardle,False,Conservative
+nhs,0.04986596267013024,Robert Wareing,False,Labour
+nhs,0.07612186550710934,Nigel Waterson,False,Conservative
+nhs,0.0964135001146557,Dave Watts,False,Labour
+nhs,0.056440032108629516,Steve Webb,False,Liberal Democrat
+nhs,0.009966667029208578,Bowen Wells,False,Conservative
+nhs,0.05724132286660969,Andrew Welsh,False,Scottish National Party
+nhs,0.007227200212019937,Brian White,False,Labour
+nhs,0.14854394052634307,Ray Whitney,False,Conservative
+nhs,0.018574781316837714,Malcolm Wicks,False,Labour
+nhs,0.158960561456736,Ann Widdecombe,True,Conservative
+nhs,0.05038355593522713,Dafydd Wigley,False,Plaid Cymru
+nhs,0.03483078361381628,John Wilkinson,False,Conservative
+nhs,0.015591467446976521,David Willetts,False,Conservative
+nhs,0.052358819023602586,Betty Williams,True,Labour
+nhs,0.019751727682934393,Phil Willis,False,Liberal Democrat
+nhs,0.026706922702701464,Michael Wills,False,Labour
+nhs,0.07271302240400009,David Wilshire,False,Conservative
+nhs,0.007439232678379495,Brian Wilson,False,Labour
+nhs,0.0796816972003768,Ann Winterton,True,Conservative
+nhs,0.12082708905800461,Nicholas Winterton,False,Conservative
+nhs,0.11446899614251405,Audrey Wise,True,Labour
+nhs,0.1498375617843075,Mike Wood,False,Labour
+nhs,0.07266768590268048,Shaun Woodward,False,Labour
+nhs,0.025018504488409136,Phil Woolas,False,Labour
+nhs,0.04143096748625355,Tony Worthington,False,Labour
+nhs,0.12517735710095054,Jimmy Wray,False,Labour
+nhs,0.12781827018841033,Anthony D Wright,False,Labour
+nhs,0.13998908806320198,Tony Wright,False,Labour
+nhs,0.044598539822984146,Derek Wyatt,False,Labour
+nhs,0.10080939930331664,Tim Yeo,False,Conservative
+nhs,0.1166350120793496,George Young,False,Conservative
+nhs,0.10544048127947053,John Randall,False,Conservative
+nhs,0.004733951481691769,Douglas Alexander,False,Labour
+nhs,0.07005070305353638,Jacqui Lait,True,Conservative
+nhs,0.24795953262399975,Stephen O'Brien,False,Conservative
+nhs,0.01187611325904191,Bill Tynan,False,Labour
+nhs,0.2387367555664009,Neil Turner,False,Labour
+nhs,0.01865813744203957,Michael Portillo,False,Conservative
+nhs,0.03399503900613612,Simon Thomas,False,Plaid Cymru
+nhs,0.3283621030787608,Sandra Gidley,True,Liberal Democrat
+nhs,0.07345344101873247,William McCrea,False,DUP
+nhs,0.014453791496056124,Eric Joyce,False,Labour
+nhs,0.011083454801961426,Vera Baird,True,Labour
+nhs,0.019657849540392427,Gregory Barker,False,Conservative
+nhs,0.010857651159725932,John Barrett,False,Liberal Democrat
+nhs,0.057443121441432286,Annette Brooke,True,Liberal Democrat
+nhs,0.01717450928928,David Burnside,False,UUP
+nhs,0.01715691190383704,David Cairns,False,Labour
+nhs,0.21873081964453214,Patsy Calton,True,Liberal Democrat
+nhs,0.05696721803157089,David Cameron,False,Conservative
+nhs,0.021895994411672372,Colin Challen,False,Labour
+nhs,0.06511314782746934,Derek Conway,False,Conservative
+nhs,0.1310332320055175,Tony Cunningham,False,Labour
+nhs,0.0958032668700469,Paul Daisley,False,Labour
+nhs,0.03185522972919422,Parmjit Dhanda,False,Labour
+nhs,0.10825918612703292,Sue Doughty,True,Liberal Democrat
+nhs,0.059144391799655555,Peter Duncan,False,Conservative
+nhs,0.0007793710592493794,Annabelle Ewing,True,Scottish National Party
+nhs,0.1993989052733418,Adrian Flook,False,Conservative
+nhs,0.051849434001415416,Hywel Francis,False,Labour
+nhs,0.046622609967096454,Paul Goodman,False,Conservative
+nhs,0.014451494124571269,Matthew Green,False,Liberal Democrat
+nhs,0.01880255776361936,David Hamilton,False,Labour
+nhs,0.018537899384366684,Tom Harris,False,Labour
+nhs,0.04106491213769213,Dai Havard,False,Labour
+nhs,0.040396748521115244,Charles Hendry,False,Conservative
+nhs,0.2366232824279744,David Heyes,False,Labour
+nhs,0.02367368934127815,Mark Hoban,False,Conservative
+nhs,0.042068073222672434,Paul Holmes,False,Liberal Democrat
+nhs,0.0045636884224194395,Jim Knight,False,Labour
+nhs,0.02061909475068181,David Laws,False,Liberal Democrat
+nhs,0.01045312580360542,Mark Lazarowicz,False,Labour
+nhs,0.01914263705172126,Iain Luke,False,Labour
+nhs,0.18836895624516833,John Lyons,False,Labour
+nhs,0.019323772186253273,John MacDougall,False,Labour
+nhs,0.004750484810021998,Ann McKechin,True,Labour
+nhs,0.031307702592337346,Patrick Mercer,False,Conservative
+nhs,0.00996199426462901,David Miliband,False,Labour
+nhs,0.024728538549729825,Meg Munn,True,Labour
+nhs,0.08359618055701756,Anne Moffat,False,Labour
+nhs,0.02857493268127491,Adam Price,False,Plaid Cymru
+nhs,0.014818935478664086,James Purnell,False,Labour
+nhs,0.014559108461109319,Alan Reid,False,Liberal Democrat
+nhs,0.016553842223443065,Hugh Robertson,False,Conservative
+nhs,0.23527496935384473,Iris Robinson,True,DUP
+nhs,0.04501983911171965,Jim Sheridan,False,Labour
+nhs,0.21239556089864972,Mark Simmonds,False,Conservative
+nhs,0.047556522388392315,Siôn Simon,False,Labour
+nhs,0.06551823754271406,Bob Spink,False,Conservative
+nhs,0.7897222134183063,Richard Taylor,False,Independent
+nhs,0.005135739676037223,John Thurso,False,Liberal Democrat
+nhs,0.06929458752012455,Roger Williams,False,Liberal Democrat
+nhs,0.09216535933110312,David Wright,False,Labour
+nhs,0.07247671528849947,Richard Younger-Ross,False,Liberal Democrat
+nhs,0.11620677300651841,Chris Mole,False,Labour
+nhs,0.047505094717643095,Huw Irranca-Davies,False,Labour
+nhs,0.034695252940317604,Sarah Teather,True,Liberal Democrat
+nhs,0.038646642748420716,John Hemming,False,Liberal Democrat
+nhs,0.22469313206621777,Peter Law,False,Independent
+nhs,0.027300156863728064,Brooks Newmark,False,Conservative
+nhs,0.012658719291579006,Stephen Williams,False,Liberal Democrat
+nhs,0.03361190191539882,Kitty Ussher,True,Labour
+nhs,0.013314872648109762,David Howarth,False,Liberal Democrat
+nhs,0.011148989729472187,Jennifer Willott,False,Liberal Democrat
+nhs,0.057492386195356925,Martin Horwood,False,Liberal Democrat
+nhs,0.36160754106348075,Jamie Reed,False,Labour
+nhs,0.042766797878681616,Dan Rogerson,False,Liberal Democrat
+nhs,0.11190734423879475,Andrew Pelling,False,Conservative
+nhs,0.04992747485005391,Shahid Malik,False,Labour
+nhs,0.007620130479802532,Christopher Huhne,False,Liberal Democrat
+nhs,0.10663594559779793,Julia Goldsworthy,True,Liberal Democrat
+nhs,0.37359519596069085,Linda Riordan,True,Labour
+nhs,0.027569607747948963,Lynne Featherstone,True,Liberal Democrat
+nhs,0.015080514869658198,Celia Barlow,True,Labour
+nhs,0.22279355525212707,Lee Scott,False,Conservative
+nhs,0.011124115799348817,Malcolm Rifkind,False,Conservative
+nhs,0.00825101061757528,Peter Soulsby,False,Labour
+nhs,0.09620779415580209,John Leech,False,Liberal Democrat
+nhs,0.013013407324503797,Edward Balls,False,Labour
+nhs,0.015262724643370765,Brian Binley,False,Conservative
+nhs,0.04958390708379333,Alison Seabeck,True,Labour
+nhs,0.013451246876715747,Sarah McCarthy-Fry,True,Labour
+nhs,0.0992180385253235,Susan Kramer,True,Liberal Democrat
+nhs,0.0596401274145621,Paul Rowen,False,Liberal Democrat
+nhs,0.023154455695340456,Lorely Burt,True,Liberal Democrat
+nhs,0.0655679360413397,Lynda Waltho,True,Labour
+nhs,0.002958271089529442,Siân James,False,Labour
+nhs,0.11190160664432774,Anne Snelgrove,True,Labour
+nhs,0.013196998288131891,Jeremy Browne,False,Liberal Democrat
+nhs,0.03152459170074546,Sadiq Khan,False,Labour
+nhs,0.011194823030096132,Katy Clark,True,Labour
+nhs,0.015408089709767534,Jo Swinson,True,Liberal Democrat
+nhs,0.04416374638085253,Jim McGovern,False,Labour
+nhs,0.006422402564142871,Danny Alexander,False,Liberal Democrat
+nhs,0.042184237024899124,Gordon Banks,False,Labour
+nhs,0.04392939288505116,Mark Hunter,False,Liberal Democrat
+nhs,0.03961920013967876,Hugh Dykes,False,Liberal Democrat
+nhs,0.039447406286392615,Neil Kinnock,False,Labour
+nhs,0.029297997441843457,David Steel,False,Liberal Democrat
+nhs,0.015224025781361637,Helene Hayman,True,Labour
+nhs,0.024542892226178777,Naomi Long,True,Alliance
+nhs,0.0,John Lamont,False,Conservative
+nhs,0.005578161506942927,Lindsay Roy,False,Labour
+nhs,0.017124054136913407,Julian Critchley,False,Conservative
+nhs,0.06911410901433195,Barbara Castle,True,Labour
+nhs,0.03716318391094697,Leo Abse,False,Labour
+nhs,0.10618438875479723,Allen Adams,False,Labour
+nhs,0.010214944450086524,John Grant,False,Labour
+nhs,0.030681752717725212,Robert Adley,False,Conservative
+nhs,0.0010351073355872589,Alan L. Williams,False,Labour
+nhs,0.23690337844166265,Rosie Barnes,True,SDP
+nhs,0.07404655632090813,Den Dover,False,Conservative
+nhs,0.004525134942799011,Judith Chaplin,True,Conservative
+nhs,0.02797365370967604,Jimmy Boyce,False,
+nhs,0.05646746258416363,Jo Richardson,True,Labour
+nhs,0.009813033308812436,Stephen Milligan,False,Conservative
+nhs,0.02395218049563929,Ron Leighton,False,Labour
+nhs,0.02490971537665425,Bob Cryer,False,Labour
+nhs,0.0033862595512880664,Bryan Gould,False,Labour
+nhs,0.051858267846380236,John Blackburn,False,Conservative
+nhs,0.01939440573474098,Nicholas Fairbairn,False,Conservative
+nhs,0.10035739557146074,James Kilfedder,False,UUP
+nhs,0.05957128245770829,Geoffrey Dickens,False,Conservative
+nhs,0.01333976900710493,Derek Enright,False,Labour
+nhs,0.0,David Lightbown,False,Conservative
+nhs,0.01136068151745012,Barry Porter,False,Conservative
+nhs,0.03240002280515834,Terry Patchett,False,Labour
+nhs,0.008594630470036895,Brandon Rhys Williams,False,Conservative
+nhs,0.06018396269728105,Dudley Fishburn,False,Conservative
+nhs,0.039773150288353536,Bruce Millan,False,Labour
+nhs,0.03108780578568947,Jim Sillars,False,Scottish National Party
+nhs,0.011094838778716117,John Biggs-Davison,False,Conservative
+nhs,0.052151090643939274,Steven Norris,False,Conservative
+nhs,0.0231568298340105,Brynmor John,False,Labour
+nhs,0.007415867426920697,Leon Brittan,False,Conservative
+nhs,0.034043872395313236,Raymond Gower,False,Conservative
+nhs,0.021967793126022817,Robert McTaggart,False,Labour
+nhs,0.044155249256206265,Mike Watson,False,Labour
+nhs,0.021154682024246543,Stuart Holland,False,Labour
+nhs,0.028170625120189842,John Heddle,False,Conservative
+nhs,0.00444673776821532,Harold McCusker,False,UUP
+nhs,0.013715112703450296,Allan Roberts,False,Labour
+nhs,0.0047191043002994424,Sean Hughes,False,Labour
+nhs,0.022896880334265984,Ian Gow,False,Conservative
+nhs,0.017152466369447155,Pat Wall,False,Labour
+nhs,0.010554970864953297,Norman Buchan,False,Labour
+nhs,0.021544624055808526,David Waddington,False,Conservative
+nhs,0.04993908225634822,Donald Coleman,False,Labour
+nhs,0.017776784819094504,John Stradling Thomas,False,Conservative
+nhs,0.009090345015406417,Eric Heffer,False,Labour
+nhs,0.023313168081553627,George Buckley,False,Labour
+nhs,0.00793092834878484,Alick Buchanan-Smith,False,Conservative
+nhs,0.03189212189845983,Richard Holt,False,Conservative
+nhs,0.03753294644517729,John Hannam,False,Conservative
+nhs,0.03667233831090637,Rupert Allason,False,Conservative
+nhs,0.02177058844451098,Neil Hamilton,False,UKIP
+nhs,0.012872836321636825,Robert Carr,False,Conservative
+nhs,0.003133214657317517,Roy Jenkins,False,Liberal Democrat
+nhs,0.006744559452714976,Peggy Fenner,False,Conservative
+nhs,0.05233947434597758,Jeremy Hanley,False,Conservative
+nhs,0.03070707853791971,Jonathan Aitken,False,UKIP
+nhs,0.017943659774074742,Austen Albu,False,Labour
+nhs,0.13047499172553098,Michael Alison,False,Conservative
+nhs,0.017384340237687437,Frank Allaun,False,Labour
+nhs,0.035677465508500456,Walter Alldritt,False,Labour
+nhs,0.03443142619554698,David Alton,False,Liberal Democrat
+nhs,0.0025891410132470984,Julian Amery,False,Conservative
+nhs,0.01769999934638399,Shirley Williams,True,Liberal Democrat
+nhs,0.017844257354944517,Alan Amos,False,Conservative
+nhs,0.012481765559394894,Peter Archer,False,Labour
+nhs,0.010963693962627261,Jeffrey Archer,False,Conservative
+nhs,0.027967643433322618,David Ashby,False,Conservative
+nhs,0.2963702409787207,Jack Aspinwall,False,Conservative
+nhs,0.04884478416566633,John Astor,False,Conservative
+nhs,0.03402028728568504,Daniel Awdry,False,Conservative
+nhs,0.008042660380103487,Gordon Bagier,False,Labour
+nhs,0.10718767716754998, Balniel,False,
+nhs,0.026451755236520196,Anthony Barber,False,Conservative
+nhs,0.0034759899033084906,Spencer Batiste,False,Conservative
+nhs,0.0,Brian Batsford,False,Conservative
+nhs,0.01858773880251141,Tufton Beamish,False,Conservative
+nhs,0.08382370754985984,Robert Bean,False,Labour
+nhs,0.044515381535967485,Allan Beaney,False,Labour
+nhs,0.03321739462737107,Anthony Beaumont-Dark,False,Conservative
+nhs,0.032258811169617416,Vivian Bendall,False,Conservative
+nhs,0.001445094613275787,David Bevan,False,Conservative
+nhs,0.015431889941035448,Sydney Bidwell,False,Labour
+nhs,0.011678501530389478,John Biffen,False,Conservative
+nhs,0.010979382320171375,Edward Bishop,False,Labour
+nhs,0.002176427147992061,Peter Blaker,False,Conservative
+nhs,0.1786404954718239,Arthur Blenkinsop,False,Labour
+nhs,0.03471527040871018,Thomas Boardman,False,
+nhs,0.1156788493566597,Harold Boardman,False,Labour
+nhs,0.1285444190683791,Robert Boscawen,False,Conservative
+nhs,0.01723429692037766,Clive Bossom,False,Conservative
+nhs,0.017033097923198254,Andrew Bowden,False,Conservative
+nhs,0.021329983881161755,Gerald Bowden,False,Conservative
+nhs,0.19615084043940736,John Bowis,False,Conservative
+nhs,0.00832899392816616,John Boyd-Carpenter,False,Conservative
+nhs,0.04390992549496091,James Boyden,False,Labour
+nhs,0.028484856604935348,Roland Boyes,False,Labour
+nhs,0.011732655755423656,Rhodes Boyson,False,Conservative
+nhs,0.032272410830699004,Robert Bradford,False,UUP
+nhs,0.11987687029508304,Bernard Braine,False,Conservative
+nhs,0.018527192121936292,Martin Brandon-Bravo,False,Conservative
+nhs,0.02851930136777671,Gyles Brandreth,False,Conservative
+nhs,0.010787218225860432,Jeremy Bray,False,Labour
+nhs,0.05442529207514394,Ronald Bray,False,Conservative
+nhs,0.05742850732158343,Henry Brewis,False,
+nhs,0.011237549565223144,Christopher Brocklebank-Fowler,False,Conservative
+nhs,0.0028262890953653958,Michael Brotherton,False,Conservative
+nhs,0.38884203769426745,Alfred Broughton,False,Labour
+nhs,0.01235063506210386,Jock Bruce-Gardyne,False,Conservative
+nhs,0.05304652940207924,Peter Bruinvels,False,Conservative
+nhs,0.0037477218503563533,Nicholas Budgen,False,Conservative
+nhs,0.009996750281456796,Eric Bullus,False,Conservative
+nhs,0.06736632084212252,Esmond Bulmer,False,Conservative
+nhs,0.004474355416721248,Jocelyn Cadbury,False,Conservative
+nhs,0.006743502106808702,,,
+nhs,0.16138239626634482,James Callaghan,False,Labour
+nhs,0.0036220426036471924,Robert Cant,False,Labour
+nhs,0.002047130052717911,Kenneth Carlisle,False,Conservative
+nhs,0.01368064632244941,Mark Carlisle,False,Conservative
+nhs,0.030495250737347906,John Carlisle,False,Conservative
+nhs,0.048318137189427346,Matthew Carrington,False,Conservative
+nhs,0.12927963886585647,Lewis Carter-Jones,False,Labour
+nhs,0.17023242862320442,Michael Carttiss,False,Conservative
+nhs,0.011467568869957336,Robert Cary,False,Conservative
+nhs,0.033058056429972116,Lynda Chalker,True,Conservative
+nhs,0.008343236967473255,Paul Channon,False,Conservative
+nhs,0.01004234743527581,Christopher Chataway,False,Conservative
+nhs,0.0022600362682237527,Robin Chichester-Clark,False,
+nhs,0.011672661285085954,Walter Clegg,False,Conservative
+nhs,0.014075311376547259,Ivor Clemitson,False,Labour
+nhs,0.008304489551899672,John Cockcroft,False,Conservative
+nhs,0.05219186651889258,Eric Cockeram,False,Conservative
+nhs,0.04593552800177058,Michael Cocks,False,Labour
+nhs,0.15792134243684863,Sebastian Coe,False,Conservative
+nhs,0.06723532611930585,Maureen Colquhoun,True,Labour
+nhs,0.020420866468157356,Don Concannon,False,Labour
+nhs,0.26922128713643795,David Congdon,False,Conservative
+nhs,0.028267020460455945,Bernard Conlan,False,Labour
+nhs,0.024067117933722945,Simon Coombs,False,Conservative
+nhs,0.04211972966501441,Anthony Coombs,False,Conservative
+nhs,0.0,Derek Coombs,False,Conservative
+nhs,0.007777965195721267,John Cope,False,Conservative
+nhs,0.04095441982693196,John Cordle,False,Conservative
+nhs,0.0023172167896535266,Frederick Corfield,False,Conservative
+nhs,0.06779555467771946,John Corrie,False,Conservative
+nhs,0.03076739605274111,Albert Costain,False,Conservative
+nhs,0.143985180628332,James Couchman,False,Conservative
+nhs,0.013917204247443696,Harry Cowans,False,Labour
+nhs,0.022899031428390042,James Craigen,False,Labour
+nhs,0.006237391585740182,Dick Crawshaw,False,
+nhs,0.0407041240650587,John Cronin,False,Labour
+nhs,0.0025651919279385724,Anthony Crosland,False,Labour
+nhs,0.1640355939951385,David Crouch,False,Conservative
+nhs,0.022788727152064925,Peter Crowder,False,
+nhs,0.013608180359397124,Stanley Crowther,False,Labour
+nhs,0.021718718251486142,Jack D'Avigdor-Goldsmid,False,
+nhs,0.005229856789480764,Henry D'Avigdor-Goldsmid,False,Conservative
+nhs,0.07777884376157547,James Dance,False,Conservative
+nhs,0.005618116323825382,Geoffrey De Freitas,False,Labour
+nhs,0.1518439537419007,Eric Deakins,False,Labour
+nhs,0.024589754743974204,William Deedes,False,
+nhs,0.053016587579101104,Hugh Delargy,False,Labour
+nhs,0.0021663645580752397,Edmund Dell,False,Liberal Democrat
+nhs,0.02917293034835326,James Dempsey,False,Labour
+nhs,0.06930533092304263,Nirj Deva,False,Conservative
+nhs,0.051512105557678364,Timothy Devlin,False,Conservative
+nhs,0.008174916728680301,Terry Dicks,False,Conservative
+nhs,0.007604367244105539,Douglas Dodds-Parker,False,Conservative
+nhs,0.010786308450396746,Geoffrey Dodsworth,False,Conservative
+nhs,0.016899306860863588,Peter Doig,False,Labour
+nhs,0.023231563645160724,Jack Dormand,False,Labour
+nhs,0.08918024686125868,James Douglas-Hamilton,False,Conservative
+nhs,0.001362164571804859,Alec Douglas-Home,False,Conservative
+nhs,0.012551092307864605,Bruce Douglas-Mann,False,Labour
+nhs,0.004732383858438977,George Drayson,False,
+nhs,0.030210767501828446,Tom Driberg,False,Labour
+nhs,0.024982073128486777,Edward Du Cann,False,Conservative
+nhs,0.07140859925778952,Alfred Dubs,False,
+nhs,0.005067652439233309,Patrick Duffy,False,Labour
+nhs,0.23106223850107105,John Dunlop,False,
+nhs,0.05112761851280875,Jimmy Dunnachie,False,Labour
+nhs,0.0,Jack Dunnett,False,Labour
+nhs,0.008557126529612007,Alexander Eadie,False,
+nhs,0.049449517635286315,Kenneth Eastham,False,Labour
+nhs,0.012347537003349696,Maurice Edelman,False,Labour
+nhs,0.020232200422866473,John Eden,False,Conservative
+nhs,0.004232271026628339,Geoffrey Edge,False,Labour
+nhs,0.008665280828082829,Timothy Eggar,False,Conservative
+nhs,0.03216074017056439,Harold Elletson,False,Conservative
+nhs,0.036600848503171836,Robert Elliott,False,
+nhs,0.011491687866362888,Michael English,False,Labour
+nhs,0.18498348696420758,David Ennals,False,Labour
+nhs,0.10973713517838127,David Evennett,False,Conservative
+nhs,0.19615775348491507,Russell Fairgrieve,False,Conservative
+nhs,0.2563500264549671,Sheila Faith,True,Conservative
+nhs,0.052014139844921516,John Farr,False,Conservative
+nhs,0.014744959702070343,Andrew Faulds,False,Labour
+nhs,0.15752228578439398,Anthony Favell,False,Conservative
+nhs,0.04582318501983255,Anthony Fell,False,Conservative
+nhs,0.020207354563541897,Ernest Fernyhough,False,Labour
+nhs,0.000607487700451328,Michael Fidler,False,Conservative
+nhs,0.11774900710976244,Terry Fields,False,Labour
+nhs,0.005331761014349596,Angela Rumbold,False,Conservative
+nhs,0.12009204646619832,Geoffrey Finsberg,False,Conservative
+nhs,0.0038267696528435893,Alan Fitch,False,Labour
+nhs,0.013364709650683917,Gerry Fitt,False,
+nhs,0.007521591883275323,Charles Fletcher-Cooke,False,Conservative
+nhs,0.03008404528394403,Janet Fookes,False,Conservative
+nhs,0.01811915653548902,Michael Foot,False,Labour
+nhs,0.0032603447211425186,Benjamin Ford,False,
+nhs,0.03368028691275556,Nigel Forman,False,Conservative
+nhs,0.0042018861567291775,John Forrester,False,Labour
+nhs,0.008562660082748438,Cecil Franks,False,Conservative
+nhs,0.1803862156745182,Roger Freeman,False,Conservative
+nhs,0.005320262453530322,Reginald Freeson,False,Labour
+nhs,0.06523530779502958,Clement Freud,False,Liberal Party
+nhs,0.20622678800476615,Roy Galley,False,Conservative
+nhs,0.02482102791624659,Phil Gallie,False,Conservative
+nhs,0.04913258380404708,Myer Galpern,False,Labour
+nhs,0.0037852405830673284,Tristan Garel-Jones,False,Conservative
+nhs,0.02986175063693773,Edward Garrett,False,
+nhs,0.031366635834858075,John Garrett,False,Labour
+nhs,0.14650324465695438,David Gibson-Watt,False,Conservative
+nhs,0.0029448985046384114,John Gilbert,False,Labour
+nhs,0.019588745059957426,John Gilmour,False,Conservative
+nhs,0.005339709298417659,Ian Gilmour,False,Conservative
+nhs,0.004526578126564106,David Ginsburg,False,Labour
+nhs,0.002326758118149824,Joseph Godber,False,Conservative
+nhs,0.027200265202355068,Philip Goodhart,False,Conservative
+nhs,0.01784566741937318,Victor Goodhew,False,Conservative
+nhs,0.20538384851692637,Charles Goodson-Wickes,False,Conservative
+nhs,0.005225461344776273,Patrick Gordon Walker,False,Labour
+nhs,0.062215331114224476,Harry Gourlay,False,Labour
+nhs,0.015561430030236443,Robert Grant-Ferris,False,Conservative
+nhs,0.0058208608209748165,Jo Grimond,False,Liberal Party
+nhs,0.2313034548740169,Ian Grist,False,Conservative
+nhs,0.07628440899651096,Patrick Ground,False,Conservative
+nhs,0.014382257546272368,Michael Grylls,False,Conservative
+nhs,0.029976725245269318,Harold Gurden,False,Conservative
+nhs,0.007588431667714815,Alfred Hall-Davis,False,Conservative
+nhs,0.010753959687868206,William Hamling,False,Labour
+nhs,0.004191159076921554,Keith Hampson,False,Conservative
+nhs,0.043491967222375714,William Hannan,False,Labour
+nhs,0.15731545183093792,Kenneth Hargreaves,False,Conservative
+nhs,0.00998593305922547,Andrew Hargreaves,False,Conservative
+nhs,0.002073839536823882,Joseph Harper,False,Labour
+nhs,0.029486806358882536,Judith Hart,False,Labour
+nhs,0.029865462371431242,Betty Harvie Anderson,False,Conservative
+nhs,0.004537325651663411,Roy Hattersley,False,Labour
+nhs,0.006511815985092298,Frank Hatton,False,Labour
+nhs,0.0067313928287833485,Michael Havers,False,Conservative
+nhs,0.05768738902951374,Warren Hawksley,False,Conservative
+nhs,0.1321320515846212,Barney Hayhoe,False,Conservative
+nhs,0.11790279795197864,Frank Haynes,False,Labour
+nhs,0.04923230079850774,Robert Hayward,False,Conservative
+nhs,0.4507549051680844,Joseph Hendron,False,
+nhs,0.02350828984828839,Richard Hickmet,False,Conservative
+nhs,0.022329157918281647,Joseph Hiley,False,Conservative
+nhs,0.02608007303263494,William Hilton,False,Labour
+nhs,0.06078684929807333,Kenneth Hind,False,Conservative
+nhs,0.01952311980224054,Michael Hirst,False,Conservative
+nhs,0.04990919590619031,William Homewood,False,Labour
+nhs,0.0056903997376750795,Frank Hooley,False,Labour
+nhs,0.025080524780949808,Emlyn Hooson,False,Liberal Democrat
+nhs,0.009878100040805351,Tom Hooson,False,Conservative
+nhs,0.036462744143023515,Peter Hordern,False,Conservative
+nhs,0.3070725527438888,Patricia Hornsby-Smith,False,Conservative
+nhs,0.02573259393306414,Douglas Houghton,False,Labour
+nhs,0.009862162605554994,Geoffrey Howe,False,Conservative
+nhs,0.0846905322253123,Peter Hubbard-Miles,False,Conservative
+nhs,0.041554136226353594,Leslie Huckfield,False,Labour
+nhs,0.0025001973578780722,Douglas Hurd,False,Conservative
+nhs,0.009907839378642504,Michael Hutchison,False,
+nhs,0.052528424984373275,Tom Iremonger,False,Conservative
+nhs,0.00617208377496139,Arthur Irvine,False,
+nhs,0.07282005807055286,Michael Irvine,False,Conservative
+nhs,0.030207078966983547,Sydney Irving,False,Labour
+nhs,0.13172519873711377,Charles Irving,False,Conservative
+nhs,0.052888419841411585,Tim Janman,False,Conservative
+nhs,0.04774381160052279,Greville Janner,False,Labour
+nhs,0.002329241341564384,Douglas Jay,False,Labour
+nhs,0.02031892220057346,George Jeger,False,Labour
+nhs,0.04222980685472333,Lena Jeger,True,Labour
+nhs,0.013472744815108021,Michael Jopling,False,Conservative
+nhs,0.04656269557906173,Keith Joseph,False,Conservative
+nhs,0.00613272711074456,Frank Judd,False,Labour
+nhs,0.00897464895202279,Donald Kaberry,False,Conservative
+nhs,0.10591150311275241,Elaine Kellett,False,Conservative
+nhs,0.02252434115243832,Richard Kelley,False,Labour
+nhs,0.0024092179446290026,Henry Kerby,False,Conservative
+nhs,0.01604453126928012,Russell Kerr,False,Labour
+nhs,0.03513320887250297,Anthony Kershaw,False,Conservative
+nhs,0.09226381612262632,Robert Kilroy-Silk,False,Labour
+nhs,0.014290612642974463,Marcus Kimball,False,Conservative
+nhs,0.0,Joseph Kinsey,False,Conservative
+nhs,0.01941866338413123,Timothy Kirkhope,False,Conservative
+nhs,0.06706084328624706,Roger Knapman,False,UKIP
+nhs,0.01246556588374671,David Lambie,False,Labour
+nhs,0.10540381316812718,Harry Lamborn,False,Labour
+nhs,0.04057902377874441,James Lamond,False,Labour
+nhs,0.010446858248955233,Norman Lamont,False,Conservative
+nhs,0.025173604751163432,Ian Lang,False,Conservative
+nhs,0.017532057859489147,John Langford-Holt,False,Conservative
+nhs,0.003824591456714654,Geoffrey Lawler,False,Conservative
+nhs,0.003983795421374114,Spencer Le Marchant,False,Conservative
+nhs,0.02138626167077948,Edward Leadbitter,False,
+nhs,0.0006361472233648271,Barry Legg,False,Conservative
+nhs,0.008335674368458114,Henry Legge-Bourke,False,
+nhs,0.0038291027392192336,Mark Lennox-Boyd,False,Conservative
+nhs,0.0022277970785776293,Richard Leonard,False,Labour
+nhs,0.003735053040371371,James Lester,False,
+nhs,0.019897447793285786,Joan Lestor,True,Labour
+nhs,0.03141761991890111,Marcus Lipton,False,Labour
+nhs,0.04327737874663709,Tom Litterick,False,Labour
+nhs,0.05806978814710065,Geoffrey Lofthouse,False,Labour
+nhs,0.15373183246429284,Ken Lomas,False,
+nhs,0.008272753441368071,Gilbert Longden,False,Conservative
+nhs,0.12964837071361332,Charles Loughlin,False,Labour
+nhs,0.004644953940873962,John Loveridge,False,Conservative
+nhs,0.0650640543521739,Eddie Loyden,False,
+nhs,0.000853262491793473,Evan Luard,False,Labour
+nhs,0.008046957657985222,Richard Luce,False,Conservative
+nhs,0.11945122517200614,Liz Lynne,True,Liberal Democrat
+nhs,0.010301121235218605,Alex Lyon,False,Labour
+nhs,0.10192972665889313,Dickson Mabon,False,
+nhs,0.012625228427854789,Stephen McAdden,False,Conservative
+nhs,0.004120261967784948,Ian MacArthur,False,Conservative
+nhs,0.006736247536627555,James MacColl,False,Labour
+nhs,0.012052208775135811,Iain MacCormick,False,Scottish National Party
+nhs,0.008597655429945042,Roderick MacFarquhar,False,Labour
+nhs,0.030988916666150813,Gregor Mackenzie,False,Labour
+nhs,0.10686302491472344,Iain Macleod,False,Conservative
+nhs,0.04797892922323142,Maurice Macmillan,False,Conservative
+nhs,0.011189560887795621,Malcolm Macpherson,False,Labour
+nhs,0.0375221043430334,Martin Maddan,False,Conservative
+nhs,0.059335708523958905,Max Madden,False,Labour
+nhs,0.008619429850310048,Bryan Magee,False,Labour
+nhs,0.014019928360457047,Edward Mallalieu,False,
+nhs,0.04528828961219024,Joseph Mallalieu,False,Labour
+nhs,0.5561682019945252,Gerald Malone,False,
+nhs,0.03789205939040524,Keith Mans,False,Conservative
+nhs,0.006805077190381716,Paul Marland,False,Conservative
+nhs,0.014947314052276575,Tony Marlow,False,
+nhs,0.010956168710828395,Ernest Marples,False,Conservative
+nhs,0.01159920881186492,David Marquand,False,Liberal Democrat
+nhs,0.042392089838348544,Richard Marsh,False,Labour
+nhs,0.002129571172004511,Reginald Maudling,False,Conservative
+nhs,0.008161291289157992,Raymond Mawby,False,Conservative
+nhs,0.02545592213701159,Robin Maxwell-Hyslop,False,Conservative
+nhs,0.03327049403362352,Christopher Mayhew,False,Liberal Democrat
+nhs,0.01539110272513339,Patrick Mayhew,False,Conservative
+nhs,0.006439557755978137,Joan Maynard,True,Labour
+nhs,0.0032378516325103192,Bernadette Devlin,True,Independent
+nhs,0.015368940339374427,Neil McBride,False,Labour
+nhs,0.002758148116319791,John McCann,False,
+nhs,0.03261625602542086,Robert McCrindle,False,Conservative
+nhs,0.09174880279771332,Anna McCurley,True,Liberal Democrat
+nhs,0.02751849783821594,Frank McElhone,False,Labour
+nhs,0.02993022636636607,Allen McKay,False,Labour
+nhs,0.08137493612901354,William McKelvey,False,Labour
+nhs,0.00047679796402895876,Frank McManus,False,
+nhs,0.04824645010142745,Thomas McMillan,False,Labour
+nhs,0.10551620906694739,Michael McNair-Wilson,False,Conservative
+nhs,0.0019526011815809237,Patrick McNair-Wilson,False,Conservative
+nhs,0.010912359176680245,Tom McNally,False,Liberal Democrat
+nhs,0.0,John McQuade,False,
+nhs,0.016442914471764374,Albert McQuarrie,False,
+nhs,0.10682616455985174,Michael Meadowcroft,False,Liberal Party
+nhs,0.05900028352785004,Robert Mellish,False,
+nhs,0.006703942752038462,John Mendelson,False,Labour
+nhs,0.013656261370298253,Anthony Meyer,False,Liberal Democrat
+nhs,0.010731050599701992,Ian Mikardo,False,Labour
+nhs,0.017075314849058117,Edward Milne,False,
+nhs,0.005127506551382554,Norman Miscampbell,False,Conservative
+nhs,0.04748175632012753,Roger Moate,False,Conservative
+nhs,0.022083376277176714,James Molyneaux,False,
+nhs,0.02128540272374149,Ernle Money,False,Conservative
+nhs,0.0017890304637237155,Constance Monks,False,Conservative
+nhs,0.050076172487359065,Hector Monro,False,Conservative
+nhs,0.08312212049193266,Fergus Montgomery,False,Conservative
+nhs,0.11009046781831129,Eric Moonman,False,Labour
+nhs,0.008776840433169878,Morgan Morgan-Giles,False,Conservative
+nhs,0.3012718501055036,Roland Moyle,False,Labour
+nhs,0.019671044221665664,Colin Moynihan,False,Conservative
+nhs,0.027764898121139588,David Mudd,False,Conservative
+nhs,0.003214890856876347,Fred Mulley,False,Labour
+nhs,0.013305354495270729,Oscar Murton,False,Conservative
+nhs,0.017015995005054265,David Myles,False,
+nhs,0.011868264880533065,Gerald Nabarro,False,Conservative
+nhs,0.014657292473478701,Gerrard Neale,False,
+nhs,0.00826161775317088,Airey Neave,False,Conservative
+nhs,0.05346979935158806,Richard Needham,False,Conservative
+nhs,0.05254812493803434,Dave Nellist,False,Labour
+nhs,0.05398862487205975,Michael Neubert,False,Conservative
+nhs,0.004744268793151049,Arthur Newens,False,
+nhs,0.08198489558153099,Tony Newton,False,Conservative
+nhs,0.0037337424837797194,Tom Normanton,False,Conservative
+nhs,0.006740804821435842,John Nott,False,Conservative
+nhs,0.36482807546558654,Michael O'Halloran,False,Labour
+nhs,0.011532020650812519,Gordon Oakes,False,Labour
+nhs,0.031394169408425786,Eric Ogden,False,Labour
+nhs,0.007748470506678592,Sally Oppenheim,True,Conservative
+nhs,0.011202227699355898,Philip Oppenheim,False,Conservative
+nhs,0.007762696296253888,Albert Oram,False,Labour
+nhs,0.08266702273299581,Maurice Orbach,False,Labour
+nhs,0.034914440024474365,Stan Orme,False,Labour
+nhs,0.007278925433022134,Lawrence Orr,False,
+nhs,0.003318245403338597,John Osborn,False,Conservative
+nhs,0.07093737380065035,John Ovenden,False,Labour
+nhs,0.011783427780439705,Walter Padley,False,Labour
+nhs,0.01280710881844532,Charles Pannell,False,Labour
+nhs,0.011538030816680131,John Pardoe,False,Liberal Party
+nhs,0.02858749183369409,George Park,False,Labour
+nhs,0.016349587353657366,Cecil Parkinson,False,Conservative
+nhs,0.006516525598561842,Matthew Parris,False,Conservative
+nhs,0.06046796701454912,Irvine Patnick,False,Conservative
+nhs,0.026884018161961287,Geoffrey Pattie,False,Conservative
+nhs,0.38960862796651996,Laurie Pavitt,False,
+nhs,0.03583824385690971,James Pawsey,False,
+nhs,0.007312599452817147,Thomas Peart,False,
+nhs,0.035764816519821566,David Penhaligon,False,Liberal Party
+nhs,0.035952748217421115,Norman Pentland,False,Labour
+nhs,0.005844934832570779,Ian Percival,False,Conservative
+nhs,0.004178144361565126,Ernest Perry,False,Labour
+nhs,0.005525783827051537,John Peyton,False,Conservative
+nhs,0.002250969291479572,Bonner Pink,False,Conservative
+nhs,0.0027599243068972715,Rafton Pounder,False,
+nhs,0.010049145289991072,John Powley,False,Conservative
+nhs,0.025510225275420406,Arthur Probert,False,
+nhs,0.05402786857461586,Harvey Proctor,False,Conservative
+nhs,0.008842904930296049,George Proudfoot,False,
+nhs,0.059074632990872455,Joan Quennell,False,Conservative
+nhs,0.13750561590726276,Reg Race,False,Labour
+nhs,0.04898046928283687,Keith Raffan,False,Liberal Democrat
+nhs,0.03502868578778027,Timothy Raison,False,Conservative
+nhs,0.004823490151183167,Peter Rawlinson,False,Conservative
+nhs,0.005494113658542114,Peter Rees,False,Conservative
+nhs,0.01262083549712509,Merlyn Rees,False,Labour
+nhs,0.03218707112994024,William Rees-Davies,False,Conservative
+nhs,0.025392852650928915,David Renton,False,Conservative
+nhs,0.012838662586712917,Timothy Renton,False,
+nhs,0.013171377245893526,Geoffrey Rhodes,False,Labour
+nhs,0.0239054027476819,Robert Rhodes James,False,Conservative
+nhs,0.014517595149769686,Graham Riddick,False,Conservative
+nhs,0.03741864539195836,Julian Ridsdale,False,Conservative
+nhs,0.0023806936403356124,Geoffrey Rippon,False,Conservative
+nhs,0.02903738231782029,Caerwyn Roderick,False,Labour
+nhs,0.006366655185279232,John Rodgers,False,Conservative
+nhs,0.006327921160605937,William Rodgers,False,Liberal Democrat
+nhs,0.026564903034942265,George Rodgers,False,Labour
+nhs,0.0021667624299456234,John Roper,False,Liberal Democrat
+nhs,0.02542779415878382,Paul Rose,False,Labour
+nhs,0.011691384694083193,Hugh Rossi,False,Conservative
+nhs,0.008557119128885463,Peter Rost,False,Conservative
+nhs,0.038623760633478554,Anthony Royle,False,Conservative
+nhs,0.0080764265444117,John Ryman,False,Labour
+nhs,0.47642408932788916,Tom Sackville,False,Conservative
+nhs,0.009913383368197685,Tim Sainsbury,False,Conservative
+nhs,0.0026948082298587058,Neville Sandelson,False,Labour
+nhs,0.006553979471159653,James Scott-Hopkins,False,Conservative
+nhs,0.0,Harry Selby,False,Labour
+nhs,0.01043301145945315,John Sever,False,Labour
+nhs,0.015459285789395216,Richard Sharples,False,Conservative
+nhs,0.015904068385852337,William Shelton,False,
+nhs,0.004604997599783866,Peter Shore,False,Labour
+nhs,0.002309498358347578,Sam Silkin,False,
+nhs,0.033531205404161386,John Silkin,False,Labour
+nhs,0.005376065483839062,Julius Silverman,False,Labour
+nhs,0.02815749360340415,Fred Silvester,False,Conservative
+nhs,0.03498742892049164,Charles Simeons,False,Conservative
+nhs,0.16946710464179562,Roger Sims,False,Conservative
+nhs,0.0017328451777038913,Trevor Skeet,False,Conservative
+nhs,0.01445599598009152,Arthur Skeffington,False,Labour
+nhs,0.0,Harold Soref,False,Conservative
+nhs,0.04230599337121355,Nigel Spearing,False,Labour
+nhs,0.022556154703559435,Keith Speed,False,Conservative
+nhs,0.05583516156202924,Anthony Speller,False,Conservative
+nhs,0.0,John Spence,False,Conservative
+nhs,0.061989378688595324,Leslie Spriggs,False,Labour
+nhs,0.006705613741488683,Iain Sproat,False,Conservative
+nhs,0.02126044152069236,Norman St John-Stevas,False,Conservative
+nhs,0.00779976789794169,Keith Stainton,False,Conservative
+nhs,0.04905132843624504,Jock Stallard,False,
+nhs,0.041017946957176143,Ivor Stanbrook,False,Conservative
+nhs,0.024729846575441996,Martin Stevens,False,Conservative
+nhs,0.02041829350962623,Lewis Stevens,False,Conservative
+nhs,0.0020227607603418873,Geoffrey Stewart-Smith,False,Conservative
+nhs,0.02844396938915807,James Stodart,False,
+nhs,0.0058756345676469705,David Stoddart,False,Labour
+nhs,0.5355416872307828,Malcolm Stoddart-Scott,False,Conservative
+nhs,0.011215342488041735,John Stokes,False,Conservative
+nhs,0.005764322046482084,John Stonehouse,False,Liberal Democrat
+nhs,0.28615822348222986,Thomas Stuttaford,False,Conservative
+nhs,0.01927004541950098,David Sumberg,False,Conservative
+nhs,0.12445306189475985,Shirley Summerskill,False,Labour
+nhs,0.033608024478195955,Hugo Summerson,False,Conservative
+nhs,0.005510719915514924,Thomas Swain,False,Labour
+nhs,0.01947535774904792,Walter Sweeney,False,Conservative
+nhs,0.010393262404405842,Dick Taverne,False,Liberal Democrat
+nhs,0.006267297642412293,Norman Tebbit,False,Conservative
+nhs,0.031160307800828013,Stefan Terlezki,False,Conservative
+nhs,0.025167721100084743,Margaret Thatcher,True,Conservative
+nhs,0.006170604811622155,Roy Thomason,False,Conservative
+nhs,0.055680452036813016,Stanley Thorne,False,
+nhs,0.017168794410984563,Neil Thorne,False,Conservative
+nhs,0.006622920237735995,Jeremy Thorpe,False,Liberal Party
+nhs,0.08268397730528061,Peter Thurnham,False,Liberal Democrat
+nhs,0.06741081407843015,Sydney Tierney,False,
+nhs,0.04758901635117855,John Tilley,False,Labour
+nhs,0.008941824915083779,John Tilney,False,Conservative
+nhs,0.014521590658734386,James Tinn,False,Labour
+nhs,0.012956606533566286,Frank Tomney,False,Labour
+nhs,0.038308564990713126,Thomas Torney,False,Labour
+nhs,0.04894471360765803,Richard Tracey,False,Conservative
+nhs,0.31179987395437414,Anthony Trafford,False,Conservative
+nhs,0.009131129621310106,Peter Trew,False,Conservative
+nhs,0.0036418665820641977,David Trippier,False,Conservative
+nhs,0.08116017801358366,Raphael Tuck,False,Labour
+nhs,0.0038747409471985342,Christopher Tugendhat,False,Conservative
+nhs,0.050805878369944345,Robin Turton,False,Conservative
+nhs,0.118752415182898,Ian Twinn,False,Conservative
+nhs,0.020397773311564185,Thomas Urwin,False,Labour
+nhs,0.032842495986390934,William Van Straubenzee,False,Conservative
+nhs,0.013631251076291952,Eric Varley,False,Labour
+nhs,0.49869462584968477,Gerard Vaughan,False,Conservative
+nhs,0.02909181072047492,Edwin Wainwright,False,Labour
+nhs,0.012465291602573961,Richard Wainwright,False,Liberal Party
+nhs,0.01755804450260661,John Wakeham,False,Conservative
+nhs,0.10063315408678955,William Waldegrave,False,Conservative
+nhs,0.008213233243232256,Brian Walden,False,Labour
+nhs,0.010676047997877611,George Walden,False,Conservative
+nhs,0.005095185733005792,David Walder,False,Conservative
+nhs,0.06889054983433815,Derek Walker-Smith,False,Conservative
+nhs,0.03669471562059987,Gary Waller,False,Conservative
+nhs,0.001076363296121497,Dennis Walters,False,Conservative
+nhs,0.0026288998751091124,Kenneth Warren,False,Conservative
+nhs,0.03992031145605692,David Watkins,False,Labour
+nhs,0.006614542858998027,John Watkinson,False,Labour
+nhs,0.0656415657473449,Bernard Weatherill,False,Conservative
+nhs,0.01774224407214135,Kenneth Weetch,False,
+nhs,0.013287330243284283,David Weitzman,False,Labour
+nhs,0.002605430558965025,James Wellbeloved,False,Labour
+nhs,0.015564618174123588,John Wheeler,False,Conservative
+nhs,0.024118047151072585,John Whitfield,False,Conservative
+nhs,0.13435021069559003,William Whitlock,False,Labour
+nhs,0.016517279961315287,Keith Wickenden,False,Conservative
+nhs,0.006909116876079837,Frederick Willey,False,Labour
+nhs,0.18403025709883977,Michael Winstanley,False,Liberal Party
+nhs,0.053610399783521646,Mark Wolfson,False,Conservative
+nhs,0.0559457446752494,Patrick Wolrige-Gordon,False,Conservative
+nhs,0.031242774859303348,Michael Woodcock,False,
+nhs,0.0212831816225392,Mark Woodnutt,False,Conservative
+nhs,0.013930710004045081,Robert Woof,False,Labour
+nhs,0.0023636529546383436,Ken Woolmer,False,
+nhs,0.034190704377233615,William Worsley,False,
+nhs,0.01081184541584129,Ian Wrigglesworth,False,Liberal Democrat
+nhs,0.02810224633498905,Alec Woodall,False,Labour
+nhs,0.020522060543932085,Christopher Woodhouse,False,
+nhs,0.13852563679412577,David Young,False,Labour
+nhs,0.004647710940521935,Ernest Armstrong,False,Labour
+nhs,0.008504549995497808,George Younger,False,Conservative
+nhs,0.018823748459349445,Humphrey Atkins,False,Conservative
+nhs,0.007588404473940886,James Allason,False,Conservative
+nhs,0.07785514377939393,Jack Ashley,False,Labour
+nhs,0.016980213563925272,Norman Atkinson,False,Labour
+nhs,0.004835093974055768,Norman Wylie,False,Conservative
+nhs,0.023409545887621522,Ronald Atkins,False,Labour
+nhs,0.012106391611634284,Sydney Allen,False,
+nhs,0.005441148936120815,Tom Arnold,False,Conservative
+nhs,0.07105325765669479,Richard Alexander,False,Conservative
+nhs,0.02308878955047785,Robert Atkins,False,Conservative
+nhs,0.013437896365255457,Sheila Wright,True,Labour
+nhs,0.059147274954015776,Jacques Arnold,False,Conservative
+nhs,0.04987790442181967,James White,False,Labour
+nhs,0.028737220595400414,Jimmy Hamilton,False,
+nhs,0.0026720070160918537,Denis Healey,False,Labour
+nhs,0.06005179221530422,John Wells,False,Conservative
+nhs,0.07002505662099177,Robert Hughes,False,Conservative
+nhs,0.22852715209919824,Rod Richards,False,Conservative
+nhs,0.05264785507693103,Adam Hunter,False,Labour
+nhs,0.00681614011316658,Alan Green,False,Conservative
+nhs,0.02991387390097841,Alan Glyn,False,Conservative
+nhs,0.03453020874930101,Alastair Harrison,False,
+nhs,0.03616292520799976,Albert Roberts,False,Labour
+nhs,0.02491788117722614,Arthur Jones,False,Conservative
+nhs,0.004493494728741982,Albert Booth,False,Labour
+nhs,0.011984425574197929,Alexander Wilson,False,Labour
+nhs,0.004078569477178375,Alexander Fletcher,False,Conservative
+nhs,0.002615086796937537,Alfred Bates,False,Labour
+nhs,0.07697535429986521,Alf Morris,False,Labour
+nhs,0.03823723486165074,Alfred Evans,False,Labour
+nhs,0.01984357906038849,Jerry Wiggin,False,Conservative
+nhs,0.002071642704319968, Lambton,False,Conservative
+nhs,0.02902371162218113,Arnold Shaw,False,Labour
+nhs,0.009033158827688072,Arthur Latham,False,Labour
+nhs,0.004820392645166117,Arthur Palmer,False,Labour
+nhs,0.01567769405597462,Arthur Harvey,False,Conservative
+nhs,0.01709684072619888,Arthur Lewis,False,Labour
+nhs,0.014257873505170174,Brian O'Malley,False,Labour
+nhs,0.025622813702004543,Bryan Davies,False,Labour
+nhs,0.021683619569046228,Carol Johnson,False,Labour
+nhs,0.02331968299512258,Charles Morrison,False,Conservative
+nhs,0.04741003691545423,Charles Morris,False,Labour
+nhs,0.019553075889993297,Charles Taylor,False,Conservative
+nhs,0.07588846698362571,Chris Price,False,
+nhs,0.022637212244399955,Cledwyn Hughes,False,Labour
+nhs,0.026192811051918195,Colin Phipps,False,Labour
+nhs,0.02787019207028208,Cranley Onslow,False,Conservative
+nhs,0.04572523435410566,Cyril Smith,False,Liberal Party
+nhs,0.010986489950560709,Cyril Townsend,False,Liberal Democrat
+nhs,0.03753770179993407,Dafydd Elis Thomas,False,Plaid Cymru
+nhs,0.023871792208713397,Elystan Morgan,False,Labour
+nhs,0.01717615193905853,Daniel Jones,False,
+nhs,0.0,David Reed,False,Labour
+nhs,0.10295770548126994,David Owen,False,Labour
+nhs,0.003294784675702197,David Howell,False,Conservative
+nhs,0.002095671600274504,David Mather,False,
+nhs,0.04618608399037511,David Price,False,Conservative
+nhs,0.04449930820333129,David Hunt,False,Conservative
+nhs,0.01193735252310003,David Knox,False,Conservative
+nhs,0.03438139716897794,Neil Macfarlane,False,Conservative
+nhs,0.015226004251112733,David James,False,Conservative
+nhs,0.00369950126404764,Russell Johnston,False,Liberal Democrat
+nhs,0.02134962258903351,David Lane,False,Conservative
+nhs,0.06316551789783487,Denis Howell,False,Labour
+nhs,0.022200412101612128,Donald Stewart,False,Scottish National Party
+nhs,0.024609786520976163,Doris Fisher,True,Labour
+nhs,0.02946341695702156,Douglas Henderson,False,Scottish National Party
+nhs,0.05183755455676684,Dudley Smith,False,Conservative
+nhs,0.00368916696114219,Duncan Sandys,False,Conservative
+nhs,0.01384393281019162,Edward Lyons,False,Labour
+nhs,0.018900832050570214,Edward Brown,False,Conservative
+nhs,0.01300373235558466,Edward Fletcher,False,Labour
+nhs,0.018161429225726,Edward Gardner,False,Conservative
+nhs,0.10545839272648204,Doug Hoyle,False,Labour
+nhs,0.006996188652177086,Tatton Brinton,False,Conservative
+nhs,0.01122222016759026,Evelyn King,False,Conservative
+nhs,0.02246771598178025,Fitzroy Maclean,False,Conservative
+nhs,0.0026741675838791966,Francis Pym,False,Conservative
+nhs,0.011464002332325722,Frank Taylor,False,Conservative
+nhs,0.01438921072112194,Frank White,False,Labour
+nhs,0.018567278598285726,Freda Corbet,True,Labour
+nhs,0.004715458184786973,Frederic Bennett,False,Conservative
+nhs,0.0037862042685757923,Frederick Lee,False,Labour
+nhs,0.00402852054116467,Elwyn Jones,False,Labour
+nhs,0.01748090756790083,Geoffrey Lloyd,False,Conservative
+nhs,0.005439968954160887,George Darling,False,Labour
+nhs,0.007091563595121021,George Grant,False,Labour
+nhs,0.0018489065931785833,George Jackson,False,
+nhs,0.1391331460510079,George Wallace,False,Labour
+nhs,0.0054688083904491334,Douglas Crawford,False,Scottish National Party
+nhs,0.0320870139228586,George Sinclair,False,Conservative
+nhs,0.19584319392023522,George Thompson,False,Scottish National Party
+nhs,0.0,George Morton,False,Labour
+nhs,0.03665114925625003,George Lawson,False,Labour
+nhs,0.0036607474604713986,George Reid,False,Scottish National Party
+nhs,0.004715213066367512,George Strauss,False,Labour
+nhs,0.013827441604854628,Gerald Fowler,False,Labour
+nhs,0.01116761055581955,Gordon Campbell,False,Conservative
+nhs,0.008829058431249752,Goronwy Roberts,False,Labour
+nhs,0.01530096155263638,Gwilym Roberts,False,Labour
+nhs,0.006056803603402048,Ednyfed Davies,False,Labour
+nhs,0.03827112072052033,Gwilym Davies,False,
+nhs,0.015773723484530117,Gwynfor Evans,False,
+nhs,0.009065578882420228,Gwynoro Jones,False,Labour
+nhs,0.006443855852975822,Hamish Watt,False,Scottish National Party
+nhs,0.023100842152427057,Harold Walker,False,Labour
+nhs,0.005158050582051331,Neil Marten,False,Conservative
+nhs,0.0,Harry West,False,
+nhs,0.008472811859377533,John Parker,False,Labour
+nhs,0.04844108718359182,Hilary Miller,False,
+nhs,0.02845888503833845,Horace King,False,Labour
+nhs,0.006655553156094726,Hugh Fraser,False,Conservative
+nhs,0.014754075947263742,Hugh Brown,False,Labour
+nhs,0.013339331335867404,Hugh Jenkins,False,Labour
+nhs,0.0011891453130921817,Ian Campbell,False,Labour
+nhs,0.004374974652640781,Ian Lloyd,False,Conservative
+nhs,0.0034970510611366753,Idris Owen,False,Conservative
+nhs,0.08145932087506871,Wyn Roberts,False,Conservative
+nhs,0.07142768929681857,Ifor Davies,False,Labour
+nhs,0.02127928821338543,Ioan Evans,False,Labour
+nhs,0.07195479392619056,Irene Ward,False,Conservative
+nhs,0.020175209606823164,Ivan Lawrence,False,Conservative
+nhs,0.003191503179893959,Ivor Richard,False,Labour
+nhs,0.011862681063412175,James Johnson,False,Labour
+nhs,0.008311262164957546,James Bennett,False,Labour
+nhs,0.03861978478827197,James Dunn,False,Labour
+nhs,0.011237929732218372,James Ramsden,False,Conservative
+nhs,0.0054621378772042005,Harold Wilson,False,Labour
+nhs,0.017074527207911614,Harwood Harrison,False,Conservative
+nhs,0.001361049666120369,Hamish Gray,False,Conservative
+nhs,0.019824207140444663,James Spicer,False,Conservative
+nhs,0.0253825192468642,Jasper More,False,Conservative
+nhs,0.0448005041973748,Jeffrey Thomas,False,Labour
+nhs,0.05213311763269846,Joan Vickers,False,Conservative
+nhs,0.008174324601609592,Joan Hall,True,Conservative
+nhs,0.007927318565027321,Joel Barnett,False,Labour
+nhs,0.0028461605998544104,John Ellis,False,Labour
+nhs,0.0005896514156857113,John Carson,False,
+nhs,0.019711618749654613,John Hall,False,Conservative
+nhs,0.007937226179969172,John Mackie,False,Labour
+nhs,0.010219315067268097,John Hay,False,Conservative
+nhs,0.028419244694409738,Anthony Grant,False,Conservative
+nhs,0.04320736055527809,John Cartwright,False,Labour
+nhs,0.014335816122940956,John Jennings,False,Conservative
+nhs,0.017220467045510467,John Fraser,False,Labour
+nhs,0.0037382386572264604,John Tomlinson,False,Labour
+nhs,0.009026302582331096,John Hill,False,Conservative
+nhs,0.03258045079148883,John Moore,False,Conservative
+nhs,0.00019791664719611646,John Davies,False,Conservative
+nhs,0.0334379586317647,Enoch Powell,False,Conservative
+nhs,0.013762881525888115,John Foster,False,Conservative
+nhs,0.0041175548481929706,Giles Shaw,False,Conservative
+nhs,0.05958233614623387,John Hunt,False,Conservative
+nhs,0.02856637703230652,Marcus Fox,False,Conservative
+nhs,0.008846110816313292,John Temple,False,Conservative
+nhs,0.05288447136493022,John Gorst,False,Conservative
+nhs,0.008567403660664738,John Lee,False,Labour
+nhs,0.009832086545065117,John Mackintosh,False,Labour
+nhs,0.02755653512823172,Tim Rathbone,False,Conservative
+nhs,0.0026320577375172,Selwyn Lloyd,False,Conservative
+nhs,0.023037096094351003,Jon Rankin,False,Labour
+nhs,0.012382456922949413,Thomas Price,False,
+nhs,0.010039843859663188,Kenneth Marks,False,Labour
+nhs,0.0417708450252035,Kenneth Lewis,False,Conservative
+nhs,0.015074048404931362,Kenneth Baker,False,Conservative
+nhs,0.001355512672321308,Laurance Reed,False,Conservative
+nhs,0.0016118694952377132,Raymond Fletcher,False,Labour
+nhs,0.008459538321018307,Charles Curran,False,Conservative
+nhs,0.024410074095400903,Martin Flannery,False,Labour
+nhs,0.010220169319287509,Martin McLaren,False,Conservative
+nhs,0.009656348213238295,Mary Holt,True,Conservative
+nhs,0.014682090445913036,Maurice Foley,False,Labour
+nhs,0.19789490028657178,Maurice Miller,False,Labour
+nhs,1.0,Frank Maguire,False,
+nhs,0.003657195566422026,Michael Noble,False,Labour
+nhs,0.037390816898825785,Michael Latham,False,Conservative
+nhs,0.04924983354777361,Michael Noble,False,Conservative
+nhs,0.010186048237836047,Michael Hamilton,False,Conservative
+nhs,0.00830747365065243,Michael Barnes,False,Labour
+nhs,0.02770302340575847,Michael Roberts,False,Conservative
+nhs,0.026375480358296486,Michael Ward,False,Labour
+nhs,0.008613616578616144,Michael Shaw,False,Conservative
+nhs,0.10012555281908296,Mike Thomas,False,Labour
+nhs,0.11250781991888568,Michael Morris,False,Conservative
+nhs,0.08112948888869219,Millie Miller,True,Labour
+nhs,0.003069710392298921,Neville Trotter,False,Conservative
+nhs,0.004820538934814479,Nicholas Ridley,False,Conservative
+nhs,0.020189195438407012,Guy Barnett,False,Labour
+nhs,0.019814402984301337,Nicholas Scott,False,Conservative
+nhs,0.01120947549557309,Nigel Lawson,False,Conservative
+nhs,0.021349718321070695,Nigel Fisher,False,Conservative
+nhs,0.004597314191420574,Harold Lever,False,Labour
+nhs,0.017403892287337002,Oonagh McDonald,True,Labour
+nhs,0.012103811850695943,Paul Bryan,False,Conservative
+nhs,0.01864042833609161,Peter Hardy,False,Labour
+nhs,0.016913230803524974,Peter Fry,False,Conservative
+nhs,0.010744000323739036,Peter Walker,False,Conservative
+nhs,0.018791848491362746,Peter Morrison,False,Conservative
+nhs,0.0067902050746822306,Peter Thomas,False,Conservative
+nhs,0.01620363832582582,Peter Mills,False,Conservative
+nhs,0.009527206149558043,Peter Kirk,False,Conservative
+nhs,0.04554164311835461,Phillip Whitehead,False,Labour
+nhs,0.049426183386559144,Philip Holland,False,Conservative
+nhs,0.0036141789354420485,Piers Dixon,False,Conservative
+nhs,0.027370346066035476,Ralph Howell,False,Conservative
+nhs,0.02543280354775945,Raymond Carter,False,Labour
+nhs,0.006342352386250315,Raymond Gunter,False,Labour
+nhs,0.0060086365314105895,Reginald Eyre,False,Conservative
+nhs,0.08438618477748784,Reginald Bennett,False,Conservative
+nhs,0.007087557886886552,Reginald Paget,False,Labour
+nhs,0.02958536115251001,Richard Buchanan,False,Labour
+nhs,0.027170866512207386,Richard Wood,False,Conservative
+nhs,0.015496222362421166,Dick Douglas,False,Labour
+nhs,0.26518710559254416,Richard Thompson,False,Conservative
+nhs,0.0486151254437063,Richard Crossman,False,Labour
+nhs,0.019344758167045072,Richard Hornby,False,Conservative
+nhs,0.059885102303141494,Robert Hughes,False,Labour
+nhs,0.022510113535036798,Robert Edwards,False,Labour
+nhs,0.05946092597284147,Robert Parry,False,Labour
+nhs,0.011901853142579244,Robert Hicks,False,Conservative
+nhs,0.019746844571561645,Anthony Durant,False,
+nhs,0.024878306928726335,Robert Brown,False,Labour
+nhs,0.012804295545438587,Robert Taylor,False,Conservative
+nhs,0.030976865839063943,Robert Cooke,False,Conservative
+nhs,0.00533089752467464,Gordon Wilson,False,Scottish National Party
+nhs,0.00633911945587048,Michael Maitland Stewart,False,
+nhs,0.024042277348394456,Robert Redmond,False,Conservative
+nhs,0.042053505369541534,Robert Ellis,False,
+nhs,0.029600099191992416,Roger White,False,Conservative
+nhs,0.04140723591748387,Nicholas Edwards,False,Conservative
+nhs,0.010471036119859794,Ronald Lewis,False,Labour
+nhs,0.0027738497841207866,Ronald Murray,False,Labour
+nhs,0.012364469631763112,Ronald Bell,False,Conservative
+nhs,0.01172751257831555,Ronald Thomas,False,Labour
+nhs,0.021068002686888992,Ronald Russell,False,Conservative
+nhs,0.06131557446627738,Ronald Brown,False,Labour
+nhs,0.007734787989738043,Roy Mason,False,Labour
+nhs,0.023425760046281333,Roy Hughes,False,Labour
+nhs,0.04130385588808994,Simon Mahon,False,Labour
+nhs,0.007890290580799934,Simon Digby,False,Conservative
+nhs,0.028405208348109393,Stan Cohen,False,Labour
+nhs,0.010093323583633698,James Hill,False,Conservative
+nhs,0.004690013984946234,Stephen Hastings,False,Conservative
+nhs,0.021868595862475946,Stephen Ross,False,Liberal Party
+nhs,0.009925371703046738,Terence Higgins,False,Conservative
+nhs,0.009450112526999416,Terence Walker,False,Labour
+nhs,0.1628327867853408,Thomas Oswald,False,
+nhs,0.010586187964245732,Edward Graham,False,Labour
+nhs,0.09684443218071798,Toby Jessel,False,Conservative
+nhs,0.05283765874130702,George Thomas,False,Labour
+nhs,0.032952831444440625,Tim Smith,False,Conservative
+nhs,0.09822199574893692,Timothy Kitson,False,Conservative
+nhs,0.10035785733322988,Alec Jones,False,Labour
+nhs,0.11329894443670038,Tim Fortescue,False,Conservative
+nhs,0.014230334146503846,Walter Elliot,False,Conservative
+nhs,0.06508254912389608,Walter Harrison,False,Labour
+nhs,0.0, Dalkeith,False,
+nhs,0.09851481617140781,Walter Johnson,False,Labour
+nhs,0.006149995891313701,Bill Baker,False,
+nhs,0.013797160900287203,William Baxter,False,Labour
+nhs,0.007358466208740198,William Craig,False,
+nhs,0.01641667554383797,William Wilson,False,Labour
+nhs,0.02048205900076189,William Ross,False,
+nhs,0.10305050057768438,William Price,False,Labour
+nhs,0.011457942676446111,William Clark,False,Conservative
+nhs,0.06922374702234824,William Edwards,False,Labour
+nhs,0.004106356278692257,John Peel,False,Conservative
+nhs,0.10172385204166337,William Molloy,False,Labour
+nhs,0.00667583896440986,William Hughes,False,
+nhs,0.02473008352911579,Percy Grieve,False,Conservative
+nhs,0.010877521677008811,William Benyon,False,Conservative
+nhs,0.005226692702480218,William Whitelaw,False,
+nhs,0.014642626387596254,Stratton Mills,False,
+nhs,0.005062708473161953,Thomas Williams,False,Labour
+nhs,0.0448567158881232,William Wells,False,Labour
+nhs,0.09558626827325858,Willie Hamilton,False,Labour
+nhs,0.014597755011715239,Winston Churchill,False,Conservative
+nhs,0.01829058350282166,Stephen Davies,False,
+nhs,0.014946570927564247,John Evans,False,Labour
+nhs,0.06791153064476473,Anthony Berry,False,Conservative
+nhs,0.005561000644973209,Robert Banks,False,Conservative
+nhs,0.005998448866699071,Nicholas Baker,False,Conservative
+nhs,0.09498647542415417,Thomas Benyon,False,Conservative
+nhs,0.02718368982188922,Keith Best,False,Conservative
+nhs,0.013652242130765081,Nicholas Bonsor,False,Conservative
+nhs,0.18717544165345482,Nicholas Bennett,False,Conservative
+nhs,0.1156395964602476,Matthew Banks,False,Conservative
+nhs,0.021903507221517907,Michael Bates,False,Conservative
+nhs,0.0716172705099503,Hartley Booth,False,Conservative
+nhs,0.012842528560625432,Adam Butler,False,Conservative
+nhs,0.020627590787053736,Albert Cooper,False,Conservative
+nhs,0.023187824817074,Angus Maude,False,Conservative
+nhs,0.015092209999198917,Arthur Davidson,False,Labour
+nhs,0.008718320799737887,Arthur Bottomley,False,Labour
+nhs,0.03881923849077232,John Page,False,Conservative
+nhs,0.08538947922812322,Paul Dean,False,Conservative
+nhs,0.07211365931949809,Patrick Jenkin,False,Conservative
+nhs,0.0,Colin Mitchell,False,Conservative
+nhs,0.056131496243157435,Colin Shepherd,False,Conservative
+nhs,0.01049390554019418,David Mitchell,False,Conservative
+nhs,0.09480348945608395,Edmund Marshall,False,Liberal Democrat
+nhs,0.004433757390585208,Edward Griffiths,False,Labour
+nhs,0.012906571525645345,Edward Short,False,Labour
+nhs,0.0077957820798172615,Eldon Griffiths,False,Conservative
+nhs,0.03298606613362661,Frederick Burden,False,Conservative
+nhs,0.012348263408885996,George Cunningham,False,Labour
+nhs,0.09850994046600026,George Gardiner,False,Conservative
+nhs,0.007973459478524068,George Thomson,False,Liberal Democrat
+nhs,0.018107805628645807,Geraint Howells,False,Liberal Democrat
+nhs,0.021693348913116837,Harmar Nicholls,False,Conservative
+nhs,0.09675991929912439,Harry Ewing,False,Labour
+nhs,0.0,Hugh McCartney,False,Labour
+nhs,0.07812069355696505,Mervyn Pike,True,Conservative
+nhs,0.007510144831669481,James Prior,False,Conservative
+nhs,0.2568018275641097,Jill Knight,False,Conservative
+nhs,0.022398018049518808,John Golding,False,Labour
+nhs,0.005959336367644537,John Maginnis,False,
+nhs,0.05446176997842008,John Sutcliffe,False,Conservative
+nhs,0.014126060175486137,Joseph Dean,False,Labour
+nhs,0.05795901053419289,Joyce Butler,True,Labour
+nhs,0.023758699394406488,Michael McGuire,False,Labour
+nhs,0.0008588453617930807,Patrick Wall,False,Conservative
+nhs,0.01065723616561276,Paul Hawkins,False,Conservative
+nhs,0.0458421192636205,Peter Griffiths,False,Conservative
+nhs,0.04537266995215334,Antony Buck,False,Conservative
+nhs,0.009822427724272253,Quintin Hogg,False,Conservative
+nhs,0.00800692387344356,Reginald Prentice,False,
+nhs,0.18088352807153146,Renée Short,False,Labour
+nhs,0.007885449633878619,Anthony Nelson,False,Conservative
+nhs,0.006795138020492532,Bob Mitchell,False,Labour
+nhs,0.010047491059250001,Michael Marshall,False,Conservative
+nhs,0.011345479402869897,Graham Page,False,Conservative
+nhs,0.009766080129880056,Clinton Davis,False,Labour
+nhs,0.009626415863514023,Stanley McMaster,False,
+nhs,0.06415145976301871,Thomas Galbraith,False,
+nhs,0.011094875595083384,Tom Bradley,False,Labour
+nhs,0.25520812132064014,William Griffiths,False,Labour
+nhs,0.003286828416250807,,,
+nhs,0.018608600699849685,Graham Bright,False,Conservative
+nhs,0.05285981966765479,Timothy Brinton,False,Conservative
+nhs,0.05016603238309506,Michael Brown,False,Conservative
+nhs,0.023559474602588986,Ronald Brown,False,Labour
+nhs,0.010477520768627829,John Browne,False,Conservative
+nhs,0.0036859081998490955,John Butcher,False,Conservative
+nhs,0.021285166063921265, Cranborne,False,
+nhs,0.06476145842050757,Robert Litherland,False,
+nhs,0.010872944660015767,Donald Dixon,False,Labour
+nhs,0.031432580156408874,Bob Dunn,False,Conservative
+nhs,0.030584798369706755,Raymond Ellis,False,Labour
+nhs,0.007063513639493392,Peter Fraser,False,Conservative
+nhs,0.018964144698803843,Harry Greenway,False,Conservative
+nhs,0.012113270160702738,Barry Henderson,False,
+nhs,0.08687793481942375,Norman Hogg,False,Labour
+nhs,0.008712147991883017,John Lee,False,Liberal Democrat
+nhs,0.0,Andy McMahon,False,
+nhs,0.1816223727123123,John Mackay,False,Conservative
+nhs,0.06309290399691024,David Mellor,False,Conservative
+nhs,0.014402993172787745,Iain Mills,False,Conservative
+nhs,0.011162266487039375,Christopher Murphy,False,Conservative
+nhs,0.014610202930081315,Chris Patten,False,Conservative
+nhs,0.142292601886358,John Patten,False,Conservative
+nhs,0.07358083408156617,Ernest Roberts,False,Conservative
+nhs,0.01691028094953374,Robin Squire,False,Conservative
+nhs,0.06691001759183503,Allan Stewart,False,Conservative
+nhs,0.2239457626157122,Roger Thomas,False,Labour
+nhs,0.013486681534662195,Donald Thompson,False,Conservative
+nhs,0.013780275156459583,Malcolm Thornton,False,Conservative
+nhs,0.029159925168682987,Bill Walker,False,
+nhs,0.008232899740067441,John Ward,False,Conservative
+nhs,0.010120008917593949,John Watson,False,Conservative
+nhs,0.012957317971533735,Michael Welsh,False,Labour
+nhs,0.007447878340038764,Delwyn Williams,False,Conservative
+nhs,0.0972455548470272,Alex Carlile,False,Liberal Democrat
+nhs,0.05679440612274737,Robert Clay,False,
+nhs,0.37575681244013776,Edwina Currie,True,Conservative
+nhs,0.18134054296347624,Michael Forsyth,False,Conservative
+nhs,0.014024271345196628,Conal Gregory,False,Conservative
+nhs,0.03225859776723024,David Harris,False,Conservative
+nhs,0.005848313053575074,Robert Harvey,False,Conservative
+nhs,0.09700869624906748,Christopher Hawkins,False,Conservative
+nhs,0.4271726096196561,Jerry Hayes,False,Conservative
+nhs,0.22260551773137566,Gwilym Jones,False,Conservative
+nhs,0.03332139760419336,Robert Jones,False,Conservative
+nhs,0.019147965624456767,Roger King,False,Conservative
+nhs,0.004278434114871072,Michael Knowles,False,Conservative
+nhs,0.007002464330962186,Jim Nicholson,False,UUP
+nhs,0.033489347710990165,Elizabeth Peacock,True,Conservative
+nhs,0.007512169237986315,William Powell,False,Conservative
+nhs,0.01589812210080956,Stuart Randall,False,Labour
+nhs,0.1408354138394504,Martin Redmond,False,Labour
+nhs,0.11570328108977876,Mark Robinson,False,Conservative
+nhs,0.017072085881596047,Richard Ryder,False,Conservative
+nhs,0.05027688787005366,Derek Spencer,False,Conservative
+nhs,0.05990889174870482,Michael Stern,False,Conservative
+nhs,0.00837155914695099,Andrew Stewart,False,
+nhs,0.011983051966830496,Patrick Thompson,False,Conservative
+nhs,0.02082005566202692,Jack Thompson,False,Labour
+nhs,0.012249618855674745,John Watts,False,Conservative
+nhs,0.005845243143628741,Timothy Wood,False,Conservative
+nhs,0.03564372239806774,Christopher Butler,False,Conservative
+nhs,0.15461626954638139,David Evans,False,Conservative
+nhs,0.05614090996002317,Barry Field,False,Conservative
+nhs,0.02707499959180818,Douglas French,False,Conservative
+nhs,0.05732653910633812,Mildred Gordon,True,Labour
+nhs,0.025297129755065605,Maureen Hicks,True,Conservative
+nhs,0.19672663953895234,John Hughes,False,Labour
+nhs,0.02407791074606629,David Martin,False,Conservative
+nhs,0.06194786168596808,David Nicholson,False,Conservative
+nhs,0.05717449395300559,Emma Nicholson,True,Liberal Democrat
+nhs,0.09769859188009092,David Porter,False,Conservative
+nhs,0.02352081974467817,David Shaw,False,Conservative
+nhs,0.0077474139648204396,Peter Butler,False,Conservative
+nhs,0.021821480970498568,Jonathan Evans,False,Conservative
+nhs,0.005648653622366037,Roger Evans,False,Conservative
+nhs,0.020301233555864537,Angela Knight,True,Conservative
+nhs,0.04569692435786756,George Kynoch,False,
+nhs,0.12758974884822835,Olga Maitland,True,Conservative
+nhs,0.011132459341410432,Raymond Robertson,False,Conservative
+nhs,0.07921991815535125,Michael Stephen,False,Conservative
+nhs,0.08419655164325913,John Marshall,False,Conservative
+nhs,0.004316784354274299,William Morgan,False,Liberal Party
+nhs,0.2194557227341028,Gareth Wardell,False,Labour
+nhs,0.04845014009666968,William Small,False,Labour
+nhs,0.02838965177365262,Alexander Pollock,False,Conservative
+nhs,0.055109891719526446,John Sykes,False,Conservative
+nhs,0.0018300430547831226,William Bain,False,Labour
+nhs,0.01578058607272489,Tom Greatrex,False,Labour
+nhs,0.007305095756020524,Michael McCann,False,Labour
+nhs,0.01677362086157128,Fiona O'Donnell,True,Labour
+nhs,0.005719982670028059,Cathy Jamieson,True,Labour
+nhs,0.02372513176622613,Thomas Docherty,False,Labour
+nhs,0.0049292583711524965,Gregg McClymont,False,Labour
+nhs,0.02585821462013233,Margaret Curran,True,Labour
+nhs,0.011322511062519296,Graeme Morrice,False,Labour
+nhs,0.03240218039407398,Pamela Nash,True,Labour
+nhs,0.017408828119034072,Anas Sarwar,False,Labour
+nhs,0.03758259731516289,Stephen Mosley,False,Conservative
+nhs,0.24354593218438095,Stephen Lloyd,False,Liberal Democrat
+nhs,0.016937502520013314,Jessica Lee,True,Conservative
+nhs,0.01270829109897316,Sheila Gilmore,True,Labour
+nhs,0.05299298837772319,Laura Sandys,True,Conservative
+nhs,0.09358082071008658,Gordon Birtwistle,False,Liberal Democrat
+nhs,0.007225157855409976,Michael Crockart,False,Liberal Democrat
+nhs,0.059798617615438,Lorraine Fullbrook,True,Conservative
+nhs,0.02181642499702307,Ian Swales,False,Liberal Democrat
+nhs,0.02348070289679873,Chris Williamson,False,Labour
+nhs,0.006032845822459997,Louise Mensch,False,Conservative
+nhs,0.03802196070843761,Stephen Phillips,False,Conservative
+nhs,0.08337667080984999,Chris Kelly,False,Conservative
+nhs,0.24400121559911556,Aidan Burley,False,Conservative
+nhs,0.07420585515871762,Dan Byles,False,Conservative
+nhs,0.014569788916735415,Tristram Hunt,False,Labour
+nhs,0.003575489033226276,Simon Reevell,False,Conservative
+nhs,0.11888329236569256,Nick de Bois,False,Conservative
+nhs,0.057605703103819766,Duncan Hames,False,Liberal Democrat
+nhs,0.010391723296350821,Simon Wright,False,Liberal Democrat
+nhs,0.06136157394658365,Julie Hilling,True,Labour
+nhs,0.006342469917503755,Esther McVey,True,Conservative
+nhs,0.03202995387724617,Paul Uppal,False,Conservative
+nhs,0.11042415933044403,Mike Weatherley,False,Conservative
+nhs,0.04117994290687305,Julian Huppert,False,Liberal Democrat
+nhs,0.07919626058082331,Mark Reckless,False,Conservative
+nhs,0.007299191058950835,Zac Goldsmith,False,Conservative
+nhs,0.014611942794069641,Mary Macleod,True,Conservative
+nhs,0.00993305989991225,Gemma Doyle,True,Labour
+nhs,0.004191522806751095,Stephen Gilbert,False,Liberal Democrat
+nhs,0.13832193133005,Tessa Munt,True,Liberal Democrat
+nhs,0.053021093111588986,David Ward,False,Liberal Democrat
+nhs,0.07799902584448518,Angie Bray,True,Conservative
+nhs,0.136675082666691,Eric Ollerenshaw,False,Conservative
+nhs,0.11391790515483921,Vicky Ford,False,Conservative
+nhs,,Anneliese Dodds,False,Labour/Co-operative
+nhs,0.0,Marsha de Cordova,False,Labour
+nhs,0.02988568330475614,Leo Docherty,False,Conservative
+nhs,,Fiona Onasanya,False,Labour
+nhs,0.0,Anna McMorrin,False,Labour
+nhs,0.0,Simon Clarke,False,Conservative
+nhs,0.12703938931903178,Bambos Charalambous,False,Labour
+nhs,0.0,David Linden,False,Scottish National Party
+nhs,0.0,Matt Western,False,Labour
+nhs,0.07423254281061512,Emma Dent Coad,False,Labour
+nhs,0.1009908958803904,Diane Abbott,True,Labour
+nhs,0.02963480733364002,Graham Allen,False,Labour
+nhs,0.1801320493622531,David Amess,False,Conservative
+nhs,0.22561012469515102,Kevin Barron,False,Labour
+nhs,0.06412345581835259,Margaret Beckett,True,Labour
+nhs,0.05693783421089745,John Bercow,False,Speaker
+nhs,0.10685419380076813,Paul Beresford,False,Conservative
+nhs,0.02597824157503529,Clive Betts,False,Labour
+nhs,0.033248495606523314,Crispin Blunt,False,Conservative
+nhs,0.04787306275493375,Peter Bottomley,False,Conservative
+nhs,0.29755588685702516,Ben Bradshaw,False,Labour
+nhs,0.06185938727903982,Graham Brady,False,Conservative
+nhs,0.07807951381748121,Tom Brake,False,Liberal Democrat
+nhs,0.04155153895858282,Julian Brazier,False,Conservative
+nhs,0.09404630522577961,Nick Brown,False,Labour
+nhs,0.036201754204923615,Karen Buck,True,Labour
+nhs,0.11763576894916541,Richard Burden,False,Labour
+nhs,0.3631415825578524,Simon Burns,False,Conservative
+nhs,0.019072553909205713,Alan Campbell,False,Labour
+nhs,0.14301734836304528,Ronnie Campbell,False,Labour
+nhs,0.008609254052165387,Bill Cash,False,Conservative
+nhs,0.019829968613523114,Christopher Chope,False,Conservative
+nhs,0.13590032133530072,Kenneth Clarke,False,Conservative
+nhs,0.035274104075312264,Geoffrey Clifton-Brown,False,Conservative
+nhs,0.05824244322381157,Ann Clwyd,True,Labour
+nhs,0.02084067480565164,Vernon Coaker,False,Labour
+nhs,0.1039851394166799,Ann Coffey,True,Labour
+nhs,0.06784982237972999,Yvette Cooper,True,Labour
+nhs,0.07069163088682945,Jeremy Corbyn,False,Labour
+nhs,0.08883997920693859,David Crausby,False,Labour
+nhs,0.08654536884998963,John Cryer,False,Labour
+nhs,0.08360796470031889,Jim Cunningham,False,Labour
+nhs,0.03091558898929729,Geraint Davies,False,Labour/Co-operative
+nhs,0.019613297845327893,David Davis,False,Conservative
+nhs,0.015566712974053227,Jeffrey M. Donaldson,False,DUP
+nhs,0.25402439577923835,Jim Dowd,False,Labour
+nhs,0.04264658321807024,Alan Duncan,False,Conservative
+nhs,0.019232319560199985,Iain Duncan Smith,False,Conservative
+nhs,0.029015363876910095,Angela Eagle,True,Labour
+nhs,0.016320394286033813,Maria Eagle,True,Labour
+nhs,0.114337822148028,Clive Efford,False,Labour
+nhs,0.01589765250167107,Louise Ellman,True,Labour/Co-operative
+nhs,0.10137985645431832,Nigel Evans,False,Conservative
+nhs,0.1256839580332617,Michael Fabricant,False,Conservative
+nhs,0.01982711286064069,Michael Fallon,False,Conservative
+nhs,0.026932346347245548,Frank Field,False,Labour
+nhs,0.030046364275799414,Jim Fitzpatrick,False,Labour
+nhs,0.10415827493379776,Caroline Flint,True,Labour
+nhs,0.03725376966664102,Paul Flynn,False,Labour
+nhs,0.1956474182850005,Liam Fox,False,Conservative
+nhs,0.08077642072667575,Roger Gale,False,Conservative
+nhs,0.06487963762449352,Mike Gapes,False,Labour/Co-operative
+nhs,0.046958978656916325,Barry Gardiner,False,Labour
+nhs,0.031695658733805185,Edward Garnier,False,Conservative
+nhs,0.010032187411177243,Nick Gibb,False,Conservative
+nhs,0.034927697395119334,Cheryl Gillan,True,Conservative
+nhs,0.001413220776647151,Roger Godsiff,False,Labour
+nhs,0.03770065026875132,James Gray,False,Conservative
+nhs,0.015777695372425453,Damian Green,False,Conservative
+nhs,0.006929283747482075,Dominic Grieve,False,Conservative
+nhs,0.039977130185468744,Fabian Hamilton,False,Labour
+nhs,0.053407200523421954,Philip Hammond,False,Conservative
+nhs,0.030416150607858496,David Hanson,False,Labour
+nhs,0.16670764130117338,Harriet Harman,True,Labour
+nhs,0.02683953691218603,Alan Haselhurst,False,Conservative
+nhs,0.016719879798655777,John Hayes,False,Conservative
+nhs,0.04458473349690599,Oliver Heald,False,Conservative
+nhs,0.10128446381226464,John Healey,False,Labour
+nhs,0.0995174472419124,Stephen Hepburn,False,Labour
+nhs,0.07783060552121256,Margaret Hodge,True,Labour
+nhs,0.06712767362265337,Kate Hoey,True,Labour
+nhs,0.03729044317488448,Kelvin Hopkins,False,Labour
+nhs,0.02789340866143963,George Howarth,False,Labour
+nhs,0.010294685112497834,Gerald Howarth,False,Conservative
+nhs,0.045551635666058285,Lindsay Hoyle,False,Labour
+nhs,0.025983518030625555,Bernard Jenkin,False,Conservative
+nhs,0.22533033631206678,Alan Johnson,False,Labour
+nhs,0.17722950588768566,Helen Jones,True,Labour
+nhs,0.013067665868740775,Eleanor Laing,True,Conservative
+nhs,0.03480243641035921,Edward Leigh,False,Conservative
+nhs,0.02728649637953305,Chris Leslie,False,Labour/Co-operative
+nhs,0.018407715967263837,Oliver Letwin,False,Conservative
+nhs,0.15224606846797298,Ivan Lewis,False,Labour
+nhs,0.060989144705171375,Julian Lewis,False,Conservative
+nhs,0.027894771042796102,David Lidington,False,Conservative
+nhs,0.043815710827140385,Peter Lilley,False,Conservative
+nhs,0.11872840355976733,Tim Loughton,False,Conservative
+nhs,0.09814164464057207,Steve McCabe,False,Labour
+nhs,0.3239326081452831,Siobhain McDonagh,True,Labour
+nhs,0.02807965626562204,John Martin McDonnell,False,Labour
+nhs,0.023324165790357957,Patrick McLoughlin,False,Conservative
+nhs,0.0498444695597053,Fiona Mactaggart,True,Labour
+nhs,0.018059299171159615,Gordon Marsden,False,Labour
+nhs,0.04028002118150712,Theresa May,True,Conservative
+nhs,0.02331245146153449,Alan Meale,False,Labour
+nhs,0.046430402720094535,Owen Paterson,False,Conservative
+nhs,0.03981475312646038,Eric Pickles,False,Conservative
+nhs,0.07582728296659258,Steve Pound,False,Labour
+nhs,0.03230622869982521,John Redwood,False,Conservative
+nhs,0.04816535925552079,Laurence Robertson,False,Conservative
+nhs,0.05528067343422759,Geoffrey Robinson,False,Labour
+nhs,0.1733231801362871,Joan Ryan,True,Labour
+nhs,0.008874396408545685,Alex Salmond,False,Scottish National Party
+nhs,0.02733688916934559,Barry Sheerman,False,Labour/Co-operative
+nhs,0.013537461633182417,Keith Simpson,False,Conservative
+nhs,0.037478523925725746,Dennis Skinner,False,Labour
+nhs,0.04797045797186591,Andrew Smith,False,Labour
+nhs,0.028365552385897958,Nicholas Soames,False,Conservative
+nhs,0.014559238490554465,John Spellar,False,Labour
+nhs,0.05712903077566281,Caroline Spelman,True,Conservative
+nhs,0.02567649063127294,Gary Streeter,False,Conservative
+nhs,0.06749098412737344,Graham Stringer,False,Labour
+nhs,0.2398579668361991,Gisela Stuart,True,Labour
+nhs,0.08279689719766894,Desmond Swayne,False,Conservative
+nhs,0.05517119390381036,Robert Syms,False,Conservative
+nhs,0.07748252262243135,Gareth Thomas,False,Labour/Co-operative
+nhs,0.018833749877696378,Stephen Timms,False,Labour
+nhs,0.2866545306840883,David Tredinnick,False,Conservative
+nhs,0.1435080217802564,Jon Trickett,False,Labour
+nhs,0.12635789264500835,Derek Twigg,False,Labour
+nhs,0.012164317249240036,Stephen Twigg,False,Labour/Co-operative
+nhs,0.01638239991049199,Andrew Tyrie,False,Conservative
+nhs,0.058780260401167045,Keith Vaz,False,Labour
+nhs,0.02715079418315815,Alan Whitehead,False,Labour
+nhs,0.07519548215200593,John Whittingdale,False,Conservative
+nhs,0.01871510630342641,David Winnick,False,Labour
+nhs,0.3894950338763017,Rosie Winterton,True,Labour
+nhs,0.01552099338551666,Hilary Benn,False,Labour
+nhs,0.11602037001154616,David Lammy,False,Labour
+nhs,0.03447710208441545,Mark Hendrick,False,Labour/Co-operative
+nhs,0.056014368088369675,Adrian Bailey,False,Labour/Co-operative
+nhs,0.12695007023192104,Richard Bacon,False,Conservative
+nhs,0.1961736812379659,John Baron,False,Conservative
+nhs,0.06411703572891055,Henry Bellingham,False,Conservative
+nhs,0.01415766375511497,Kevin Brennan,False,Labour
+nhs,0.018698405502425953,Chris Bryant,False,Labour
+nhs,0.47993448810619094,Andy Burnham,False,Labour
+nhs,0.11075964675796,Alistair Burt,False,Conservative
+nhs,0.011830519175842014,Gregory Campbell,False,DUP
+nhs,0.011509779498632465,Alistair Carmichael,False,Liberal Democrat
+nhs,0.02169020523102539,Jon Cruddas,False,Labour
+nhs,0.01545978052095133,Wayne David,False,Labour
+nhs,0.005549801189809199,Jonathan Djanogly,False,Conservative
+nhs,0.021790180679471315,Nigel Dodds,False,DUP
+nhs,0.1437883847179647,Paul Farrelly,False,Labour
+nhs,0.008866240392239228,Mark Field,False,Conservative
+nhs,0.03668711926981931,Mark Francois,False,Conservative
+nhs,0.03555695485320476,Chris Grayling,False,Conservative
+nhs,0.022455175271719963,Sylvia Hermon,True,Independent
+nhs,0.01405710151763624,Boris Johnson,False,Conservative
+nhs,0.08794131765675886,Kevan Jones,False,Labour
+nhs,0.006582690228529183,Greg Knight,False,Conservative
+nhs,0.540138688786119,Norman Lamb,False,Liberal Democrat
+nhs,0.061946721174293694,Ian Liddell-Grainger,False,Conservative
+nhs,0.0596500081770008,Ian Lucas,False,Labour
+nhs,0.04494705863611829,Khalid Mahmood,False,Labour
+nhs,0.10279638931373769,John Mann,False,Labour
+nhs,0.04301367868010551,Rob Marris,False,Labour
+nhs,0.0575514546547594,Andrew Mitchell,False,Conservative
+nhs,0.30989319030360885,Andrew Murrison,False,Conservative
+nhs,0.015800493000944483,George Osborne,False,Conservative
+nhs,0.013825245636008145,Albert Owen,False,Labour
+nhs,0.007790931379757472,Mark Prisk,False,Conservative
+nhs,0.18671689634157795,John Pugh,False,Liberal Democrat
+nhs,0.01523143369470206,Angus Robertson,False,Scottish National Party
+nhs,0.03365597969515997,Andrew Rosindell,False,Conservative
+nhs,0.061515259912729534,Andrew Selous,False,Conservative
+nhs,0.030134697935009593,Hugo Swire,False,Conservative
+nhs,0.06496337042782789,Mark Tami,False,Labour
+nhs,0.09570696961867835,Andrew Turner,False,Conservative
+nhs,0.058136786064636785,Angela Watkinson,True,Conservative
+nhs,0.021615141349994288,Tom Watson,False,Labour
+nhs,0.010923770511401918,Michael Weir,False,Scottish National Party
+nhs,0.11671064371209476,Bill Wiggin,False,Conservative
+nhs,0.0771571774872631,Hywel Williams,False,Plaid Cymru
+nhs,0.027170653498037278,Pete Wishart,False,Scottish National Party
+nhs,0.09487751091397849,Liam Byrne,False,Labour
+nhs,0.052327122236017924,Iain Wright,False,Labour
+nhs,0.005434418107531888,Sammy Wilson,False,DUP
+nhs,0.020659032889816444,Nick Herbert,False,Conservative
+nhs,0.037042182829296805,Maria Miller,True,Conservative
+nhs,0.29784997027463955,Nadine Dorries,True,Conservative
+nhs,0.017198230835020548,Alasdair McDonnell,False,Social Democratic and Labour Party
+nhs,0.07433698278777845,Graham Stuart,False,Conservative
+nhs,0.09512590213894613,David Evennett,False,Conservative
+nhs,0.04033322709172813,Helen Goodman,True,Labour
+nhs,0.10122141136987588,David Anderson,False,Labour
+nhs,0.007389193216399634,Tobias Ellwood,False,Conservative
+nhs,0.03586482533580902,Dawn Butler,True,Labour
+nhs,0.08967546864338795,Madeleine Moon,True,Labour
+nhs,0.04790398510996803,Kerry McCarthy,True,Labour
+nhs,0.2319852148850448,Charles Walker,False,Conservative
+nhs,0.04069611936096461,Shailesh Vara,False,Conservative
+nhs,0.0123987779847432,Mark Williams,False,Liberal Democrat
+nhs,0.02465489072152841,Theresa Villiers,True,Conservative
+nhs,0.06658586602873393,David Jones,False,Conservative
+nhs,0.24527579560488935,Andrew Gwynne,False,Labour
+nhs,0.08869426203132208,Natascha Engel,True,Labour
+nhs,0.032536408388763406,Geoffrey Cox,False,Conservative
+nhs,0.05433764055096793,Ed Miliband,False,Labour
+nhs,0.12800495291515598,Ian Austin,False,Labour
+nhs,0.03776340831656599,Roberta Blackman-Woods,True,Labour
+nhs,0.07665915365576302,Andrew Slaughter,False,Labour
+nhs,0.08499151454243706,David Burrowes,False,Conservative
+nhs,0.06975692471070426,Mark Harper,False,Conservative
+nhs,0.010717384307450848,Mark Durkan,False,Social Democratic and Labour Party
+nhs,0.07419679677743897,Sharon Hodgson,True,Labour
+nhs,0.011974047020000005,Adam Holloway,False,Conservative
+nhs,0.538524808550672,Anne Milton,True,Conservative
+nhs,0.1161697571960518,Meg Hillier,True,Labour/Co-operative
+nhs,0.027880980327559597,Greg Hands,False,Conservative
+nhs,0.028478124124677356,Douglas Carswell,False,UKIP
+nhs,0.20693306854156898,Mike Penning,False,Conservative
+nhs,0.004290469553469562,David Gauke,False,Conservative
+nhs,0.044172679934568276,James Brokenshire,False,Conservative
+nhs,0.09886888059140059,Diana R. Johnson,True,Labour
+nhs,0.06339172815454423,Emily Thornberry,True,Labour
+nhs,0.10064380168176958,Philip Hollobone,False,Conservative
+nhs,0.4331677297727939,Rosie Cooper,True,Labour
+nhs,0.02638397442237267,Ben Wallace,False,Conservative
+nhs,0.14013267017562303,Greg Mulholland,False,Liberal Democrat
+nhs,0.03662980678489126,Nia Griffith,True,Labour
+nhs,0.14443849539233333,Philip Dunne,False,Conservative
+nhs,0.04988952534192203,Mark Lancaster,False,Conservative
+nhs,0.1449611940780146,David Davies,False,Conservative
+nhs,0.018153391784527642,Richard Benyon,False,Conservative
+nhs,0.024337793193544042,Jessica Morden,True,Labour
+nhs,0.08877065839945454,Stewart Jackson,False,Conservative
+nhs,0.016843896575928094,Stephen Crabb,False,Conservative
+nhs,0.016475163941272197,Justine Greening,True,Conservative
+nhs,0.015007816849689068,Rob Wilson,False,Conservative
+nhs,0.04313795338886254,James Duddridge,False,Conservative
+nhs,0.03906920832596937,Jeremy Wright,False,Conservative
+nhs,0.030388465022271265,Nick Hurd,False,Conservative
+nhs,0.06573566934848618,Anne Main,True,Conservative
+nhs,0.02675601379851988,Robert Goodwill,False,Conservative
+nhs,0.051029813351148354,Nick Clegg,False,Liberal Democrat
+nhs,0.03657334599126936,Angela Smith,False,Labour
+nhs,0.030645156333125166,Philip Davies,False,Conservative
+nhs,0.10646318366237964,Daniel Kawczynski,False,Conservative
+nhs,0.06443532700971782,Rob Flello,False,Labour
+nhs,0.009430226375639502,Michael Gove,False,Conservative
+nhs,0.7532348987325662,Jeremy Hunt,False,Conservative
+nhs,0.03164482841737022,Greg Clark,False,Conservative
+nhs,0.01872708104891219,David Simpson,False,DUP
+nhs,0.04180838329829007,Mary Creagh,True,Labour
+nhs,0.042489088032508664,Ed Vaizey,False,Conservative
+nhs,0.15873229230975092,Peter Bone,False,Conservative
+nhs,0.09208316861685938,Grant Shapps,False,Conservative
+nhs,0.1020044363601239,Lyn Brown,True,Labour
+nhs,0.11361022353322628,Tim Farron,False,Liberal Democrat
+nhs,0.015300320365617102,John Penrose,False,Conservative
+nhs,0.018001437414299038,Stephen Hammond,False,Conservative
+nhs,0.05127590577358883,Adam Afriyie,False,Conservative
+nhs,0.011214978543177686,Pat McFadden,False,Labour
+nhs,0.34885078323414664,Barbara Keeley,True,Labour
+nhs,0.07492816324950113,Mark Pritchard,False,Conservative
+nhs,0.0066382616755605904,David Mundell,False,Conservative
+nhs,0.00124436152301194,Stewart Hosie,False,Scottish National Party
+nhs,0.00680008808838234,Angus MacNeil,False,Scottish National Party
+nhs,0.011558577578978104,Bob Neill,False,Conservative
+nhs,0.018622090950236602,Tom Elliott,False,UUP
+nhs,0.012013713591306442,"Ian Paisley, Jr.",False,DUP
+nhs,0.02382866650428347,Margaret Ritchie,True,Social Democratic and Labour Party
+nhs,0.07652553889742837,Jim Shannon,False,DUP
+nhs,0.05419971417048437,Phil Wilson,False,Labour
+nhs,0.21377792388023628,Virendra Sharma,False,Labour
+nhs,0.03604589652836387,Edward Timpson,False,Conservative
+nhs,0.10560739787530521,John Howell,False,Conservative
+nhs,0.012613816314459254,Anne McLaughlin,True,Scottish National Party
+nhs,0.022831296890019923,Danny Kinahan,False,UUP
+nhs,0.06158291198425509,Chloe Smith,True,Conservative
+nhs,0.03483851627683212,Bridget Phillipson,True,Labour
+nhs,0.013849319644944898,Julie Elliott,True,Labour
+nhs,0.08364804500419376,Jenny Chapman,True,Labour
+nhs,0.2764064543833603,Chris Skidmore,False,Conservative
+nhs,0.38030271162911844,Grahame Morris,False,Labour
+nhs,0.07259468887521961,Jack Lopresti,False,Conservative
+nhs,0.33755850044692015,Jane Ellison,True,Conservative
+nhs,0.008365453717114002,Susan Elan Jones,True,Labour
+nhs,0.020614195015106074,Chris Evans,False,Labour/Co-operative
+nhs,0.006722458811432302,Karen Bradley,True,Conservative
+nhs,0.10469953452078534,Nick Smith,False,Labour
+nhs,0.0319360200149634,Gavin Williamson,False,Conservative
+nhs,0.08072161438612335,Rebecca Harris,True,Conservative
+nhs,0.047381586821363855,Nicky Morgan,True,Conservative
+nhs,0.0409131968981345,Guto Bebb,False,Conservative
+nhs,0.11801477410236716,Glyn Davies,False,Conservative
+nhs,0.054669035963979956,Alun Cairns,False,Conservative
+nhs,0.04546457446495438,Andrew Bridgen,False,Conservative
+nhs,0.09299905848825611,Alex Cunningham,False,Labour
+nhs,0.007740354068933226,Jonathan Edwards,False,Plaid Cymru
+nhs,0.007470028233087181,Damian Collins,False,Conservative
+nhs,0.03942295706311742,Marcus Jones,False,Conservative
+nhs,0.05575339309232489,Christopher Pincher,False,Conservative
+nhs,0.03675665627345615,Andrew Bingham,False,Conservative
+nhs,0.028478424960558593,Stephen Metcalfe,False,Conservative
+nhs,0.7721099357629818,Daniel Poulter,False,Conservative
+nhs,0.039659891727184385,Andrew Jones,False,Conservative
+nhs,0.10357493374269,Andrew Stephenson,False,Conservative
+nhs,0.3454442598136102,Jeremy Lefroy,False,Conservative
+nhs,0.47117557265526966,Sarah Wollaston,True,Conservative
+nhs,0.18673472791850285,Michael Dugher,False,Labour
+nhs,0.09267369466879426,Paul Maynard,False,Conservative
+nhs,0.29393616210048096,Phillip Lee,False,Conservative
+nhs,0.01012378654481811,Nicholas Boles,False,Conservative
+nhs,0.0999884174346353,Karl Turner,False,Labour
+nhs,0.06806937153801747,Heather Wheeler,True,Conservative
+nhs,0.015630499583767964,Kwasi Kwarteng,False,Conservative
+nhs,0.07496356053142118,Therese Coffey,True,Conservative
+nhs,0.15451029465569863,Anna Soubry,True,Conservative
+nhs,0.006182251139392008,Matthew Hancock,False,Conservative
+nhs,0.06206895610377389,Lilian Greenwood,True,Labour
+nhs,0.09371201922524919,Yasmin Qureshi,True,Labour
+nhs,0.038151683306843986,Charlie Elphicke,False,Conservative
+nhs,0.05717255980634931,Priti Patel,True,Conservative
+nhs,0.04003740595571716,Neil Parish,False,Conservative
+nhs,0.0066435986142092665,Conor Burns,False,Conservative
+nhs,0.005346411783386327,Damian Hinds,False,Conservative
+nhs,0.027594601262610454,Robert Halfon,False,Conservative
+nhs,0.02278863174884663,Harriett Baldwin,True,Conservative
+nhs,0.14978146790572452,Steven Baker,False,Conservative
+nhs,0.05815125293786402,Richard Fuller,False,Conservative
+nhs,0.0034156644961634516,Shabana Mahmood,True,Labour
+nhs,0.005967890498595894,Sam Gyimah,False,Conservative
+nhs,0.03224258265160842,Karl McCartney,False,Conservative
+nhs,0.02017380055804762,Amber Rudd,True,Conservative
+nhs,0.01785849173132399,Helen Grant,True,Conservative
+nhs,0.09088069973550725,Owen Smith,False,Labour
+nhs,0.10444437486652489,Nicholas Dakin,False,Labour
+nhs,0.042375857602577546,John Stevenson,False,Conservative
+nhs,0.26098453368630037,Henry Smith,False,Conservative
+nhs,0.026447526349990428,Gareth Johnson,False,Conservative
+nhs,0.0218058340030286,Mark Menzies,False,Conservative
+nhs,0.023070638700441695,Yvonne Fovargue,True,Labour
+nhs,0.056228394386510665,Chi Onwurah,True,Labour
+nhs,0.03508878628437814,Simon Danczuk,False,Labour
+nhs,0.019733362896042588,Caroline Nokes,True,Conservative
+nhs,0.08670688948932724,Gloria De Piero,True,Labour
+nhs,0.021584745967401148,Eilidh Whiteford,True,Scottish National Party
+nhs,0.08065376688064799,Simon Hart,False,Conservative
+nhs,0.026375278541172515,Martin Vickers,False,Conservative
+nhs,0.005290132050612291,Dominic Raab,False,Conservative
+nhs,0.5354329260875456,Liz Kendall,True,Labour
+nhs,0.32070833158303663,George Freeman,False,Conservative
+nhs,0.0255502449977478,Catherine McKinnell,True,Labour
+nhs,0.015734330310087367,David Rutley,False,Conservative
+nhs,0.08029762344989123,Pauline Latham,True,Conservative
+nhs,0.019488779785849474,Nadhim Zahawi,False,Conservative
+nhs,0.05721404590216205,Mark Garnier,False,Conservative
+nhs,0.02071185556098268,Jack Dromey,False,Labour
+nhs,0.1441879262053107,Andrew Griffiths,False,Conservative
+nhs,0.10502126382944749,Jesse Norman,False,Conservative
+nhs,0.12188533866235343,Gordon Henderson,False,Conservative
+nhs,0.02120470805600194,Andrea Leadsom,True,Conservative
+nhs,0.039505898003299886,Lisa Nandy,True,Labour
+nhs,0.07375655927952958,Andrew Percy,False,Conservative
+nhs,0.04496630338135512,Graham Jones,False,Labour
+nhs,0.1080295517553879,John Woodcock,False,Labour/Co-operative
+nhs,0.07314461205382577,John Glen,False,Conservative
+nhs,0.008558288582292026,Neil Carmichael,False,Conservative
+nhs,0.0868415803369378,Chris Heaton-Harris,False,Conservative
+nhs,0.17780590021527096,Nicola Blackwood,True,Conservative
+nhs,0.02750136786031444,Robert Buckland,False,Conservative
+nhs,0.06430222765315814,Toby Perkins,False,Labour
+nhs,0.0396771318979439,Gavin Shuker,False,Labour/Co-operative
+nhs,0.12407995266251216,Tom Blenkinsop,False,Labour
+nhs,0.006617950379587486,Rachel Reeves,True,Labour
+nhs,0.22276786127521458,Valerie Vaz,True,Labour
+nhs,0.09195541447883611,Julian Sturdy,False,Conservative
+nhs,0.01258612609778635,Sajid Javid,False,Conservative
+nhs,0.10556187241179539,James Morris,False,Conservative
+nhs,0.15081906411453322,Karen Lumley,True,Conservative
+nhs,0.054184324448095005,Fiona Bruce,True,Conservative
+nhs,0.02194580379216079,Jake Berry,False,Conservative
+nhs,0.04594950468575108,Robin Walker,False,Conservative
+nhs,0.042395149087192094,Gavin Barwell,False,Conservative
+nhs,0.15764222182674167,Stuart Andrew,False,Conservative
+nhs,0.03769852927761206,Michael Ellis,False,Conservative
+nhs,0.020198822130281874,Emma Reynolds,True,Labour
+nhs,0.011713863228337085,Justin Tomlinson,False,Conservative
+nhs,0.10746650077603302,Tracey Crouch,True,Conservative
+nhs,0.01614862675827978,Ian Murray,False,Labour
+nhs,0.02611332407889215,Caroline Dinenage,True,Conservative
+nhs,0.06603996984698184,Sheryll Murray,True,Conservative
+nhs,0.06748423002001687,Margot James,True,Conservative
+nhs,0.03329328216668294,David Nuttall,False,Conservative
+nhs,0.008524575248825383,Nigel Adams,False,Conservative
+nhs,0.0054893451501497525,Brandon Lewis,False,Conservative
+nhs,0.03959752626375433,Mark Pawsey,False,Conservative
+nhs,0.03013616395887794,Graham Evans,False,Conservative
+nhs,0.08033976843001561,Jonathan Lord,False,Conservative
+nhs,0.10303522845067771,Jason McCartney,False,Conservative
+nhs,0.12299533632506437,Stephen McPartland,False,Conservative
+nhs,0.3197009425416488,Charlotte Leslie,True,Conservative
+nhs,0.023918342816327695,Alec Shelbrooke,False,Conservative
+nhs,0.013555863237703712,Jo Johnson,False,Conservative
+nhs,0.08026432412975115,Kate Green,True,Labour
+nhs,0.03548570588206469,Alison McGovern,True,Labour
+nhs,0.0792540462830249,Oliver Colvile,False,Conservative
+nhs,0.022330207642362918,Simon Kirby,False,Conservative
+nhs,0.17380665558491876,Steve Brine,False,Conservative
+nhs,,Alok Sharma,False,Conservative
+nhs,0.07669198790248934,Richard Drax,False,Conservative
+nhs,0.010618497717314757,Peter Aldous,False,Conservative
+nhs,0.058692457019529826,Bill Esterson,False,Labour
+nhs,0.024390390140043204,Bob Stewart,False,Conservative
+nhs,0.10566321875443217,Mark Spencer,False,Conservative
+nhs,0.06020119941782308,Caroline Lucas,True,Green
+nhs,0.21959216481401614,Anne Marie Morris,True,Conservative
+nhs,0.022623973746695135,Mel Stride,False,Conservative
+nhs,0.013088905610418608,Claire Perry,True,Conservative
+nhs,0.26250110174838337,Stephen Barclay,False,Conservative
+nhs,0.03194812227025641,Pat Glass,True,Labour
+nhs,0.01848220761656316,Ian Mearns,False,Labour
+nhs,0.08024565555149471,Rehman Chishti,False,Conservative
+nhs,0.015037442029509756,Richard Graham,False,Conservative
+nhs,0.4508807241905238,Ben Gummer,False,Conservative
+nhs,0.025915823065515035,Kris Hopkins,False,Conservative
+nhs,0.1678412163923006,Luciana Berger,True,Labour/Co-operative
+nhs,0.010226739371271618,Jacob Rees-Mogg,False,Conservative
+nhs,0.11482438373684843,Mary Glindon,True,Labour
+nhs,0.08483927644599037,Jonathan Reynolds,False,Labour/Co-operative
+nhs,0.011945752827597576,James Wharton,False,Conservative
+nhs,0.17168398381051994,David Mowat,False,Conservative
+nhs,0.00429081586039841,George Eustice,False,Conservative
+nhs,0.07565478750444353,Mike Freer,False,Conservative
+nhs,0.06849150087728167,Steve Rotheram,False,Labour
+nhs,0.04503284228956391,George Hollingbery,False,Conservative
+nhs,0.04696446736106794,Penny Mordaunt,True,Conservative
+nhs,0.005821545689553012,Elizabeth Truss,True,Conservative
+nhs,0.078420888185648,Paul Blomfield,False,Labour
+nhs,0.04305714251914242,Craig Whittaker,False,Conservative
+nhs,0.055320559035306506,Bob Blackman,False,Conservative
+nhs,0.05229444686520065,Iain Stewart,False,Conservative
+nhs,0.1749323374584724,Sarah Newton,True,Conservative
+nhs,0.050511889034403346,Stella Creasy,True,Labour/Co-operative
+nhs,0.017352773362987663,Chuka Umunna,False,Labour
+nhs,0.35419776314517365,Heidi Alexander,True,Labour
+nhs,0.03264464823103683,Richard Harrington,False,Conservative
+nhs,0.08201381521076538,Matthew Offord,False,Conservative
+nhs,0.05508866287337926,Teresa Pearce,True,Labour
+nhs,0.08387596218624205,Jackie Doyle-Price,True,Conservative
+nhs,0.049327915217541915,Rushanara Ali,True,Labour
+nhs,0.00836633346194577,Chris White,False,Conservative
+nhs,0.028433317614573444,Julian Smith,False,Conservative
+nhs,0.10828275498903658,Guy Opperman,False,Conservative
+nhs,0.027246006144147104,Ian Lavery,False,Labour
+nhs,0.015378630861839214,Rory Stewart,False,Conservative
+nhs,0.02861564401019313,Nigel Mills,False,Conservative
+nhs,0.11592091349903834,David Morris,False,Conservative
+nhs,0.0970295600530971,Debbie Abrahams,True,Labour
+nhs,0.03297067188596733,Dan Jarvis,False,Labour
+nhs,0.3294024798225064,Jon Ashworth,False,Labour/Co-operative
+nhs,0.03868222714822735,Seema Malhotra,True,Labour/Co-operative
+nhs,0.020756832239857356,Lucy Powell,True,Labour/Co-operative
+nhs,0.013707666987979606,Stephen Doughty,False,Labour/Co-operative
+nhs,0.06338072879380771,Sarah Champion,True,Labour
+nhs,0.017083684012548225,Andy McDonald,False,Labour
+nhs,0.05993016608814224,Steve Reed,False,Labour/Co-operative
+nhs,0.15886944840291192,Emma Lewell-Buck,True,Labour
+nhs,0.169850006733376,Mike Kane,False,Labour
+nhs,0.03734100976961851,Robert Jenrick,False,Conservative
+nhs,0.26478961917295346,Liz McInnes,True,Labour
+nhs,0.012888372088717922,Alan Brown,False,Scottish National Party
+nhs,0.022285683515959494,Mhairi Black,True,Scottish National Party
+nhs,0.023690502697720196,Chris Law,False,Scottish National Party
+nhs,0.004150530914330805,John McNally,False,Scottish National Party
+nhs,0.007562225751405467,Suella Fernandes,True,Conservative
+nhs,0.016633282773501925,Peter Grant,False,Scottish National Party
+nhs,0.007553974282566603,Tasmina Ahmed-Sheikh,True,Scottish National Party
+nhs,0.014905979865916626,Martin Docherty,False,Scottish National Party
+nhs,0.1419366438495925,Lisa Cameron,True,Scottish National Party
+nhs,0.011675364423078117,Marion Fellows,True,Scottish National Party
+nhs,0.005218166459745368,Owen Thompson,False,Scottish National Party
+nhs,0.0833720316067275,Nick Thomas-Symonds,False,Labour
+nhs,0.01612728557236524,Gavin Robinson,False,DUP
+nhs,0.002510735559107688,John Nicolson,False,Scottish National Party
+nhs,0.09694927152365884,Chris Davies,False,Conservative
+nhs,0.3417227378091258,Julie Cooper,True,Labour
+nhs,0.08262622107547034,Rupa Huq,True,Labour
+nhs,0.0017440316106342192,Alan Mak,False,Conservative
+nhs,0.005827654468118053,Roger Mullin,False,Scottish National Party
+nhs,0.019420282355699058,Margaret Ferrier,True,Scottish National Party
+nhs,0.02806033945363799,Ronnie Cowan,False,Scottish National Party
+nhs,0.01670961596106421,Gerald Jones,False,Labour
+nhs,0.02157804408241231,Craig Tracey,False,Conservative
+nhs,0.0446220542665114,Gavin Newlands,False,Scottish National Party
+nhs,0.2211861987682636,James Davies,False,Conservative
+nhs,0.000253455907133161,Neil Gray,False,Scottish National Party
+nhs,0.004920062779708918,Kirsten Oswald,True,Scottish National Party
+nhs,0.009513163260269918,Angela Crawley,True,Scottish National Party
+nhs,0.019268374030690892,Steven Paterson,False,Scottish National Party
+nhs,0.0020290043057331706,Stephen Kinnock,False,Labour
+nhs,0.11327950802831672,Kate Hollern,True,Labour
+nhs,0.01783409164105649,Patrick Grady,False,Scottish National Party
+nhs,0.01424263805053332,Patricia Gibson,True,Scottish National Party
+nhs,0.0020835439242581646,Stuart McDonald,False,Scottish National Party
+nhs,0.010599191045392347,Liz Saville-Roberts,True,Plaid Cymru
+nhs,0.04372767722699842,Natalie McGarry,True,Independent
+nhs,0.05981748473271885,Jo Stevens,True,Labour
+nhs,0.009333710825984585,Douglas Chapman,False,Scottish National Party
+nhs,0.02296012052775819,Chris Stephens,False,Scottish National Party
+nhs,0.14207570382474596,Martyn Day,False,Scottish National Party
+nhs,0.01679057495004214,Carolyn Harris,True,Labour
+nhs,0.06531498242115129,Peter Dowd,False,Labour
+nhs,0.1613021902659966,Helen Hayes,True,Labour
+nhs,0.08416177510958213,Victoria Borwick,True,Conservative
+nhs,0.01759103176960594,James Berry,False,Conservative
+nhs,0.02883981035016319,Anna Turley,True,Labour/Co-operative
+nhs,0.022413224976025728,Kirsty Blackman,True,Scottish National Party
+nhs,0.00830709613474999,Phil Boswell,False,Scottish National Party
+nhs,0.01716413754772423,Michelle Donelan,True,Conservative
+nhs,0.04854874972892513,Melanie Onn,True,Labour
+nhs,0.568114832996678,Philippa Whitford,True,Scottish National Party
+nhs,0.24482354239078777,Colleen Fletcher,True,Labour
+nhs,0.08982243237564803,Wes Streeting,False,Labour
+nhs,0.21036624994910458,Marie Rimmer,True,Labour
+nhs,0.007390616318237782,Stewart McDonald,False,Scottish National Party
+nhs,0.03379549869490312,Oliver Dowden,False,Conservative
+nhs,0.005870851070809849,Stephen Gethins,False,Scottish National Party
+nhs,0.0002584770699114142,George Kerevan,False,Scottish National Party
+nhs,0.06477576093214486,Neil Coyle,False,Labour
+nhs,0.03532422867862202,Alison Thewliss,True,Scottish National Party
+nhs,0.10917129155051153,Catherine West,True,Labour
+nhs,0.00976520343602041,Craig Williams,False,Conservative
+nhs,0.061921187113699296,Mims Davies,True,Conservative
+nhs,0.09249895861514112,Paul Scully,False,Conservative
+nhs,0.030117022757534414,Christina Rees,True,Labour/Co-operative
+nhs,0.14521412174019036,Tania Mathias,True,Conservative
+nhs,0.084235659964883,Ben Howlett,False,Conservative
+nhs,0.0256193990058129,Caroline Ansell,True,Conservative
+nhs,0.00869046671926881,Deidre Brock,True,Scottish National Party
+nhs,0.11553942997836167,Lucy Allan,True,Conservative
+nhs,0.05508163522562178,Kevin Foster,False,Conservative
+nhs,0.03148709799144943,Paul Monaghan,False,Scottish National Party
+nhs,0.0729729394498999,Alex Chalk,False,Conservative
+nhs,0.030484867857037225,Tommy Sheppard,False,Scottish National Party
+nhs,0.14568092417176776,Wendy Morton,True,Conservative
+nhs,0.07660994928017865,Ruth Cadbury,True,Labour
+nhs,0.053960645301358016,Tulip Siddiq,True,Labour
+nhs,,Royston Smith,False,Conservative
+nhs,0.04595997784192719,Kit Malthouse,False,Conservative
+nhs,0.027256219882211472,David Mackintosh,False,Conservative
+nhs,0.06418782126728981,Heidi Allen,True,Conservative
+nhs,0.36158692574206,Margaret Greenwood,True,Labour
+nhs,0.003645448119602891,Amanda Milling,True,Conservative
+nhs,0.018225053809460576,Richard Arkless,False,Scottish National Party
+nhs,,Michelle Thomson,True,Independent
+nhs,0.024205047341816274,Keir Starmer,False,Labour
+nhs,0.024781214804996912,Nusrat Ghani,True,Conservative
+nhs,0.023202163225003302,Byron Davies,False,Conservative
+nhs,0.03168384269568873,Clive Lewis,False,Labour
+nhs,0.03393316498692788,Louise Haigh,True,Labour
+nhs,0.14828667714396682,Sue Hayman,True,Labour
+nhs,0.034123436562235966,Chris Green,False,Conservative
+nhs,0.03307924413698939,William Wragg,False,Conservative
+nhs,0.006132688397024614,Ian Blackford,False,Scottish National Party
+nhs,0.08325274871430563,Mike Wood,False,Conservative
+nhs,0.17176340804712392,Antoinette Sandbach,True,Conservative
+nhs,0.007642180094670966,Jess Phillips,True,Labour
+nhs,0.026728206853916473,Kate Osamor,True,Labour/Co-operative
+nhs,0.24440373391048156,Jeff Smith,False,Labour
+nhs,0.09343479013398669,Johnny Mercer,False,Conservative
+nhs,0.028309615617769148,Rebecca Long-Bailey,True,Labour
+nhs,0.010891010737025765,Brendan O'Hara,False,Scottish National Party
+nhs,0.29267203844184386,Maggie Throup,True,Conservative
+nhs,0.026596460193798566,David Warburton,False,Conservative
+nhs,0.015083857321754194,Luke Hall,False,Conservative
+nhs,0.01932230756406296,Thomas Tugendhat,False,Conservative
+nhs,0.013178326669163106,Imran Hussain,False,Labour
+nhs,0.0782410397405669,James Cleverly,False,Conservative
+nhs,0.009277835964109608,Chris Philp,False,Conservative
+nhs,0.2597973524440012,Justin Madders,False,Labour
+nhs,0.015373009205137358,Matthew Pennycook,False,Labour
+nhs,0.07124472337507709,Vicky Foxcroft,True,Labour
+nhs,0.03560344123041184,Nigel Huddleston,False,Conservative
+nhs,0.02253626507953515,Drew Hendry,False,Scottish National Party
+nhs,0.04240238756197758,Scott Mann,False,Conservative
+nhs,0.07414342227491505,Marcus Fysh,False,Conservative
+nhs,0.2143071540451637,Naseem Shah,False,Labour
+nhs,0.10295872114604085,Daniel Zeichner,False,Labour
+nhs,0.060862328257871245,Tom Pursglove,False,Conservative
+nhs,0.09570643214911656,Julian Knight,False,Conservative
+nhs,0.020506539141562148,Seema Kennedy,True,Conservative
+nhs,0.3434133972451048,Karin Smyth,True,Labour
+nhs,0.015239397851458617,Richard Burgon,False,Labour
+nhs,0.04207078955844294,Flick Drummond,True,Conservative
+nhs,0.07545196615252617,Judith Cummins,True,Labour
+nhs,0.07166940463272378,Matt Warman,False,Conservative
+nhs,0.011339795170344698,Edward Argar,False,Conservative
+nhs,0.3982417313711014,Maria Caulfield,True,Conservative
+nhs,0.3053358802206904,Helen Whately,True,Conservative
+nhs,0.01893704790441237,Lucy Frazer,True,Conservative
+nhs,0.001947987536968939,Callum McCaig,False,Scottish National Party
+nhs,0.10919714263346714,Corri Wilson,True,Scottish National Party
+nhs,0.08637967243086957,Thangam Debbonaire,True,Labour
+nhs,0.11036391690036813,Will Quince,False,Conservative
+nhs,0.006633009259413723,Joanna Cherry,True,Scottish National Party
+nhs,0.044249603564419426,Mary Robinson,True,Conservative
+nhs,0.012171113587230597,Carol Monaghan,True,Scottish National Party
+nhs,0.03943111464147162,Rebecca Pow,True,Conservative
+nhs,0.26211821804600954,Jo Churchill,True,Conservative
+nhs,0.01439638593266986,Hannah Bardell,True,Scottish National Party
+nhs,0.016030627631967262,Steve Double,False,Conservative
+nhs,0.05467702776259358,Chris Matheson,False,Labour
+nhs,0.09080152314566263,Peter Heaton-Jones,False,Conservative
+nhs,,Alberto Costa,False,Conservative
+nhs,0.01836366927419269,James Cartlidge,False,Conservative
+nhs,0.02936953571446158,Kevin Hollinrake,False,Conservative
+nhs,0.005404559548704457,Calum Kerr,False,Scottish National Party
+nhs,0.014597456073942817,Jeremy Quin,False,Conservative
+nhs,0.033740398164024334,Peter Kyle,False,Labour
+nhs,0.0015530909055973333,Ranil Jayawardena,False,Conservative
+nhs,0.1944260993825487,Victoria Prentis,True,Conservative
+nhs,0.3883284831903665,Paula Sherriff,True,Labour
+nhs,0.01619929767502686,Michael Tomlinson,False,Conservative
+nhs,0.08714582301186746,Conor McGinn,False,Labour
+nhs,0.07205359097762029,Victoria Atkins,True,Conservative
+nhs,0.03989128367737233,Stuart Donaldson,False,Scottish National Party
+nhs,0.1099439680799174,Huw Merriman,False,Conservative
+nhs,0.06005883506239439,Simon Hoare,False,Conservative
+nhs,0.03131168952455272,Rishi Sunak,False,Conservative
+nhs,0.055698000998583116,Angela Rayner,True,Labour
+nhs,0.017524764278090976,Kelly Tolhurst,True,Conservative
+nhs,0.2970047530126841,Andrea Jenkyns,True,Conservative
+nhs,0.048031491816747166,Cat Smith,True,Labour
+nhs,0.22316925499151566,Rachael Maskell,True,Labour/Co-operative
+nhs,0.15765637975633198,Holly Lynch,True,Labour
+nhs,0.0054519020555757166,Ruth Smeeth,True,Labour
+nhs,0.047657428468704376,Amanda Solloway,True,Conservative
+nhs,0.03470089239700111,Craig Mackinlay,False,Conservative
+nhs,0.06838147588254083,James Heappey,False,Conservative
+nhs,0.12449750195930054,Anne-Marie Trevelyan,True,Conservative
+nhs,0.20786794330425432,Derek Thomas,False,Conservative
+nhs,0.11608134076343808,Jim McMahon,False,Labour/Co-operative
+nhs,0.037831616077556855,Gill Furniss,True,Labour
+nhs,0.004838889438166912,Chris Elmore,False,Labour
+nhs,0.414266012490524,Rosena Allin-Khan,True,Labour
+nhs,0.07287194632674458,Tracy Brabin,True,Labour/Co-operative
+nhs,0.04181048417904581,Robert Courts,False,Conservative
+nhs,0.009212947802167953,Sarah Olney,True,Liberal Democrat
+nhs,0.2136979552155906,Caroline Johnson,True,Conservative
+nhs,0.05049246333592113,Trudy Harrison,True,Conservative
+nhs,,Gareth Snell,False,Labour/Co-operative

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    svg {
+        font: 20px sans-serif;
+    }
+
+    p {
+        margin: 6px 2px;
+    }
+
+    .axisTitle {
+        font: bold 12px sans-serif;
+    }
+
+    .x.axis .domain {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .d3-tip {
+        line-height: 1;
+        font-weight: bold;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 2px;
+        font: 14px sans-serif;
+    }
+    /* Creates a small triangle extender for the tooltip */
+
+    .d3-tip:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.8);
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+    }
+    /* Style northward tooltips differently */
+
+    .d3-tip.n:after {
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+    }
+</style>
+
+<body>
+    <script src="http://localhost:35730/livereload.js"></script>
+    <script src="external/d3.v4.min.js"></script>
+    <script src="external/d3-tip.js"></script>
+    <script>
+        var margin = {
+                top: 50,
+                right: 50,
+                bottom: 50,
+                left: 50
+            },
+            width = 3000 - margin.left - margin.right,
+            height = 800 - margin.top - margin.bottom,
+
+            padding = 2,
+            maxRadius = 30,
+            minRadius = 2;
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .attr("shape-rendering", "geometric-precision");
+
+            var wrapper = svg
+            .append("g")
+            .attr("class", "wrapper")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var x = d3.scalePoint()
+        .domain(['european union', 'nhs',
+                'welfare reforms', 'education',
+                'middle east', 'armed forces',
+                'domestic violence', 'child care', 'energy'
+            ])
+            // .domain(['european law', 'european union', 'pensioner income', 'nhs',
+            //     'welfare reforms', 'education', 'investment', 'construction',
+            //     'middle east', 'private housing', 'armed forces',
+            //     'domestic violence', 'economy', 'child care', 'energy'
+            // ])
+            .range([0, width]);
+
+        var xAxis = d3.axisBottom(x);
+
+
+        var y = d3.scaleLinear()
+            .domain([0, 1])
+            .range([height, 0]);
+
+        var yAxis = d3.axisLeft(y);
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-6, 0])
+            .html(function(d) {
+                return `<p><strong> ${d.full_name} </strong></p>
+    <p>${d.value}</p><p>
+    </p>`;
+            });
+
+        svg.call(tip);
+
+
+        var xAxisTitle = svg.append("text")
+            .attr("class", "axisTitle")
+            .text("Topic")
+
+        xAxisTitle
+            .attr("x", width - xAxisTitle.node().getBBox().width + margin.right)
+            .attr("y", margin.top + (height / 2) - xAxisTitle.node().getBBox().height);
+
+        wrapper.append("text")
+            .attr("x", 50)
+            .attr("y", 30)
+            .attr("dy", "0.71em")
+            .text("What topics are MPs interested in?");
+
+
+        d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+            if (error) throw error;
+
+            nodes = data.map(function(d) {
+                return {
+                    "topic": d.topic_id,
+                    "value": +d.value,
+                    "full_name": d.full_name
+                };
+            })
+
+            var colorScale = d3.scaleOrdinal(d3.schemeCategory20);
+            var colorScale = d3.scaleSequential(d3.interpolateRainbow);
+
+            var simulation = d3.forceSimulation(nodes)
+            .on("tick", function(d) {
+                circle
+                .attr("cx", function(d) { return d.x} )
+                .attr("cy", function(d) { return d.y} )
+            })
+                .force("x", d3.forceX(function(d) {
+                    return x(d.topic);
+                }).strength(1))
+                .force("y", d3.forceY(function(d) {
+                    return y(d.value);
+                }).strength(10))
+                .force("collide", d3.forceCollide().radius(2))
+                // .force("manyBody", d3.forceManyBody().strength(-5))
+                .stop();
+
+            for (var i = 0; i < 800; ++i) simulation.tick()
+
+            var circle = wrapper.selectAll("circle")
+                .data(nodes)
+                .enter().append("circle")
+                .style("fill", function(d) {
+                    return colorScale(d.value);
+                })
+                .attr("cx", function(d) {
+                    return d.x
+                })
+                .attr("cy", function(d) {
+                    return d.y
+                })
+                .attr("r", 1.8)
+                .style("opacity", 0.7)
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
+        });
+
+        wrapper.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+    </script>
+</body>
+
+</html>
