@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Violin plot</title>
+        <style>
+            svg {
+                font: 20px sans-serif;
+            }
+
+            p {
+                margin: 6px 2px;
+            }
+
+            .axisTitle {
+                font: bold 12px sans-serif;
+            }
+
+            .x.axis .domain {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script src="external/d3.v4.min.js"></script>
+        <script src="external/d3-tip.js"></script>
+        <script>
+            var margin = {
+                    top: 50,
+                    right: 50,
+                    bottom: 50,
+                    left: 50
+                },
+                width = 600 - margin.left - margin.right,
+                height = 600 - margin.top - margin.bottom;
+
+            function kernelDensityEstimator(kernel, X) {
+                return function(V) {
+                    return X.map(function(x) {
+                        return [x, d3.mean(V, function(v) {
+                            return kernel(x - v);
+                        })];
+                    });
+                };
+            }
+
+            function kernelEpanechnikov(k) {
+                return function(v) {
+                    return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
+                };
+            }
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("shape-rendering", "geometric-precision");
+
+            d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+                if (error) throw error;
+
+                nodes = data.map(function(d) {
+                    return {
+                        "topic_id": d.topic_id,
+                        "topic_name": d.topic_name,
+                        "value": +d.value,
+                        "full_name": d.full_name,
+                        "gender": d.is_female == "True" ? "Female" : "Male"
+                    };
+                })
+
+                // Number of topics
+                n_topics = d3.map(nodes, function(d) {
+                    return d.topic_name
+                }).keys().length
+
+                // Group MPs by gender
+                nodes = d3.nest()
+                    .key(function(d) {
+                        return d.gender;
+                    })
+                    .object(nodes)
+
+                var x = d3.scalePoint()
+                    .domain(d3.map(data, function(d) {
+                        return d.topic_name
+                    }).keys())
+                    .range([0, width]);
+
+                var wrapper = svg
+                    .append("g")
+                    .attr("class", "wrapper");
+
+                var violin_wrapper = wrapper
+                    .append("g")
+                    .attr("class", "violin-wrapper")
+
+                var violin_x = d3.scaleLinear()
+                    .domain([-0.5, 0.5])
+                    .range([margin.left, width - margin.right]);
+
+                var violin_y = d3.scaleLinear()
+                    .domain([0.0, 0.5])
+                    .range([height - margin.bottom, margin.top]);
+
+                kde = kernelDensityEstimator(kernelEpanechnikov(0.01), violin_x.ticks(100))
+
+                violin_wrapper.append("path")
+                    .datum(kde(nodes["Male"].map(function(d) {
+                        return d.value;
+                    })))
+                    .attr("fill", "red")
+                    .attr("d", d3.area()
+                        .curve(d3.curveBasis)
+                        .x0(violin_x(0))
+                        .x1(function(d) {
+                            return violin_x(d[1] / 100);
+                        })
+                        .y(function(d) {
+                            return violin_y(d[0]);
+                        })
+                    );
+
+                violin_wrapper.append("path")
+                    .datum(kde(nodes["Female"].map(function(d) {
+                        return d.value;
+                    })))
+                    .attr("fill", "blue")
+                    .attr("d", d3.area()
+                        .curve(d3.curveBasis)
+                        .x0(violin_x(0))
+                        .x1(function(d) {
+                            return violin_x(-d[1] / 100);
+                        })
+                        .y(function(d) {
+                            return violin_y(d[0]);
+                        })
+                    );
+            });
+        </script>
+    </body>
+
+</html>
