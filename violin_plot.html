@@ -34,7 +34,7 @@
                     bottom: 50,
                     left: 50
                 },
-                width = 600 - margin.left - margin.right,
+                width = 1200 - margin.left - margin.right,
                 height = 600 - margin.top - margin.bottom;
 
             function kernelDensityEstimator(kernel, X) {
@@ -71,73 +71,86 @@
                     };
                 })
 
-                // Number of topics
-                n_topics = d3.map(nodes, function(d) {
-                    return d.topic_name
-                }).keys().length
 
-                // Group MPs by gender
+                // Group MPs by topic and gender
                 nodes = d3.nest()
+                    .key(function(d) {
+                        return d.topic_name;
+                    })
                     .key(function(d) {
                         return d.gender;
                     })
-                    .object(nodes)
+                    .entries(nodes)
 
-                var x = d3.scalePoint()
-                    .domain(d3.map(data, function(d) {
-                        return d.topic_name
-                    }).keys())
+                // Number of topics
+                n_topics = nodes.map(function(d) {
+                    return d.key
+                }).length
+
+                x_topics = d3.scalePoint()
+                    .domain(nodes.map(function(d) {
+                        return d.key
+                    }))
                     .range([0, width]);
 
                 var wrapper = svg
                     .append("g")
                     .attr("class", "wrapper");
 
-                var violin_wrapper = wrapper
+                // One group per topic
+                var violin_wrappers = wrapper
+                    .selectAll(".violin-wrapper")
+                    .data(nodes)
+                    .enter()
                     .append("g")
                     .attr("class", "violin-wrapper")
+                    .attr("transform", function(g) {
+                        return `translate(${x_topics(g.key)}, 0)`
+                    })
 
-                var violin_x = d3.scaleLinear()
+                var x_violin = d3.scaleLinear()
                     .domain([-0.5, 0.5])
-                    .range([margin.left, width - margin.right]);
+                    .range([0, 200]);
 
-                var violin_y = d3.scaleLinear()
+                var y_violin = d3.scaleLinear()
                     .domain([0.0, 0.5])
-                    .range([height - margin.bottom, margin.top]);
+                    .range([200, 0]);
 
-                kde = kernelDensityEstimator(kernelEpanechnikov(0.01), violin_x.ticks(100))
-
-                violin_wrapper.append("path")
-                    .datum(kde(nodes["Male"].map(function(d) {
-                        return d.value;
-                    })))
-                    .attr("fill", "red")
+                violin_wrappers
+                    .selectAll(".topic-curve")
+                    .data(function(d) {
+                        return d.values
+                    })
+                    .enter()
+                    .append("path")
+                    .attr("class", function(d) {
+                        return "topic-curve topic-curve-" + d.key
+                    })
+                    .attr("fill", function(d) {
+                        return d.key == "Female" ? "red" : "blue"
+                    })
+                    .datum(function(d) {
+                        kde = kernelDensityEstimator(kernelEpanechnikov(0.01), x_violin.ticks(500))
+                        return kde(d.values.map(function(x) {
+                            return x.value;
+                        })).map(
+                            function(c) {
+                                return [c, d.key]
+                            }
+                        )
+                    })
                     .attr("d", d3.area()
                         .curve(d3.curveBasis)
-                        .x0(violin_x(0))
+                        .x0(x_violin(0))
                         .x1(function(d) {
-                            return violin_x(d[1] / 100);
+                            return x_violin((d[1] == "Male" ? -1 : 1) * d[0][1] / 100);
                         })
                         .y(function(d) {
-                            return violin_y(d[0]);
+                            return y_violin(d[0][0]);
                         })
+
                     );
 
-                violin_wrapper.append("path")
-                    .datum(kde(nodes["Female"].map(function(d) {
-                        return d.value;
-                    })))
-                    .attr("fill", "blue")
-                    .attr("d", d3.area()
-                        .curve(d3.curveBasis)
-                        .x0(violin_x(0))
-                        .x1(function(d) {
-                            return violin_x(-d[1] / 100);
-                        })
-                        .y(function(d) {
-                            return violin_y(d[0]);
-                        })
-                    );
             });
         </script>
     </body>
