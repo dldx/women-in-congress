@@ -34,8 +34,8 @@
                     bottom: 50,
                     left: 50
                 },
-                width = 1200 - margin.left - margin.right,
-                height = 600 - margin.top - margin.bottom;
+                width = 4000 - margin.left - margin.right,
+                height = 1000 - margin.top - margin.bottom;
 
             function kernelDensityEstimator(kernel, X) {
                 return function(V) {
@@ -67,6 +67,7 @@
                         "topic_name": d.topic_name,
                         "value": +d.value,
                         "full_name": d.full_name,
+                        "party": d.Party,
                         "gender": d.is_female == "True" ? "Female" : "Male"
                     };
                 })
@@ -74,6 +75,9 @@
 
                 // Group MPs by topic and gender
                 nodes = d3.nest()
+                    .key(function(d) {
+                        return d.party;
+                    })
                     .key(function(d) {
                         return d.topic_name;
                     })
@@ -83,24 +87,47 @@
                     .entries(nodes)
 
                 // Number of topics
-                n_topics = nodes.map(function(d) {
-                    return d.key
-                }).length
+                n_topics = nodes[0].values.length
+                n_parties = nodes.length
 
-                x_topics = d3.scalePoint()
+                x_topics = d3.scaleBand()
+                    .domain(nodes[0].values.map(function(d) {
+                        return d.key
+                    }))
+                    .range([0, width])
+                    .paddingOuter(0.1)
+                    .paddingInner(0.1);
+
+                y_parties = d3.scaleBand()
                     .domain(nodes.map(function(d) {
                         return d.key
                     }))
-                    .range([0, width]);
+                    .range([0, height])
+                    .paddingOuter(0.0)
+                    .paddingInner(0.1);
 
                 var wrapper = svg
                     .append("g")
-                    .attr("class", "wrapper");
+                    .attr("class", "wrapper")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                // One group per party
+                var party_wrappers = wrapper
+                    .selectAll(".party-wrapper")
+                    .data(nodes)
+                    .enter()
+                    .append("g")
+                    .attr("class", "party-wrapper")
+                    .attr("transform", function(g) {
+                        return `translate(0, ${y_parties(g.key)})`
+                    })
 
                 // One group per topic
-                var violin_wrappers = wrapper
+                var violin_wrappers = party_wrappers
                     .selectAll(".violin-wrapper")
-                    .data(nodes)
+                    .data(function(d) {
+                        return d.values
+                    })
                     .enter()
                     .append("g")
                     .attr("class", "violin-wrapper")
@@ -110,11 +137,39 @@
 
                 var x_violin = d3.scaleLinear()
                     .domain([-0.5, 0.5])
-                    .range([0, 200]);
+                    .range([0, x_topics.bandwidth()]);
 
                 var y_violin = d3.scaleLinear()
-                    .domain([0.0, 0.5])
-                    .range([200, 0]);
+                    .domain([-0.05, 0.5])
+                    .range([y_parties.bandwidth(), 0]);
+
+                var yAxis = d3.axisLeft(y_violin)
+                .ticks(5);
+
+                var y_violin_axis = party_wrappers.append("g")
+                    .attr("class", "axis axis--y")
+                    .call(yAxis)
+                var violin_area = d3.area()
+                    .curve(d3.curveCardinal)
+                    .x0(function(d) {
+                        if((d[0][1]/100) > 0.01) {
+                            return x_violin(0);
+} else {return x_violin(0);}
+                    })
+                    .x1(function(d) {
+                        if((d[0][1]/100) > 0.01) {
+                        return x_violin((d[1] == "Male" ? -1 : 1) * d[0][1] / 100);
+} else {return x_violin(0) ;}
+                    })
+                    .y(function(d) {
+                        if(d[0][0] == -0.05) {
+                            last_value = 0
+                        }
+                        if((d[0][1]/100) > 0.01) {
+                            last_value = d[0][0];
+                        return y_violin(d[0][0]);
+                    } else {  return y_violin(last_value)}
+                    })
 
                 violin_wrappers
                     .selectAll(".topic-curve")
@@ -127,30 +182,21 @@
                         return "topic-curve topic-curve-" + d.key
                     })
                     .attr("fill", function(d) {
-                        return d.key == "Female" ? "red" : "blue"
+                        return d.key == "Female" ? "orange" : "blue"
                     })
-                    .datum(function(d) {
-                        kde = kernelDensityEstimator(kernelEpanechnikov(0.01), x_violin.ticks(500))
-                        return kde(d.values.map(function(x) {
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 0.2)
+                    .attr("d", function(d) {
+                        kde = kernelDensityEstimator(kernelEpanechnikov(0.01), y_violin.ticks(500))
+                        data = kde(d.values.map(function(x) {
                             return x.value;
                         })).map(
                             function(c) {
                                 return [c, d.key]
                             }
                         )
-                    })
-                    .attr("d", d3.area()
-                        .curve(d3.curveBasis)
-                        .x0(x_violin(0))
-                        .x1(function(d) {
-                            return x_violin((d[1] == "Male" ? -1 : 1) * d[0][1] / 100);
-                        })
-                        .y(function(d) {
-                            return y_violin(d[0][0]);
-                        })
-
-                    );
-
+                        return violin_area(data)
+                    });
             });
         </script>
     </body>
