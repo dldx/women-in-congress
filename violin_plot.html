@@ -185,7 +185,7 @@
                         return d.key == "Female" ? "orange" : "blue"
                     })
                     .attr("stroke", "black")
-                    .attr("stroke-width", 0.2)
+                    .attr("stroke-width", 1)
                     .attr("d", function(d) {
                         kde = kernelDensityEstimator(kernelEpanechnikov(0.01), y_violin.ticks(500))
                         data = kde(d.values.map(function(x) {
