@@ -20,7 +20,7 @@ var colors = {
     "LD": "#F37A48",
     "Green": "#A1C181",
     "SF": "#008e4b",
-    "Other": "#50514F", // Used fallback when no party colour has been defined
+    "Other": "#50514F", // Used as fallback when no party colour has been defined
     "Hover": "#e5e5e5", // Used when hovering over an item
     "Active": "#A1C181" // Used for the active slide on the tracker
 }
