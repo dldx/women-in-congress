@@ -439,21 +439,22 @@ function first_slide() {
         .append("g")
 
     // Add circle to signify start and end of term
-    instance
-        .append("circle")
-        .attr("r", circleRadius)
-        .attr("class", "term-start")
+    // instance
+    //     .append("circle")
+    //     .attr("r", circleRadius)
+    //     .attr("class", "term-start")
 
-    instance
-        .append("circle")
-        .attr("r", circleRadius)
-        .attr("class", "term-end")
+    // instance
+    //     .append("circle")
+    //     .attr("r", circleRadius)
+    //     .attr("class", "term-end")
 
     // Add a line connecting start and end of term
     instance
         .append("line")
         .attr("class", "line-connect")
         .style("stroke-width", lineThickness)
+        .style("stroke-linecap", "round")
 
     // Use a hidden rect to catch mouseovers more easily (similar to voronoi mouseover grid)
     instance
@@ -462,27 +463,27 @@ function first_slide() {
         .style("opacity", 0)
 
     // For each start and end point, set position and colour
-    instance.selectAll(".term-start")
-        .attr("cx", function (d) {
-            return x(d.term_start)
-        })
-        .attr("cy", function (d) {
-            return y(d.stream)
-        })
-        .attr("fill", function (d) {
-            return colorParty(d.party);
-        })
-
-    instance.selectAll(".term-end")
-        .attr("cx", function (d) {
-            return x(d.term_end)
-        })
-        .attr("cy", function (d) {
-            return y(d.stream)
-        })
-        .attr("fill", function (d) {
-            return colorParty(d.party);
-        })
+    // instance.selectAll(".term-start")
+    //     .attr("cx", function (d) {
+    //         return x(d.term_start)
+    //     })
+    //     .attr("cy", function (d) {
+    //         return y(d.stream)
+    //     })
+    //     .attr("fill", function (d) {
+    //         return colorParty(d.party);
+    //     })
+    //
+    // instance.selectAll(".term-end")
+    //     .attr("cx", function (d) {
+    //         return x(d.term_end)
+    //     })
+    //     .attr("cy", function (d) {
+    //         return y(d.stream)
+    //     })
+    //     .attr("fill", function (d) {
+    //         return colorParty(d.party);
+    //     })
 
     // For each MP line, set position and stroke colour
     instance.selectAll(".line-connect")
@@ -490,7 +491,7 @@ function first_slide() {
             return x(d.term_start)
         })
         .attr("x2", function (d) {
-            return x(d.term_end)
+            return x(d.term_end) - lineThickness*1.2
         })
         .attr("y1", function (d) {
             return y(d.stream)
@@ -546,16 +547,16 @@ function first_slide() {
                     return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
                 })
             // Also make the start and end circles bigger
-            pointsGroup
-                .selectAll(".term-start")
-                .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                })
-            pointsGroup
-                .selectAll(".term-end")
-                .attr("r", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-                })
+            // pointsGroup
+            //     .selectAll(".term-start")
+            //     .attr("r", function (a) {
+            //         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+            //     })
+            // pointsGroup
+            //     .selectAll(".term-end")
+            //     .attr("r", function (a) {
+            //         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
+            //     })
         }
         d3.event.preventDefault()
     }
@@ -575,12 +576,12 @@ function first_slide() {
             pointsGroup
                 .selectAll(".line-connect")
                 .style("stroke-width", lineThickness)
-            pointsGroup
-                .selectAll(".term-start")
-                .attr("r", circleRadius)
-            pointsGroup
-                .selectAll(".term-end")
-                .attr("r", circleRadius)
+            // pointsGroup
+            //     .selectAll(".term-start")
+            //     .attr("r", circleRadius)
+            // pointsGroup
+            //     .selectAll(".term-end")
+            //     .attr("r", circleRadius)
         })
         .on("touchend", mpMouseover)
         // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
@@ -825,45 +826,60 @@ function second_slide(no_transition=false) {
             return x(a.term_start)
         })
 
-    pointsGroup.selectAll(".term-end")
-        // .attr("r", function (a) {
-        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-        // })
-        .transition()
-        .delay(no_transition ? 500 : 0)
-        .duration(no_transition ? 0: 500)
-        .attr("cx", function (a) {
-            return x(a.term_start)
-        })
-        .transition()
-        .attr("r", function (a) {
-            return 3 * circleRadius
-        })
-        .attr("cy", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
-        .transition()
-        .delay(no_transition ? 0 : 2500)
-        .duration(no_transition ? 0 : 500)
-        .attr("r", 0)
+    // pointsGroup.selectAll(".term-end")
+    //     // .attr("r", function (a) {
+    //     //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+    //     // })
+    //     .transition()
+    //     .delay(no_transition ? 500 : 0)
+    //     .duration(no_transition ? 0: 500)
+    //     .attr("cx", function (a) {
+    //         return x(a.term_start)
+    //     })
+    //     .transition()
+    //     .attr("r", function (a) {
+    //         return 3 * circleRadius
+    //     })
+    //     .attr("cy", function (a) {
+    //         return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+    //     })
+    //     .transition()
+    //     .delay(no_transition ? 0 : 2500)
+    //     .duration(no_transition ? 0 : 500)
+    //     .attr("r", 0)
 
     // ----------------------------------------------------------------------------
     // ACT 2: MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
     // ----------------------------------------------------------------------------
-    pointsGroup.selectAll(".term-start")
-        // .attr("r", function (a) {
-        //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-        // })
+    pointsGroup.selectAll(".line-connect")
         .transition()
         .delay(no_transition ? 500 : 500)
         .duration(no_transition ? 0 : 500)
-        .attr("cx", function (a) {
-            return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
-        })
-        .attr("cy", function (a) {
+        .attr("y1", function (a) {
             return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
         })
+        .attr("y2", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+        .transition()
+        .delay(no_transition ? 0 : 2000)
+        .duration(no_transition ? 0 : 250)
         .style("opacity", 0)
+
+    // pointsGroup.selectAll(".term-start")
+    //     // .attr("r", function (a) {
+    //     //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
+    //     // })
+    //     .transition()
+    //     .delay(no_transition ? 500 : 500)
+    //     .duration(no_transition ? 0 : 500)
+    //     .attr("cx", function (a) {
+    //         return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
+    //     })
+    //     .attr("cy", function (a) {
+    //         return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+    //     })
+    //     .style("opacity", 0)
 
     // ----------------------------------------------------------------------------
     // ACT 3: DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
@@ -1159,9 +1175,9 @@ function draw_graph() {
         width = new_width;
         height = new_height;
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
-        lineThickness = 0.0018 * height;
+        lineThickness = 0.0018 * height * 2;
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
-        circleRadius = lineThickness;
+        circleRadius = lineThickness/2;
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
