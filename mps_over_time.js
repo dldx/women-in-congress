@@ -1000,11 +1000,11 @@ function second_slide(no_transition=false) {
                     // Reconfigure tooltip to show different information
                     var first_election = d.year
                     var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
-                    var num_men = d.total_mps - number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
-                    var gender_ratio = d.total_mps / num_men - 1
+                    var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
+                    var gender_ratio = d.total_mps / num_women - 1
                     tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
-            ${(d.total_mps - num_men) > 0 ? `For every <span class="male">male</span> MP, there ${new Date() > second_election ? `were` : `are`}
-                                <div class="gender-ratio">${gender_ratio.toFixed(3)}</div> <span class="female">female</span> MPs.` :
+            ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
                             `There were no women in the House of Commons yet :(`}
                                 </div>
             `;
