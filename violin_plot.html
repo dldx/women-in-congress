@@ -25,17 +25,18 @@
     </head>
 
     <body>
+<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
         <script src="external/d3.v4.min.js"></script>
         <script src="external/d3-tip.js"></script>
         <script>
             var margin = {
-                    top: 50,
+                    top: 0,
                     right: 50,
-                    bottom: 50,
+                    bottom: 80,
                     left: 50
                 },
-                width = 6000 - margin.left - margin.right,
-                height = 1000 - margin.top - margin.bottom;
+                width = window.innerWidth - margin.left - margin.right,
+                height = window.innerHeight  - margin.top - margin.bottom;
 
             function kernelDensityEstimator(kernel, X) {
                 return function(V) {
@@ -53,10 +54,48 @@
                 };
             }
 
+            /**
+ * The "median" is the "middle" value in the list of numbers.
+ *
+ * @param {Array} numbers An array of numbers.
+ * @return {Number} The calculated median value from the specified numbers.
+ */
+function median(numbers) {
+    // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
+    var median = 0, numsLen = numbers.length;
+    numbers.sort();
+
+    if (
+        numsLen % 2 === 0 // is even
+    ) {
+        // average of two middle numbers
+        median = (numbers[numsLen / 2 - 1] + numbers[numsLen / 2]) / 2;
+    } else { // is odd
+        // middle number only
+        median = numbers[(numsLen - 1) / 2];
+    }
+
+    return median;
+}
+
             var svg = d3.select("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .attr("shape-rendering", "geometric-precision");
+
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-6, 0])
+            .html(function(d) {
+                return `<p><strong> ${d.key} </strong></p>
+                <div>${d.values[0].key}</div>
+                <div>${median(d.values[0].values.map(function(i) { return i.value}))}</div>
+                <div>${d.values[1].key}</div>
+                <div>${median(d.values[1].values.map(function(i) { return i.value}))}</div>
+    </p>`;
+            });
+
+        svg.call(tip);
 
             d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
                 if (error) throw error;
@@ -96,7 +135,7 @@
                     }))
                     .range([0, width])
                     .paddingOuter(0.1)
-                    .paddingInner(0.0);
+                    .paddingInner(0.05);
 
                 y_parties = d3.scaleBand()
                     .domain(nodes.map(function(d) {
@@ -134,13 +173,15 @@
                     .attr("transform", function(g) {
                         return `translate(${x_topics(g.key)}, 0)`
                     })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
 
                 var x_violin = d3.scaleLinear()
-                    .domain([-0.6, 0.6])
+                    .domain([-1.0, 1.0])
                     .range([0, x_topics.bandwidth()]);
 
                 var y_violin = d3.scaleLinear()
-                    .domain([-0.0, 0.301])
+                    .domain([-0.02, 0.301])
                     .range([y_parties.bandwidth(), 0]);
 
                 var x_topic_axis = wrapper.append("g")
@@ -171,12 +212,20 @@
                     })
 
                 violin_wrappers
+                .append("clipPath")
+                .attr("id", "clip-rect")
+                    .append("rect")
+                    .attr("width", x_topics.bandwidth())
+                    .attr("height", y_parties.bandwidth())
+
+                violin_wrappers
                     .selectAll(".topic-curve")
                     .data(function(d) {
                         return d.values
                     })
                     .enter()
                     .append("path")
+                    .attr("clip-path", "url(#clip-rect)")
                     .attr("class", function(d) {
                         return "topic-curve topic-curve-" + d.key
                     })
@@ -186,7 +235,7 @@
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.5)
                     .attr("d", function(d) {
-                        kde = kernelDensityEstimator(kernelEpanechnikov(0.01), y_violin.ticks(50))
+                        kde = kernelDensityEstimator(kernelEpanechnikov(0.005), y_violin.ticks(50))
 
                         data = kde(d.values.map(function(x) {
                                 return x.value;
@@ -199,8 +248,9 @@
                         // any points that have more than 1% width and then selecting the largest y value
                         max_y = data
                             .filter(function(x) {
-                                return x[1] > 1.0
+                                return x[1] >  1.0
                             })[0][0]
+
                         // then filter all points with a y less than max_y
                         // and add the gender key to the data
                         data = data
