@@ -98,7 +98,7 @@
 
             svg.call(tip);
 
-            d3.csv("data_.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+            d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
                 var nodes = [];
                 // Convert wide data to long
                 data.forEach(function(row) {
@@ -113,12 +113,12 @@
                             "full_name": row["full_name"],
                             "gender": row["is_female"] == 1 ? "Female" : "Male",
                             "party": row["Party"],
-                            "value": +row[colname],
+                            "value": row[colname] == '-inf' ? 0 : 10**(+row[colname]),
                             "topic_name": colname
                         });
                     });
                 });
-
+                console.log(nodes)
                 if (error) throw error;
 
                 // Group MPs by topic and gender
