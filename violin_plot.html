@@ -25,7 +25,7 @@
     </head>
 
     <body>
-<link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+        <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
         <script src="external/d3.v4.min.js"></script>
         <script src="external/d3-tip.js"></script>
         <script>
@@ -36,7 +36,7 @@
                     left: 50
                 },
                 width = window.innerWidth - margin.left - margin.right,
-                height = window.innerHeight  - margin.top - margin.bottom;
+                height = window.innerHeight - margin.top - margin.bottom;
 
             function kernelDensityEstimator(kernel, X) {
                 return function(V) {
@@ -55,62 +55,71 @@
             }
 
             /**
- * The "median" is the "middle" value in the list of numbers.
- *
- * @param {Array} numbers An array of numbers.
- * @return {Number} The calculated median value from the specified numbers.
- */
-function median(numbers) {
-    // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
-    var median = 0, numsLen = numbers.length;
-    numbers.sort();
+             * The "median" is the "middle" value in the list of numbers.
+             *
+             * @param {Array} numbers An array of numbers.
+             * @return {Number} The calculated median value from the specified numbers.
+             */
+            function median(numbers) {
+                // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
+                var median = 0,
+                    numsLen = numbers.length;
+                numbers.sort();
 
-    if (
-        numsLen % 2 === 0 // is even
-    ) {
-        // average of two middle numbers
-        median = (numbers[numsLen / 2 - 1] + numbers[numsLen / 2]) / 2;
-    } else { // is odd
-        // middle number only
-        median = numbers[(numsLen - 1) / 2];
-    }
+                if (
+                    numsLen % 2 === 0 // is even
+                ) {
+                    // average of two middle numbers
+                    median = (numbers[numsLen / 2 - 1] + numbers[numsLen / 2]) / 2;
+                } else { // is odd
+                    // middle number only
+                    median = numbers[(numsLen - 1) / 2];
+                }
 
-    return median;
-}
+                return median;
+            }
 
             var svg = d3.select("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .attr("shape-rendering", "geometric-precision");
 
-        var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-6, 0])
-            .html(function(d) {
-                return `<p><strong> ${d.key} </strong></p>
+            var tip = d3.tip()
+                .attr('class', 'd3-tip')
+                .offset([-6, 0])
+                .html(function(d) {
+                    return `<p><strong> ${d.key} </strong></p>
                 <div>${d.values[0].key}</div>
                 <div>${median(d.values[0].values.map(function(i) { return i.value}))}</div>
                 <div>${d.values[1].key}</div>
                 <div>${median(d.values[1].values.map(function(i) { return i.value}))}</div>
     </p>`;
-            });
+                });
 
-        svg.call(tip);
+            svg.call(tip);
 
-            d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+            d3.csv("data_.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+                var nodes = [];
+                // Convert wide data to long
+                data.forEach(function(row) {
+                    // Loop through all of the columns, and for each column
+                    // make a new row
+                    Object.keys(row).forEach(function(colname) {
+                        // Ignore 'State' and 'Value' columns
+                        if (colname == "full_name" || colname == "is_female" || colname == "Party") {
+                            return
+                        }
+                        nodes.push({
+                            "full_name": row["full_name"],
+                            "gender": row["is_female"] == 1 ? "Female" : "Male",
+                            "party": row["Party"],
+                            "value": +row[colname],
+                            "topic_name": colname
+                        });
+                    });
+                });
+
                 if (error) throw error;
-
-                nodes = data.map(function(d) {
-                    return {
-                        "topic_id": d.topic_id,
-                        "topic_name": d.topic_name,
-                        "value": +d.value,
-                        "full_name": d.full_name,
-                        "party": d.Party,
-                        "gender": d.is_female == "True" ? "Female" : "Male"
-                    };
-                })
-
 
                 // Group MPs by topic and gender
                 nodes = d3.nest()
@@ -173,8 +182,8 @@ function median(numbers) {
                     .attr("transform", function(g) {
                         return `translate(${x_topics(g.key)}, 0)`
                     })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide)
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
 
                 var x_violin = d3.scaleLinear()
                     .domain([-1.0, 1.0])
@@ -212,8 +221,8 @@ function median(numbers) {
                     })
 
                 violin_wrappers
-                .append("clipPath")
-                .attr("id", "clip-rect")
+                    .append("clipPath")
+                    .attr("id", "clip-rect")
                     .append("rect")
                     .attr("width", x_topics.bandwidth())
                     .attr("height", y_parties.bandwidth())
@@ -248,7 +257,7 @@ function median(numbers) {
                         // any points that have more than 1% width and then selecting the largest y value
                         max_y = data
                             .filter(function(x) {
-                                return x[1] >  1.0
+                                return x[1] > 1.0
                             })[0][0]
 
                         // then filter all points with a y less than max_y
