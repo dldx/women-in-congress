@@ -26,6 +26,7 @@
 
     <body>
         <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
+        <script src='//alexmacy.github.io/crossfilter/crossfilter.v1.min.js' defer></script>
         <script src="external/d3.v4.min.js"></script>
         <script src="external/d3-tip.js"></script>
         <script>
@@ -99,8 +100,8 @@
             svg.call(tip);
 
             d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
-                var nodes = [];
                 // Convert wide data to long
+                nodes = [];
                 data.forEach(function(row) {
                     // Loop through all of the columns, and for each column
                     // make a new row
@@ -113,12 +114,12 @@
                             "full_name": row["full_name"],
                             "gender": row["is_female"] == 1 ? "Female" : "Male",
                             "party": row["Party"],
-                            "value": row[colname] == '-inf' ? 0 : 10**(+row[colname]),
+                            "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
                             "topic_name": colname
                         });
                     });
                 });
-                console.log(nodes)
+
                 if (error) throw error;
 
                 // Group MPs by topic and gender
@@ -257,7 +258,7 @@
                         // any points that have more than 1% width and then selecting the largest y value
                         max_y = data
                             .filter(function(x) {
-                                return x[1] > 1.0
+                                return x[1] > 2.0
                             })[0][0]
 
                         // then filter all points with a y less than max_y
