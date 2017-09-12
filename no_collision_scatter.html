@@ -83,17 +83,17 @@
             'middle east', 'armed forces',
             'domestic violence', 'child care', 'energy'
         ]
-    var topics = ["welfare reforms"]
-    var topics = ["Male",  "Female"]
+        var topics = ["welfare reforms"]
+        var topics = ["Male", "Female"]
         var x = d3.scalePoint()
             .domain(topics)
-            .range([0+width/4, width*2/4]);
+            .range([0 + width / 4, width * 3 / 4]);
 
         var xAxis = d3.axisBottom(x);
 
 
         var y = d3.scaleLinear()
-            .domain([0, 0.5])
+            .domain([0, 0.3])
             .range([height, 0]);
 
         var yAxis = d3.axisLeft(y);
@@ -103,7 +103,7 @@
             .offset([-6, 0])
             .html(function(d) {
                 return `<p><strong> ${d.full_name} </strong></p>
-    <p>${d.value}</p><p>
+    <p>${d[topic_name]}</p><p>
     </p>`;
             });
 
@@ -129,55 +129,68 @@
             if (error) throw error;
 
             // Convert wide data to long
-            nodes = [];
-            data.forEach(function(row) {
-                // Loop through all of the columns, and for each column
-                // make a new row
-                Object.keys(row).forEach(function(colname) {
-                    // Ignore 'State' and 'Value' columns
-                    if (colname == "full_name" || colname == "is_female" || colname == "Party") {
-                        return
+            nodes = data.map(function(d) {
+                node = {
+                    "full_name": d.full_name,
+                    "party": d.Party,
+                    "gender": d.is_female == 1 ? "Female" : "Male"
+                };
+                Object.keys(d).forEach(function(key) {
+                    if (key != "full_name" & key != "Party" & key != "is_female") {
+                        node[key] =  d[key] == '-inf' ? 0 : 10 ** (+d[key])
                     }
-                    nodes.push({
-                        "full_name": row["full_name"],
-                        "gender": row["is_female"] == 1 ? "Female" : "Male",
-                        "party": row["Party"],
-                        "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
-                        "topic_name": colname
-                    });
-                });
-            });
+                })
+                return node
+            })
+            // data.forEach(function(row) {
+            //     // Loop through all of the columns, and for each column
+            //     // make a new row
+            //     Object.keys(row).forEach(function(colname) {
+            //         // Ignore 'State' and 'Value' columns
+            //         if (colname == "full_name" || colname == "is_female" || colname == "Party") {
+            //             return
+            //         }
+            //         nodes.push({
+            //             "full_name": row["full_name"],
+            //             "gender": row["is_female"] == 1 ? "Female" : "Male",
+            //             "party": row["Party"],
+            //             "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
+            //             "topic_name": colname
+            //         });
+            //     });
+            // });
 
-            nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
+            // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
+            topic_name = "welfare reforms";
             // var colorScale = d3.scaleSequential(d3.interpolateRainbow).domain([0, 0.05]);
             var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(["Male", "Female"])
+                .domain(["Male", "Female"])
             var colorScale = d3.scaleQuantize().domain([0, 0.1]).range(d3.schemeCategory20);
             var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(["Labour", "Conservative", "Liberal Democrat", "Scottish National Party"])
+                .domain(["Labour", "Conservative", "Liberal Democrat", "Scottish National Party"])
 
-            var simulation = d3.forceSimulation(nodes)
+                simulation = d3.forceSimulation(nodes)
                 .force("x", d3.forceX(function(d) {
                     return x(d.gender);
                 }).strength(0.1))
                 .force("collide", d3.forceCollide(1.0).radius(2).iterations(10))
-                .alphaDecay(0.01)
+                // .alphaDecay(0.5)
                 // .force("manyBody", d3.forceManyBody().strength(-5))
                 .on("tick", function() {
                     nodes.map(function(d) {
-                        node_y = y(d.value)
+                        node_y = y(d[topic_name])
                         d.y = Math.min(node_y + 2.5, Math.max(node_y - 2.5, d.y))
                     })
-                circle.attr("cx", function(d) {
-                    return d.x
-                })
-                .attr("cy", function(d) {
-                    // return Math.max(0 + 2.5, Math.min(height - 2.5, d.y))
-                    return d.y
-                })
+                    circle.attr("cx", function(d) {
+                            return d.x
+                        })
+                        .attr("cy", function(d) {
+                            // return Math.max(0 + 2.5, Math.min(height - 2.5, d.y))
+                            return d.y
+                        })
 
                 })
-                // .stop();
+            // .stop();
 
             // for (var i = 0; i < 3000; ++i) simulation.tick()
 
@@ -185,7 +198,7 @@
                 .data(nodes)
                 .enter().append("circle")
                 .style("fill", function(d) {
-                    return colorScale(d.value);
+                    return colorScale(d.party);
                 })
                 // .attr("cx", function(d) {
                 //     return d.x
