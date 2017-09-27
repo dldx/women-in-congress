@@ -3,8 +3,14 @@ const d3 = require('d3')
 const request = require("d3-request")
 const fs = require("fs")
 
-var width = 500,
-    height = 500;
+var margin = {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 50
+    },
+    width = 1000 - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom
 var d3n = new D3Node();
 
 var topics = ["Male", "Female"]
@@ -18,17 +24,18 @@ var y = d3.scaleLinear()
 
 fs.readFile("data.csv", "utf-8", function (error, data) {
     if (error) throw error;
-	data = d3.csvParse(data)
+    data = d3.csvParse(data)
     // Convert wide data to long
     nodes = data.map(function (d) {
         node = {
+            "id": +d.id,
             "full_name": d.full_name,
             "party": d.Party,
             "gender": d.is_female == 1 ? "Female" : "Male"
         };
         Object.keys(d)
             .forEach(function (key) {
-                if (key != "full_name" & key != "Party" & key != "is_female") {
+                if (key != "id" & key != "full_name" & key != "Party" & key != "is_female") {
                     node[key] = d[key] == '-inf' ? 0 : 10 ** (+d[key])
                 }
             })
@@ -64,8 +71,6 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         .force("collide", d3.forceCollide(1.0)
             .radius(2)
             .iterations(10))
-        // .alphaDecay(0.5)
-        // .force("manyBody", d3.forceManyBody().strength(-5))
         .on("tick", function () {
             nodes.map(function (d) {
                 node_y = y(d[topic_name])
@@ -74,19 +79,24 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         })
         .stop();
 
-    for (var i = 0; i < 20; ++i) simulation.tick()
-    console.log(nodes)
-require('fs')
-    .writeFile(
+    // Run simulation
+    for (var i = 0; i < 500; ++i) simulation.tick()
 
-        './my.json',
+    require('fs')
+        .writeFile(
+            './baked_positions.json',
+            nodes.map(node => [node.id,
+                node.x.toFixed(2),
+                node["welfare reforms"],
+                y.invert(node.y)
+                .toFixed(2)
+            ])
+            .join("\n"),
 
-        JSON.stringify(nodes),
-
-        function (err) {
-            if (err) {
-                console.error('Crap happens');
+            function (err) {
+                if (err) {
+                    console.error('Crap happens');
+                }
             }
-        }
-    );
+        );
 })
