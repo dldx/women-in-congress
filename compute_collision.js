@@ -41,24 +41,6 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
             })
         return node
     })
-    // console.log(nodes)
-    // data.forEach(function(row) {
-    //     // Loop through all of the columns, and for each column
-    //     // make a new row
-    //     Object.keys(row).forEach(function(colname) {
-    //         // Ignore 'State' and 'Value' columns
-    //         if (colname == "full_name" || colname == "is_female" || colname == "Party") {
-    //             return
-    //         }
-    //         nodes.push({
-    //             "full_name": row["full_name"],
-    //             "gender": row["is_female"] == 1 ? "Female" : "Male",
-    //             "party": row["Party"],
-    //             "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
-    //             "topic_name": colname
-    //         });
-    //     });
-    // });
 
     // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
     topic_name = "welfare reforms";
@@ -68,7 +50,8 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
                 return x(d.gender);
             })
             .strength(0.1))
-        .force("collide", d3.forceCollide(1.0)
+        .force("collide",
+            d3.forceCollide(1.0)
             .radius(2)
             .iterations(10))
         .on("tick", function () {
@@ -77,26 +60,27 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
                 d.y = Math.min(node_y + 2.5, Math.max(node_y - 2.5, d.y))
             })
         })
-        .stop();
+    .stop();
 
-    // Run simulation
-    for (var i = 0; i < 500; ++i) simulation.tick()
+    for (var i = 0; i < 50; ++i) simulation.tick()
 
-    require('fs')
-        .writeFile(
-            './baked_positions.json',
-            nodes.map(node => [node.id,
-                node.x.toFixed(2),
-                node["welfare reforms"],
-                y.invert(node.y)
-                .toFixed(2)
-            ])
-            .join("\n"),
+    simulation.on("end", function () {
+        require('fs')
+            .writeFile(
+                './baked_positions.csv',
+                nodes.map(node => [node.id,
+                    node.x.toFixed(5),
+                    // node["welfare reforms"],
+                    y.invert(node.y)
+                    .toFixed(5)
+                ])
+                .join("\n"),
 
-            function (err) {
-                if (err) {
-                    console.error('Crap happens');
+                function (err) {
+                    if (err) {
+                        console.error('Crap happens');
+                    }
                 }
-            }
-        );
+            );
+    })
 })

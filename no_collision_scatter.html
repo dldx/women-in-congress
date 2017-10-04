@@ -140,23 +140,6 @@
                 })
                 return node
             })
-            // data.forEach(function(row) {
-            //     // Loop through all of the columns, and for each column
-            //     // make a new row
-            //     Object.keys(row).forEach(function(colname) {
-            //         // Ignore 'State' and 'Value' columns
-            //         if (colname == "full_name" || colname == "is_female" || colname == "Party") {
-            //             return
-            //         }
-            //         nodes.push({
-            //             "full_name": row["full_name"],
-            //             "gender": row["is_female"] == 1 ? "Female" : "Male",
-            //             "party": row["Party"],
-            //             "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
-            //             "topic_name": colname
-            //         });
-            //     });
-            // });
 
             // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
             topic_name = "welfare reforms";
@@ -171,7 +154,10 @@
                 .force("x", d3.forceX(function(d) {
                     return x(d.gender);
                 }).strength(0.1))
-                .force("collide", d3.forceCollide(1.0).radius(2).iterations(10))
+                .force("collide",
+                 d3.forceCollide(1.0)
+                     .radius(2)
+                     .iterations(10))
 
             nodes.map(function(d) {
                 d.x = x(d.gender)
