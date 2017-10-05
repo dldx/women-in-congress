@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
+    body {
+        color: #ccc;
+        background-color: #171717;
+    }
+
     svg {
         font: 20px sans-serif;
+    }
+
+    text {
+        fill: #ccc;
     }
 
     p {
@@ -15,7 +24,7 @@
 
     .x.axis .domain {
         fill: none;
-        stroke: #000;
+        stroke: #ccc;
         shape-rendering: crispEdges;
     }
 
@@ -61,7 +70,7 @@
                 bottom: 50,
                 left: 50
             },
-            width = 300 - margin.left - margin.right,
+            width = 800 - margin.left - margin.right,
             height = 800 - margin.top - margin.bottom,
 
             padding = 2,
@@ -84,7 +93,7 @@
             'domestic violence', 'child care', 'energy'
         ]
         var topics = ["welfare reforms"]
-        var topics = ["Male", "Female"]
+        // var topics = ["Male", "Female"]
         var x = d3.scalePoint()
             .domain(topics)
             .range([0 + width / 4, width * 3 / 4]);
@@ -146,28 +155,55 @@
             // var colorScale = d3.scaleSequential(d3.interpolateRainbow).domain([0, 0.05]);
             var colorScale = d3.scaleQuantize().domain([0, 0.1]).range(d3.schemeCategory20);
             var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-            .domain(["Male", "Female"])
+                .domain(["Male", "Female"])
             var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
                 .domain(["Labour", "Conservative", "Liberal Democrat", "Scottish National Party"])
 
-            var simulation = d3.forceSimulation(nodes)
+            var  nodes_male = nodes.filter(d => d.gender == "Male");
+            var  nodes_female = nodes.filter(d => d.gender != "Male");
+
+            simulation_male = d3.forceSimulation(nodes_male)
                 .force("x", d3.forceX(function(d) {
-                    return x(d.gender);
+                    return x(topic_name);
                 }).strength(0.1))
                 .force("collide",
-                 d3.forceCollide(1.0)
-                     .radius(2)
-                     .iterations(10))
+                    d3.forceCollide(7.0)
+                    .radius(2)
+                    .iterations(10))
+                .alphaMin(0.000000001)
+                .velocityDecay(0.1)
 
-            nodes.map(function(d) {
-                d.x = x(d.gender)
+            simulation_female = d3.forceSimulation(nodes_female)
+                .force("x", d3.forceX(function(d) {
+                    return x(topic_name);
+                }).strength(0.1))
+                .force("collide",
+                    d3.forceCollide(7.0)
+                    .radius(2)
+                    .iterations(10))
+                .alphaMin(0.000001)
+                .velocityDecay(0.2)
+
+            // Set default positions for nodes
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+            }
+            nodes_male.map(function(d) {
+                d.x = x(topic_name) + getRandomInt(0, -10)
                 node_y = y(d[topic_name])
                 d.y = Math.min(node_y + 2.5, Math.max(node_y - 2.5, d.y))
             })
+            nodes_female.map(function(d) {
+                d.x = x(topic_name) + getRandomInt(0, 10)
+                node_y = y(d[topic_name])
+                d.y = Math.min(node_y + 5, Math.max(node_y - 5, d.y))
+            })
 
-            var circle = wrapper.selectAll("circle")
-                .data(nodes)
-                .enter().append("circle")
+            var circle_male = wrapper.selectAll(".male-node")
+                .data(nodes_male)
+                .enter().append("circle").attr("class", "male-node")
                 .style("fill", function(d) {
                     return d.gender == "Male" ? "red" : "blue";
                     // return colorScale(d.party);
@@ -177,12 +213,40 @@
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide)
 
-            simulation.on("tick", function() {
-                nodes.map(function(d) {
+            simulation_male.on("tick", function() {
+                nodes_male.map(function(d) {
+                    d.x = Math.min(d.x, x(topic_name) - 2.5)
+                    node_y = y(d[topic_name])
+                    d.y = Math.min(node_y + 5, Math.max(node_y - 5, d.y))
+                })
+                circle_male.attr("cx", function(d) {
+                        return d.x
+                    })
+                    .attr("cy", function(d) {
+                        // return Math.max(0 + 2.5, Math.min(height - 2.5, d.y))
+                        return d.y
+                    })
+            })
+
+            var circle_female  = wrapper.selectAll(".female-node")
+                .data(nodes_female)
+                .enter().append("circle").attr("class", "female-node")
+                .style("fill", function(d) {
+                    return d.gender == "Male" ? "red" : "blue";
+                    // return colorScale(d.party);
+                })
+                .attr("r", 1.8)
+                .style("opacity", 0.7)
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
+
+            simulation_female.on("tick", function() {
+                nodes_female.map(function(d) {
+                    d.x =  Math.max(x(topic_name) + 2.5, d.x)
                     node_y = y(d[topic_name])
                     d.y = Math.min(node_y + 2.5, Math.max(node_y - 2.5, d.y))
                 })
-                circle.attr("cx", function(d) {
+                circle_female.attr("cx", function(d) {
                         return d.x
                     })
                     .attr("cy", function(d) {

@@ -107,10 +107,11 @@
                     // make a new row
                     Object.keys(row).forEach(function(colname) {
                         // Ignore 'State' and 'Value' columns
-                        if (colname == "full_name" || colname == "is_female" || colname == "Party") {
+                        if (colname=="id" || colname == "full_name" || colname == "is_female" || colname == "Party") {
                             return
                         }
                         nodes.push({
+                            "id":+row["id"],
                             "full_name": row["full_name"],
                             "gender": row["is_female"] == 1 ? "Female" : "Male",
                             "party": row["Party"],

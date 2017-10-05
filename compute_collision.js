@@ -11,9 +11,12 @@ var margin = {
     },
     width = 1000 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom
+
+var node_radius = 2.5;
 var d3n = new D3Node();
 
-var topics = ["Male", "Female"]
+    topic_name = "european union";
+var topics = [topic_name]
 var x = d3.scalePoint()
     .domain(topics)
     .range([0 + width / 4, width * 3 / 4]);
@@ -43,36 +46,75 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
     })
 
     // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
-    topic_name = "welfare reforms";
 
-    simulation = d3.forceSimulation(nodes)
+    var nodes_male = nodes.filter(d => d.gender == "Male");
+    var nodes_female = nodes.filter(d => d.gender != "Male");
+
+    simulation_male = d3.forceSimulation(nodes_male)
         .force("x", d3.forceX(function (d) {
-                return x(d.gender);
+                return x(topic_name);
             })
             .strength(0.1))
         .force("collide",
-            d3.forceCollide(1.0)
+            d3.forceCollide(7.0)
+            .radius(2)
+            .iterations(20))
+        .alphaMin(0.000000001)
+        .velocityDecay(0.1)
+
+    simulation_female = d3.forceSimulation(nodes_female)
+        .force("x", d3.forceX(function (d) {
+                return x(topic_name);
+            })
+            .strength(0.1))
+        .force("collide",
+            d3.forceCollide(7.0)
             .radius(2)
             .iterations(10))
-        .on("tick", function () {
-            nodes.map(function (d) {
-                node_y = y(d[topic_name])
-                d.y = Math.min(node_y + 2.5, Math.max(node_y - 2.5, d.y))
-            })
+        .alphaMin(0.000001)
+        .velocityDecay(0.2)
+
+    // Set default positions for nodes
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    }
+    nodes_male.map(function (d) {
+        d.x = x(topic_name) + getRandomInt(0, -20)
+        node_y = y(d[topic_name])
+        d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
+    })
+    nodes_female.map(function (d) {
+        d.x = x(topic_name) + getRandomInt(0, 20)
+        node_y = y(d[topic_name])
+        d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
+    })
+
+    simulation_male.on("tick", function () {
+        nodes_male.map(function (d) {
+            d.x = Math.min(d.x, x(topic_name) - node_radius)
+            node_y = y(d[topic_name])
+            d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
         })
-    .stop();
+    })
 
-    for (var i = 0; i < 50; ++i) simulation.tick()
+    simulation_female.on("tick", function () {
+        nodes_female.map(function (d) {
+            d.x = Math.max(x(topic_name) + node_radius, d.x)
+            node_y = y(d[topic_name])
+            d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
+        })
+    })
 
-    simulation.on("end", function () {
+    simulation_male.on("end", function () {
+        nodes = nodes_male.concat(nodes_female)
         require('fs')
             .writeFile(
                 './baked_positions.csv',
-                nodes.map(node => [node.id,
-                    node.x.toFixed(5),
-                    // node["welfare reforms"],
-                    y.invert(node.y)
-                    .toFixed(5)
+                "id,x,y\n"+ nodes.map(node => [node.id,
+                    ((node.x - x(topic_name))/node_radius).toFixed(5),
+                    y.invert(node.y).toFixed(5)
                 ])
                 .join("\n"),
 
