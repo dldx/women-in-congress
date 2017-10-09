@@ -87,7 +87,7 @@
             .attr("class", "wrapper")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            topic_name = "european union";
+            topic_name = "syria";
         var topics = [topic_name]
         // var topics = ["Male", "Female"]
         var x = d3.scalePoint()
@@ -169,6 +169,9 @@ baked_positions = data;
                 .force("x", d3.forceX(function(d) {
                     return x(topic_name);
                 }).strength(0.1))
+                .force("y", d3.forceY(function(d) {
+                    return y(d[topic_name]);
+                }).strength(1))
                 .force("collide",
                     d3.forceCollide(10.0)
                     .radius(2)
@@ -228,6 +231,7 @@ baked_positions = data;
                     d.x = Math.min(d.x, x(topic_name) - 2.5)
                     node_y = y(d[topic_name])
                     d.y = Math.min(node_y + 5, Math.max(node_y - 5, d.y))
+                d.y = Math.min(y(0), d.y)
                 })
                 circle_male.attr("cx", function(d) {
                         return d.x

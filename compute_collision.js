@@ -15,7 +15,9 @@ var margin = {
 var node_radius = 2.5;
 var d3n = new D3Node();
 
-    topic_name = "european union";
+// Get topic name from command line argument
+topic_name = process.argv[2]
+
 var topics = [topic_name]
 var x = d3.scalePoint()
     .domain(topics)
@@ -45,8 +47,6 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         return node
     })
 
-    // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
-
     var nodes_male = nodes.filter(d => d.gender == "Male");
     var nodes_female = nodes.filter(d => d.gender != "Male");
 
@@ -55,8 +55,12 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
                 return x(topic_name);
             })
             .strength(0.1))
+        .force("y", d3.forceY(function (d) {
+                return y(d[topic_name]);
+            })
+            .strength(1))
         .force("collide",
-            d3.forceCollide(7.0)
+            d3.forceCollide(10.0)
             .radius(2)
             .iterations(20))
         .alphaMin(0.000000001)
@@ -67,12 +71,16 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
                 return x(topic_name);
             })
             .strength(0.1))
+        .force("y", d3.forceY(function (d) {
+                return y(d[topic_name]);
+            })
+            .strength(1))
         .force("collide",
-            d3.forceCollide(7.0)
+            d3.forceCollide(10.0)
             .radius(2)
-            .iterations(10))
-        .alphaMin(0.000001)
-        .velocityDecay(0.2)
+            .iterations(20))
+        .alphaMin(0.000000001)
+        .velocityDecay(0.1)
 
     // Set default positions for nodes
     function getRandomInt(min, max) {
@@ -96,6 +104,7 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
             d.x = Math.min(d.x, x(topic_name) - node_radius)
             node_y = y(d[topic_name])
             d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
+            d.y = Math.min(y(0), d.y)
         })
     })
 
@@ -104,25 +113,18 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
             d.x = Math.max(x(topic_name) + node_radius, d.x)
             node_y = y(d[topic_name])
             d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
+            d.y = Math.min(y(0), d.y)
         })
     })
 
     simulation_male.on("end", function () {
         nodes = nodes_male.concat(nodes_female)
-        require('fs')
-            .writeFile(
-                './baked_positions.csv',
-                "id,x,y\n"+ nodes.map(node => [node.id,
-                    ((node.x - x(topic_name))/node_radius).toFixed(5),
+        process.stdout.write(
+                `id,${topic_name}_x,${topic_name}_y\n` + nodes.map(node => [node.id,
+                    ((node.x - x(topic_name)) / node_radius).toFixed(5),
                     y.invert(node.y).toFixed(5)
                 ])
                 .join("\n"),
-
-                function (err) {
-                    if (err) {
-                        console.error('Crap happens');
-                    }
-                }
             );
     })
 })
