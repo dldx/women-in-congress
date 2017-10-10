@@ -121,8 +121,8 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         nodes = nodes_male.concat(nodes_female)
         process.stdout.write(
                 `id,${topic_name}_x,${topic_name}_y\n` + nodes.map(node => [node.id,
-                    ((node.x - x(topic_name)) / node_radius).toFixed(5),
-                    y.invert(node.y).toFixed(5)
+                    ((node.x - x(topic_name)) / node_radius),
+                    y.invert(node.y)
                 ])
                 .join("\n"),
             );
