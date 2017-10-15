@@ -5,6 +5,9 @@ raw_speeches.h5
 processed.h5
 processed_2.h5
 processed_speeches.h5
+
+# mp photos also too big to upload
+mp_photos/
 # Ignore config which contains API KEYS
 config.py
 # Ignore temp data
