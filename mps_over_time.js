@@ -208,8 +208,8 @@ function initialise_tracker() {
 
     var arcLabels = arcGroup
         .append("text")
-        .attr("transform", function(d) { return "translate(" + labels.centroid(d) + ")"; })
-        .text(function(d) { return d.data.section; });
+        .attr("transform", function (d) { return "translate(" + labels.centroid(d) + ")"; })
+        .text(function (d) { return d.data.section; });
 
     arcGroup
         .on("mouseover", function (d) {
@@ -491,7 +491,7 @@ function first_slide() {
             return x(d.term_start)
         })
         .attr("x2", function (d) {
-            return x(d.term_end) - lineThickness*1.2
+            return x(d.term_end) - lineThickness * 1.2
         })
         .attr("y1", function (d) {
             return y(d.stream)
@@ -529,6 +529,11 @@ function first_slide() {
             partyLogo = partyHasLogo.indexOf(d.party) != -1
             tooltip.innerHTML = `
                     <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
+                    <div class="mp-image">
+                    ${typeof mp_base64_data[d.id] === 'undefined' ? '' : '<img src = "data:image/jpeg;base64,' + mp_base64_data[d.id]
+                     + '" style="width: 5rem; filter: blur(5px); transform: scale(0.95, 0.95);" />' +
+                    '<img class="mp-image" src="./mp_photos/cropped/small/mp-' + d.id + '.jpg" style="transform: translate(0, -5rem);"/>'}
+                    </div>
                     <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(d.term_end)}</div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
@@ -597,7 +602,7 @@ function first_slide() {
                     return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
                 })
                 .moveToFront()
-        d3.event.preventDefault()
+            d3.event.preventDefault()
         })
 
     // Exit
@@ -614,7 +619,7 @@ function first_slide() {
 // ----------------------------------------------------------------------------
 function to_first_slide() {
     // Increment lastTransitioned counter if it is less than 0
-    if(lastTransitioned < 0) {
+    if (lastTransitioned < 0) {
         lastTransitioned = 0
     }
     t0 = svg
@@ -649,8 +654,8 @@ function to_first_slide() {
 // TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
 function to_second_slide() {
-    if(lastTransitioned < 1) {
-        second_slide(no_transition=false)
+    if (lastTransitioned < 1) {
+        second_slide(no_transition = false)
         // Update transition counter
         lastTransitioned = 1
     } else {
@@ -660,7 +665,7 @@ function to_second_slide() {
             .duration(1000)
             .style("opacity", 0)
             .remove()
-        second_slide(no_transition=true)
+        second_slide(no_transition = true)
     }
 }
 
@@ -668,7 +673,7 @@ function to_second_slide() {
 // ----------------------------------------------------------------------------
 // SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
 // ----------------------------------------------------------------------------
-function second_slide(no_transition=false) {
+function second_slide(no_transition = false) {
     // Set all points to full opacity in case they were filtered previously
     pointsGroup.selectAll("g")
         .style("opacity", 1)
@@ -821,7 +826,7 @@ function second_slide(no_transition=false) {
     pointsGroup.selectAll(".line-connect")
         .transition()
         .delay(no_transition ? 500 : 0)
-        .duration(no_transition ? 0: 500)
+        .duration(no_transition ? 0 : 500)
         .attr("x2", function (a) {
             return x(a.term_start)
         })
@@ -1035,7 +1040,8 @@ function second_slide(no_transition=false) {
             var parseDate = d3.timeParse("%Y-%m-%d");
 
             // Remove old info bubbles
-            d3.select("#info-bubbles").remove()
+            d3.select("#info-bubbles")
+                .remove()
             infoBubbles = zoomedArea
                 .append("g")
                 .attr("id", "info-bubbles")
@@ -1159,6 +1165,7 @@ var clippedArea,
     mps_over_time_data,
     number_women_over_time_data,
     total_mps_over_time_data,
+    mp_base64_data,
     info_bubbles_data
 
 // ----------------------------------------------------------------------------
@@ -1177,14 +1184,15 @@ function draw_graph() {
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
         lineThickness = 0.0018 * height * 2;
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
-        circleRadius = lineThickness/2;
+        circleRadius = lineThickness / 2;
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
         d3.queue()
-            .defer(d3.csv, "mps_over_time.csv", function (d) {
+            .defer(d3.csv, "women_mps.csv", function (d) {
                 var parseDate = d3.timeParse("%Y-%m-%d");
                 return {
+                    id: d.id,
                     name: d.name,
                     constituency: d.constituency,
                     term_start: parseDate(d.term_start),
@@ -1211,14 +1219,30 @@ function draw_graph() {
                     total_mps: +d.total_mps
                 }
             })
+            .defer(d3.csv, "mp_base64.csv", function (d) {
+                return {
+                    id: d.id,
+                    base64: d.base64
+                }
+            })
             .defer(d3.json, "info_bubbles.json")
             .await(analyze);
 
-        function analyze(error, mps_over_time, number_women_over_time, total_mps_over_time, info_bubbles) {
+        function analyze(error,
+            mps_over_time,
+            number_women_over_time,
+            total_mps_over_time,
+            mp_base64,
+            info_bubbles) {
             // Make global
             mps_over_time_data = mps_over_time
             number_women_over_time_data = number_women_over_time
             total_mps_over_time_data = total_mps_over_time
+            // Turn d3 array into a pythonic dictionary
+            mp_base64_data = {}
+            for (var i = 0; i < mp_base64.length; i++) {
+                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64;
+            }
             info_bubbles_data = info_bubbles
             new_slide = 0
             var current_slide = -1
