@@ -529,10 +529,9 @@ function first_slide() {
             partyLogo = partyHasLogo.indexOf(d.party) != -1
             tooltip.innerHTML = `
                     <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
-                    <div class="mp-image">
-                    ${typeof mp_base64_data[d.id] === 'undefined' ? '' : '<img src = "data:image/jpeg;base64,' + mp_base64_data[d.id]
-                     + '" style="width: 5rem; filter: blur(5px); transform: scale(0.95, 0.95);" />' +
-                    '<img class="mp-image" src="./mp_photos/cropped/small/mp-' + d.id + '.jpg" style="transform: translate(0, -5rem);"/>'}
+                    <div class="mp-image-parent">
+                    ${typeof mp_base64_data[d.id] === 'undefined' ? '' : '<img class="mp-image-blurred" src="data:image/jpeg;base64,' + mp_base64_data[d.id] + '" />' +
+                    '<img class="mp-image" src="./mp-images/mp-' + d.id + '.jpg" />'}
                     </div>
                     <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(d.term_end)}</div>
