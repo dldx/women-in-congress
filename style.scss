@@ -279,7 +279,7 @@ $tip-padding: 1;
   .mp-image-parent {
     width: 5rem;
     height: 5rem;
-    border: 0.5px solid white;
+    // border: 0.5px solid white;
     overflow: hidden;
   }
 
@@ -287,12 +287,14 @@ $tip-padding: 1;
     width: 100%;
     height: 100%;
     transform: translate(0, -5rem);
+    opacity: 0;
+    transition: opacity 0.5s linear;
   }
 
   .mp-image-blurred {
     width: 100%;
     height: 100%;
-    filter: blur(5px);
+    filter: blur(4px);
   }
 
 }

@@ -531,7 +531,7 @@ function first_slide() {
                     <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
                     <div class="mp-image-parent">
                     ${typeof mp_base64_data[d.id] === 'undefined' ? '' : '<img class="mp-image-blurred" src="data:image/jpeg;base64,' + mp_base64_data[d.id] + '" />' +
-                    '<img class="mp-image" src="./mp-images/mp-' + d.id + '.jpg" />'}
+                    '<img class="mp-image" src="./mp_photos/cropped/small/mp-' + d.id + '.jpg" style="opacity: 0;" onload="this.style.opacity = 1;" />'}
                     </div>
                     <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(d.term_end)}</div>
