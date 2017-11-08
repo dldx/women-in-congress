@@ -1,4 +1,4 @@
-id,clean_name,mp_id
+id,clean_name,wikidata_id
 10001,diane abbott,Q153454
 10003,irene adams,Q334498
 10012,janet anderson,Q4935679
@@ -101,7 +101,7 @@ id,clean_name,mp_id
 10536,gillian shephard,Q333058
 10539,debra shipley,Q5248514
 10540,clare short,Q333550
-10546,angela smith,Q390949
+10546,angela smith,Q168606
 10548,geraldine smith,Q5549794
 10549,jacqui smith,Q237217
 10557,helen southworth,Q5703202
