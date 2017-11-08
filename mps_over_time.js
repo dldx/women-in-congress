@@ -47,9 +47,6 @@ var tracker_data = [
     { section: "6" }
 ]
 
-// These are the colours to be used on repeat for the tracker hexagon
-var tracker_colors = ["#5c5c5c", "#424242"]
-
 // ----------------------------------------------------------------------------
 // FIND TIMELINE DIV AND ADD SVG
 // ----------------------------------------------------------------------------
@@ -136,7 +133,7 @@ function reset_zoom(callback) {
             // Add the y axis to the left of the graph
             yAxis = d3.axisLeft(y)
             gY = d3.select(".y-axis")
-                .call(yAxis);
+                .call(yAxis)
             callback()
         })
 }
@@ -144,6 +141,7 @@ function reset_zoom(callback) {
 // UPDATE GRAPH WHEN USER MOVES TO A NEW SLIDE
 // ----------------------------------------------------------------------------
 function update_state() {
+    "use strict"
     // Only update if we are actually changing states
     if (current_slide != new_slide) {
         // Go from slide 0 to slide 1
@@ -152,8 +150,8 @@ function update_state() {
             reset_zoom(to_second_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
-            zoom.on("zoom", zoomed);
-            svg.call(zoom);
+            zoom.on("zoom", zoomed)
+            svg.call(zoom)
             to_first_slide()
         }
         current_slide = new_slide
@@ -181,6 +179,7 @@ function update_state() {
 // TRACKER TO IDENTIFY AND SWITCH BETWEEN SLIDES
 // ----------------------------------------------------------------------------
 function initialise_tracker() {
+    "use strict"
     var tracker_outer_radius = 30
     var tracker_inner_radius = 0
     d3.select(".tracker")
@@ -234,21 +233,21 @@ function initialise_tracker() {
         .append("g")
         .attr("class", "arc")
 
-    var arc = arcGroup
+    arcGroup
         .append("path")
         .attr("d", path)
 
-    var arcLabels = arcGroup
+    arcGroup
         .append("text")
-        .attr("transform", function (d) { return "translate(" + labels.centroid(d) + ")"; })
-        .text(function (d) { return d.data.section; });
+        .attr("transform", function (d) { return "translate(" + labels.centroid(d) + ")" })
+        .text(function (d) { return d.data.section })
 
     arcGroup
-        .on("mouseover", function (d) {
+        .on("mouseover", function () {
             d3.select(this)
                 .classed("hover", true)
         })
-        .on("mouseout", function (d) {
+        .on("mouseout", function () {
             d3.select(this)
                 .classed("hover", false)
             update_state()
@@ -265,21 +264,19 @@ function initialise_tracker() {
 
     var SQRT3 = Math.sqrt(3),
         hexRadius = tracker_outer_radius,
-        hexWidth = SQRT3 * hexRadius,
-        hexHeight = 2 * hexRadius;
-    var hexagonPoly = [
-        [0, -1],
-        [SQRT3 / 2, 0.5],
-        [0, 1],
-        [-SQRT3 / 2, 0.5],
-        [-SQRT3 / 2, -0.5],
-        [0, -1],
-        [SQRT3 / 2, -0.5]
-    ];
+        hexagonPoly = [
+            [0, -1],
+            [SQRT3 / 2, 0.5],
+            [0, 1],
+            [-SQRT3 / 2, 0.5],
+            [-SQRT3 / 2, -0.5],
+            [0, -1],
+            [SQRT3 / 2, -0.5]
+        ]
     var hexagonPath = "m" + hexagonPoly.map(function (p) {
-            return [p[0] * hexRadius, p[1] * hexRadius].join(',');
-        })
-        .join('l') + "z";
+        return [p[0] * hexRadius, p[1] * hexRadius].join(",")
+    })
+        .join("l") + "z"
 
     //Place a hexagon on the scene
     tracker_wrapper.append("path")
@@ -287,14 +284,14 @@ function initialise_tracker() {
         .attr("d", hexagonPath)
 
 
-    var mask = tracker_wrapper.append("clipPath")
+    tracker_wrapper.append("clipPath")
         .attr("id", "hex-mask")
         .append("path")
         .attr("fill", "none")
         .attr("d", hexagonPath)
 
     // Attach hexagon clip mask to tracker wrapper
-    d3.select('.tracker-wrapper')
+    d3.select(".tracker-wrapper")
         .attr("clip-path", "url(#hex-mask)")
 }
 
@@ -308,7 +305,7 @@ function initialise_tracker() {
 // CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
 // ----------------------------------------------------------------------------
 function initial_render() {
-    'use strict'
+    "use strict"
     // INITIALISE THE X AND Y AXIS SCALES AND RANGES
     x = d3.scaleTime()
         .domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
@@ -316,14 +313,14 @@ function initial_render() {
 
     y = d3.scaleLinear()
         .domain([0, 200]) // Almost 200 MPs by 2020
-        .range([height, 0]);
+        .range([height, 0])
 
-    svg.append("defs");
+    svg.append("defs")
     // Add the group wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
         .attr("class", "timeline-wrapper")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // Initialise the hexagon tracker that tracks the state of the graph
     initialise_tracker()
@@ -338,7 +335,7 @@ function initial_render() {
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
-    var boundingBox = wrapper
+    wrapper
         .append("rect")
         .style("opacity", 0.0)
         .attr("width", width)
@@ -359,20 +356,20 @@ function initial_render() {
         .attr("id", "clip")
         .append("rect")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
 
     // Add the x axis to the bottom of the graph
     xAxis = d3.axisBottom(x)
     gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
 
     // Add the y axis to the left of the graph
     yAxis = d3.axisLeft(y)
     gY = wrapper.append("g")
         .attr("class", "y-axis")
-        .call(yAxis);
+        .call(yAxis)
 
     // Add chart title
     wrapper.append("text")
@@ -399,8 +396,8 @@ function initial_render() {
     // Add zoom capabilities for the points
     zoom = d3.zoom()
         .scaleExtent([0.95, 40])
-        .on("zoom", zoomed);
-    svg.call(zoom);
+        .on("zoom", zoomed)
+    svg.call(zoom)
 
 }
 
@@ -408,9 +405,10 @@ function initial_render() {
 // ZOOM function
 // ----------------------------------------------------------------------------
 function zoomed() {
+    "use strict"
     zoomedArea.attr("transform", d3.event.transform)
-    gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-    gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+    gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
+    gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
 }
 
 // ----------------------------------------------------------------------------
@@ -419,17 +417,17 @@ function zoomed() {
 // ----------------------------------------------------------------------------
 d3.selection.prototype.moveToFront = function () {
     return this.each(function () {
-        this.parentNode.appendChild(this);
-    });
-};
+        this.parentNode.appendChild(this)
+    })
+}
 d3.selection.prototype.moveToBack = function () {
     return this.each(function () {
-        var firstChild = this.parentNode.firstChild;
+        var firstChild = this.parentNode.firstChild
         if (firstChild) {
-            this.parentNode.insertBefore(this, firstChild);
+            this.parentNode.insertBefore(this, firstChild)
         }
-    });
-};
+    })
+}
 
 // ----------------------------------------------------------------------------
 // ███████╗██╗██████╗ ███████╗████████╗    ███████╗██╗     ██╗██████╗ ███████
@@ -441,6 +439,7 @@ d3.selection.prototype.moveToBack = function () {
 // ALL WOMEN MPS OVER TIME
 // ----------------------------------------------------------------------------
 function first_slide() {
+    "use strict"
     d3.select("#slide1-group")
         .remove()
     d3.select("#election-rects")
@@ -511,7 +510,7 @@ function first_slide() {
             return y(d.stream)
         })
         .attr("stroke", function (d) {
-            return colorParty(d.party);
+            return colorParty(d.party)
         })
 
     // For each hidden rectangle belonging to a point, set position and size
@@ -537,19 +536,19 @@ function first_slide() {
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
-            partyLogo = partyHasLogo.indexOf(d.party) != -1
+            var partyLogo = partyHasLogo.indexOf(d.party) != -1
             tooltip.innerHTML = `
                     <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
                     <div class="mp-image-parent">
-                    ${typeof mp_base64_data[d.id] === 'undefined' ? '' : '<img class="mp-image-blurred" src="data:image/jpeg;base64,' + mp_base64_data[d.id] + '" />' +
-                    '<img class="mp-image" src="./mp-images/mp-' + d.id + '.jpg" style="opacity: ${typeof d.loaded == \'undefined\' ? 0 : d.loaded;d.loaded = 1;};" onload="this.style.opacity = 1;" />'}
+                    ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(d.term_end)}</div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
                     <div class="mp-constituency">${d.constituency}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ``}
-                    `;
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
+                    `
 
             // Increase line thickness of all terms of the same MP
             pointsGroup
@@ -567,7 +566,7 @@ function first_slide() {
     instance
         .on("mouseover", mpMouseover)
         // On mouse out, change everything back
-        .on("mouseout", function (d) {
+        .on("mouseout", function() {
             pointsGroup
                 .selectAll("g")
                 .style("opacity", function (a) {
@@ -601,7 +600,7 @@ function first_slide() {
     // Exit
     instance
         .exit()
-        .remove();
+        .remove()
 
     // Update current slide number
     current_slide = 0
@@ -615,7 +614,7 @@ function to_first_slide() {
     if (lastTransitioned < 0) {
         lastTransitioned = 0
     }
-    t0 = svg
+    var t0 = svg
         .transition()
         .duration(1000)
 
@@ -647,8 +646,9 @@ function to_first_slide() {
 // TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
 function to_second_slide() {
+    "use strict"
     if (lastTransitioned < 1) {
-        second_slide(no_transition = false)
+        second_slide(false)
         // Update transition counter
         lastTransitioned = 1
     } else {
@@ -658,7 +658,7 @@ function to_second_slide() {
             .duration(1000)
             .style("opacity", 0)
             .remove()
-        second_slide(no_transition = true)
+        second_slide(true)
     }
 }
 
@@ -715,12 +715,12 @@ function second_slide(no_transition = false) {
     var max_mps_area = d3.area()
         .curve(d3.curveCardinal)
         .x(function (d) {
-            return x(d.year);
+            return x(d.year)
         })
         .y0(height)
         .y1(function (d) {
-            return y(d.total_mps);
-        });
+            return y(d.total_mps)
+        })
 
     // Add the svg path for this shaded region
     var max_mps_path_area = slide2Group.append("path")
@@ -775,10 +775,10 @@ function second_slide(no_transition = false) {
         .attr("fill", "none")
         .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", total_women_mps_line)
-        .attr("stroke-dasharray", function (d) {
+        .attr("stroke-dasharray", function () {
             return this.getTotalLength()
         })
-        .attr("stroke-dashoffset", function (d) {
+        .attr("stroke-dashoffset", function () {
             return this.getTotalLength()
         })
 
@@ -786,12 +786,12 @@ function second_slide(no_transition = false) {
     var total_women_mps_area = d3.area()
         .curve(d3.curveBasis)
         .x(function (d) {
-            return x(d.year);
+            return x(d.year)
         })
         .y0(height)
         .y1(function (d) {
-            return y(d.total_women_mps);
-        });
+            return y(d.total_women_mps)
+        })
 
     // Add the area path
     var total_women_mps_path_area = slide2Group.append("path")
@@ -830,9 +830,9 @@ function second_slide(no_transition = false) {
     // ----------------------------------------------------------------------------
 
     // Create a bisector method to find the nearest point in the total mp data
-    bisect = d3.bisector(function (a) {
-            return a.year
-        })
+    var bisect = d3.bisector(function (a) {
+        return a.year
+    })
         .left
 
     pointsGroup.selectAll(".line-connect")
@@ -1019,25 +1019,25 @@ function second_slide(no_transition = false) {
                     var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
                     var gender_ratio = d.total_mps / num_women - 1
                     tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
-            ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? `were` : `are`}
+            ${num_women > 0 ? `For every <span class="female">female</span> MP, there ${new Date() > second_election ? "were" : "are"}
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
-                            `There were no women in the House of Commons yet :(`}
+        "There were no women in the House of Commons yet :("}
                                 </div>
-            `;
+            `
                 })
-                .on("mouseout", function (d, i) {
+                .on("mouseout", function () {
                     d3.select(this)
                         .classed("hover", false)
                 })
             // ----------------------------------------------------------------
             // Add info bubbles to show information at specific points
             // ----------------------------------------------------------------
-            var parseDate = d3.timeParse("%Y-%m-%d");
+            var parseDate = d3.timeParse("%Y-%m-%d")
 
             // Remove old info bubbles
             d3.select("#info-bubbles")
                 .remove()
-            infoBubbles = zoomedArea
+            var infoBubbles = zoomedArea
                 .append("g")
                 .attr("id", "info-bubbles")
                 .selectAll("g")
@@ -1114,9 +1114,9 @@ function second_slide(no_transition = false) {
                                 <h1>${d.head}</h1>
                                 <div class="date">${formatDate(parseDate(d.x))}</div>
                                 <div class="body">${d.body}</div>
-                            </div>`;
+                            </div>`
                 })
-                .on("mouseout", function (d) {
+                .on("mouseout", function () {
                     d3.select(this)
                         .select(".info-bubble")
                         .classed("hover", false)
@@ -1139,25 +1139,26 @@ function second_slide(no_transition = false) {
 // GET DATA AND DRAW INITIAL GRAPH, WHILE RESIZING TO FIT WITHIN WINDOW
 // ----------------------------------------------------------------------------
 function draw_graph() {
+    "use strict"
     d3.selectAll("g")
         .remove()
     // Chart dimensions - use parent div size
     var new_width = timeline.clientWidth - margin.left - margin.right,
-        new_height = timeline.clientHeight - margin.top - margin.bottom;
+        new_height = timeline.clientHeight - margin.top - margin.bottom
 
     if (new_width != width | new_height != height) {
-        width = new_width;
-        height = new_height;
+        width = new_width
+        height = new_height
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
-        lineThickness = 0.0018 * height * 2;
+        lineThickness = 0.0018 * height * 2
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
-        circleRadius = lineThickness / 2;
+        circleRadius = lineThickness / 2
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
         d3.queue()
             .defer(d3.csv, "women_mps.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d");
+                var parseDate = d3.timeParse("%Y-%m-%d")
                 return {
                     id: d.id,
                     name: d.name,
@@ -1169,10 +1170,10 @@ function draw_graph() {
                     notes: d.notes,
                     clean_name: d.clean_name,
                     stream: +d.stream
-                };
+                }
             })
             .defer(d3.csv, "number_women_over_time.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d");
+                var parseDate = d3.timeParse("%Y-%m-%d")
                 return {
                     year: parseDate(d.Year),
                     total_women_mps: +d.Total,
@@ -1180,7 +1181,7 @@ function draw_graph() {
                 }
             })
             .defer(d3.csv, "total_mps_over_time.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d");
+                var parseDate = d3.timeParse("%Y-%m-%d")
                 return {
                     year: parseDate(d.Year),
                     total_mps: +d.total_mps
@@ -1193,30 +1194,32 @@ function draw_graph() {
                 }
             })
             .defer(d3.json, "info_bubbles.json")
-            .await(analyze);
+            .await(analyze)
 
-        function analyze(error,
-            mps_over_time,
-            number_women_over_time,
-            total_mps_over_time,
-            mp_base64,
-            info_bubbles) {
-            // Make global
-            mps_over_time_data = mps_over_time
-            number_women_over_time_data = number_women_over_time
-            total_mps_over_time_data = total_mps_over_time
-            // Turn d3 array into a pythonic dictionary
-            mp_base64_data = {}
-            for (var i = 0; i < mp_base64.length; i++) {
-                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64;
-            }
-            info_bubbles_data = info_bubbles
-            new_slide = 0
-            var current_slide = -1
-            initial_render()
-            first_slide()
-        };
+
     }
+}
+function analyze(error,
+    mps_over_time,
+    number_women_over_time,
+    total_mps_over_time,
+    mp_base64,
+    info_bubbles) {
+    // Make global
+    mps_over_time_data = mps_over_time
+    number_women_over_time_data = number_women_over_time
+    total_mps_over_time_data = total_mps_over_time
+    // Turn d3 array into a pythonic dictionary
+    mp_base64_data = {}
+    for (var i = 0; i < mp_base64.length; i++) {
+        mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
+    }
+
+    info_bubbles_data = info_bubbles
+    new_slide = 0
+    current_slide = -1
+    initial_render()
+    first_slide()
 }
 
 // INITIAL DRAW
@@ -1224,4 +1227,4 @@ draw_graph()
 // ----------------------------------------------------------------------------
 // REDRAW GRAPH ON WINDOW RESIZE
 // ----------------------------------------------------------------------------
-window.addEventListener('resize', draw_graph);
+window.addEventListener("resize", draw_graph)
