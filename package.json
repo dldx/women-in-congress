@@ -1,0 +1,16 @@
+{
+  "name": "women-in-parliament",
+  "version": "1.0.0",
+  "description": "Visualisation about Women MPs",
+  "main": "mps_over_time.js",
+  "dependencies": {
+    "d3-node": "^1.1.1",
+    "d3-request": "^1.0.6",
+    "npm": "^5.4.1",
+    "svg2png": "^4.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dldx/women-in-parliament.git"
+  }
+}

@@ -1,5 +1,11 @@
 // ----------------------------------------------------------------------------
-// DEFINE KEY SETTINGS FOR TIMELINE
+//
+//  ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗         ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██████╗ ██╗     ███████╗███████╗
+// ██╔════╝ ██║     ██╔═══██╗██╔══██╗██╔══██╗██║         ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝
+// ██║  ███╗██║     ██║   ██║██████╔╝███████║██║         ██║   ██║███████║██████╔╝██║███████║██████╔╝██║     █████╗  ███████╗
+// ██║   ██║██║     ██║   ██║██╔══██╗██╔══██║██║         ╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║██╔══██╗██║     ██╔══╝  ╚════██║
+// ╚██████╔╝███████╗╚██████╔╝██████╔╝██║  ██║███████╗     ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║██████╔╝███████╗███████╗███████║
+//  ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝      ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝
 // ----------------------------------------------------------------------------
 
 // These are the margins for the SVG
@@ -8,7 +14,7 @@ var margin = {
     right: 50,
     bottom: 60,
     left: 100
-};
+}
 
 // These are the colours used to identify each political party as well as
 // a few additional functions
@@ -32,67 +38,87 @@ var partyToggled = false
 var lastTransitioned = -1
 
 // These are the labels for each slide
-var tracker_data = [{
-        section: "1",
-    },
-    {
-        section: "2",
-    },
-    {
-        section: "3",
-    },
-    {
-        section: "4",
-    },
-    {
-        section: "5",
-    },
-    {
-        section: "6",
-    },
+var tracker_data = [
+    { section: "1" },
+    { section: "2" },
+    { section: "3" },
+    { section: "4" },
+    { section: "5" },
+    { section: "6" }
 ]
 
 // These are the colours to be used on repeat for the tracker hexagon
 var tracker_colors = ["#5c5c5c", "#424242"]
 
+// ----------------------------------------------------------------------------
+// FIND TIMELINE DIV AND ADD SVG
+// ----------------------------------------------------------------------------
+var timeline = document.getElementById("timeline")
+var svg = d3.select(timeline)
+    .append("svg")
+
+
+var width = 0,
+    height = 0
+
+var clippedArea,
+    electionRects,
+    zoom,
+    zoomedArea,
+    pointsGroup,
+    slide2Group,
+    instance,
+    x, y,
+    xAxis, gX,
+    yAxis, gY,
+    tooltip,
+    lineThickness,
+    circleRadius,
+    mps_over_time_data,
+    number_women_over_time_data,
+    total_mps_over_time_data,
+    mp_base64_data,
+    info_bubbles_data
+
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
-var partyHasLogo = Object.keys(colors);
+var partyHasLogo = Object.keys(colors)
+
 
 // ----------------------------------------------------------------------------
 // WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
 // IF PARTY ISN'T FOUND
 // ----------------------------------------------------------------------------
 function colorParty(party) {
-    if (colors[party] != undefined) {
-        return colors[party];
-    } else {
-        return colors["Other"];
+    "use strict"
+    if (colors[party] !== undefined) {
+        return colors[party]
     }
+    return colors.Other
 }
 
 // ----------------------------------------------------------------------------
 // FORMAT DATE AS Jan 2016
 // ----------------------------------------------------------------------------
 function formatDate(date) {
+    "use strict"
     var monthNames = [
-        "Jan", "Feb", "March",
-        "Apr", "May", "Jun", "Jul",
-        "Aug", "Sept", "Oct",
-        "Nov", "Dec"
-    ];
+            "Jan", "Feb", "March",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sept", "Oct",
+            "Nov", "Dec"
+        ],
+        monthIndex = date.getMonth(),
+        year = date.getFullYear()
 
-    // var day = date.getDate();
-    var monthIndex = date.getMonth();
-    var year = date.getFullYear();
-
-    return monthNames[monthIndex] + ' ' + year;
+    return monthNames[monthIndex] + " " + year
 }
 
 // ----------------------------------------------------------------------------
 // RESET THE GRAPH IF ZOOMED IN AND REMOVE ANY EVENT CALLBACKS
 // ----------------------------------------------------------------------------
 function reset_zoom(callback) {
+    "use strict"
     svg.transition()
         .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
@@ -146,7 +172,13 @@ function update_state() {
 }
 
 // ----------------------------------------------------------------------------
-// INITIALISE THE HEXAGON TRACKER TO IDENTIFY AND SWITCH BETWEEN SLIDES
+// ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗    ██╗  ██╗███████╗██╗  ██╗ █████╗  ██████╗  ██████╗ ███╗   ██╗
+// ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║██╔════╝██╔════╝    ██║  ██║██╔════╝╚██╗██╔╝██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║
+// ██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║███████╗█████╗      ███████║█████╗   ╚███╔╝ ███████║██║  ███╗██║   ██║██╔██╗ ██║
+// ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ██╔══██║██╔══╝   ██╔██╗ ██╔══██║██║   ██║██║   ██║██║╚██╗██║
+// ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗    ██║  ██║███████╗██╔╝ ██╗██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║
+// ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝
+// TRACKER TO IDENTIFY AND SWITCH BETWEEN SLIDES
 // ----------------------------------------------------------------------------
 function initialise_tracker() {
     var tracker_outer_radius = 30
@@ -267,19 +299,26 @@ function initialise_tracker() {
 }
 
 // ----------------------------------------------------------------------------
-// INITIALISE GRAPH. CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
+// ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗    ██╗   ██╗██╗███████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+// ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║██╔════╝██╔════╝    ██║   ██║██║╚══███╔╝██║   ██║██╔══██╗██║     ██║██╔════╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+// ██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║███████╗█████╗      ██║   ██║██║  ███╔╝ ██║   ██║███████║██║     ██║███████╗███████║   ██║   ██║██║   ██║██╔██╗ ██║
+// ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ╚██╗ ██╔╝██║ ███╔╝  ██║   ██║██╔══██║██║     ██║╚════██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+// ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗     ╚████╔╝ ██║███████╗╚██████╔╝██║  ██║███████╗██║███████║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+// ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝      ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+// CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
 // ----------------------------------------------------------------------------
 function initial_render() {
+    'use strict'
     // INITIALISE THE X AND Y AXIS SCALES AND RANGES
     x = d3.scaleTime()
-        .domain([new Date(1915, 01, 01), new Date(2020, 01, 01)])
-        .range([0, width]);
+        .domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
+        .range([0, width])
 
     y = d3.scaleLinear()
         .domain([0, 200]) // Almost 200 MPs by 2020
         .range([height, 0]);
 
-    defs = svg.append("defs")
+    svg.append("defs");
     // Add the group wrapper that contains the whole graph
     var wrapper = svg
         .append("g")
@@ -393,7 +432,13 @@ d3.selection.prototype.moveToBack = function () {
 };
 
 // ----------------------------------------------------------------------------
-// SET UP FOR THE FIRST SLIDE: ALL WOMEN MPS OVER TIME
+// ███████╗██╗██████╗ ███████╗████████╗    ███████╗██╗     ██╗██████╗ ███████
+// ██╔════╝██║██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝██║     ██║██╔══██╗██╔════
+// █████╗  ██║██████╔╝███████╗   ██║       ███████╗██║     ██║██║  ██║█████╗
+// ██╔══╝  ██║██╔══██╗╚════██║   ██║       ╚════██║██║     ██║██║  ██║██╔══╝
+// ██║     ██║██║  ██║███████║   ██║       ███████║███████╗██║██████╔╝███████
+// ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝       ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════
+// ALL WOMEN MPS OVER TIME
 // ----------------------------------------------------------------------------
 function first_slide() {
     d3.select("#slide1-group")
@@ -438,17 +483,6 @@ function first_slide() {
         .enter()
         .append("g")
 
-    // Add circle to signify start and end of term
-    // instance
-    //     .append("circle")
-    //     .attr("r", circleRadius)
-    //     .attr("class", "term-start")
-
-    // instance
-    //     .append("circle")
-    //     .attr("r", circleRadius)
-    //     .attr("class", "term-end")
-
     // Add a line connecting start and end of term
     instance
         .append("line")
@@ -461,29 +495,6 @@ function first_slide() {
         .append("rect")
         .attr("class", "hover-rect")
         .style("opacity", 0)
-
-    // For each start and end point, set position and colour
-    // instance.selectAll(".term-start")
-    //     .attr("cx", function (d) {
-    //         return x(d.term_start)
-    //     })
-    //     .attr("cy", function (d) {
-    //         return y(d.stream)
-    //     })
-    //     .attr("fill", function (d) {
-    //         return colorParty(d.party);
-    //     })
-    //
-    // instance.selectAll(".term-end")
-    //     .attr("cx", function (d) {
-    //         return x(d.term_end)
-    //     })
-    //     .attr("cy", function (d) {
-    //         return y(d.stream)
-    //     })
-    //     .attr("fill", function (d) {
-    //         return colorParty(d.party);
-    //     })
 
     // For each MP line, set position and stroke colour
     instance.selectAll(".line-connect")
@@ -550,17 +561,6 @@ function first_slide() {
                 .style("stroke-width", function (a) {
                     return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
                 })
-            // Also make the start and end circles bigger
-            // pointsGroup
-            //     .selectAll(".term-start")
-            //     .attr("r", function (a) {
-            //         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-            //     })
-            // pointsGroup
-            //     .selectAll(".term-end")
-            //     .attr("r", function (a) {
-            //         return (d.clean_name == a.clean_name) ? 1.5 * circleRadius : circleRadius
-            //     })
         }
         d3.event.preventDefault()
     }
@@ -580,12 +580,6 @@ function first_slide() {
             pointsGroup
                 .selectAll(".line-connect")
                 .style("stroke-width", lineThickness)
-            // pointsGroup
-            //     .selectAll(".term-start")
-            //     .attr("r", circleRadius)
-            // pointsGroup
-            //     .selectAll(".term-end")
-            //     .attr("r", circleRadius)
         })
         .on("touchend", mpMouseover)
         // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
@@ -670,7 +664,14 @@ function to_second_slide() {
 
 
 // ----------------------------------------------------------------------------
-// SECOND SLIDE: SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
+//
+// ███████╗███████╗ ██████╗ ██████╗ ███╗   ██╗██████╗     ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██╔════╝██╔════╝██╔═══██╗████╗  ██║██╔══██╗    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// ███████╗█████╗  ██║     ██║   ██║██╔██╗ ██║██║  ██║    ███████╗██║     ██║██║  ██║█████╗
+// ╚════██║██╔══╝  ██║     ██║   ██║██║╚██╗██║██║  ██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ███████║███████╗╚██████╗╚██████╔╝██║ ╚████║██████╔╝    ███████║███████╗██║██████╔╝███████╗
+// ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝     ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// SHOW THE TOTAL NUMBER OF MPS OVER TIME AS A LINE GRAPH
 // ----------------------------------------------------------------------------
 function second_slide(no_transition = false) {
     // Set all points to full opacity in case they were filtered previously
@@ -806,14 +807,26 @@ function second_slide(no_transition = false) {
     // ------------------------------------------------------------------------
 
     // ----------------------------------------------------------------------------
-    // ACT 0: HIDE THE TOOLTIP
+    //  █████╗  ██████╗████████╗     ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ██╔═████╗
+    // ███████║██║        ██║       ██║██╔██║
+    // ██╔══██║██║        ██║       ████╔╝██║
+    // ██║  ██║╚██████╗   ██║       ╚██████╔╝
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝        ╚═════╝
+    // HIDE THE TOOLTIP
     // ----------------------------------------------------------------------------
     // Hide the tooltip
     d3.select("#tooltip")
         .style("opacity", 0)
 
     // ----------------------------------------------------------------------------
-    // ACT 1: SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
+    // █████╗  ██████╗████████╗     ██╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ███║
+    // ███████║██║        ██║       ╚██║
+    // ██╔══██║██║        ██║        ██║
+    // ██║  ██║╚██████╗   ██║        ██║
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝        ╚═╝
+    // SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
     // ----------------------------------------------------------------------------
 
     // Create a bisector method to find the nearest point in the total mp data
@@ -830,30 +843,14 @@ function second_slide(no_transition = false) {
             return x(a.term_start)
         })
 
-    // pointsGroup.selectAll(".term-end")
-    //     // .attr("r", function (a) {
-    //     //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-    //     // })
-    //     .transition()
-    //     .delay(no_transition ? 500 : 0)
-    //     .duration(no_transition ? 0: 500)
-    //     .attr("cx", function (a) {
-    //         return x(a.term_start)
-    //     })
-    //     .transition()
-    //     .attr("r", function (a) {
-    //         return 3 * circleRadius
-    //     })
-    //     .attr("cy", function (a) {
-    //         return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-    //     })
-    //     .transition()
-    //     .delay(no_transition ? 0 : 2500)
-    //     .duration(no_transition ? 0 : 500)
-    //     .attr("r", 0)
-
     // ----------------------------------------------------------------------------
-    // ACT 2: MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
+    //  █████╗  ██████╗████████╗    ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
+    // ███████║██║        ██║        █████╔╝
+    // ██╔══██║██║        ██║       ██╔═══╝
+    // ██║  ██║╚██████╗   ██║       ███████╗
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝
+    // MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
     // ----------------------------------------------------------------------------
     pointsGroup.selectAll(".line-connect")
         .transition()
@@ -870,23 +867,15 @@ function second_slide(no_transition = false) {
         .duration(no_transition ? 0 : 250)
         .style("opacity", 0)
 
-    // pointsGroup.selectAll(".term-start")
-    //     // .attr("r", function (a) {
-    //     //     return (d.party == a.party) ? 1.5 * circleRadius : circleRadius
-    //     // })
-    //     .transition()
-    //     .delay(no_transition ? 500 : 500)
-    //     .duration(no_transition ? 0 : 500)
-    //     .attr("cx", function (a) {
-    //         return x(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].year)
-    //     })
-    //     .attr("cy", function (a) {
-    //         return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-    //     })
-    //     .style("opacity", 0)
 
     // ----------------------------------------------------------------------------
-    // ACT 3: DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
+    //  █████╗  ██████╗████████╗    ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
+    // ███████║██║        ██║        █████╔╝
+    // ██╔══██║██║        ██║        ╚═══██╗
+    // ██║  ██║╚██████╗   ██║       ██████╔╝
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚═════╝
+    // DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
     // ----------------------------------------------------------------------------
     total_women_mps_path
         .transition()
@@ -895,8 +884,15 @@ function second_slide(no_transition = false) {
         .duration(no_transition ? 0 : 3000)
         .attr("stroke-dashoffset", 0)
 
+
     // ----------------------------------------------------------------------------
-    // ACT 4: RESCALE Y AXIS, FADE IN MP AREAS AND LINES
+    //  █████╗  ██████╗████████╗    ██╗  ██╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ██║  ██║
+    // ███████║██║        ██║       ███████║
+    // ██╔══██║██║        ██║       ╚════██║
+    // ██║  ██║╚██████╗   ██║            ██║
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝            ╚═╝
+    // RESCALE Y AXIS, FADE IN MP AREAS AND LINES
     // ----------------------------------------------------------------------------
     // Change domain to include all MPs and rescale y axis
     y.domain([0, 750])
@@ -1134,40 +1130,12 @@ function second_slide(no_transition = false) {
 }
 
 // ----------------------------------------------------------------------------
-// FIND TIMELINE DIV AND ADD SVG
-// ----------------------------------------------------------------------------
-var timeline = document.getElementById("timeline")
-var svg = d3.select(timeline)
-    .append("svg")
-
-
-// ----------------------------------------------------------------------------
-// GLOBAL VARIABLES TO STORE SPECIFIC SELECTORS AND DATA
-// ----------------------------------------------------------------------------
-var width = 0,
-    height = 0
-
-var clippedArea,
-    electionRects,
-    defs,
-    zoom,
-    zoomedArea,
-    pointsGroup,
-    slide2Group,
-    instance,
-    x, y,
-    xAxis, gX,
-    yAxis, gY,
-    tooltip,
-    lineThickness,
-    circleRadius,
-    mps_over_time_data,
-    number_women_over_time_data,
-    total_mps_over_time_data,
-    mp_base64_data,
-    info_bubbles_data
-
-// ----------------------------------------------------------------------------
+// ██╗███╗   ██╗██╗████████╗
+// ██║████╗  ██║██║╚══██╔══╝
+// ██║██╔██╗ ██║██║   ██║
+// ██║██║╚██╗██║██║   ██║
+// ██║██║ ╚████║██║   ██║
+// ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝
 // GET DATA AND DRAW INITIAL GRAPH, WHILE RESIZING TO FIT WITHIN WINDOW
 // ----------------------------------------------------------------------------
 function draw_graph() {

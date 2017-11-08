@@ -1,7 +1,10 @@
 {
   "ecmaVersion": 6,
   "libs": [],
-  "loadEagerly": ["*.js", "external/*.js"],
+  "loadEagerly": [
+    "*.js",
+    "external/*.js"
+  ],
   "dontLoad": [
     "node_module/**"
   ],
