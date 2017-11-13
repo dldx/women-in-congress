@@ -1,4 +1,19 @@
 // ----------------------------------------------------------------------------
+// ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗    ██████╗  █████╗ ██████╗ ██╗     ██╗ █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗
+// ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔══██╗██╔══██╗██╔══██╗██║     ██║██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
+// ██║ █╗ ██║██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║    ██║██╔██╗ ██║    ██████╔╝███████║██████╔╝██║     ██║███████║██╔████╔██║█████╗  ██╔██╗ ██║   ██║
+// ██║███╗██║██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ██║██║╚██╗██║    ██╔═══╝ ██╔══██║██╔══██╗██║     ██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║
+// ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║    ██║██║ ╚████║    ██║     ██║  ██║██║  ██║███████╗██║██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║
+//  ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ╚═╝╚═╝  ╚═══╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// A visualization celebrating women MPs in the UK House of Commons
+//
+// by Durand D'souza
+//
+// https://github.com/dldx/women-in-parliament
+//
+// ----------------------------------------------------------------------------
 //
 //  ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗         ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██████╗ ██╗     ███████╗███████╗
 // ██╔════╝ ██║     ██╔═══██╗██╔══██╗██╔══██╗██║         ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝
@@ -297,10 +312,10 @@ function initialise_tracker() {
 
 // ----------------------------------------------------------------------------
 // ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗    ██╗   ██╗██╗███████╗██╗   ██╗ █████╗ ██╗     ██╗███████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
-// ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║██╔════╝██╔════╝    ██║   ██║██║╚══███╔╝██║   ██║██╔══██╗██║     ██║██╔════╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
-// ██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║███████╗█████╗      ██║   ██║██║  ███╔╝ ██║   ██║███████║██║     ██║███████╗███████║   ██║   ██║██║   ██║██╔██╗ ██║
-// ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ╚██╗ ██╔╝██║ ███╔╝  ██║   ██║██╔══██║██║     ██║╚════██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
-// ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗     ╚████╔╝ ██║███████╗╚██████╔╝██║  ██║███████╗██║███████║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+// ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║██╔════╝██╔════╝    ██║   ██║██║██╔════╝██║   ██║██╔══██╗██║     ██║╚══███╔╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+// ██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║███████╗█████╗      ██║   ██║██║███████╗██║   ██║███████║██║     ██║  ███╔╝ ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+// ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ╚██╗ ██╔╝██║╚════██║██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+// ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗     ╚████╔╝ ██║███████║╚██████╔╝██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 // ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝      ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
 // CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
 // ----------------------------------------------------------------------------
@@ -312,7 +327,7 @@ function initial_render() {
         .range([0, width])
 
     y = d3.scaleLinear()
-        .domain([0, 200]) // Almost 200 MPs by 2020
+        .domain([0, 210]) // Almost 210 MPs by 2020
         .range([height, 0])
 
     svg.append("defs")
@@ -633,7 +648,7 @@ function to_first_slide() {
         .on("mouseout", null)
 
     // Change domain to include all MPs and rescale y axis
-    y.domain([0, 200])
+    y.domain([0, 210])
     t0.select(".y-axis")
         .call(yAxis)
 
@@ -884,6 +899,20 @@ function second_slide(no_transition = false) {
         .duration(no_transition ? 0 : 3000)
         .attr("stroke-dashoffset", 0)
 
+    // Draw women mps line
+    total_women_mps_path
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
+        .attr("d", total_women_mps_line)
+
+    // Fade in women mps area
+    total_women_mps_path_area
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
+        .attr("d", total_women_mps_area)
+        .style("opacity", 1)
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██╗  ██╗
@@ -894,49 +923,69 @@ function second_slide(no_transition = false) {
     // ╚═╝  ╚═╝ ╚═════╝   ╚═╝            ╚═╝
     // RESCALE Y AXIS, FADE IN MP AREAS AND LINES
     // ----------------------------------------------------------------------------
-    // Change domain to include all MPs and rescale y axis
+
+
+    // Rescale y axis to include all MPs
     y.domain([0, 750])
 
+    slide2Group.append("text")
+        .attr("x", x(new Date(2010, 1, 1)))
+        .attr("y", y(0) - 10 * lineThickness)
+        .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
+            (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
+        .attr("class", "women-label")
+        .text("Women")
+        .style("opacity", 0)
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 500)
+        .style("opacity", 1)
+
+    // Do the actual axis rescale now
     gY
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 5500)
         .duration(no_transition ? 1000 : 750)
         .call(yAxis)
+
+    // Now rescale the women mps line and area to fit new axis
     total_women_mps_path
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 5500)
         .duration(no_transition ? 0 : 750)
         .attr("d", total_women_mps_line)
 
     total_women_mps_path_area
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 5500)
         .duration(no_transition ? 0 : 750)
         .attr("d", total_women_mps_area)
-        .style("opacity", 1)
 
+    // Draw a line and area for the total number of MPs
     max_mps_path
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 6500)
         .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_line)
 
     max_mps_path_area
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 6500)
         .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_area)
         .style("opacity", 1)
 
+    // And a mask for the rects
     mask
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 6500)
         .duration(no_transition ? 0 : 750)
         .attr("d", max_mps_area)
 
+    // Draw a 50% line
     half_max_mps_path
         .transition()
-        .delay(no_transition ? 0 : 4000)
+        .delay(no_transition ? 0 : 6500)
         .duration(no_transition ? 0 : 750)
         .attr("d", half_max_mps_line)
 
@@ -945,22 +994,20 @@ function second_slide(no_transition = false) {
         .on("mouseout", null)
         .on("click", null)
 
+    // ------------------------------------------------------------------------
+    //  █████╗  ██████╗████████╗    ███████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝
+    // ███████║██║        ██║       ███████╗
+    // ██╔══██║██║        ██║       ╚════██║
+    // ██║  ██║╚██████╗   ██║       ███████║
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝
+    // DRAW LABELS FOR EACH AREA AND OVERLAY RECTS FOR EACH PARLIAMENT
+    // ----------------------------------------------------------------------------
+
     svg.transition()
-        .delay(no_transition ? 0 : 4500)
+        .delay(no_transition ? 0 : 7000)
         .on("end", () => {
             // Add text labels for areas
-            slide2Group.append("text")
-                .attr("x", x(new Date(2010, 1, 1)))
-                .attr("y", y(0) - 10 * lineThickness)
-                .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
-                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
-                .attr("class", "women-label")
-                .text("Women")
-                .style("opacity", 0)
-                .transition()
-                .duration(no_transition ? 0 : 500)
-                .style("opacity", 1)
-
             slide2Group.append("text")
                 .attr("x", x(new Date(2010, 1, 1)))
                 .attr("y", y(500))
@@ -982,6 +1029,7 @@ function second_slide(no_transition = false) {
                     return y(d.total_mps / 2)
                 })
                 .curve(d3.curveBundle.beta(0.75))
+
             // Add path for text to follow
             slide2Group
                 .append("defs")

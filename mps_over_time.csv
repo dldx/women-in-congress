@@ -288,7 +288,7 @@
 "Patsy CALTON","Cheadle",2001-06-07,2005-05-29,"LD",FALSE,NA,"patsycalton",14
 "Sue DOUGHTY","Guildford",2001-06-07,2005-05-05,"LD",FALSE,NA,"suedoughty",20
 "Annabelle EWING","Perth",2001-06-07,2005-05-05,"SNP",FALSE,NA,"annabelleewing",24
-"Michelle GILDERNEW","Fermanagh & South Tyrone",2001-06-07,2020-01-01,"SF",FALSE,"Did not take seat","michellegildernew",26
+"Michelle GILDERNEW","Fermanagh & South Tyrone",2001-06-07,2015-05-07,"SF",FALSE,"Did not take seat","michellegildernew",26
 "Lady Sylvia HERMON","North Down",2001-06-07,2020-01-01,"UU",FALSE,NA,"sylviahermon",29
 "Ann McKECHIN","Glasgow Maryhill",2001-06-07,2005-05-05,"Lab",FALSE,NA,"annmckechin",30
 "Meg MUNN","Sheffield, Heeley",2001-06-07,2015-03-30,"Lab",FALSE,NA,"megmunn",39
@@ -328,7 +328,7 @@
 "Alison SEABECK","Plymouth, Devonport",2005-05-05,2010-05-06,"Lab",FALSE,NA,"alisonseabeck",97
 "Angela C SMITH","Sheffield, Hillsborough",2005-05-05,2010-05-06,"Lab",FALSE,NA,"angelacsmith",100
 "Anne SNELGROVE","South Swindon",2005-05-05,2010-05-06,"Lab",FALSE,NA,"annesnelgrove",109
-"Jo SWINSON","East Dunbartonshire",2005-05-05,2020-01-01,"LD",FALSE,NA,"joswinson",114
+"Jo SWINSON","East Dunbartonshire",2005-05-05,2015-05-07,"LD",FALSE,NA,"joswinson",114
 "Emily THORNBERRY","Islington South & Finsbury",2005-05-05,2020-01-01,"Lab",FALSE,NA,"emilythornberry",120
 "Kitty USSHER","Burnley",2005-05-05,2010-05-06,"Lab",FALSE,NA,"kittyussher",121
 "Rt Hon Theresa VILLIERS","Chipping Barnet",2005-05-05,2020-01-01,"Con",FALSE,NA,"theresavilliers",122
@@ -384,7 +384,7 @@
 "Shabana MAHMOOD","Birmingham, Ladywood",2010-05-06,2020-01-01,"Lab",FALSE,NA,"shabanamahmood",87
 "Alison MCGOVERN","Wirral South",2010-05-06,2020-01-01,"Lab",FALSE,NA,"alisonmcgovern",88
 "Catherine MCKINNELL","Newcastle upon Tyne North",2010-05-06,2020-01-01,"Lab",FALSE,NA,"catherinemckinnell",90
-"Rt Hon Esther MCVEY","Wirral West",2010-05-06,2020-01-01,"Con",FALSE,NA,"esthermcvey",91
+"Rt Hon Esther MCVEY","Wirral West",2010-05-06,2015-05-07,"Con",FALSE,NA,"esthermcvey",91
 "Penny MORDAUNT","Portsmouth North",2010-05-06,2020-01-01,"Con",FALSE,NA,"pennymordaunt",92
 "Rt Hon Nicky MORGAN","Loughborough",2010-05-06,2020-01-01,"Con",FALSE,NA,"nickymorgan",93
 "Anne Marie MORRIS","Newton Abbot",2010-05-06,2020-01-01,"Con",FALSE,NA,"annemariemorris",94
@@ -435,85 +435,120 @@
 "Heidi ALLEN","South Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,NA,"heidiallen",12
 "Caroline ANSELL","Eastbourne",2015-05-07,2017-05-03,"Con",FALSE,NA,"carolineansell",20
 "Victoria ATKINS","Louth and Horncastle",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaatkins",22
-"Hannah BARDELL","Livingston",2015-05-07,2020-01-01,"SNP",FALSE,NA,"hannahbardell",27
-"Mhairi BLACK","Paisley and Renfrewshire South",2015-05-07,2020-01-01,"SNP",FALSE,NA,"mhairiblack",32
-"Kirsty BLACKMAN","Aberdeen North",2015-05-07,2020-01-01,"SNP",FALSE,NA,"kirstyblackman",34
-"Victoria BORWICK","Kensington",2015-05-07,2017-05-03,"Con",FALSE,NA,"victoriaborwick",35
-"Deidre BROCK","Edinburgh North and Leith",2015-05-07,2020-01-01,"SNP",FALSE,NA,"deidrebrock",36
-"Ruth CADBURY","Brentford and Isleworth",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthcadbury",37
-"Lisa CAMERON","East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,"SNP",FALSE,NA,"lisacameron",39
-"Maria CAULFIELD","Lewes",2015-05-07,2020-01-01,"Con",FALSE,NA,"mariacaulfield",51
-"Joanna CHERRY","Edinburgh South West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"joannacherry",52
-"Jo CHURCHILL","Bury St Edmunds",2015-05-07,2020-01-01,"Con",FALSE,NA,"jochurchill",54
-"Julie COOPER","Burnley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"juliecooper",64
-"Jo COX","Batley and Spen",2015-05-07,2016-06-16,"Lab",FALSE,NA,"jocox",67
-"Angela CRAWLEY","Lanark and Hamilton East",2015-05-07,2020-01-01,"SNP",FALSE,NA,"angelacrawley",73
-"Judith CUMMINS","Bradford South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"judithcummins",75
-"Mims DAVIES","Eastleigh",2015-05-07,2020-01-01,"Con",FALSE,NA,"mimsdavies",84
-"Thangam DEBBONAIRE","Bristol West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"thangamdebbonaire",86
-"Michelle DONELAN","Chippenham",2015-05-07,2020-01-01,"Con",FALSE,NA,"michelledonelan",96
-"Flick DRUMMOND","Portsmouth South",2015-05-07,2017-05-03,"Con",FALSE,NA,"flickdrummond",97
-"Marion FELLOWS","Motherwell and Wishaw",2015-05-07,2020-01-01,"SNP",FALSE,NA,"marionfellows",100
-"Suella FERNANDES","Fareham",2015-05-07,2020-01-01,"Con",FALSE,NA,"suellafernandes",103
-"Margaret FERRIER","Rutherglen and Hamilton West",2015-05-07,2017-05-03,"SNP",FALSE,NA,"margaretferrier",118
-"Colleen FLETCHER","Coventry North East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"colleenfletcher",121
-"Vicky FOXCROFT","Lewisham, Deptford",2015-05-07,2020-01-01,"Lab",FALSE,NA,"vickyfoxcroft",124
-"Lucy FRAZER","South East Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,NA,"lucyfrazer",127
-"Nusrat GHANI","Wealden",2015-05-07,2020-01-01,"Con",FALSE,NA,"nusratghani",128
-"Patricia GIBSON","North Ayrshire and Arran",2015-05-07,2020-01-01,"SNP",FALSE,NA,"patriciagibson",132
-"Margaret GREENWOOD","Wirral West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"margaretgreenwood",133
-"Louise HAIGH","Sheffield, Heeley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"louisehaigh",137
-"Carolyn HARRIS","Swansea East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"carolynharris",139
-"Helen HAYES","Dulwich and West Norwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"helenhayes",142
-"Sue HAYMAN","Workington",2015-05-07,2020-01-01,"Lab",FALSE,NA,"suehayman",149
-"Kate HOLLERN","Blackburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"katehollern",150
-"Rupa HUQ","Ealing Central and Acton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rupahuq",151
-"Andrea  JENKYNS","Morley and Outwood",2015-05-07,2020-01-01,"Con",FALSE,NA,"andreajenkyns",152
-"Seema KENNEDY","South Ribble",2015-05-07,2020-01-01,"Con",FALSE,NA,"seemakennedy",153
-"Rebecca LONG BAILEY","Salford and Eccles",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rebeccalongbailey",154
-"Holly LYNCH","Halifax",2015-05-07,2020-01-01,"Lab",FALSE,NA,"hollylynch",155
-"Rachael MASKELL","York Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rachaelmaskell",156
-"Tania MATHIAS","Twickenham",2015-05-07,2017-05-03,"Con",FALSE,NA,"taniamathias",157
-"Natalie McGARRY","Glasgow East",2015-05-07,2017-05-03,"SNP",FALSE,NA,"nataliemcgarry",158
-"Anne McLAUGHLIN","Glasgow North East",2015-05-07,2017-05-03,"SNP",FALSE,NA,"annemclaughlin",159
-"Amanda MILLING","Cannock Chase",2015-05-07,2020-01-01,"Con",FALSE,NA,"amandamilling",160
-"Carol MONAGHAN","Glasgow North West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"carolmonaghan",161
-"Wendy MORTON","Aldridge-Brownhills",2015-05-07,2020-01-01,"Con",FALSE,NA,"wendymorton",162
-"Melanie ONN","Great Grimsby",2015-05-07,2020-01-01,"Lab",FALSE,NA,"melanieonn",163
-"Kate OSAMOR","Edmonton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"kateosamor",164
-"Kirsten OSWALD","East Renfrewshire",2015-05-07,2017-05-03,"SNP",FALSE,NA,"kirstenoswald",165
-"Jess PHILLIPS","Birmingham, Yardley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jessphillips",166
-"Rebecca POW","Taunton Deane",2015-05-07,2020-01-01,"Con",FALSE,NA,"rebeccapow",167
-"Victoria PRENTIS","Banbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaprentis",168
-"Angela RAYNER","Ashton-Under-Lyne",2015-05-07,2020-01-01,"Lab",FALSE,NA,"angelarayner",169
-"Christina REES","Neath",2015-05-07,2020-01-01,"Lab",FALSE,NA,"christinarees",170
-"Marie RIMMER","St Helens South and Whiston",2015-05-07,2020-01-01,"Lab",FALSE,NA,"marierimmer",171
-"Mary ROBINSON","Cheadle",2015-05-07,2020-01-01,"Con",FALSE,NA,"maryrobinson",172
-"Antoinette SANDBACH","Eddisbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"antoinettesandbach",173
-"Liz SAVILLE-ROBERTS","Dwyfor Meirionnydd",2015-05-07,2020-01-01,"PC",FALSE,NA,"lizsavilleroberts",174
-"Naz SHAH","Bradford West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"nazshah",175
-"Paula SHERRIFF","Dewsbury",2015-05-07,2020-01-01,"Lab",FALSE,NA,"paulasherriff",176
-"Tulip SIDDIQ","Hampstead and Kilburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"tulipsiddiq",177
-"Ruth SMEETH","Stoke-On-Trent North",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthsmeeth",178
-"Cat SMITH","Lancaster and Fleetwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catsmith",179
-"Karin SMYTH","Bristol South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"karinsmyth",180
-"Amanda SOLLOWAY","Derby North",2015-05-07,2017-05-03,"Con",FALSE,NA,"amandasolloway",181
-"Jo STEVENS","Cardiff Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jostevens",182
-"Alison THEWLISS","Glasgow Central",2015-05-07,2020-01-01,"SNP",FALSE,NA,"alisonthewliss",183
-"Michelle THOMSON","Edinburgh West",2015-05-07,2017-05-03,"SNP",FALSE,NA,"michellethomson",184
-"Maggie THROUP","Erewash",2015-05-07,2020-01-01,"Con",FALSE,NA,"maggiethroup",185
-"Kelly TOLHURST","Rochester and Strood",2015-05-07,2020-01-01,"Con",FALSE,NA,"kellytolhurst",186
-"Anne-Marie TREVELYAN","Berwick-Upon-Tweed",2015-05-07,2020-01-01,"Con",FALSE,NA,"annemarietrevelyan",187
-"Anna TURLEY","Redcar",2015-05-07,2020-01-01,"Lab",FALSE,NA,"annaturley",188
-"Catherine WEST","Hornsey and Wood Green",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catherinewest",189
-"Helen WHATELY","Faversham and Mid Kent",2015-05-07,2020-01-01,"Con",FALSE,NA,"helenwhately",190
-"Philippa WHITFORD","Central Ayrshire",2015-05-07,2020-01-01,"SNP",FALSE,NA,"philippawhitford",191
-"Corri WILSON","Ayr, Carrick and Cumnock",2015-05-07,2017-05-03,"SNP",FALSE,NA,"corriwilson",192
-"Joan RYAN","Enfield North",2015-05-07,2020-01-01,"Lab",FALSE,NA,"joanryan",193
-"Dawn BUTLER","Brent Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"dawnbutler",194
-"Gill FURNISS","Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,"Lab",TRUE,NA,"gillfurniss",195
-"Dr Rosena ALLIN-KHAN","Tooting",2016-06-16,2020-01-01,"Lab",TRUE,NA,"rosenaallinkhan",67
-"Tracy BRABIN","Batley and Spen",2016-10-20,2020-01-01,"Lab",TRUE,NA,"tracybrabin",196
-"Sarah OLNEY","Richmond Park",2016-12-01,2017-05-03,"LD",TRUE,NA,"saraholney",197
-"Caroline JOHNSON","Sleaford and North Hykeham",2016-12-08,2020-01-01,"Con",TRUE,NA,"carolinejohnson",198
-"Trudy HARRISON","Copeland",2017-02-23,2020-01-01,"Con",TRUE,NA,"trudyharrison",199
+"Hannah BARDELL","Livingston",2015-05-07,2020-01-01,"SNP",FALSE,NA,"hannahbardell",26
+"Mhairi BLACK","Paisley and Renfrewshire South",2015-05-07,2020-01-01,"SNP",FALSE,NA,"mhairiblack",27
+"Kirsty BLACKMAN","Aberdeen North",2015-05-07,2020-01-01,"SNP",FALSE,NA,"kirstyblackman",32
+"Victoria BORWICK","Kensington",2015-05-07,2017-05-03,"Con",FALSE,NA,"victoriaborwick",34
+"Deidre BROCK","Edinburgh North and Leith",2015-05-07,2020-01-01,"SNP",FALSE,NA,"deidrebrock",35
+"Ruth CADBURY","Brentford and Isleworth",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthcadbury",36
+"Lisa CAMERON","East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,"SNP",FALSE,NA,"lisacameron",37
+"Maria CAULFIELD","Lewes",2015-05-07,2020-01-01,"Con",FALSE,NA,"mariacaulfield",39
+"Joanna CHERRY","Edinburgh South West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"joannacherry",51
+"Jo CHURCHILL","Bury St Edmunds",2015-05-07,2020-01-01,"Con",FALSE,NA,"jochurchill",52
+"Julie COOPER","Burnley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"juliecooper",54
+"Jo COX","Batley and Spen",2015-05-07,2016-06-16,"Lab",FALSE,NA,"jocox",64
+"Angela CRAWLEY","Lanark and Hamilton East",2015-05-07,2020-01-01,"SNP",FALSE,NA,"angelacrawley",67
+"Judith CUMMINS","Bradford South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"judithcummins",73
+"Mims DAVIES","Eastleigh",2015-05-07,2020-01-01,"Con",FALSE,NA,"mimsdavies",75
+"Thangam DEBBONAIRE","Bristol West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"thangamdebbonaire",84
+"Michelle DONELAN","Chippenham",2015-05-07,2020-01-01,"Con",FALSE,NA,"michelledonelan",86
+"Flick DRUMMOND","Portsmouth South",2015-05-07,2017-05-03,"Con",FALSE,NA,"flickdrummond",91
+"Marion FELLOWS","Motherwell and Wishaw",2015-05-07,2020-01-01,"SNP",FALSE,NA,"marionfellows",96
+"Suella FERNANDES","Fareham",2015-05-07,2020-01-01,"Con",FALSE,NA,"suellafernandes",97
+"Margaret FERRIER","Rutherglen and Hamilton West",2015-05-07,2017-05-03,"SNP",FALSE,NA,"margaretferrier",100
+"Colleen FLETCHER","Coventry North East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"colleenfletcher",103
+"Vicky FOXCROFT","Lewisham, Deptford",2015-05-07,2020-01-01,"Lab",FALSE,NA,"vickyfoxcroft",114
+"Lucy FRAZER","South East Cambridgeshire",2015-05-07,2020-01-01,"Con",FALSE,NA,"lucyfrazer",118
+"Nusrat GHANI","Wealden",2015-05-07,2020-01-01,"Con",FALSE,NA,"nusratghani",121
+"Patricia GIBSON","North Ayrshire and Arran",2015-05-07,2020-01-01,"SNP",FALSE,NA,"patriciagibson",124
+"Margaret GREENWOOD","Wirral West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"margaretgreenwood",127
+"Louise HAIGH","Sheffield, Heeley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"louisehaigh",128
+"Carolyn HARRIS","Swansea East",2015-05-07,2020-01-01,"Lab",FALSE,NA,"carolynharris",132
+"Helen HAYES","Dulwich and West Norwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"helenhayes",133
+"Sue HAYMAN","Workington",2015-05-07,2020-01-01,"Lab",FALSE,NA,"suehayman",137
+"Kate HOLLERN","Blackburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"katehollern",139
+"Rupa HUQ","Ealing Central and Acton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rupahuq",142
+"Andrea  JENKYNS","Morley and Outwood",2015-05-07,2020-01-01,"Con",FALSE,NA,"andreajenkyns",149
+"Seema KENNEDY","South Ribble",2015-05-07,2020-01-01,"Con",FALSE,NA,"seemakennedy",150
+"Rebecca LONG BAILEY","Salford and Eccles",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rebeccalongbailey",151
+"Holly LYNCH","Halifax",2015-05-07,2020-01-01,"Lab",FALSE,NA,"hollylynch",152
+"Rachael MASKELL","York Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"rachaelmaskell",153
+"Tania MATHIAS","Twickenham",2015-05-07,2017-05-03,"Con",FALSE,NA,"taniamathias",154
+"Natalie McGARRY","Glasgow East",2015-05-07,2017-05-03,"SNP",FALSE,NA,"nataliemcgarry",155
+"Anne McLAUGHLIN","Glasgow North East",2015-05-07,2017-05-03,"SNP",FALSE,NA,"annemclaughlin",156
+"Amanda MILLING","Cannock Chase",2015-05-07,2020-01-01,"Con",FALSE,NA,"amandamilling",157
+"Carol MONAGHAN","Glasgow North West",2015-05-07,2020-01-01,"SNP",FALSE,NA,"carolmonaghan",158
+"Wendy MORTON","Aldridge-Brownhills",2015-05-07,2020-01-01,"Con",FALSE,NA,"wendymorton",159
+"Melanie ONN","Great Grimsby",2015-05-07,2020-01-01,"Lab",FALSE,NA,"melanieonn",160
+"Kate OSAMOR","Edmonton",2015-05-07,2020-01-01,"Lab",FALSE,NA,"kateosamor",161
+"Kirsten OSWALD","East Renfrewshire",2015-05-07,2017-05-03,"SNP",FALSE,NA,"kirstenoswald",162
+"Jess PHILLIPS","Birmingham, Yardley",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jessphillips",163
+"Rebecca POW","Taunton Deane",2015-05-07,2020-01-01,"Con",FALSE,NA,"rebeccapow",164
+"Victoria PRENTIS","Banbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"victoriaprentis",165
+"Angela RAYNER","Ashton-Under-Lyne",2015-05-07,2020-01-01,"Lab",FALSE,NA,"angelarayner",166
+"Christina REES","Neath",2015-05-07,2020-01-01,"Lab",FALSE,NA,"christinarees",167
+"Marie RIMMER","St Helens South and Whiston",2015-05-07,2020-01-01,"Lab",FALSE,NA,"marierimmer",168
+"Mary ROBINSON","Cheadle",2015-05-07,2020-01-01,"Con",FALSE,NA,"maryrobinson",169
+"Antoinette SANDBACH","Eddisbury",2015-05-07,2020-01-01,"Con",FALSE,NA,"antoinettesandbach",170
+"Liz SAVILLE-ROBERTS","Dwyfor Meirionnydd",2015-05-07,2020-01-01,"PC",FALSE,NA,"lizsavilleroberts",171
+"Naz SHAH","Bradford West",2015-05-07,2020-01-01,"Lab",FALSE,NA,"nazshah",172
+"Paula SHERRIFF","Dewsbury",2015-05-07,2020-01-01,"Lab",FALSE,NA,"paulasherriff",173
+"Tulip SIDDIQ","Hampstead and Kilburn",2015-05-07,2020-01-01,"Lab",FALSE,NA,"tulipsiddiq",174
+"Ruth SMEETH","Stoke-On-Trent North",2015-05-07,2020-01-01,"Lab",FALSE,NA,"ruthsmeeth",175
+"Cat SMITH","Lancaster and Fleetwood",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catsmith",176
+"Karin SMYTH","Bristol South",2015-05-07,2020-01-01,"Lab",FALSE,NA,"karinsmyth",177
+"Amanda SOLLOWAY","Derby North",2015-05-07,2017-05-03,"Con",FALSE,NA,"amandasolloway",178
+"Jo STEVENS","Cardiff Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"jostevens",179
+"Alison THEWLISS","Glasgow Central",2015-05-07,2020-01-01,"SNP",FALSE,NA,"alisonthewliss",180
+"Michelle THOMSON","Edinburgh West",2015-05-07,2017-05-03,"SNP",FALSE,NA,"michellethomson",181
+"Maggie THROUP","Erewash",2015-05-07,2020-01-01,"Con",FALSE,NA,"maggiethroup",182
+"Kelly TOLHURST","Rochester and Strood",2015-05-07,2020-01-01,"Con",FALSE,NA,"kellytolhurst",183
+"Anne-Marie TREVELYAN","Berwick-Upon-Tweed",2015-05-07,2020-01-01,"Con",FALSE,NA,"annemarietrevelyan",184
+"Anna TURLEY","Redcar",2015-05-07,2020-01-01,"Lab",FALSE,NA,"annaturley",185
+"Catherine WEST","Hornsey and Wood Green",2015-05-07,2020-01-01,"Lab",FALSE,NA,"catherinewest",186
+"Helen WHATELY","Faversham and Mid Kent",2015-05-07,2020-01-01,"Con",FALSE,NA,"helenwhately",187
+"Philippa WHITFORD","Central Ayrshire",2015-05-07,2020-01-01,"SNP",FALSE,NA,"philippawhitford",188
+"Corri WILSON","Ayr, Carrick and Cumnock",2015-05-07,2017-05-03,"SNP",FALSE,NA,"corriwilson",189
+"Joan RYAN","Enfield North",2015-05-07,2020-01-01,"Lab",FALSE,NA,"joanryan",190
+"Dawn BUTLER","Brent Central",2015-05-07,2020-01-01,"Lab",FALSE,NA,"dawnbutler",191
+"Gill FURNISS","Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,"Lab",TRUE,NA,"gillfurniss",192
+"Dr Rosena ALLIN-KHAN","Tooting",2016-06-16,2020-01-01,"Lab",TRUE,NA,"rosenaallinkhan",64
+"Tracy BRABIN","Batley and Spen",2016-10-20,2020-01-01,"Lab",TRUE,NA,"tracybrabin",193
+"Sarah OLNEY","Richmond Park",2016-12-01,2017-05-03,"LD",TRUE,NA,"saraholney",194
+"Caroline JOHNSON","Sleaford and North Hykeham",2016-12-08,2020-01-01,"Con",TRUE,NA,"carolinejohnson",195
+"Trudy HARRISON","Copeland",2017-02-23,2020-01-01,"Con",TRUE,NA,"trudyharrison",196
+"Kirstene HAIR","Angus",2017-06-08,2020-01-01,"Con",FALSE,NA,"kirstenehair",6
+"Stephanie PEACOCK","Barnsley East",2017-06-08,2020-01-01,"Lab",FALSE,NA,"stephaniepeacock",10
+"Wera HOBHOUSE","Bath",2017-06-08,2020-01-01,"LD",FALSE,NA,"werahobhouse",20
+"Marsha DE CORDOVA","Battersea",2017-06-08,2020-01-01,"Lab",FALSE,NA,"marshadecordova",30
+"Emma LITTLE-PENGELLY","Belfast South",2017-06-08,2020-01-01,"DUP",FALSE,NA,"emmalittlepengelly",34
+"Preet GILL","Birmingham, Edgbaston",2017-06-08,2020-01-01,"Lab",FALSE,NA,"preetgill",48
+"Liz TWIST","Blaydon",2017-06-08,2020-01-01,"Lab",FALSE,NA,"liztwist",56
+"Rosie DUFFIELD","Canterbury",2017-06-08,2020-01-01,"Lab",FALSE,NA,"rosieduffield",74
+"Anna McMORRIN","Cardiff North",2017-06-08,2020-01-01,"Lab",FALSE,NA,"annamcmorrin",81
+"Vicky FORD","Chelmsford",2017-06-08,2020-01-01,"Con",FALSE,NA,"vickyford",82
+"Gillian KEEGAN","Chichester",2017-06-08,2020-01-01,"Con",FALSE,NA,"gilliankeegan",91
+"Thelma WALKER","Colne Valley",2017-06-08,2020-01-01,"Lab",FALSE,NA,"thelmawalker",100
+"Laura SMITH","Crewe and Nantwich",2017-06-08,2020-01-01,"Lab",FALSE,NA,"laurasmith",107
+"Sarah JONES","Croydon Central",2017-06-08,2020-01-01,"Lab",FALSE,NA,"sarahjones",117
+"Christine JARDINE","Edinburgh West",2017-06-08,2020-01-01,"LD",FALSE,NA,"christinejardine",130
+"Elisha McCALLION","Foyle",2017-06-08,2020-01-01,"SF",FALSE,NA,"elishamccallion",138
+"Tonia ANTONIAZZI","Gower",2017-06-08,2020-01-01,"Lab",FALSE,NA,"toniaantoniazzi",154
+"Ruth GEORGE","""High Peak""",2017-06-08,2020-01-01,"Lab",FALSE,NA,"ruthgeorge",155
+"Julia DOCKERILL","""Hornchurch and Upminster""",2017-06-08,2020-01-01,"Con",FALSE,NA,"juliadockerill",156
+"Emma DENT COAD","""Kensington""",2017-06-08,2020-01-01,"Lab",FALSE,NA,"emmadentcoad",162
+"Emma HARDY","Kingston upon Hull West and Hessle",2017-06-08,2020-01-01,"Lab",FALSE,NA,"emmahardy",178
+"Lesley LAIRD","Kirkcaldy and Cowdenbeath",2017-06-08,2020-01-01,"Lab",FALSE,NA,"lesleylaird",181
+"Jo PLATT","Leigh",2017-06-08,2020-01-01,"Lab",FALSE,NA,"joplatt",189
+"Ellie REEVES","Lewisham West and Penge",2017-06-08,2020-01-01,"Lab",FALSE,NA,"elliereeves",194
+"Karen LEE","Lincoln",2017-06-08,2020-01-01,"Lab",FALSE,NA,"karenlee",197
+"Laura PIDCOCK","North West Durham",2017-06-08,2020-01-01,"Lab",FALSE,NA,"laurapidcock",198
+"Anneliese DODDS","Oxford East",2017-06-08,2020-01-01,"Lab",FALSE,NA,"anneliesedodds",199
+"Layla MORAN","Oxford West and Abingdon",2017-06-08,2020-01-01,"LD",FALSE,NA,"laylamoran",200
+"Fiona ONASANYA","Peterborough",2017-06-08,2020-01-01,"Lab",FALSE,NA,"fionaonasanya",201
+"Rachel MACLEAN","Redditch",2017-06-08,2020-01-01,"Con",FALSE,NA,"rachelmaclean",202
+"Kemi BADENOCH","Saffron Walden",2017-06-08,2020-01-01,"Con",FALSE,NA,"kemibadenoch",203
+"Eleanor SMITH","Wolverhampton South West",2017-06-08,2020-01-01,"Lab",FALSE,NA,"eleanorsmith",204
+"Michelle GILDERNEW","Fermanagh & South Tyrone",2017-06-08,2020-01-01,"SF",FALSE,"Did not take seat","michellegildernew",205
+"Jo SWINSON","East Dunbartonshire",2017-06-08,2020-01-01,"LD",FALSE,NA,"joswinson",206
+"Rt Hon Esther MCVEY","Tatton",2017-06-08,2020-01-01,"Con",FALSE,NA,"esthermcvey",207

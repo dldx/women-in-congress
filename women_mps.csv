@@ -288,7 +288,7 @@ id,name,constituency,term_start,term_end,party,byelection,notes,clean_name,strea
 10776,Patsy CALTON,Cheadle,2001-06-07,2005-05-29,LD,False,,patsycalton,14
 10863,Sue DOUGHTY,Guildford,2001-06-07,2005-05-05,LD,False,,suedoughty,20
 10879,Annabelle EWING,Perth,2001-06-07,2005-05-05,SNP,False,,annabelleewing,24
-10913,Michelle GILDERNEW,Fermanagh & South Tyrone,2001-06-07,2020-01-01,SF,False,Did not take seat,michellegildernew,26
+10913,Michelle GILDERNEW,Fermanagh & South Tyrone,2001-06-07,2015-05-07,SF,False,Did not take seat,michellegildernew,26
 10958,Lady Sylvia HERMON,North Down,2001-06-07,2020-01-01,UU,False,,sylviahermon,29
 11076,Ann McKECHIN,Glasgow Maryhill,2001-06-07,2005-05-05,Lab,False,,annmckechin,30
 11128,Meg MUNN,"Sheffield, Heeley",2001-06-07,2015-03-30,Lab,False,,megmunn,39
@@ -328,7 +328,7 @@ id,name,constituency,term_start,term_end,party,byelection,notes,clean_name,strea
 11760,Alison SEABECK,"Plymouth, Devonport",2005-05-05,2010-05-06,Lab,False,,alisonseabeck,97
 11814,Angela C SMITH,"Sheffield, Hillsborough",2005-05-05,2010-05-06,Lab,False,,angelacsmith,100
 11866,Anne SNELGROVE,South Swindon,2005-05-05,2010-05-06,Lab,False,,annesnelgrove,109
-11971,Jo SWINSON,East Dunbartonshire,2005-05-05,2020-01-01,LD,False,,joswinson,114
+11971,Jo SWINSON,East Dunbartonshire,2005-05-05,2015-05-07,LD,False,,joswinson,114
 11656,Emily THORNBERRY,Islington South & Finsbury,2005-05-05,2020-01-01,Lab,False,,emilythornberry,120
 11464,Kitty USSHER,Burnley,2005-05-05,2010-05-06,Lab,False,,kittyussher,121
 11500,Rt Hon Theresa VILLIERS,Chipping Barnet,2005-05-05,2020-01-01,Con,False,,theresavilliers,122
@@ -384,7 +384,7 @@ id,name,constituency,term_start,term_end,party,byelection,notes,clean_name,strea
 24788,Shabana MAHMOOD,"Birmingham, Ladywood",2010-05-06,2020-01-01,Lab,False,,shabanamahmood,87
 24897,Alison MCGOVERN,Wirral South,2010-05-06,2020-01-01,Lab,False,,alisonmcgovern,88
 24818,Catherine MCKINNELL,Newcastle upon Tyne North,2010-05-06,2020-01-01,Lab,False,,catherinemckinnell,90
-24882,Rt Hon Esther MCVEY,Wirral West,2010-05-06,2020-01-01,Con,False,,esthermcvey,91
+24882,Rt Hon Esther MCVEY,Wirral West,2010-05-06,2015-05-07,Con,False,,esthermcvey,91
 24938,Penny MORDAUNT,Portsmouth North,2010-05-06,2020-01-01,Con,False,,pennymordaunt,92
 24732,Rt Hon Nicky MORGAN,Loughborough,2010-05-06,2020-01-01,Con,False,,nickymorgan,93
 24912,Anne Marie MORRIS,Newton Abbot,2010-05-06,2020-01-01,Con,False,,annemariemorris,94
@@ -435,85 +435,120 @@ id,name,constituency,term_start,term_end,party,byelection,notes,clean_name,strea
 25348,Heidi ALLEN,South Cambridgeshire,2015-05-07,2020-01-01,Con,False,,heidiallen,12
 25335,Caroline ANSELL,Eastbourne,2015-05-07,2017-05-03,Con,False,,carolineansell,20
 25424,Victoria ATKINS,Louth and Horncastle,2015-05-07,2020-01-01,Con,False,,victoriaatkins,22
-25409,Hannah BARDELL,Livingston,2015-05-07,2020-01-01,SNP,False,,hannahbardell,27
-25269,Mhairi BLACK,Paisley and Renfrewshire South,2015-05-07,2020-01-01,SNP,False,,mhairiblack,32
-25314,Kirsty BLACKMAN,Aberdeen North,2015-05-07,2020-01-01,SNP,False,,kirstyblackman,34
-25311,Victoria BORWICK,Kensington,2015-05-07,2017-05-03,Con,False,,victoriaborwick,35
-25336,Deidre BROCK,Edinburgh North and Leith,2015-05-07,2020-01-01,SNP,False,,deidrebrock,36
-25343,Ruth CADBURY,Brentford and Isleworth,2015-05-07,2020-01-01,Lab,False,,ruthcadbury,37
-25276,Lisa CAMERON,"East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,SNP,False,,lisacameron,39
-25397,Maria CAULFIELD,Lewes,2015-05-07,2020-01-01,Con,False,,mariacaulfield,51
-25404,Joanna CHERRY,Edinburgh South West,2015-05-07,2020-01-01,SNP,False,,joannacherry,52
-25408,Jo CHURCHILL,Bury St Edmunds,2015-05-07,2020-01-01,Con,False,,jochurchill,54
-25283,Julie COOPER,Burnley,2015-05-07,2020-01-01,Lab,False,,juliecooper,64
-25394,Jo COX,Batley and Spen,2015-05-07,2016-06-16,Lab,False,,jocox,67
-25295,Angela CRAWLEY,Lanark and Hamilton East,2015-05-07,2020-01-01,SNP,False,,angelacrawley,73
-25393,Judith CUMMINS,Bradford South,2015-05-07,2020-01-01,Lab,False,,judithcummins,75
-25330,Mims DAVIES,Eastleigh,2015-05-07,2020-01-01,Con,False,,mimsdavies,84
-25402,Thangam DEBBONAIRE,Bristol West,2015-05-07,2020-01-01,Lab,False,,thangamdebbonaire,86
-25316,Michelle DONELAN,Chippenham,2015-05-07,2020-01-01,Con,False,,michelledonelan,96
-25392,Flick DRUMMOND,Portsmouth South,2015-05-07,2017-05-03,Con,False,,flickdrummond,97
-25277,Marion FELLOWS,Motherwell and Wishaw,2015-05-07,2020-01-01,SNP,False,,marionfellows,100
-25272,Suella FERNANDES,Fareham,2015-05-07,2020-01-01,Con,False,,suellafernandes,103
-25287,Margaret FERRIER,Rutherglen and Hamilton West,2015-05-07,2017-05-03,SNP,False,,margaretferrier,118
-25319,Colleen FLETCHER,Coventry North East,2015-05-07,2020-01-01,Lab,False,,colleenfletcher,121
-25380,Vicky FOXCROFT,"Lewisham, Deptford",2015-05-07,2020-01-01,Lab,False,,vickyfoxcroft,124
-25399,Lucy FRAZER,South East Cambridgeshire,2015-05-07,2020-01-01,Con,False,,lucyfrazer,127
-25354,Nusrat GHANI,Wealden,2015-05-07,2020-01-01,Con,False,,nusratghani,128
-25300,Patricia GIBSON,North Ayrshire and Arran,2015-05-07,2020-01-01,SNP,False,,patriciagibson,132
-25349,Margaret GREENWOOD,Wirral West,2015-05-07,2020-01-01,Lab,False,,margaretgreenwood,133
-25357,Louise HAIGH,"Sheffield, Heeley",2015-05-07,2020-01-01,Lab,False,,louisehaigh,137
-25308,Carolyn HARRIS,Swansea East,2015-05-07,2020-01-01,Lab,False,,carolynharris,139
-25310,Helen HAYES,Dulwich and West Norwood,2015-05-07,2020-01-01,Lab,False,,helenhayes,142
-25358,Sue HAYMAN,Workington,2015-05-07,2020-01-01,Lab,False,,suehayman,149
-25298,Kate HOLLERN,Blackburn,2015-05-07,2020-01-01,Lab,False,,katehollern,150
-25284,Rupa HUQ,Ealing Central and Acton,2015-05-07,2020-01-01,Lab,False,,rupahuq,151
-25431,Andrea  JENKYNS,Morley and Outwood,2015-05-07,2020-01-01,Con,False,,andreajenkyns,152
-25389,Seema KENNEDY,South Ribble,2015-05-07,2020-01-01,Con,False,,seemakennedy,153
-25368,Rebecca LONG BAILEY,Salford and Eccles,2015-05-07,2020-01-01,Lab,False,,rebeccalongbailey,154
-25434,Holly LYNCH,Halifax,2015-05-07,2020-01-01,Lab,False,,hollylynch,155
-25433,Rachael MASKELL,York Central,2015-05-07,2020-01-01,Lab,False,,rachaelmaskell,156
-25333,Tania MATHIAS,Twickenham,2015-05-07,2017-05-03,Con,False,,taniamathias,157
-25303,Natalie McGARRY,Glasgow East,2015-05-07,2017-05-03,SNP,False,,nataliemcgarry,158
-14146,Anne McLAUGHLIN,Glasgow North East,2015-05-07,2017-05-03,SNP,False,,annemclaughlin,159
-25350,Amanda MILLING,Cannock Chase,2015-05-07,2020-01-01,Con,False,,amandamilling,160
-25406,Carol MONAGHAN,Glasgow North West,2015-05-07,2020-01-01,SNP,False,,carolmonaghan,161
-25342,Wendy MORTON,Aldridge-Brownhills,2015-05-07,2020-01-01,Con,False,,wendymorton,162
-25317,Melanie ONN,Great Grimsby,2015-05-07,2020-01-01,Lab,False,,melanieonn,163
-25365,Kate OSAMOR,Edmonton,2015-05-07,2020-01-01,Lab,False,,kateosamor,164
-25294,Kirsten OSWALD,East Renfrewshire,2015-05-07,2017-05-03,SNP,False,,kirstenoswald,165
-25364,Jess PHILLIPS,"Birmingham, Yardley",2015-05-07,2020-01-01,Lab,False,,jessphillips,166
-25407,Rebecca POW,Taunton Deane,2015-05-07,2020-01-01,Con,False,,rebeccapow,167
-25420,Victoria PRENTIS,Banbury,2015-05-07,2020-01-01,Con,False,,victoriaprentis,168
-25429,Angela RAYNER,Ashton-Under-Lyne,2015-05-07,2020-01-01,Lab,False,,angelarayner,169
-25332,Christina REES,Neath,2015-05-07,2020-01-01,Lab,False,,christinarees,170
-25321,Marie RIMMER,St Helens South and Whiston,2015-05-07,2020-01-01,Lab,False,,marierimmer,171
-25405,Mary ROBINSON,Cheadle,2015-05-07,2020-01-01,Con,False,,maryrobinson,172
-25363,Antoinette SANDBACH,Eddisbury,2015-05-07,2020-01-01,Con,False,,antoinettesandbach,173
-25302,Liz SAVILLE-ROBERTS,Dwyfor Meirionnydd,2015-05-07,2020-01-01,PC,False,,lizsavilleroberts,174
-25385,Naz SHAH,Bradford West,2015-05-07,2020-01-01,Lab,False,,nazshah,175
-25421,Paula SHERRIFF,Dewsbury,2015-05-07,2020-01-01,Lab,False,,paulasherriff,176
-25344,Tulip SIDDIQ,Hampstead and Kilburn,2015-05-07,2020-01-01,Lab,False,,tulipsiddiq,177
-25435,Ruth SMEETH,Stoke-On-Trent North,2015-05-07,2020-01-01,Lab,False,,ruthsmeeth,178
-25432,Cat SMITH,Lancaster and Fleetwood,2015-05-07,2020-01-01,Lab,False,,catsmith,179
-25390,Karin SMYTH,Bristol South,2015-05-07,2020-01-01,Lab,False,,karinsmyth,180
-25436,Amanda SOLLOWAY,Derby North,2015-05-07,2017-05-03,Con,False,,amandasolloway,181
-25304,Jo STEVENS,Cardiff Central,2015-05-07,2020-01-01,Lab,False,,jostevens,182
-25327,Alison THEWLISS,Glasgow Central,2015-05-07,2020-01-01,SNP,False,,alisonthewliss,183
-25352,Michelle THOMSON,Edinburgh West,2015-05-07,2017-05-03,SNP,False,,michellethomson,184
-25371,Maggie THROUP,Erewash,2015-05-07,2020-01-01,Con,False,,maggiethroup,185
-25430,Kelly TOLHURST,Rochester and Strood,2015-05-07,2020-01-01,Con,False,,kellytolhurst,186
-25439,Anne-Marie TREVELYAN,Berwick-Upon-Tweed,2015-05-07,2020-01-01,Con,False,,annemarietrevelyan,187
-25313,Anna TURLEY,Redcar,2015-05-07,2020-01-01,Lab,False,,annaturley,188
-25328,Catherine WEST,Hornsey and Wood Green,2015-05-07,2020-01-01,Lab,False,,catherinewest,189
-25398,Helen WHATELY,Faversham and Mid Kent,2015-05-07,2020-01-01,Con,False,,helenwhately,190
-25318,Philippa WHITFORD,Central Ayrshire,2015-05-07,2020-01-01,SNP,False,,philippawhitford,191
-25401,Corri WILSON,"Ayr, Carrick and Cumnock",2015-05-07,2017-05-03,SNP,False,,corriwilson,192
-10523,Joan RYAN,Enfield North,2015-05-07,2020-01-01,Lab,False,,joanryan,193
-11447,Dawn BUTLER,Brent Central,2015-05-07,2020-01-01,Lab,False,,dawnbutler,194
-25489,Gill FURNISS,"Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,Lab,True,,gillfurniss,195
-25579,Dr Rosena ALLIN-KHAN,Tooting,2016-06-16,2020-01-01,Lab,True,,rosenaallinkhan,67
-25592,Tracy BRABIN,Batley and Spen,2016-10-20,2020-01-01,Lab,True,,tracybrabin,196
-25596,Sarah OLNEY,Richmond Park,2016-12-01,2017-05-03,LD,True,,saraholney,197
-25597,Caroline JOHNSON,Sleaford and North Hykeham,2016-12-08,2020-01-01,Con,True,,carolinejohnson,198
-25600,Trudy HARRISON,Copeland,2017-02-23,2020-01-01,Con,True,,trudyharrison,199
+25409,Hannah BARDELL,Livingston,2015-05-07,2020-01-01,SNP,False,,hannahbardell,26
+25269,Mhairi BLACK,Paisley and Renfrewshire South,2015-05-07,2020-01-01,SNP,False,,mhairiblack,27
+25314,Kirsty BLACKMAN,Aberdeen North,2015-05-07,2020-01-01,SNP,False,,kirstyblackman,32
+25311,Victoria BORWICK,Kensington,2015-05-07,2017-05-03,Con,False,,victoriaborwick,34
+25336,Deidre BROCK,Edinburgh North and Leith,2015-05-07,2020-01-01,SNP,False,,deidrebrock,35
+25343,Ruth CADBURY,Brentford and Isleworth,2015-05-07,2020-01-01,Lab,False,,ruthcadbury,36
+25276,Lisa CAMERON,"East Kilbride, Strathaven and Lesmahagow",2015-05-07,2020-01-01,SNP,False,,lisacameron,37
+25397,Maria CAULFIELD,Lewes,2015-05-07,2020-01-01,Con,False,,mariacaulfield,39
+25404,Joanna CHERRY,Edinburgh South West,2015-05-07,2020-01-01,SNP,False,,joannacherry,51
+25408,Jo CHURCHILL,Bury St Edmunds,2015-05-07,2020-01-01,Con,False,,jochurchill,52
+25283,Julie COOPER,Burnley,2015-05-07,2020-01-01,Lab,False,,juliecooper,54
+25394,Jo COX,Batley and Spen,2015-05-07,2016-06-16,Lab,False,,jocox,64
+25295,Angela CRAWLEY,Lanark and Hamilton East,2015-05-07,2020-01-01,SNP,False,,angelacrawley,67
+25393,Judith CUMMINS,Bradford South,2015-05-07,2020-01-01,Lab,False,,judithcummins,73
+25330,Mims DAVIES,Eastleigh,2015-05-07,2020-01-01,Con,False,,mimsdavies,75
+25402,Thangam DEBBONAIRE,Bristol West,2015-05-07,2020-01-01,Lab,False,,thangamdebbonaire,84
+25316,Michelle DONELAN,Chippenham,2015-05-07,2020-01-01,Con,False,,michelledonelan,86
+25392,Flick DRUMMOND,Portsmouth South,2015-05-07,2017-05-03,Con,False,,flickdrummond,91
+25277,Marion FELLOWS,Motherwell and Wishaw,2015-05-07,2020-01-01,SNP,False,,marionfellows,96
+25272,Suella FERNANDES,Fareham,2015-05-07,2020-01-01,Con,False,,suellafernandes,97
+25287,Margaret FERRIER,Rutherglen and Hamilton West,2015-05-07,2017-05-03,SNP,False,,margaretferrier,100
+25319,Colleen FLETCHER,Coventry North East,2015-05-07,2020-01-01,Lab,False,,colleenfletcher,103
+25380,Vicky FOXCROFT,"Lewisham, Deptford",2015-05-07,2020-01-01,Lab,False,,vickyfoxcroft,114
+25399,Lucy FRAZER,South East Cambridgeshire,2015-05-07,2020-01-01,Con,False,,lucyfrazer,118
+25354,Nusrat GHANI,Wealden,2015-05-07,2020-01-01,Con,False,,nusratghani,121
+25300,Patricia GIBSON,North Ayrshire and Arran,2015-05-07,2020-01-01,SNP,False,,patriciagibson,124
+25349,Margaret GREENWOOD,Wirral West,2015-05-07,2020-01-01,Lab,False,,margaretgreenwood,127
+25357,Louise HAIGH,"Sheffield, Heeley",2015-05-07,2020-01-01,Lab,False,,louisehaigh,128
+25308,Carolyn HARRIS,Swansea East,2015-05-07,2020-01-01,Lab,False,,carolynharris,132
+25310,Helen HAYES,Dulwich and West Norwood,2015-05-07,2020-01-01,Lab,False,,helenhayes,133
+25358,Sue HAYMAN,Workington,2015-05-07,2020-01-01,Lab,False,,suehayman,137
+25298,Kate HOLLERN,Blackburn,2015-05-07,2020-01-01,Lab,False,,katehollern,139
+25284,Rupa HUQ,Ealing Central and Acton,2015-05-07,2020-01-01,Lab,False,,rupahuq,142
+25431,Andrea  JENKYNS,Morley and Outwood,2015-05-07,2020-01-01,Con,False,,andreajenkyns,149
+25389,Seema KENNEDY,South Ribble,2015-05-07,2020-01-01,Con,False,,seemakennedy,150
+25368,Rebecca LONG BAILEY,Salford and Eccles,2015-05-07,2020-01-01,Lab,False,,rebeccalongbailey,151
+25434,Holly LYNCH,Halifax,2015-05-07,2020-01-01,Lab,False,,hollylynch,152
+25433,Rachael MASKELL,York Central,2015-05-07,2020-01-01,Lab,False,,rachaelmaskell,153
+25333,Tania MATHIAS,Twickenham,2015-05-07,2017-05-03,Con,False,,taniamathias,154
+25303,Natalie McGARRY,Glasgow East,2015-05-07,2017-05-03,SNP,False,,nataliemcgarry,155
+14146,Anne McLAUGHLIN,Glasgow North East,2015-05-07,2017-05-03,SNP,False,,annemclaughlin,156
+25350,Amanda MILLING,Cannock Chase,2015-05-07,2020-01-01,Con,False,,amandamilling,157
+25406,Carol MONAGHAN,Glasgow North West,2015-05-07,2020-01-01,SNP,False,,carolmonaghan,158
+25342,Wendy MORTON,Aldridge-Brownhills,2015-05-07,2020-01-01,Con,False,,wendymorton,159
+25317,Melanie ONN,Great Grimsby,2015-05-07,2020-01-01,Lab,False,,melanieonn,160
+25365,Kate OSAMOR,Edmonton,2015-05-07,2020-01-01,Lab,False,,kateosamor,161
+25294,Kirsten OSWALD,East Renfrewshire,2015-05-07,2017-05-03,SNP,False,,kirstenoswald,162
+25364,Jess PHILLIPS,"Birmingham, Yardley",2015-05-07,2020-01-01,Lab,False,,jessphillips,163
+25407,Rebecca POW,Taunton Deane,2015-05-07,2020-01-01,Con,False,,rebeccapow,164
+25420,Victoria PRENTIS,Banbury,2015-05-07,2020-01-01,Con,False,,victoriaprentis,165
+25429,Angela RAYNER,Ashton-Under-Lyne,2015-05-07,2020-01-01,Lab,False,,angelarayner,166
+25332,Christina REES,Neath,2015-05-07,2020-01-01,Lab,False,,christinarees,167
+25321,Marie RIMMER,St Helens South and Whiston,2015-05-07,2020-01-01,Lab,False,,marierimmer,168
+25405,Mary ROBINSON,Cheadle,2015-05-07,2020-01-01,Con,False,,maryrobinson,169
+25363,Antoinette SANDBACH,Eddisbury,2015-05-07,2020-01-01,Con,False,,antoinettesandbach,170
+25302,Liz SAVILLE-ROBERTS,Dwyfor Meirionnydd,2015-05-07,2020-01-01,PC,False,,lizsavilleroberts,171
+25385,Naz SHAH,Bradford West,2015-05-07,2020-01-01,Lab,False,,nazshah,172
+25421,Paula SHERRIFF,Dewsbury,2015-05-07,2020-01-01,Lab,False,,paulasherriff,173
+25344,Tulip SIDDIQ,Hampstead and Kilburn,2015-05-07,2020-01-01,Lab,False,,tulipsiddiq,174
+25435,Ruth SMEETH,Stoke-On-Trent North,2015-05-07,2020-01-01,Lab,False,,ruthsmeeth,175
+25432,Cat SMITH,Lancaster and Fleetwood,2015-05-07,2020-01-01,Lab,False,,catsmith,176
+25390,Karin SMYTH,Bristol South,2015-05-07,2020-01-01,Lab,False,,karinsmyth,177
+25436,Amanda SOLLOWAY,Derby North,2015-05-07,2017-05-03,Con,False,,amandasolloway,178
+25304,Jo STEVENS,Cardiff Central,2015-05-07,2020-01-01,Lab,False,,jostevens,179
+25327,Alison THEWLISS,Glasgow Central,2015-05-07,2020-01-01,SNP,False,,alisonthewliss,180
+25352,Michelle THOMSON,Edinburgh West,2015-05-07,2017-05-03,SNP,False,,michellethomson,181
+25371,Maggie THROUP,Erewash,2015-05-07,2020-01-01,Con,False,,maggiethroup,182
+25430,Kelly TOLHURST,Rochester and Strood,2015-05-07,2020-01-01,Con,False,,kellytolhurst,183
+25439,Anne-Marie TREVELYAN,Berwick-Upon-Tweed,2015-05-07,2020-01-01,Con,False,,annemarietrevelyan,184
+25313,Anna TURLEY,Redcar,2015-05-07,2020-01-01,Lab,False,,annaturley,185
+25328,Catherine WEST,Hornsey and Wood Green,2015-05-07,2020-01-01,Lab,False,,catherinewest,186
+25398,Helen WHATELY,Faversham and Mid Kent,2015-05-07,2020-01-01,Con,False,,helenwhately,187
+25318,Philippa WHITFORD,Central Ayrshire,2015-05-07,2020-01-01,SNP,False,,philippawhitford,188
+25401,Corri WILSON,"Ayr, Carrick and Cumnock",2015-05-07,2017-05-03,SNP,False,,corriwilson,189
+10523,Joan RYAN,Enfield North,2015-05-07,2020-01-01,Lab,False,,joanryan,190
+11447,Dawn BUTLER,Brent Central,2015-05-07,2020-01-01,Lab,False,,dawnbutler,191
+25489,Gill FURNISS,"Sheffield, Brightside and Hillsborough",2016-05-05,2020-01-01,Lab,True,,gillfurniss,192
+25579,Dr Rosena ALLIN-KHAN,Tooting,2016-06-16,2020-01-01,Lab,True,,rosenaallinkhan,64
+25592,Tracy BRABIN,Batley and Spen,2016-10-20,2020-01-01,Lab,True,,tracybrabin,193
+25596,Sarah OLNEY,Richmond Park,2016-12-01,2017-05-03,LD,True,,saraholney,194
+25597,Caroline JOHNSON,Sleaford and North Hykeham,2016-12-08,2020-01-01,Con,True,,carolinejohnson,195
+25600,Trudy HARRISON,Copeland,2017-02-23,2020-01-01,Con,True,,trudyharrison,196
+25616,Kirstene HAIR,Angus,2017-06-08,2020-01-01,Con,False,,kirstenehair,6
+25617,Stephanie PEACOCK,Barnsley East,2017-06-08,2020-01-01,Lab,False,,stephaniepeacock,10
+25648,Wera HOBHOUSE,Bath,2017-06-08,2020-01-01,LD,False,,werahobhouse,20
+25620,Marsha DE CORDOVA,Battersea,2017-06-08,2020-01-01,Lab,False,,marshadecordova,30
+25452,Emma LITTLE-PENGELLY,Belfast South,2017-06-08,2020-01-01,DUP,False,,emmalittlepengelly,34
+25666,Preet GILL,"Birmingham, Edgbaston",2017-06-08,2020-01-01,Lab,False,,preetgill,48
+25623,Liz TWIST,Blaydon,2017-06-08,2020-01-01,Lab,False,,liztwist,56
+25656,Rosie DUFFIELD,Canterbury,2017-06-08,2020-01-01,Lab,False,,rosieduffield,74
+25647,Anna McMORRIN,Cardiff North,2017-06-08,2020-01-01,Lab,False,,annamcmorrin,81
+25614,Vicky FORD,Chelmsford,2017-06-08,2020-01-01,Con,False,,vickyford,82
+25670,Gillian KEEGAN,Chichester,2017-06-08,2020-01-01,Con,False,,gilliankeegan,91
+25671,Thelma WALKER,Colne Valley,2017-06-08,2020-01-01,Lab,False,,thelmawalker,100
+25672,Laura SMITH,Crewe and Nantwich,2017-06-08,2020-01-01,Lab,False,,laurasmith,107
+25673,Sarah JONES,Croydon Central,2017-06-08,2020-01-01,Lab,False,,sarahjones,117
+25675,Christine JARDINE,Edinburgh West,2017-06-08,2020-01-01,LD,False,,christinejardine,130
+25604,Elisha McCALLION,Foyle,2017-06-08,2020-01-01,SF,False,,elishamccallion,138
+25634,Tonia ANTONIAZZI,Gower,2017-06-08,2020-01-01,Lab,False,,toniaantoniazzi,154
+25633,Ruth GEORGE,"High Peak",2017-06-08,2020-01-01,Lab,False,,ruthgeorge,155
+25652,Julia DOCKERILL,"Hornchurch and Upminster",2017-06-08,2020-01-01,Con,False,,juliadockerill,156
+25706,Emma DENT COAD,"Kensington",2017-06-08,2020-01-01,Lab,False,,emmadentcoad,162
+25646,Emma HARDY,Kingston upon Hull West and Hessle,2017-06-08,2020-01-01,Lab,False,,emmahardy,178
+25653,Lesley LAIRD,Kirkcaldy and Cowdenbeath,2017-06-08,2020-01-01,Lab,False,,lesleylaird,181
+25611,Jo PLATT,Leigh,2017-06-08,2020-01-01,Lab,False,,joplatt,189
+25681,Ellie REEVES,Lewisham West and Penge,2017-06-08,2020-01-01,Lab,False,,elliereeves,194
+25682,Karen LEE,Lincoln,2017-06-08,2020-01-01,Lab,False,,karenlee,197
+25640,Laura PIDCOCK,North West Durham,2017-06-08,2020-01-01,Lab,False,,laurapidcock,198
+25618,Anneliese DODDS,Oxford East,2017-06-08,2020-01-01,Lab,False,,anneliesedodds,199
+25689,Layla MORAN,Oxford West and Abingdon,2017-06-08,2020-01-01,LD,False,,laylamoran,200
+25638,Fiona ONASANYA,Peterborough,2017-06-08,2020-01-01,Lab,False,,fionaonasanya,201
+25692,Rachel MACLEAN,Redditch,2017-06-08,2020-01-01,Con,False,,rachelmaclean,202
+25693,Kemi BADENOCH,Saffron Walden,2017-06-08,2020-01-01,Con,False,,kemibadenoch,203
+25631,Eleanor SMITH,Wolverhampton South West,2017-06-08,2020-01-01,Lab,False,,eleanorsmith,204
+10913,Michelle GILDERNEW,Fermanagh & South Tyrone,2017-06-08,2020-01-01,SF,False,Did not take seat,michellegildernew,205
+11971,Jo SWINSON,East Dunbartonshire,2017-06-08,2020-01-01,LD,False,,joswinson,206
+24882,Rt Hon Esther MCVEY,Tatton,2017-06-08,2020-01-01,Con,False,,esthermcvey,207
