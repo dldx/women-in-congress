@@ -4,7 +4,7 @@
   "description": "Visualisation about Women MPs",
   "main": "mps_over_time.js",
   "scripts": {
-    "prepublish": "rollup -c && uglifyjs d3.js -c -m -o d3.min.js"
+    "prepublish": "rollup -c && uglifyjs d3.js -c -m -o d3.min.js;python mp_base64.py"
   },
   "dependencies": {
     "d3-array": "^1.2.1",
