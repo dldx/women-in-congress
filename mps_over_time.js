@@ -1130,17 +1130,95 @@ function second_slide(no_transition = false) {
 }
 
 // ----------------------------------------------------------------------------
+// ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
+// ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+// ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║    ██║  ██║███████║   ██║   ███████║
+// ██║  ██║██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║██╔══██║██║  ██║    ██║  ██║██╔══██║   ██║   ██╔══██║
+// ██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝██║  ██║██████╔╝    ██████╔╝██║  ██║   ██║   ██║  ██║
+// ╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+// DOWNLOAD ALL THE MP DATA WE NEED TO DRAW THE GRAPHS
+// ----------------------------------------------------------------------------
+function download_data() {
+    d3.queue()
+        .defer(d3.csv, "women_mps.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d")
+            return {
+                id: d.id,
+                name: d.name,
+                constituency: d.constituency,
+                term_start: parseDate(d.term_start),
+                term_end: parseDate(d.term_end),
+                party: d.party,
+                byelection: (d.byelection == "TRUE"),
+                notes: d.notes,
+                clean_name: d.clean_name,
+                stream: +d.stream
+            }
+        })
+        .defer(d3.csv, "number_women_over_time.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d")
+            return {
+                year: parseDate(d.Year),
+                total_women_mps: +d.Total,
+                total_mps: +d.total_mps
+            }
+        })
+        .defer(d3.csv, "total_mps_over_time.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d")
+            return {
+                year: parseDate(d.Year),
+                total_mps: +d.total_mps
+            }
+        })
+        .defer(d3.json, "info_bubbles.json")
+        .await(function(error,
+            mps_over_time,
+            number_women_over_time,
+            total_mps_over_time,
+            info_bubbles) {
+            // Make global
+            window.mps_over_time_data = mps_over_time
+            window.number_women_over_time_data = number_women_over_time
+            window.total_mps_over_time_data = total_mps_over_time
+            window.info_bubbles_data = info_bubbles
+            // INITIAL DRAW
+            draw_graph()
+        })
+
+    // This file can download independently because we don't need to wait for it
+    d3.queue()
+        .defer(d3.csv, "mp_base64.csv", function (d) {
+            return {
+                id: d.id,
+                base64: d.base64
+            }
+        })
+        .await(function(error, mp_base64) {
+            // Turn d3 array into a pythonic dictionary
+            mp_base64_data = {}
+            for (var i = 0; i < mp_base64.length; i++) {
+                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
+            }
+        })
+}
+
+// GET ALL DATA
+download_data()
+
+
+// ----------------------------------------------------------------------------
 // ██╗███╗   ██╗██╗████████╗
 // ██║████╗  ██║██║╚══██╔══╝
 // ██║██╔██╗ ██║██║   ██║
 // ██║██║╚██╗██║██║   ██║
 // ██║██║ ╚████║██║   ██║
 // ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝
-// GET DATA AND DRAW INITIAL GRAPH, WHILE RESIZING TO FIT WITHIN WINDOW
+//  DRAW GRAPH WHILE RESIZING TO FIT WITHIN WINDOW
 // ----------------------------------------------------------------------------
 function draw_graph() {
     "use strict"
-    d3.selectAll("g")
+
+    d3.select("svg").selectAll("*")
         .remove()
     // Chart dimensions - use parent div size
     var new_width = timeline.clientWidth - margin.left - margin.right,
@@ -1156,74 +1234,13 @@ function draw_graph() {
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-        d3.queue()
-            .defer(d3.csv, "women_mps.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d")
-                return {
-                    id: d.id,
-                    name: d.name,
-                    constituency: d.constituency,
-                    term_start: parseDate(d.term_start),
-                    term_end: parseDate(d.term_end),
-                    party: d.party,
-                    byelection: (d.byelection == "TRUE"),
-                    notes: d.notes,
-                    clean_name: d.clean_name,
-                    stream: +d.stream
-                }
-            })
-            .defer(d3.csv, "number_women_over_time.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d")
-                return {
-                    year: parseDate(d.Year),
-                    total_women_mps: +d.Total,
-                    total_mps: +d.total_mps
-                }
-            })
-            .defer(d3.csv, "total_mps_over_time.csv", function (d) {
-                var parseDate = d3.timeParse("%Y-%m-%d")
-                return {
-                    year: parseDate(d.Year),
-                    total_mps: +d.total_mps
-                }
-            })
-            .defer(d3.csv, "mp_base64.csv", function (d) {
-                return {
-                    id: d.id,
-                    base64: d.base64
-                }
-            })
-            .defer(d3.json, "info_bubbles.json")
-            .await(analyze)
-
-
+        new_slide = 0
+        current_slide = -1
+        // REDRAW
+        initial_render()
+        first_slide()
     }
 }
-function analyze(error,
-    mps_over_time,
-    number_women_over_time,
-    total_mps_over_time,
-    mp_base64,
-    info_bubbles) {
-    // Make global
-    mps_over_time_data = mps_over_time
-    number_women_over_time_data = number_women_over_time
-    total_mps_over_time_data = total_mps_over_time
-    // Turn d3 array into a pythonic dictionary
-    mp_base64_data = {}
-    for (var i = 0; i < mp_base64.length; i++) {
-        mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
-    }
-
-    info_bubbles_data = info_bubbles
-    new_slide = 0
-    current_slide = -1
-    initial_render()
-    first_slide()
-}
-
-// INITIAL DRAW
-draw_graph()
 // ----------------------------------------------------------------------------
 // REDRAW GRAPH ON WINDOW RESIZE
 // ----------------------------------------------------------------------------
