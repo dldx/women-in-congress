@@ -1358,11 +1358,11 @@ function third_slide(no_transition = false) {
         .append("path")
         .attr("d", function(d) {return women_in_govt_line(d.values)})
         .attr("class", "women-in-govt-path")
-        .attr("id", d => "#" + d.key.replace(/[^a-zA-Z0-9s]/g, ''))
+        .attr("id", d => d.key.replace(/[^a-zA-Z0-9s]/g, ''))
         .style("stroke", d => countryColors(d.key))
-        .style("stroke-width", lineThickness / 2)
+        .style("stroke-width", lineThickness*2)
         .style("fill", "none")
-        .style("opacity", 0.5)
+        .style("opacity", 1)
         .attr("stroke-dasharray", function () {
             return this.getTotalLength()
         })
@@ -1373,10 +1373,12 @@ function third_slide(no_transition = false) {
     t2 = t1.transition()
     women_in_govt_paths
         .transition(t2)
-        .delay((d, i) => 1000 + i * 1000 - i ** 1.5 * 50)
+        .delay((d, i) => 1000 + i * 1000 - i ** 1.3 * 100)
         .duration(2000)
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
+        .style("opacity", 0.5)
+        .style("stroke-width", lineThickness / 2)
 
     var focus = slide3Group.append("g")
         .attr("transform", "translate(-100,-100)")
@@ -1421,9 +1423,9 @@ var voronoi = d3.voronoi()
                 .style("opacity", 1)
 
         // d.line.parentNode.appendChild(d.line);
-        focus.attr("transform", "translate(" + x(d.data.year) + "," + y(d.data.women_pct) + ")");
-        focus.select("text")
-            .text(d.data.country);
+        // focus.attr("transform", "translate(" + x(d.data.year) + "," + y(d.data.women_pct) + ")");
+        // focus.select("text")
+        //     .text(d.data.country);
     }
 
     function mouseout(d) {
