@@ -79,10 +79,24 @@ var clippedArea,
     zoomedArea,
     pointsGroup,
     slide2Group,
+    slide3Group,
+    max_mps_line,
+    max_mps_path,
+    max_mps_area,
+    max_mps_path_area,
+    half_max_mps_line,
+    half_max_mps_path,
+    total_women_mps_line,
+    total_women_mps_path,
+    total_women_mps_area,
+    total_women_mps_path_area,
+    half_max_mps_line_smooth,
+    text_path_50_50,
+    mask,
     instance,
     x, y,
     xAxis, gX,
-    yAxis, gY,
+    yAxis, gY, yLabel,
     tooltip,
     lineThickness,
     circleRadius,
@@ -163,6 +177,9 @@ function update_state() {
         if (current_slide == 0 & new_slide == 1) {
             // Reset zoom, then load second slide
             reset_zoom(to_second_slide)
+        } else if (current_slide == 1 & new_slide == 2) {
+            // Reset zoom, then load second slide
+            to_third_slide()
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -401,7 +418,7 @@ function initial_render() {
         .attr("class", "x-label")
         .text("Time")
 
-    wrapper.append("text")
+    yLabel = wrapper.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left / 2)
         .attr("x", 0 - (height / 2))
@@ -581,7 +598,7 @@ function first_slide() {
     instance
         .on("mouseover", mpMouseover)
         // On mouse out, change everything back
-        .on("mouseout", function() {
+        .on("mouseout", function () {
             pointsGroup
                 .selectAll("g")
                 .style("opacity", function (a) {
@@ -662,6 +679,7 @@ function to_first_slide() {
 // ----------------------------------------------------------------------------
 function to_second_slide() {
     "use strict"
+
     if (lastTransitioned < 1) {
         second_slide(false)
         // Update transition counter
@@ -679,7 +697,6 @@ function to_second_slide() {
 
 
 // ----------------------------------------------------------------------------
-//
 // ███████╗███████╗ ██████╗ ██████╗ ███╗   ██╗██████╗     ███████╗██╗     ██╗██████╗ ███████╗
 // ██╔════╝██╔════╝██╔════╝██╔═══██╗████╗  ██║██╔══██╗    ██╔════╝██║     ██║██╔══██╗██╔════╝
 // ███████╗█████╗  ██║     ██║   ██║██╔██╗ ██║██║  ██║    ███████╗██║     ██║██║  ██║█████╗
@@ -710,7 +727,7 @@ function second_slide(no_transition = false) {
     }
 
     // Add interpolation line for total mps over time
-    var max_mps_line = d3.line()
+    max_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
         })
@@ -720,14 +737,14 @@ function second_slide(no_transition = false) {
         .curve(d3.curveCardinal)
 
     // Add the svg path to display this line
-    var max_mps_path = slide2Group.append("path")
+    max_mps_path = slide2Group.append("path")
         .attr("class", "max-mps-path slide2")
         .datum(total_mps_over_time_data)
         .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", max_mps_line)
 
     // Also add an area curve to shade the whole region below the max mp line
-    var max_mps_area = d3.area()
+    max_mps_area = d3.area()
         .curve(d3.curveCardinal)
         .x(function (d) {
             return x(d.year)
@@ -738,14 +755,14 @@ function second_slide(no_transition = false) {
         })
 
     // Add the svg path for this shaded region
-    var max_mps_path_area = slide2Group.append("path")
+    max_mps_path_area = slide2Group.append("path")
         .attr("class", "max-mps-area slide2")
         .data([total_mps_over_time_data])
         .attr("d", max_mps_area)
         .style("opacity", 0)
 
     // Mask election rectangles with the total area path
-    var mask = slide2Group
+    mask = slide2Group
         .append("clipPath")
         .attr("id", "slide2-hover-mask")
         .append("path")
@@ -757,7 +774,7 @@ function second_slide(no_transition = false) {
         .moveToFront()
 
     // Add a 50% line to show halfway mark for gender
-    var half_max_mps_line = d3.line()
+    half_max_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
         })
@@ -767,14 +784,14 @@ function second_slide(no_transition = false) {
         .curve(d3.curveBasis)
 
     // Add this in svg
-    var half_max_mps_path = slide2Group.append("path")
+    half_max_mps_path = slide2Group.append("path")
         .attr("class", "half-max-mps-path slide2")
         .datum(total_mps_over_time_data)
         .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", half_max_mps_line)
 
     // Curve to show total number of women MPs over time
-    var total_women_mps_line = d3.line()
+    total_women_mps_line = d3.line()
         .x(function (d) {
             return x(d.year)
         })
@@ -784,7 +801,7 @@ function second_slide(no_transition = false) {
         .curve(d3.curveBasis)
 
     // add the line path
-    var total_women_mps_path = slide2Group.append("path")
+    total_women_mps_path = slide2Group.append("path")
         .attr("class", "total-women-mps-path slide2")
         .datum(number_women_over_time_data)
         .attr("fill", "none")
@@ -798,7 +815,7 @@ function second_slide(no_transition = false) {
         })
 
     // Area curve for total number of women MPs
-    var total_women_mps_area = d3.area()
+    total_women_mps_area = d3.area()
         .curve(d3.curveBasis)
         .x(function (d) {
             return x(d.year)
@@ -809,7 +826,7 @@ function second_slide(no_transition = false) {
         })
 
     // Add the area path
-    var total_women_mps_path_area = slide2Group.append("path")
+    total_women_mps_path_area = slide2Group.append("path")
         .attr("class", "total-women-mps-area slide2")
         .data([number_women_over_time_data])
         .attr("d", total_women_mps_area)
@@ -1021,7 +1038,7 @@ function second_slide(no_transition = false) {
                 .style("opacity", 1)
 
             // Add a smoothed 50% line to show halfway mark for gender and place text label on it
-            var half_max_mps_line_smooth = d3.line()
+            half_max_mps_line_smooth = d3.line()
                 .x(function (d) {
                     return x(d.year)
                 })
@@ -1031,7 +1048,7 @@ function second_slide(no_transition = false) {
                 .curve(d3.curveBundle.beta(0.75))
 
             // Add path for text to follow
-            slide2Group
+            text_path_50_50 = slide2Group
                 .append("defs")
                 .append("path")
                 .attr("id", "half-max-textpath")
@@ -1178,6 +1195,150 @@ function second_slide(no_transition = false) {
 }
 
 // ----------------------------------------------------------------------------
+// TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_third_slide() {
+    "use strict"
+
+    if (lastTransitioned < 2) {
+        third_slide(false)
+        // Update transition counter
+        lastTransitioned = 2
+    } else {
+        d3.select("#slide1-group")
+            .style("opacity", 1)
+            .transition()
+            .duration(1000)
+            .style("opacity", 0)
+            .remove()
+        third_slide(true)
+    }
+}
+// ----------------------------------------------------------------------------
+// ████████╗██╗  ██╗██╗██████╗ ██████╗     ███████╗██╗     ██╗██████╗ ███████╗
+// ╚══██╔══╝██║  ██║██║██╔══██╗██╔══██╗    ██╔════╝██║     ██║██╔══██╗██╔════╝
+//    ██║   ███████║██║██████╔╝██║  ██║    ███████╗██║     ██║██║  ██║█████╗
+//    ██║   ██╔══██║██║██╔══██╗██║  ██║    ╚════██║██║     ██║██║  ██║██╔══╝
+//    ██║   ██║  ██║██║██║  ██║██████╔╝    ███████║███████╗██║██████╔╝███████╗
+//    ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// SHOW PROGRESS IN DIFFERENT COUNTRIES
+// ----------------------------------------------------------------------------
+function third_slide(no_transition = false) {
+    // Remove elements from this slide if already created
+    d3.select("#slide3-group")
+        .remove()
+    // Add group to hold second slide lines
+    slide3Group = zoomedArea
+        .append("g")
+        .attr("id", "slide3-group")
+
+    // Add a smooth but quick transition if no fancy transition is requested
+    if (no_transition) {
+        slide3Group
+            .style("opacity", 0)
+            .transition()
+            .duration(1000)
+            .style("opacity", 1)
+    }
+
+    // Make axis into percentage axis
+    y.domain([0, 100])
+    gY.transition()
+        .duration(1000)
+        .call(yAxis)
+
+
+    total_women_mps_line
+        .y(d => y(d.women_pct))
+
+    total_women_mps_path
+        .transition()
+        .duration(1000)
+        .attr("d", total_women_mps_line)
+
+    total_women_mps_area
+        .y1(d => y(d.women_pct))
+
+    total_women_mps_path_area
+        .transition()
+        .duration(1000)
+        .attr("d", total_women_mps_area)
+
+    max_mps_line
+        .y(() => y(100))
+
+    max_mps_path
+        .transition()
+        .duration(1000)
+        .attr("d", max_mps_line)
+
+    max_mps_area
+        .y1(() => y(100))
+
+    max_mps_path_area
+        .transition()
+        .duration(1000)
+        .attr("d", max_mps_area)
+
+    half_max_mps_line
+        .y(() => y(50))
+
+    half_max_mps_path
+        .transition()
+        .duration(1000)
+        .attr("d", half_max_mps_line)
+
+    half_max_mps_line_smooth
+        .y(() => y(50))
+
+    text_path_50_50
+        .transition()
+        .duration(1000)
+        .attr("d", half_max_mps_line_smooth)
+    mask
+        .transition()
+        .duration(1000)
+        .attr("d", max_mps_area)
+
+    yLabel
+        .transition()
+        .duration(1000)
+        .text("% of Women MPs")
+
+    // Remove old info bubbles
+    d3.select("#info-bubbles")
+        .remove()
+
+    var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
+
+    var women_in_govt_line = d3.line()
+        .curve(d3.curveBasis)
+        .x(d => x(d.year))
+        .y(d => y(d.women_pct))
+
+    var women_in_govt_paths = slide3Group
+        .selectAll(".women-in-govt-path")
+        .data(window.women_in_govt_data)
+        .enter()
+        .append("path")
+        .attr("d", d => women_in_govt_line(d.values))
+        .attr("class", "women-in-govt-path")
+        .style("stroke", d => countryColors(d.key))
+        .style("stroke-width", "1px")
+        .style("fill", "none")
+        .attr("stroke-dasharray", function () {
+            return this.getTotalLength()
+        })
+        .attr("stroke-dashoffset", function () {
+            return this.getTotalLength()
+        })
+        .transition()
+        .delay((d,i) => i*500)
+        .duration(2000)
+        .ease(d3.easeCubic)
+        .attr("stroke-dashoffset", 0)
+}
+// ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
 // ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
 // ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║    ██║  ██║███████║   ██║   ███████║
@@ -1219,7 +1380,7 @@ function download_data() {
             }
         })
         .defer(d3.json, "info_bubbles.json")
-        .await(function(error,
+        .await(function (error,
             mps_over_time,
             number_women_over_time,
             total_mps_over_time,
@@ -1228,6 +1389,14 @@ function download_data() {
             window.mps_over_time_data = mps_over_time
             window.number_women_over_time_data = number_women_over_time
             window.total_mps_over_time_data = total_mps_over_time
+            var bisect = d3.bisector(function (a) {
+                return a.year
+            })
+                .left
+            number_women_over_time_data.forEach(d => {
+                d.total_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].total_mps
+                d.women_pct = d.total_women_mps / d.total_mps * 100
+            })
             window.info_bubbles_data = info_bubbles
             // INITIAL DRAW
             draw_graph()
@@ -1241,12 +1410,25 @@ function download_data() {
                 base64: d.base64
             }
         })
-        .await(function(error, mp_base64) {
+        .defer(d3.csv, "women_in_govt.csv", function (d) {
+            var parseDate = d3.timeParse("%Y-%m-%d")
+            return {
+                year: parseDate(d.date),
+                women_pct: +d.women_parliament,
+                country: d.country
+            }
+        })
+        .await(function (error, mp_base64, women_in_govt) {
             // Turn d3 array into a pythonic dictionary
             mp_base64_data = {}
             for (var i = 0; i < mp_base64.length; i++) {
                 mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
             }
+
+            // Group stats by country
+            window.women_in_govt_data = d3.nest()
+                .key(d => d.country)
+                .entries(women_in_govt)
         })
 }
 
@@ -1266,7 +1448,8 @@ download_data()
 function draw_graph() {
     "use strict"
 
-    d3.select("svg").selectAll("*")
+    d3.select("svg")
+        .selectAll("*")
         .remove()
     // Chart dimensions - use parent div size
     var new_width = timeline.clientWidth - margin.left - margin.right,
