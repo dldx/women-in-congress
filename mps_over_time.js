@@ -306,8 +306,8 @@ function initialise_tracker() {
             [SQRT3 / 2, -0.5]
         ]
     var hexagonPath = "m" + hexagonPoly.map(function (p) {
-        return [p[0] * hexRadius, p[1] * hexRadius].join(",")
-    })
+            return [p[0] * hexRadius, p[1] * hexRadius].join(",")
+        })
         .join("l") + "z"
 
     //Place a hexagon on the scene
@@ -863,8 +863,8 @@ function second_slide(no_transition = false) {
 
     // Create a bisector method to find the nearest point in the total mp data
     var bisect = d3.bisector(function (a) {
-        return a.year
-    })
+            return a.year
+        })
         .left
 
     pointsGroup.selectAll(".line-connect")
@@ -1241,68 +1241,61 @@ function third_slide(no_transition = false) {
             .style("opacity", 1)
     }
 
+    t0 = d3.transition()
+        .duration(1000)
     // Make axis into percentage axis
     y.domain([0, 100])
-    gY.transition()
-        .duration(1000)
+    gY
+        .transition(t0)
         .call(yAxis)
-
 
     total_women_mps_line
         .y(d => y(d.women_pct))
 
     total_women_mps_path
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", total_women_mps_line)
 
     total_women_mps_area
         .y1(d => y(d.women_pct))
 
     total_women_mps_path_area
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", total_women_mps_area)
 
     max_mps_line
         .y(() => y(100))
 
     max_mps_path
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", max_mps_line)
 
     max_mps_area
         .y1(() => y(100))
 
     max_mps_path_area
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", max_mps_area)
 
     half_max_mps_line
         .y(() => y(50))
 
     half_max_mps_path
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", half_max_mps_line)
 
     half_max_mps_line_smooth
         .y(() => y(50))
 
     text_path_50_50
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", half_max_mps_line_smooth)
     mask
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .attr("d", max_mps_area)
 
     yLabel
-        .transition()
-        .duration(1000)
+        .transition(t0)
         .text("% of Women MPs")
 
     // Remove old info bubbles
@@ -1311,32 +1304,134 @@ function third_slide(no_transition = false) {
 
     var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
 
+    // Scale axis to focus on modern history
+    xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2018, 1, 1)]))
+
+    t1 = t0.transition()
+        .duration(1000)
+
+    gX
+        .transition(t1)
+        .call(xAxis)
+
+    max_mps_path_area
+        .transition(t1)
+        .style("opacity", 0)
+        .remove()
+
+    max_mps_path
+        .transition(t1)
+        .style("opacity", 0)
+        .remove()
+
+    total_women_mps_path
+        .transition(t1)
+        .attr("stroke-dasharray", null)
+        .attr("stroke-dashoffset", null)
+        .attr("d", total_women_mps_line)
+
+    total_women_mps_path_area
+        .transition(t1)
+        .style("opacity", 0)
+        .attr("d", total_women_mps_area)
+        .remove()
+
+    electionRects
+        .transition(t1)
+        .style("opacity", 0)
+        .remove()
+
+    d3.selectAll(".women-label,.men-label")
+        .transition(t1)
+        .style("opacity", 0)
+        .remove()
+
     var women_in_govt_line = d3.line()
         .curve(d3.curveBasis)
         .x(d => x(d.year))
         .y(d => y(d.women_pct))
 
-    var women_in_govt_paths = slide3Group
+    women_in_govt_paths = slide3Group
         .selectAll(".women-in-govt-path")
         .data(window.women_in_govt_data)
         .enter()
         .append("path")
-        .attr("d", d => women_in_govt_line(d.values))
+        .attr("d", function(d) {return women_in_govt_line(d.values)})
         .attr("class", "women-in-govt-path")
+        .attr("id", d => "#" + d.key.replace(/[^a-zA-Z0-9s]/g, ''))
         .style("stroke", d => countryColors(d.key))
-        .style("stroke-width", "1px")
+        .style("stroke-width", lineThickness / 2)
         .style("fill", "none")
+        .style("opacity", 0.5)
         .attr("stroke-dasharray", function () {
             return this.getTotalLength()
         })
         .attr("stroke-dashoffset", function () {
             return this.getTotalLength()
         })
-        .transition()
-        .delay((d,i) => i*500)
+
+    t2 = t1.transition()
+    women_in_govt_paths
+        .transition(t2)
+        .delay((d, i) => 1000 + i * 1000 - i ** 1.5 * 50)
         .duration(2000)
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
+
+    var focus = slide3Group.append("g")
+        .attr("transform", "translate(-100,-100)")
+        .attr("class", "focus");
+
+    focus.append("circle")
+        .attr("r", 3.5);
+
+    focus.append("text")
+        .attr("y", -10);
+
+    var voronoiGroup = slide3Group.append("g")
+        .attr("class", "voronoi");
+
+var voronoi = d3.voronoi()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.women_pct); })
+    .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+    voronoiGroup.selectAll("path")
+        .data(voronoi.polygons(d3.merge(women_in_govt_data.map(function (d) { return d.values; }))))
+        .enter()
+        .append("path")
+        .attr("d", function (d) { return d ? "M" + d.join("L") + "Z" : null; })
+        .attr("fill", "none")
+        // .attr("stroke", "red")
+        .attr("pointer-events", "all")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
+
+    function mouseover(d) {
+            d3.select("#tooltip")
+                .style("opacity", 1)
+            // Show relevant tooltip info
+            tooltip.innerHTML = `
+                            <div class="slide3-tooltip">
+                                <h1>${d.data.country}</h1>
+                            </div>`
+        d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ''))
+        d.line
+                .style("stroke-width", lineThickness)
+                .style("opacity", 1)
+
+        // d.line.parentNode.appendChild(d.line);
+        focus.attr("transform", "translate(" + x(d.data.year) + "," + y(d.data.women_pct) + ")");
+        focus.select("text")
+            .text(d.data.country);
+    }
+
+    function mouseout(d) {
+        d.line
+                .style("stroke-width", lineThickness / 2)
+                .style("opacity", 0.5)
+        focus.attr("transform", "translate(-100,-100)");
+    }
 }
 // ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
@@ -1390,8 +1485,8 @@ function download_data() {
             window.number_women_over_time_data = number_women_over_time
             window.total_mps_over_time_data = total_mps_over_time
             var bisect = d3.bisector(function (a) {
-                return a.year
-            })
+                    return a.year
+                })
                 .left
             number_women_over_time_data.forEach(d => {
                 d.total_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].total_mps

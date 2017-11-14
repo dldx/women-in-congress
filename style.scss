@@ -191,6 +191,13 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 }
 
+.women-in-govt-path {
+  &.hover {
+    stroke-width: 10;
+  }
+}
+
+
 $tip-padding: 1;
 #tooltip {
   background-color: rgba($tip-background, .8);

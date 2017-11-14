@@ -19,6 +19,7 @@
     "d3-selection": "^1.1.0",
     "d3-shape": "^1.2.0",
     "d3-time-format": "^2.1.0",
+    "d3-transition": "^1.1.0",
     "d3-voronoi": "^1.1.2",
     "d3-zoom": "^1.7.1",
     "npm": "^5.4.1",
