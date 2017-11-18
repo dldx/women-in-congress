@@ -1228,6 +1228,11 @@ function third_slide(no_transition = false) {
     // Remove elements from this slide if already created
     d3.select("#slide3-group")
         .remove()
+
+    // Remove old info bubbles
+    d3.select("#info-bubbles")
+        .remove()
+
     // Add group to hold second slide lines
     slide3Group = zoomedArea
         .append("g")
@@ -1242,9 +1247,17 @@ function third_slide(no_transition = false) {
             .style("opacity", 1)
     }
 
+    // ----------------------------------------------------------------------------
+    //  █████╗  ██████╗████████╗     ██╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ███║
+    // ███████║██║        ██║       ╚██║
+    // ██╔══██║██║        ██║        ██║
+    // ██║  ██║╚██████╗   ██║        ██║
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝        ╚═╝
+    // Make axis into percentage axis and scale areas accordingly
+    // ----------------------------------------------------------------------------
     var t0 = d3.transition()
         .duration(1000)
-    // Make axis into percentage axis
     y.domain([0, 100])
     gY
         .transition(t0)
@@ -1299,14 +1312,19 @@ function third_slide(no_transition = false) {
         .transition(t0)
         .text("% of Women MPs")
 
-    // Remove old info bubbles
-    d3.select("#info-bubbles")
-        .remove()
-
+    // ----------------------------------------------------------------------------
+    //  █████╗  ██████╗████████╗    ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
+    // ███████║██║        ██║        █████╔╝
+    // ██╔══██║██║        ██║       ██╔═══╝
+    // ██║  ██║╚██████╗   ██║       ███████╗
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝
+    // Zoom into modern history on x axis & hide area paths so that only women MPs in the UK line is left
+    // ----------------------------------------------------------------------------
     var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
 
     // Scale axis to focus on modern history
-    xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2018, 1, 1)]))
+    xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]))
 
     var t1 = t0.transition()
         .duration(1000)
@@ -1347,21 +1365,39 @@ function third_slide(no_transition = false) {
         .style("opacity", 0)
         .remove()
 
+    // ------------------------------------------------------------------------
+    //  █████╗  ██████╗████████╗    ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
+    // ███████║██║        ██║        █████╔╝
+    // ██╔══██║██║        ██║        ╚═══██╗
+    // ██║  ██║╚██████╗   ██║       ██████╔╝
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚═════╝
+    // Draw women MP percentage lines from other countries, one by one
+    // ----------------------------------------------------------------------------
+
     var women_in_govt_line = d3.line()
         .curve(d3.curveBasis)
         .x(d => x(d.year))
         .y(d => y(d.women_pct))
+
+    // Replace data about UK with more precise data
+    women_in_govt_data
+        .filter((d) => d.key == "United Kingdom")[0].values = number_women_over_time_data
+            .map(d => { return {
+                year: d.year,
+                women_pct: d.women_pct,
+                country: "United Kingdom" } })
 
     var women_in_govt_paths = slide3Group
         .selectAll(".women-in-govt-path")
         .data(women_in_govt_data)
         .enter()
         .append("path")
-        .attr("d", function(d) {return women_in_govt_line(d.values)})
+        .attr("d", function (d) { return women_in_govt_line(d.values) })
         .attr("class", "women-in-govt-path")
         .attr("id", d => d.key.replace(/[^a-zA-Z0-9s]/g, ""))
-        .style("stroke", d => countryColors(d.key))
-        .style("stroke-width", lineThickness*2)
+        .style("stroke", d => d.key == "United Kingdom" ? colors["Hover"] : countryColors(d.key))
+        .style("stroke-width", lineThickness * 2)
         .style("fill", "none")
         .style("opacity", 1)
         .attr("stroke-dasharray", function () {
@@ -1372,15 +1408,22 @@ function third_slide(no_transition = false) {
         })
 
     var t2 = t1.transition()
+
+    var country_on_screen = []
     women_in_govt_paths
         .transition(t2)
         .delay((d, i) => 1000 + i * 1000 - Math.pow(i, 1.3) * 100)
         .duration(2000)
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
-        .style("opacity", 0.5)
-        .style("stroke-width", lineThickness / 2)
-
+        .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
+        .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+        .on("end", (d) => {
+            // Record that the country is now visible on screen so that we can toggle its hover methods
+            country_on_screen.push(d.key)
+            // If country is the UK, then we can get rid of the total women mps line
+            if(d.key == "United Kingdom") total_women_mps_path.remove()
+        })
     var focus = slide3Group.append("g")
         .attr("transform", "translate(-100,-100)")
         .attr("class", "focus")
@@ -1395,9 +1438,12 @@ function third_slide(no_transition = false) {
         .attr("class", "voronoi")
 
     var voronoi = d3.voronoi()
-        .x(function(d) { return x(d.year) })
-        .y(function(d) { return y(d.women_pct) })
-        .extent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
+        .x(function (d) { return x(d.year) })
+        .y(function (d) { return y(d.women_pct) })
+        .extent([
+            [-margin.left, -margin.top],
+            [width + margin.right, height + margin.bottom]
+        ])
 
     voronoiGroup.selectAll("path")
         .data(voronoi.polygons(d3.merge(women_in_govt_data.map(function (d) { return d.values }))))
@@ -1410,30 +1456,40 @@ function third_slide(no_transition = false) {
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
 
-    function mouseover(d) {
-        d3.select("#tooltip")
-            .style("opacity", 1)
-            // Show relevant tooltip info
-        tooltip.innerHTML = `
-                            <div class="slide3-tooltip">
-                                <h1>${d.data.country}</h1>
-                            </div>`
-        d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
-        d.line
-            .style("stroke-width", lineThickness)
-            .style("opacity", 1)
 
-        // d.line.parentNode.appendChild(d.line);
-        // focus.attr("transform", "translate(" + x(d.data.year) + "," + y(d.data.women_pct) + ")");
-        // focus.select("text")
-        //     .text(d.data.country);
+
+    function mouseover(d) {
+        // If country line is on screen, then enable mouseover
+        if (country_on_screen.indexOf(d.data.country) > -1) {
+            d3.select("#tooltip")
+                .style("opacity", 1)
+            // Show relevant tooltip info
+            var gender_ratio = 100 / d.data.women_pct - 1
+            tooltip.innerHTML = `
+                            <div class="slide3-tooltip">
+                                <h1 style="background-color: ${countryColors(d.data.country)};">${d.data.country}</h1>
+                                For every <span class="female">female</span> MP, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.data.year.getFullYear()}.
+                            </div>`
+            d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
+            d.line
+                .style("stroke-width", d => d.key == "United Kingdom" ? 2 * lineThickness : lineThickness)
+                .style("opacity", 1)
+
+            // d.line.parentNode.appendChild(d.line);
+            // focus.attr("transform", "translate(" + x(d.data.year) + "," + y(d.data.women_pct) + ")");
+            // focus.select("text")
+            //     .text(d.data.country);
+        }
     }
 
     function mouseout(d) {
-        d.line
-            .style("stroke-width", lineThickness / 2)
-            .style("opacity", 0.5)
-        focus.attr("transform", "translate(-100,-100)")
+        if (country_on_screen.indexOf(d.data.country) > -1) {
+            d.line
+                .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+                .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
+            // focus.attr("transform", "translate(-100,-100)")
+        }
     }
 }
 // ----------------------------------------------------------------------------
