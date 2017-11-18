@@ -44,7 +44,7 @@ var tip = d3.tip()
         return `<div id="tooltip">
                     <h1 style="background-color: black;">${d.full_name}</h1>
                     <div class="mp-image">
-                    <img class="mp-image" onerror="this.style.display='none'" src="./mp_photos/cropped/styled/mp-${d.id}.jpg"/>
+                    <img class="mp-image" onerror="this.style.display='none'" src="./mp-images/mp-${d.id}.jpg"/>
                     </div>
 <p>${d[topic_name].toFixed(2)}</p><p>
 </div>`;
