@@ -1418,6 +1418,18 @@ function third_slide(no_transition = false) {
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
         .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+        .on("start", d => {
+            d3.select("#tooltip")
+                .style("opacity", 1)
+            // Show relevant tooltip info
+            var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
+            tooltip.innerHTML = `
+                            <div class="slide3-tooltip">
+                                <h1 style="background-color: ${countryColors(d.values.slice(-1)[0].country)};">${d.values.slice(-1)[0].country}</h1>
+                                For every <span class="female">female</span> MP, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.values.slice(-1)[0].year.getFullYear()}.
+                            </div>`
+        })
         .on("end", (d) => {
             // Record that the country is now visible on screen so that we can toggle its hover methods
             country_on_screen.push(d.key)
