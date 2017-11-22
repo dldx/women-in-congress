@@ -144,7 +144,7 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 // RESET THE GRAPH IF ZOOMED IN AND REMOVE ANY EVENT CALLBACKS
 // ----------------------------------------------------------------------------
-function reset_zoom(callback) {
+function reset_zoom(callback, current_slide) {
     "use strict"
     svg.transition()
         .duration(500)
@@ -164,7 +164,7 @@ function reset_zoom(callback) {
             yAxis = d3.axisLeft(y)
             gY = d3.select(".y-axis")
                 .call(yAxis)
-            callback()
+            callback(current_slide)
         })
 }
 // ----------------------------------------------------------------------------
@@ -175,17 +175,17 @@ function update_state() {
     // Only update if we are actually changing states
     if (current_slide != new_slide) {
         // Go from slide 0 to slide 1
-        if (current_slide == 0 & new_slide == 1) {
+        if (new_slide == 1) {
             // Reset zoom, then load second slide
-            reset_zoom(to_second_slide)
-        } else if (current_slide == 1 & new_slide == 2) {
-            // Reset zoom, then load second slide
-            to_third_slide()
+            reset_zoom(to_second_slide, current_slide)
+        } else if (new_slide == 2) {
+            // Load third slide
+            reset_zoom(to_third_slide, current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
             svg.call(zoom)
-            to_first_slide()
+            to_first_slide(current_slide)
         }
         current_slide = new_slide
     }
@@ -463,22 +463,18 @@ d3.selection.prototype.moveToBack = function () {
 }
 
 // ----------------------------------------------------------------------------
-// ███████╗██╗██████╗ ███████╗████████╗    ███████╗██╗     ██╗██████╗ ███████
-// ██╔════╝██║██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝██║     ██║██╔══██╗██╔════
-// █████╗  ██║██████╔╝███████╗   ██║       ███████╗██║     ██║██║  ██║█████╗
-// ██╔══╝  ██║██╔══██╗╚════██║   ██║       ╚════██║██║     ██║██║  ██║██╔══╝
-// ██║     ██║██║  ██║███████║   ██║       ███████║███████╗██║██████╔╝███████
-// ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝       ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════
-// ALL WOMEN MPS OVER TIME
+// ███████╗██╗     ███████╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗    ██████╗ ███████╗ ██████╗████████╗███████╗
+// ██╔════╝██║     ██╔════╝██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║    ██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔════╝
+// █████╗  ██║     █████╗  ██║        ██║   ██║██║   ██║██╔██╗ ██║    ██████╔╝█████╗  ██║        ██║   ███████╗
+// ██╔══╝  ██║     ██╔══╝  ██║        ██║   ██║██║   ██║██║╚██╗██║    ██╔══██╗██╔══╝  ██║        ██║   ╚════██║
+// ███████╗███████╗███████╗╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║    ██║  ██║███████╗╚██████╗   ██║   ███████║
+// ╚══════╝╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝    ╚═╝  ╚═╝╚══════╝ ╚═════╝   ╚═╝   ╚══════╝
+// Let's add shaded rectangles in the background to show each parliamentary term
 // ----------------------------------------------------------------------------
-function first_slide() {
-    "use strict"
-    d3.select("#slide1-group")
-        .remove()
+function add_election_rects() {
+    // remove pre-existing rects
     d3.select("#election-rects")
         .remove()
-
-    // Add rectangles in the background to identify parliamentary terms
     electionRects = zoomedArea
         .append("g")
         .attr("id", "election-rects")
@@ -503,6 +499,25 @@ function first_slide() {
             return x(second_election) - x(first_election)
         })
         .attr("height", y(0) - y(2000)) // height of rectangle is one unit of the y axis
+}
+// ----------------------------------------------------------------------------
+// ███████╗██╗██████╗ ███████╗████████╗    ███████╗██╗     ██╗██████╗ ███████
+// ██╔════╝██║██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝██║     ██║██╔══██╗██╔════
+// █████╗  ██║██████╔╝███████╗   ██║       ███████╗██║     ██║██║  ██║█████╗
+// ██╔══╝  ██║██╔══██╗╚════██║   ██║       ╚════██║██║     ██║██║  ██║██╔══╝
+// ██║     ██║██║  ██║███████║   ██║       ███████║███████╗██║██████╔╝███████
+// ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝       ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════
+// ALL WOMEN MPS OVER TIME
+// ----------------------------------------------------------------------------
+function first_slide() {
+    "use strict"
+    d3.select("#slide1-group")
+        .remove()
+    d3.select("#election-rects")
+        .remove()
+
+    // Add rectangles in the background to identify parliamentary terms
+    add_election_rects()
 
     // Add the points group that will hold all our data points
     pointsGroup = zoomedArea
@@ -642,7 +657,7 @@ function first_slide() {
 // ----------------------------------------------------------------------------
 // GO TO FIRST SLIDE FROM ANOTHER
 // ----------------------------------------------------------------------------
-function to_first_slide() {
+function to_first_slide(current_slide) {
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 0) {
         lastTransitioned = 0
@@ -651,24 +666,47 @@ function to_first_slide() {
         .transition()
         .duration(1000)
 
-    // Fade all objects belonging to second slide
-    t0.select("#slide2-group")
-        .style("opacity", 0)
-        .remove()
-    t0.select("#info-bubbles")
-        .style("opacity", 0)
-        .remove()
-    // Remove election rect events and tooltip
+    yLabel.transition(t0)
+        .text("Number of Women MPs")
+
+    // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+    case 1:
+        // If we're coming from the second slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+        t0.select("#info-bubbles")
+            .style("opacity", 0)
+            .remove()
+        d3.selectAll(".election-rect")
+            .on("mouseover", null)
+            .on("mouseout", null)
+        break
+    case 2:
+        // Fade all objects belonging to second and third slides
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+        t0.select("#slide3-group")
+            .style("opacity", 0)
+            .remove()
+        break
+    }
+
+    // Hide tooltip
     d3.select("#tooltip")
         .style("opacity", 0)
-    d3.selectAll(".election-rect")
-        .on("mouseover", null)
-        .on("mouseout", null)
 
-    // Change domain to include all MPs and rescale y axis
+    // Scale axes to fit all data
     y.domain([0, 210])
-    t0.select(".y-axis")
+    gY.transition()
+        .duration(1000)
         .call(yAxis)
+    xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]))
+    gX.transition()
+        .duration(1000)
+        .call(xAxis)
 
     first_slide()
     pointsGroup.style("opacity", 0)
@@ -678,7 +716,7 @@ function to_first_slide() {
 // ----------------------------------------------------------------------------
 // TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
-function to_second_slide() {
+function to_second_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 1) {
@@ -686,12 +724,37 @@ function to_second_slide() {
         // Update transition counter
         lastTransitioned = 1
     } else {
-        d3.select("#slide1-group")
-            .style("opacity", 1)
+        var t0 = svg
             .transition()
             .duration(1000)
-            .style("opacity", 0)
-            .remove()
+
+        yLabel.transition(t0)
+            .text("Number of Women MPs")
+
+        // Different actions depending on which slide we're coming from
+        switch (current_slide) {
+        case 0:
+            // If we're coming from the first slide
+            t0.select("#slide1-group")
+                .style("opacity", 0)
+                .remove()
+            break
+        case 2:
+            // Fade all objects belonging to third slide
+            t0.select("#slide3-group")
+                .style("opacity", 0)
+                .remove()
+            break
+
+        }
+
+        // Scale axes to fit all data
+        xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]))
+        gX.transition()
+            .duration(1000)
+            .call(xAxis)
+
+        add_election_rects()
         second_slide(true)
     }
 }
@@ -726,6 +789,7 @@ function second_slide(no_transition = false) {
             .duration(1000)
             .style("opacity", 1)
     }
+
 
     // Add interpolation line for total mps over time
     max_mps_line = d3.line()
@@ -1046,7 +1110,7 @@ function second_slide(no_transition = false) {
                 .y(function (d) {
                     return y(d.total_mps / 2)
                 })
-                .curve(d3.curveBundle.beta(0.75))
+                .curve(d3.curveBundle.beta(0.1))
 
             // Add path for text to follow
             text_path_50_50 = slide2Group
@@ -1061,7 +1125,7 @@ function second_slide(no_transition = false) {
                 .append("textPath")
                 // .attr("x", x(new Date(1970, 1, 1)))
                 // .attr("y", y(630/2))
-                .attr("startOffset", "75%")
+                .attr("startOffset", "50%")
                 .attr("xlink:href", "#half-max-textpath")
                 .attr("font-size", Math.max(lineThickness * 10, Math.min(lineThickness * 20,
                     (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 6)))
@@ -1198,7 +1262,7 @@ function second_slide(no_transition = false) {
 // ----------------------------------------------------------------------------
 // TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
-function to_third_slide() {
+function to_third_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 2) {
@@ -1206,12 +1270,19 @@ function to_third_slide() {
         // Update transition counter
         lastTransitioned = 2
     } else {
-        d3.select("#slide1-group")
-            .style("opacity", 1)
+        var t0 = svg
             .transition()
             .duration(1000)
-            .style("opacity", 0)
-            .remove()
+
+        // Different actions depending on which slide we're coming from
+        switch (current_slide) {
+        case 0:
+            // If we're coming from the first slide
+            t0.select("#slide1-group")
+                .style("opacity", 0)
+                .remove()
+            break
+        }
         third_slide(true)
     }
 }
@@ -1239,13 +1310,13 @@ function third_slide(no_transition = false) {
         .attr("id", "slide3-group")
 
     // Add a smooth but quick transition if no fancy transition is requested
-    if (no_transition) {
-        slide3Group
-            .style("opacity", 0)
-            .transition()
-            .duration(1000)
-            .style("opacity", 1)
-    }
+    // if (no_transition) {
+    //     slide3Group
+    //         .style("opacity", 0)
+    //         .transition()
+    //         .duration(200)
+    //         .style("opacity", 1)
+    // }
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗     ██╗
@@ -1257,7 +1328,7 @@ function third_slide(no_transition = false) {
     // Make axis into percentage axis and scale areas accordingly
     // ----------------------------------------------------------------------------
     var t0 = d3.transition()
-        .duration(1000)
+        .duration(no_transition ? 500 : 1000)
     y.domain([0, 100])
     gY
         .transition(t0)
@@ -1303,7 +1374,7 @@ function third_slide(no_transition = false) {
 
     text_path_50_50
         .transition(t0)
-        .attr("d", half_max_mps_line_smooth)
+        .attr("d", half_max_mps_line)
     mask
         .transition(t0)
         .attr("d", max_mps_area)
@@ -1327,7 +1398,7 @@ function third_slide(no_transition = false) {
     xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]))
 
     var t1 = t0.transition()
-        .duration(1000)
+        .duration(no_transition ? 500 : 1000)
 
     gX
         .transition(t1)
@@ -1383,10 +1454,13 @@ function third_slide(no_transition = false) {
     // Replace data about UK with more precise data
     women_in_govt_data
         .filter((d) => d.key == "United Kingdom")[0].values = number_women_over_time_data
-            .map(d => { return {
-                year: d.year,
-                women_pct: d.women_pct,
-                country: "United Kingdom" } })
+            .map(d => {
+                return {
+                    year: d.year,
+                    women_pct: d.women_pct,
+                    country: "United Kingdom"
+                }
+            })
 
     var women_in_govt_paths = slide3Group
         .selectAll(".women-in-govt-path")
@@ -1408,33 +1482,35 @@ function third_slide(no_transition = false) {
         })
 
     var t2 = t1.transition()
+        .duration(no_transition ? 1000 : 2000)
 
     var country_on_screen = []
     women_in_govt_paths
         .transition(t2)
-        .delay((d, i) => 1000 + i * 1000 - Math.pow(i, 1.3) * 100)
-        .duration(2000)
+        .delay((d, i) => no_transition ? 0 : (1000 + i * 1000 - Math.pow(i, 1.3) * 100))
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
         .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
         .on("start", d => {
-            d3.select("#tooltip")
-                .style("opacity", 1)
-            // Show relevant tooltip info
-            var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
-            tooltip.innerHTML = `
+            if (current_slide == 2) {
+                d3.select("#tooltip")
+                    .style("opacity", 1)
+                // Show relevant tooltip info
+                var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
+                tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${countryColors(d.values.slice(-1)[0].country)};">${d.values.slice(-1)[0].country}</h1>
+                                <h1 style="background-color: ${d.values.slice(-1)[0].country == "United Kingdom" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
                                 For every <span class="female">female</span> MP, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.values.slice(-1)[0].year.getFullYear()}.
                             </div>`
+            }
         })
         .on("end", (d) => {
             // Record that the country is now visible on screen so that we can toggle its hover methods
             country_on_screen.push(d.key)
             // If country is the UK, then we can get rid of the total women mps line
-            if(d.key == "United Kingdom") total_women_mps_path.remove()
+            if (d.key == "United Kingdom") total_women_mps_path.remove()
         })
     var focus = slide3Group.append("g")
         .attr("transform", "translate(-100,-100)")
@@ -1479,7 +1555,7 @@ function third_slide(no_transition = false) {
             var gender_ratio = 100 / d.data.women_pct - 1
             tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${countryColors(d.data.country)};">${d.data.country}</h1>
+                                <h1 style="background-color: ${d.data.country == "United Kingdom" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
                                 For every <span class="female">female</span> MP, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.data.year.getFullYear()}.
                             </div>`
