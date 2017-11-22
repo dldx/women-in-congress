@@ -1,0 +1,194 @@
+"country","election_date","pct_women"
+"Rwanda",2013,61.3
+"Bolivia",2014,53.1
+"Cuba",2013,48.9
+"Iceland",2016,47.6
+"Nicaragua",2016,45.7
+"Sweden",2014,43.6
+"Mexico",2015,42.6
+"South Africa",2014,42.3
+"Finland",2015,42
+"Senegal",2017,41.8
+"Norway",2017,41.4
+"Namibia",2014,41.3
+"Mozambique",2014,39.6
+"Spain",2016,39.1
+"France",2017,39
+"Argentina",2015,38.9
+"Ethiopia",2015,38.8
+"New Zealand",2017,38.3
+"Belgium",2014,38
+"Ecuador",2017,38
+"Denmark",2015,37.4
+"United Republic of Tanzania",2015,36.9
+"Slovenia",2014,36.7
+"Burundi",2015,36.4
+"Netherlands",2017,36
+"Costa Rica",2014,35.1
+"Portugal",2015,34.8
+"Belarus",2016,34.5
+"Serbia",2016,34.4
+"Uganda",2016,34.3
+"The F.Y.R. of Macedonia",2016,34.2
+"Grenada",2013,33.3
+"Zimbabwe",2013,32.6
+"Switzerland",2015,32.5
+"Timor-Leste",2017,32.3
+"Andorra",2015,32.1
+"El Salvador",2015,32.1
+"United Kingdom",2017,32
+"Guyana",2015,31.9
+"Tunisia",2014,31.3
+"Cameroon",2013,31.1
+"Italy",2013,31
+"Trinidad and Tobago",2015,31
+"Angola",2017,30.9
+"Germany",2017,30.7
+"Austria",2013,30.6
+"Sudan",2015,30.5
+"Nepal",2013,29.6
+"Philippines",2016,29.5
+"Australia",2016,28.7
+"South Sudan",2016,28.5
+"Luxembourg",2013,28.3
+"Poland",2015,28
+"Albania",2017,27.9
+"Afghanistan",2010,27.7
+"Peru",2016,27.7
+"Israel",2015,27.5
+"Lao People's Democratic Republic",2016,27.5
+"Kazakhstan",2016,27.1
+"Dominican Republic",2016,26.8
+"Estonia",2015,26.7
+"San Marino",2016,26.7
+"Viet Nam",2016,26.7
+"Canada",2015,26.3
+"Algeria",2017,25.8
+"Honduras",2013,25.8
+"Turkmenistan",2013,25.8
+"Suriname",2015,25.5
+"Iraq",2014,25.3
+"Mauritania",2013,25.2
+"Dominica",2014,25
+"Somalia",2016,24.4
+"China",2013,24.2
+"Equatorial Guinea",2013,24
+"Bulgaria",2017,23.8
+"Cabo Verde",2016,23.6
+"Montenegro",2016,23.5
+"Singapore",2015,23
+"Lesotho",2017,22.9
+"Republic of Moldova",2014,22.8
+"United Arab Emirates",2015,22.5
+"Ireland",2016,22.2
+"Venezuela (Bolivarian Republic of)",2015,22.2
+"Eritrea",1994,22
+"Guinea",2013,21.9
+"Kenya",2017,21.8
+"Bosnia and Herzegovina",2014,21.4
+"Lithuania",2016,21.3
+"Seychelles",2016,21.2
+"Monaco",2013,20.8
+"Romania",2016,20.7
+"Pakistan",2013,20.6
+"Morocco",2016,20.5
+"Bangladesh",2014,20.3
+"Cambodia",2013,20.3
+"Uruguay",2014,20.2
+"Czech Republic",2013,20
+"Slovakia",2016,20
+"Saudi Arabia",2016,19.9
+"Indonesia",2014,19.8
+"United States of America",2016,19.4
+"Kyrgyzstan",2015,19.2
+"Madagascar",2013,19.2
+"Tajikistan",2015,19
+"Colombia",2014,18.7
+"Croatia",2016,18.5
+"Greece",2015,18.3
+"Panama",2014,18.3
+"Sao Tome and Principe",2014,18.2
+"Armenia",2017,18.1
+"Zambia",2016,18
+"Cyprus",2016,17.9
+"Togo",2013,17.6
+"Jamaica",2016,17.5
+"Gabon",2011,17.1
+"Mongolia",2016,17.1
+"Niger",2016,17
+"Republic of Korea",2016,17
+"Azerbaijan",2015,16.8
+"Barbados",2013,16.7
+"Malawi",2014,16.7
+"Saint Lucia",2016,16.7
+"Democratic People's Republic of Korea",2014,16.3
+"Fiji",2014,16
+"Georgia",2016,16
+"Latvia",2014,16
+"Libya",2014,16
+"Uzbekistan",2014,16
+"Chile",2013,15.8
+"Russian Federation",2016,15.8
+"Jordan",2016,15.4
+"Egypt",2015,14.9
+"Turkey",2015,14.6
+"Paraguay",2013,13.8
+"Guinea-Bissau",2014,13.7
+"Saint Kitts and Nevis",2015,13.3
+"Syrian Arab Republic",2016,13.2
+"Saint Vincent and the Grenadines",2015,13
+"Bahamas",2017,12.8
+"Chad",2011,12.8
+"Ghana",2016,12.7
+"Guatemala",2015,12.7
+"Palau",2016,12.5
+"Sierra Leone",2012,12.4
+"Liberia",2011,12.3
+"Ukraine",2014,12.3
+"Liechtenstein",2017,12
+"Malta",2017,11.9
+"India",2014,11.8
+"Mauritius",2014,11.6
+"Congo",2017,11.3
+"Antigua and Barbuda",2014,11.1
+"Burkina Faso",2015,11
+"Djibouti",2013,10.8
+"Brazil",2014,10.7
+"Cote d'Ivoire",2016,10.6
+"Nauru",2016,10.5
+"Malaysia",2013,10.4
+"Gambia",2017,10.3
+"Myanmar",2015,10.2
+"Hungary",2014,10.1
+"Samoa",2016,10
+"Botswana",2014,9.5
+"Belize",2015,9.4
+"Japan",2014,9.3
+"Brunei Darussalam",2017,9.1
+"Marshall Islands",2015,9.1
+"Democratic Republic of the Congo",2011,8.9
+"Mali",2013,8.8
+"Central African Republic",2016,8.6
+"Bhutan",2013,8.5
+"Bahrain",2014,7.5
+"Benin",2015,7.2
+"Tuvalu",2015,6.7
+"Kiribati",2015,6.5
+"Swaziland",2013,6.2
+"Comoros",2015,6.1
+"Iran (Islamic Republic of)",2016,5.9
+"Maldives",2014,5.9
+"Sri Lanka",2015,5.8
+"Nigeria",2015,5.6
+"Thailand",2014,4.8
+"Tonga",2014,3.8
+"Kuwait",2016,3.1
+"Lebanon",2009,3.1
+"Haiti",2015,2.5
+"Solomon Islands",2014,2
+"Oman",2015,1.2
+"Micronesia (Federated States of)",2017,0
+"Papua New Guinea",2017,0
+"Qatar",2013,0
+"Vanuatu",2016,0
+"Yemen",2003,0

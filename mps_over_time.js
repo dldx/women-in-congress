@@ -720,7 +720,7 @@ function to_second_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 1) {
-        second_slide(false)
+        second_slide(true)
         // Update transition counter
         lastTransitioned = 1
     } else {
@@ -1110,7 +1110,7 @@ function second_slide(no_transition = false) {
                 .y(function (d) {
                     return y(d.total_mps / 2)
                 })
-                .curve(d3.curveBundle.beta(0.1))
+                .curve(d3.curveBundle.beta(0.5))
 
             // Add path for text to follow
             text_path_50_50 = slide2Group
@@ -1266,7 +1266,7 @@ function to_third_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 2) {
-        third_slide(false)
+        third_slide(true)
         // Update transition counter
         lastTransitioned = 2
     } else {
