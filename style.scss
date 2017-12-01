@@ -217,7 +217,9 @@ $tip-padding: 1;
   left: 20%;
   top: 10%;
 
-  .slide2-tooltip, .slide3-tooltip {
+  .slide2-tooltip,
+  .slide3-tooltip,
+  .slide4-tooltip {
     font-size: 1rem;
     font-weight: 200;
     text-align: center;
@@ -373,4 +375,8 @@ $tip-padding: 1;
   alignment-baseline: ideographic;
   text-anchor: middle;
   fill: $female;
+}
+
+.women-pct-track {
+    stroke: steelblue;
 }

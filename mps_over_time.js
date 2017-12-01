@@ -76,10 +76,12 @@ var width = 0,
 var clippedArea,
     electionRects,
     zoom,
+    wrapper,
     zoomedArea,
     pointsGroup,
     slide2Group,
     slide3Group,
+    slide4Group,
     max_mps_line,
     max_mps_path,
     max_mps_area,
@@ -92,10 +94,11 @@ var clippedArea,
     total_women_mps_path_area,
     half_max_mps_line_smooth,
     text_path_50_50,
+    women_in_govt_paths,
     mask,
     instance,
     x, y,
-    xAxis, gX,
+    xAxis, gX, xLabel,
     yAxis, gY, yLabel,
     tooltip,
     lineThickness,
@@ -104,6 +107,7 @@ var clippedArea,
     number_women_over_time_data,
     total_mps_over_time_data,
     women_in_govt_data,
+    women_in_govt_global_data,
     mp_base64_data,
     info_bubbles_data
 
@@ -181,6 +185,9 @@ function update_state() {
         } else if (new_slide == 2) {
             // Load third slide
             reset_zoom(to_third_slide, current_slide)
+        } else if (new_slide == 3) {
+            // Load fourth slide
+            reset_zoom(to_fourth_slide, current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -350,7 +357,7 @@ function initial_render() {
 
     svg.append("defs")
     // Add the group wrapper that contains the whole graph
-    var wrapper = svg
+    wrapper = svg
         .append("g")
         .attr("class", "timeline-wrapper")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -413,7 +420,7 @@ function initial_render() {
         .text("Women MPs in the House of Commons")
 
     // Add axes labels
-    wrapper.append("text")
+    xLabel = wrapper.append("text")
         .attr("x", width / 2)
         .attr("y", height + margin.bottom / 2)
         .attr("class", "x-label")
@@ -720,7 +727,7 @@ function to_second_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 1) {
-        second_slide(false)
+        second_slide(true)
         // Update transition counter
         lastTransitioned = 1
     } else {
@@ -1266,7 +1273,7 @@ function to_third_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 2) {
-        third_slide(false)
+        third_slide(true)
         // Update transition counter
         lastTransitioned = 2
     } else {
@@ -1462,7 +1469,7 @@ function third_slide(no_transition = false) {
                 }
             })
 
-    var women_in_govt_paths = slide3Group
+    women_in_govt_paths = slide3Group
         .selectAll(".women-in-govt-path")
         .data(women_in_govt_data)
         .enter()
@@ -1580,6 +1587,162 @@ function third_slide(no_transition = false) {
         }
     }
 }
+
+function to_fourth_slide(current_slide) {
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 3) {
+        lastTransitioned = 3
+    }
+    var t0 = svg
+        .transition()
+        .duration(1000)
+
+        // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+    case 0:
+        // If we're coming from the first slide
+        t0.select("#slide1-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 1:
+        // If we're coming from the first slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 2:
+        // Fade all objects belonging to third slide
+        t0.select("#slide3-group")
+            .style("opacity", 0)
+            .remove()
+        break
+    }
+
+    // Hide tooltip
+    d3.select("#tooltip")
+        .style("opacity", 0)
+
+    gX
+        .transition(t0)
+        .style("opacity", 0)
+    gY
+        .transition(t0)
+        .style("opacity", 0)
+    xLabel
+        .transition(t0)
+        .style("opacity", 0)
+    yLabel
+        .transition(t0)
+        .style("opacity", 0)
+
+    fourth_slide(false)
+}
+
+function fourth_slide(no_transition = false) {
+    var t0 = svg
+        .transition()
+        .duration(1000)
+
+    // Remove Election rectangles
+    electionRects
+        .transition(t0)
+        .style("opacity", 0)
+        .remove()
+
+    slide4Group = wrapper.append("g")
+        .attr("id", "slide4-group")
+        // .attr("transform", `translate(${width/2}, ${height/2})`)
+
+
+    // Scale to place country circles at correct point
+    var women_pct_scale = d3.scaleLinear()
+        .domain([0, 60])
+        .range([0, 1])
+
+
+    // Returns an attrTween for translating along the specified path element.
+    function translateAlong(path) {
+        var l = path.getTotalLength()
+        return function (d, i, a) {
+            d.women_pct = d.women_pct || 0
+            return function (t) {
+                var p = path.getPointAtLength(women_pct_scale(d.women_pct) * t * l)
+                return "translate(" + p.x + "," + p.y + ")"
+            }
+        }
+    }
+
+    var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
+
+    var row_spacing = height / 6
+    var full_width = width * 0.8
+
+    var points = [
+        [0.2 * full_width, 0 * row_spacing],
+        [0.8 * full_width, 0 * row_spacing],
+        [0.8 * full_width, 0.5 * row_spacing],
+        [0 * full_width, 0.5 * row_spacing],
+        [0 * full_width, 1.5 * row_spacing],
+        [1 * full_width, 1.5 * row_spacing],
+        [1 * full_width, 3 * row_spacing],
+        [0.2 * full_width, 3 * row_spacing],
+        [0.2 * full_width, 4 * row_spacing],
+        [0.8 * full_width, 4 * row_spacing],
+        [0.8 * full_width, 5 * row_spacing],
+        [0 * full_width, 5 * row_spacing],
+        [0 * full_width, 6 * row_spacing],
+        [0.8 * full_width, 6 * row_spacing],
+
+    ]
+
+    var govt_progress_path = slide4Group.append("path")
+        .data([points])
+        .attr("id", "path")
+        .attr("d", d3.line()
+            .curve(d3.curveCardinal.tension(0.7)))
+        .attr("fill", "none")
+        .attr("stroke-linecap", "round")
+        .style("stroke-width", 2*lineThickness)
+        .attr("class", "women-pct-track")
+
+    var countryCircle = slide4Group
+        .selectAll("circle")
+        .data(women_in_govt_global_data)
+        .enter()
+        .append("circle")
+        .attr("r", 4*lineThickness)
+        .attr("fill", d => countryColors(d.country))
+
+    countryCircle
+        .transition()
+        .duration(d => no_transition ? 1000 : women_pct_scale(d.women_pct) / 0.0005)
+        .ease(d3.easeCubic)
+        .delay((d, i) => no_transition ? 0 : 1000 * Math.log(10 * i))
+        .attrTween("transform", translateAlong(document.getElementById("path")))
+
+    countryCircle
+        .on("mouseover", function (d, i) {
+            d3.select("#tooltip")
+                .style("opacity", 1)
+            d3.select(this)
+                .classed("hover", true)
+            // Reconfigure tooltip to show country information
+            var gender_ratio = 100 / d.women_pct - 1
+            tooltip.innerHTML = `
+                            <div class="slide4-tooltip">
+                                <h1 style="background-color: ${d.country == "United Kingdom" ? colors["Hover"] : countryColors(d.country)};">${d.country}</h1>
+                                For every <span class="female">female</span> MP, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.election_date}.
+                            </div>`
+        })
+        .on("mouseout", function () {
+            d3.select(this)
+                .classed("hover", false)
+        })
+}
 // ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
 // ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
@@ -1660,7 +1823,14 @@ function download_data() {
                 country: d.country
             }
         })
-        .await(function (error, mp_base64, women_in_govt) {
+        .defer(d3.csv, "women_in_govt_global.csv", d => {
+            return {
+                country: d.country,
+                election_date: +d.election_date,
+                women_pct: +d.women_pct
+            }
+        })
+        .await(function (error, mp_base64, women_in_govt, women_in_govt_global) {
             // Turn d3 array into a pythonic dictionary
             mp_base64_data = {}
             for (var i = 0; i < mp_base64.length; i++) {
@@ -1671,7 +1841,10 @@ function download_data() {
             women_in_govt_data = d3.nest()
                 .key(d => d.country)
                 .entries(women_in_govt)
+
+            women_in_govt_global_data = women_in_govt_global
         })
+
 }
 
 // GET ALL DATA
