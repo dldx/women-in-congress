@@ -2,7 +2,7 @@ export { queue } from "d3-queue";
 export { csv, json } from "d3-request"
 export { select, selectAll, selection, event } from "d3-selection"
 export { scaleTime, scaleLinear, scaleOrdinal, schemeCategory20 } from "d3-scale"
-export { pie, area, line, arc, curveBasis, curveCardinal, curveBundle } from "d3-shape"
+export { pie, area, line, arc, curveBasis, curveCardinal, curveBundle, stack } from "d3-shape"
 export { interpolate } from "d3-interpolate"
 export { axisTop, axisRight, axisBottom, axisLeft } from "d3-axis"
 export { zoom, zoomIdentity } from "d3-zoom"

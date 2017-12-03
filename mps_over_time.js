@@ -1649,7 +1649,8 @@ function to_fourth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function() {
-            d3.select("#tooltip").style("width", "80%")
+            d3.select("#tooltip")
+                .style("width", "80%")
                 .style("height", "80%")
                 .style("top", "10%")
                 .style("left", "10%")
@@ -1672,19 +1673,40 @@ function fourth_slide(no_transition = false) {
         .append("g")
         .attr("id", "slide4-group")
 
+    var topicBarScale = d3.scaleLinear().domain([0, 1]).range([0, 500])
+    var topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
+
     t0.on("end", () => {
-        var d = speech_samples_data[0].values
-        d = d[Math.floor(Math.random()*d.length)]
+        var chosen_speech = speech_samples_data[0].values
+        chosen_speech = chosen_speech[Math.floor(Math.random()*chosen_speech.length)]
         tooltip.innerHTML = `
     <div class="slide4-tooltip">
     <h1 style='background-color: ${colors["Hover"]};'>Topics mentioned in a speech</h1>
     <div class="mp-image-parent">
-    ${typeof mp_base64_data[d.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.mp_id] + "\" />" +
-    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+    ${typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" +
+    "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
     </div>
-    <div class="mp-name">${d.mp_name}</div>
-    <blockquote><p>${d.body}</p></blockquote>
+    <div class="mp-name">${chosen_speech.mp_name}</div>
+    <blockquote><p>${chosen_speech.body}</p></blockquote>
+    <div class="speech-debate" style="font-weight: 400;">on ${chosen_speech.debate_title} (${(new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"})})</div>
+    <svg id="speech-topic-bar"></svg>
     </div>`
+
+        var stack = d3.stack()
+            .keys(Object.keys(chosen_speech.topics))
+
+
+        d3.select("#speech-topic-bar")
+            .selectAll("rect")
+            .data(stack([chosen_speech.topics]))
+            .enter()
+            .append("rect")
+            .attr("fill", d => topicColorScale(d.key))
+            .attr("x", d => topicBarScale(d[0][0]))
+            .attr("width", d => topicBarScale(d[0][1] - d[0][0]))
+            .attr("y", 0)
+            .attr("height", 30)
+
     })
 }
 // ----------------------------------------------------------------------------

@@ -230,8 +230,8 @@ blockquote {
   // }
   p {
     width: 80%;
+    height: 30%;
     margin: auto;
-    margin-bottom: 20%;
     font-family: "Open Sans script=all rev=2", sans-serif;
     font-weight: 300;
     font-style: italic;
@@ -390,8 +390,9 @@ $tip-padding: 1;
     }
 
     .mp-name {
-      font-size: 1.5rem;
-      padding: $tip-padding + em;
+      font-weight: lighter;
+      font-size: 2rem;
+      padding: $tip-padding/2 + em;
     }
   }
 }
