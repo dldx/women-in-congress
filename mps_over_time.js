@@ -1648,14 +1648,16 @@ function to_fourth_slide(current_slide) {
     d3.select("#tooltip")
         .transition(t0)
         .style("opacity", 0)
-        .style("width", "80%")
-        .style("height", "80%")
-        .style("top", "10%")
-        .style("left", "10%")
-        .transition()
-        .delay(1000)
-        .duration(1000)
-        .style("opacity", 1)
+        .on("end", function() {
+            d3.select("#tooltip").style("width", "80%")
+                .style("height", "80%")
+                .style("top", "10%")
+                .style("left", "10%")
+                .html("")
+                .transition()
+                .duration(1000)
+                .style("opacity", 1)
+        })
 
     fourth_slide(false)
 }
@@ -1663,7 +1665,6 @@ function to_fourth_slide(current_slide) {
 function fourth_slide(no_transition = false) {
     var t0 = svg
         .transition()
-        .delay(2000)
         .duration(1000)
 
 
@@ -1671,18 +1672,20 @@ function fourth_slide(no_transition = false) {
         .append("g")
         .attr("id", "slide4-group")
 
-
-    var d = speech_samples_data[0].values[0]
-    tooltip.innerHTML = `
+    t0.on("end", () => {
+        var d = speech_samples_data[0].values
+        d = d[Math.floor(Math.random()*d.length)]
+        tooltip.innerHTML = `
     <div class="slide4-tooltip">
-    <h1 style='background-color: #ff2200;'>Topics mentioned in a speech</h1>
+    <h1 style='background-color: ${colors["Hover"]};'>Topics mentioned in a speech</h1>
     <div class="mp-image-parent">
     ${typeof mp_base64_data[d.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.mp_id] + "\" />" +
     "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
     </div>
     <div class="mp-name">${d.mp_name}</div>
-    <div class="mp-speech-body">${d.body}</div>
+    <blockquote><p>${d.body}</p></blockquote>
     </div>`
+    })
 }
 // ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗

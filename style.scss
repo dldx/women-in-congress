@@ -1,24 +1,21 @@
 $colors: (
-    Lab: #c61148,
-    Con: #0096db,
-    SNP: #fcca46,
-    LibDem: #f37a48,
-    LD: #f37a48,
-    Green: #a1c181,
-    SF: #008e4b,
-    Other: #50514f, // Used as fallback when no party colour has been defined
-    Hover: #e5e5e5, // Used when hovering over an item
-    Active: #a1c181 // Used for the active slide on the tracker
+  Lab: #c61148,
+  Con: #0096db,
+  SNP: #fcca46,
+  LibDem: #f37a48,
+  LD: #f37a48,
+  Green: #a1c181,
+  SF: #008e4b,
+  Other: #50514f, // Used as fallback when no party colour has been defined
+  Hover: #e5e5e5, // Used when hovering over an item
+  Active: #a1c181 // Used for the active slide on the tracker
 );
 $tracker-colors: #5c5c5c, #424242;
-
 $body-background: #131313;
 $graph-background: #252525;
 $tip-background: $body-background;
-
 $female: map-get($colors, Hover);
 $male: map-get($colors, Lab);
-
 $slide2-header-color: map-get($colors, Green);
 $info-bubble-header-color: map-get($colors, Con);
 
@@ -56,25 +53,31 @@ body {
     stroke-width: 8px;
     fill: none;
   }
+
   .arc {
     @each $item in $tracker-colors {
       &.c-#{index($tracker-colors, $item)} {
         fill: $item;
       }
     }
+
     &.active {
       fill: map-get($colors, Active);
+
       text {
         fill: nth($tracker-colors, 1);
       }
     }
+
     &.hover {
       fill: map-get($colors, Hover);
+
       text {
         fill: nth($tracker-colors, 1);
       }
     }
   }
+
   text {
     cursor: default;
     user-select: none;
@@ -83,10 +86,8 @@ body {
     alignment-baseline: middle;
     font-weight: bold;
     font-size: 1.5em;
-
   }
 }
-
 $nav-button-bg: map-get($colors, Lab);
 $nav-button-fg: lighten(map-get($colors, Hover), 50);
 
@@ -123,36 +124,40 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   stroke: invert($graph-background);
   stroke-width: .5;
 }
+
 .x-axis text,
-.y-axis text,
 .x-label,
+.y-axis text,
 .y-label {
   fill: invert($graph-background);
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
   font-weight: 500;
 }
-.x-label, .y-label {
+
+.x-label,
+.y-label {
   text-anchor: middle;
   font-size: 1.1rem;
   font-weight: 500;
 }
+
 .x-label {
   alignment-baseline: hanging;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 13 / 10), only screen and (min-resolution: 120dpi) {
   .x-axis text,
-  .y-axis text,
   .x-label text,
-  .x-label text {
+  .x-label text,
+  .y-axis text {
     font-size: 1rem;
   }
 }
 @media screen and (max-width: 500px) {
   .x-axis text,
-  .y-axis text,
   .x-label text,
-  .x-label text {
+  .x-label text,
+  .y-axis text {
     font-size: .8rem;
   }
 }
@@ -172,6 +177,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   fill: $info-bubble-header-color;
   stroke: lighten($info-bubble-header-color, 20);
   transition: fill .5s stroke .5s ease-in-out;
+
   &.hover {
     fill: lighten($info-bubble-header-color, 40);
     stroke: lighten($info-bubble-header-color, 60);
@@ -185,6 +191,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
       fill: $item;
     }
   }
+
   &.hover {
     opacity: .2;
     fill: map-get($colors, Hover);
@@ -197,8 +204,65 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 }
 
+blockquote {
+  // width: 80%;
+  // margin-left: 10%;
+  // padding: 36px 0px;
+  position: relative;
+  // margin-bottom: 28px;
+  // &::after,
+  // &::before {
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 25px;
+  //   content: '';
+  //   position: absolute;
+  //   background: #c2c2c2;
+  //   // box-shadow: 0 2px rgba(0,0,0,.25);
+  // }
+  //
+  // &::before {
+  //   right: 100%;
+  // }
+  //
+  // &::after {
+  //   left: 100%;
+  // }
+  p {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20%;
+    font-family: "Open Sans script=all rev=2", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    overflow: auto;
+  pointer-events: all;
 
+    &::before {
+      top: 0;
+      left: 16px;
+      color: #fff;
+      content: '“';
+      font-size: 4em;
+      position: absolute;
+      // text-shadow: -3px 0 #c2c2c2;
+    }
+
+    &::after {
+      right: 16px;
+      color: #fff;
+      content: '”';
+      bottom: -32px;
+      font-size: 4em;
+      position: absolute;
+      // text-shadow: 3px 0 #c2c2c2;
+    }
+  }
+}
 $tip-padding: 1;
+
 #tooltip {
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
@@ -228,12 +292,15 @@ $tip-padding: 1;
     span {
       font-weight: bold;
     }
+
     .female {
       color: $female;
     }
+
     .male {
       color: $male;
     }
+
     .gender-ratio {
       font-size: 5rem;
     }
@@ -246,12 +313,15 @@ $tip-padding: 1;
   .info-bubble-tip {
     font-size: .8rem;
     font-weight: 200;
+
     h1 {
       background-color: $info-bubble-header-color;
     }
+
     .date {
       font-weight: bold;
-      }
+    }
+
     .body {
       margin-top: .8em;
     }
@@ -267,7 +337,8 @@ $tip-padding: 1;
     text-shadow: 1px 1px 1px rgba(black, .5);
   }
   // This is for parties that don't have a logo
-  .mp-party, .mp-party-logo {
+  .mp-party,
+  .mp-party-logo {
     width: 4rem;
     height: 4rem;
     display: flex;
@@ -280,9 +351,11 @@ $tip-padding: 1;
     font-weight: bolder;
     word-break: break-all;
   }
+
   .mp-party {
     background-color: map-get($colors, Other);
   }
+
   .mp-image-parent {
     width: 5rem;
     height: 5rem;
@@ -295,7 +368,7 @@ $tip-padding: 1;
     height: 100%;
     transform: translate(0, -5rem);
     // opacity: 0;
-    transition: opacity 0.5s linear;
+    transition: opacity .5s linear;
   }
 
   .mp-image-blurred {
@@ -305,19 +378,22 @@ $tip-padding: 1;
   }
 
   .slide4-tooltip {
+    animation: fadein 1s;
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
     .mp-name {
       font-size: 1.5rem;
       padding: $tip-padding + em;
     }
-    .mp-speech-body {
-      font-family: "Open Sans script=all rev=2", sans-serif;
-      font-weight: 300;
-      font-style: italic;
-      font-size: 1rem;
-      line-height: 1.5rem;
-    }
   }
-
 }
 @media screen and (min-height: 500px) {
   .mp-party,
@@ -344,9 +420,9 @@ $tip-padding: 1;
   }
 }
 
-.total-women-mps-path,
 .half-max-mps-path,
-.max-mps-path {
+.max-mps-path,
+.total-women-mps-path {
   stroke-linejoin: round;
   stroke-linecap: round;
   fill: none;
@@ -370,12 +446,13 @@ $tip-padding: 1;
   fill: $male;
 }
 
+.i5050-label,
 .men-label,
-.women-label,
-.i5050-label {
+.women-label {
   font-weight: 500;
   text-anchor: middle;
 }
+
 .women-label {
   alignment-baseline: ideographic;
   fill: $male;
@@ -392,5 +469,5 @@ $tip-padding: 1;
 }
 
 .women-pct-track {
-    stroke: steelblue;
+  stroke: steelblue;
 }
