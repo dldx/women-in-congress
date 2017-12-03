@@ -304,6 +304,20 @@ $tip-padding: 1;
     filter: blur(4px);
   }
 
+  .slide4-tooltip {
+    .mp-name {
+      font-size: 1.5rem;
+      padding: $tip-padding + em;
+    }
+    .mp-speech-body {
+      font-family: "Open Sans script=all rev=2", sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+
 }
 @media screen and (min-height: 500px) {
   .mp-party,

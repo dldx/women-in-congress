@@ -107,9 +107,9 @@ var clippedArea,
     number_women_over_time_data,
     total_mps_over_time_data,
     women_in_govt_data,
-    women_in_govt_global_data,
     mp_base64_data,
-    info_bubbles_data
+    info_bubbles_data,
+    speech_samples_data
 
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
@@ -1597,7 +1597,7 @@ function to_fourth_slide(current_slide) {
         .transition()
         .duration(1000)
 
-        // Different actions depending on which slide we're coming from
+    // Different actions depending on which slide we're coming from
     switch (current_slide) {
     case 0:
         // If we're coming from the first slide
@@ -1615,36 +1615,15 @@ function to_fourth_slide(current_slide) {
 
     case 2:
         // Fade all objects belonging to third slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+
         t0.select("#slide3-group")
             .style("opacity", 0)
             .remove()
         break
     }
-
-    // Hide tooltip
-    d3.select("#tooltip")
-        .style("opacity", 0)
-
-    gX
-        .transition(t0)
-        .style("opacity", 0)
-    gY
-        .transition(t0)
-        .style("opacity", 0)
-    xLabel
-        .transition(t0)
-        .style("opacity", 0)
-    yLabel
-        .transition(t0)
-        .style("opacity", 0)
-
-    fourth_slide(false)
-}
-
-function fourth_slide(no_transition = false) {
-    var t0 = svg
-        .transition()
-        .duration(1000)
 
     // Remove Election rectangles
     electionRects
@@ -1652,96 +1631,58 @@ function fourth_slide(no_transition = false) {
         .style("opacity", 0)
         .remove()
 
-    slide4Group = wrapper.append("g")
-        .attr("id", "slide4-group")
-        // .attr("transform", `translate(${width/2}, ${height/2})`)
+    gX
+        .transition(t0)
+        .style("opacity", 0)
+    gY
+        .transition(t0)
+        .style("opacity", 0)
 
+    xLabel
+        .transition(t0)
+        .style("opacity", 0)
+    yLabel
+        .transition(t0)
+        .style("opacity", 0)
 
-    // Scale to place country circles at correct point
-    var women_pct_scale = d3.scaleLinear()
-        .domain([0, 60])
-        .range([0, 1])
-
-
-    // Returns an attrTween for translating along the specified path element.
-    function translateAlong(path) {
-        var l = path.getTotalLength()
-        return function (d, i, a) {
-            d.women_pct = d.women_pct || 0
-            return function (t) {
-                var p = path.getPointAtLength(women_pct_scale(d.women_pct) * t * l)
-                return "translate(" + p.x + "," + p.y + ")"
-            }
-        }
-    }
-
-    var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
-
-    var row_spacing = height / 6
-    var full_width = width * 0.8
-
-    var points = [
-        [0.2 * full_width, 0 * row_spacing],
-        [0.8 * full_width, 0 * row_spacing],
-        [0.8 * full_width, 0.5 * row_spacing],
-        [0 * full_width, 0.5 * row_spacing],
-        [0 * full_width, 1.5 * row_spacing],
-        [1 * full_width, 1.5 * row_spacing],
-        [1 * full_width, 3 * row_spacing],
-        [0.2 * full_width, 3 * row_spacing],
-        [0.2 * full_width, 4 * row_spacing],
-        [0.8 * full_width, 4 * row_spacing],
-        [0.8 * full_width, 5 * row_spacing],
-        [0 * full_width, 5 * row_spacing],
-        [0 * full_width, 6 * row_spacing],
-        [0.8 * full_width, 6 * row_spacing],
-
-    ]
-
-    var govt_progress_path = slide4Group.append("path")
-        .data([points])
-        .attr("id", "path")
-        .attr("d", d3.line()
-            .curve(d3.curveCardinal.tension(0.7)))
-        .attr("fill", "none")
-        .attr("stroke-linecap", "round")
-        .style("stroke-width", 2*lineThickness)
-        .attr("class", "women-pct-track")
-
-    var countryCircle = slide4Group
-        .selectAll("circle")
-        .data(women_in_govt_global_data)
-        .enter()
-        .append("circle")
-        .attr("r", 4*lineThickness)
-        .attr("fill", d => countryColors(d.country))
-
-    countryCircle
+    d3.select("#tooltip")
+        .transition(t0)
+        .style("opacity", 0)
+        .style("width", "80%")
+        .style("height", "80%")
+        .style("top", "10%")
+        .style("left", "10%")
         .transition()
-        .duration(d => no_transition ? 1000 : women_pct_scale(d.women_pct) / 0.0005)
-        .ease(d3.easeCubic)
-        .delay((d, i) => no_transition ? 0 : 1000 * Math.log(10 * i))
-        .attrTween("transform", translateAlong(document.getElementById("path")))
+        .delay(1000)
+        .duration(1000)
+        .style("opacity", 1)
 
-    countryCircle
-        .on("mouseover", function (d, i) {
-            d3.select("#tooltip")
-                .style("opacity", 1)
-            d3.select(this)
-                .classed("hover", true)
-            // Reconfigure tooltip to show country information
-            var gender_ratio = 100 / d.women_pct - 1
-            tooltip.innerHTML = `
-                            <div class="slide4-tooltip">
-                                <h1 style="background-color: ${d.country == "United Kingdom" ? colors["Hover"] : countryColors(d.country)};">${d.country}</h1>
-                                For every <span class="female">female</span> MP, there were
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.election_date}.
-                            </div>`
-        })
-        .on("mouseout", function () {
-            d3.select(this)
-                .classed("hover", false)
-        })
+    fourth_slide(false)
+}
+
+function fourth_slide(no_transition = false) {
+    var t0 = svg
+        .transition()
+        .delay(2000)
+        .duration(1000)
+
+
+    slide4Group = zoomedArea
+        .append("g")
+        .attr("id", "slide4-group")
+
+
+    var d = speech_samples_data[0].values[0]
+    tooltip.innerHTML = `
+    <div class="slide4-tooltip">
+    <h1 style='background-color: #ff2200;'>Topics mentioned in a speech</h1>
+    <div class="mp-image-parent">
+    ${typeof mp_base64_data[d.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.mp_id] + "\" />" +
+    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+    </div>
+    <div class="mp-name">${d.mp_name}</div>
+    <div class="mp-speech-body">${d.body}</div>
+    </div>`
 }
 // ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
@@ -1807,7 +1748,7 @@ function download_data() {
             draw_graph()
         })
 
-    // This file can download independently because we don't need to wait for it
+    // These file can download later because we don't need to wait for it
     d3.queue()
         .defer(d3.csv, "mp_base64.csv", function (d) {
             return {
@@ -1823,14 +1764,8 @@ function download_data() {
                 country: d.country
             }
         })
-        .defer(d3.csv, "women_in_govt_global.csv", d => {
-            return {
-                country: d.country,
-                election_date: +d.election_date,
-                women_pct: +d.women_pct
-            }
-        })
-        .await(function (error, mp_base64, women_in_govt, women_in_govt_global) {
+        .defer(d3.json, "speech_samples.json")
+        .await(function (error, mp_base64, women_in_govt, speech_samples) {
             // Turn d3 array into a pythonic dictionary
             mp_base64_data = {}
             for (var i = 0; i < mp_base64.length; i++) {
@@ -1842,7 +1777,11 @@ function download_data() {
                 .key(d => d.country)
                 .entries(women_in_govt)
 
-            women_in_govt_global_data = women_in_govt_global
+            // Group MP speeches by MP
+            speech_samples_data = d3.nest()
+                .key(d => d.mp_name)
+                .entries(speech_samples)
+
         })
 
 }
