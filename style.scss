@@ -204,63 +204,6 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 }
 
-blockquote {
-  // width: 80%;
-  // margin-left: 10%;
-  // padding: 36px 0px;
-  position: relative;
-  // margin-bottom: 28px;
-  // &::after,
-  // &::before {
-  //   top: 0;
-  //   bottom: 0;
-  //   width: 25px;
-  //   content: '';
-  //   position: absolute;
-  //   background: #c2c2c2;
-  //   // box-shadow: 0 2px rgba(0,0,0,.25);
-  // }
-  //
-  // &::before {
-  //   right: 100%;
-  // }
-  //
-  // &::after {
-  //   left: 100%;
-  // }
-  p {
-    width: 80%;
-    height: 30%;
-    margin: auto;
-    font-family: "Open Sans script=all rev=2", sans-serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    overflow: auto;
-  pointer-events: all;
-
-    &::before {
-      top: 0;
-      left: 16px;
-      color: #fff;
-      content: '“';
-      font-size: 4em;
-      position: absolute;
-      // text-shadow: -3px 0 #c2c2c2;
-    }
-
-    &::after {
-      right: 16px;
-      color: #fff;
-      content: '”';
-      bottom: -32px;
-      font-size: 4em;
-      position: absolute;
-      // text-shadow: 3px 0 #c2c2c2;
-    }
-  }
-}
 $tip-padding: 1;
 
 #tooltip {
@@ -378,6 +321,10 @@ $tip-padding: 1;
   }
 
   .slide4-tooltip {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     animation: fadein 1s;
     @keyframes fadein {
       from {
@@ -388,11 +335,81 @@ $tip-padding: 1;
         opacity: 1;
       }
     }
+$speech-flex-row-height: 5;
+
+.speech-flex-row {
+  display: flex;
+  align-items: flex-start;
+  button {
+    font-size: $speech-flex-row-height - 2 + rem;
+    width: $speech-flex-row-height + rem;
+    height: $speech-flex-row-height + rem;
+  }
+
+}
+    .mp-image-parent {
+      margin-top: auto;
+      margin-bottom: auto;
+      flex: 0 0 $speech-flex-row-height + rem;
+    }
 
     .mp-name {
+      flex-grow: 1;
       font-weight: lighter;
       font-size: 2rem;
       padding: $tip-padding/2 + em;
+    }
+
+  p {
+    margin-left: 20px;
+    padding-left: 10px;
+    text-align: left;
+    flex-grow: 1;
+    overflow: auto;
+    margin: auto;
+    font-family: "Open Sans script=all rev=2", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    pointer-events: all;
+
+    &::before {
+      // top: 0;
+      left: 0px;
+      color: #fff;
+      content: '“';
+      font-size: 4em;
+      position: absolute;
+      // text-shadow: -3px 0 #c2c2c2;
+    }
+
+    // &::after {
+    //   right: 16px;
+    //   color: #fff;
+    //   content: '”';
+    //   bottom: -32px;
+    //   font-size: 4em;
+    //   position: absolute;
+    //   // text-shadow: 3px 0 #c2c2c2;
+    // }
+  }
+  .end-quote {
+      color: #fff;
+      font-size: 4em;
+      margin-right: 0px;
+
+  }
+
+  .speech-debate {
+    font-weight: 400;
+    padding: 1.5rem;
+  }
+
+    #speech-topic-bar {
+      flex: 0 0 1.5rem;
+      margin: auto auto 0;
+      text-shadow: 1px 1px 1px rgba(black, .5);
     }
   }
 }
