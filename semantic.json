@@ -22,7 +22,8 @@
     "dropdown",
 	"button",
 	"transition",
-	"icon"
+	"icon",
+	"popup"
   ],
   "version": "2.2.13"
 }
