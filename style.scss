@@ -326,6 +326,7 @@ $tip-padding: 1;
     flex-direction: column;
     justify-content: space-between;
     animation: fadein 1s;
+  pointer-events: auto;
     @keyframes fadein {
       from {
         opacity: 0;
@@ -341,7 +342,6 @@ $speech-flex-row-height: 5;
   display: flex;
   align-items: flex-start;
   button {
-    font-size: $speech-flex-row-height - 2 + rem;
     width: $speech-flex-row-height + rem;
     height: $speech-flex-row-height + rem;
   }

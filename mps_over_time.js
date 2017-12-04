@@ -1683,19 +1683,35 @@ function fourth_slide(no_transition = false) {
         chosen_speech = chosen_speech[Math.floor(Math.random() * chosen_speech.length)]
         tooltip.innerHTML = `
     <div class="slide4-tooltip">
-    <h1 style='background-color: ${colors["Hover"]};'>Topics mentioned in a speech</h1>
+    <h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
+    <div id="slide4-tooltip-mp-dropdown" class="ui inline dropdown search">
+    <div class="text"></div> <i class="dropdown icon"></i>
+  </div>
+</h1>
     <div class="speech-flex-row">
     <div class="mp-image-parent">
     ${typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" +
     "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
     </div>
     <div class="mp-name">${chosen_speech.mp_name}</div>
-    <button type="button">&#8635;</button>
+    <button class="ui icon button"><i class="random big icon"></i></button>
     </div>
     <div class="speech-debate">on ${chosen_speech.debate_title} (${(new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"})})</div>
     <p class="blockquote">${chosen_speech.body}</p>
     <svg id="speech-topic-bar" width="80%" viewbox="0 0 100 5"></svg>
     </div>`
+
+        // Load mp dropdown with the list of mps
+        $("#slide4-tooltip-mp-dropdown")
+            .dropdown({
+                values: speech_samples_data.map((d, i) => ({
+                    name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
+                    value: d.values[0].mp_id,
+                    selected: i==0,
+                })),
+                fullTextSearch: true,
+            })
+
 
         chosen_speech.topics.others = 1. - Object.values(chosen_speech.topics)
             .reduce((a, b) => a + b)
