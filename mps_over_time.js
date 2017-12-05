@@ -103,6 +103,9 @@ var clippedArea,
     tooltip,
     lineThickness,
     circleRadius,
+    selected_mp,
+    topicBarScale,
+    topicColorScale,
     mps_over_time_data,
     number_women_over_time_data,
     total_mps_over_time_data,
@@ -1673,16 +1676,6 @@ function fourth_slide(no_transition = false) {
         .append("g")
         .attr("id", "slide4-group")
 
-    var topicBarScale = d3.scaleLinear()
-        .domain([0, 1])
-        .range([0, 100])
-    // Find all unique topics and use that for domain
-    var topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
-        .domain([...new Set(speech_samples_data
-            .map(d => d.values
-                .map(s => Object.keys(s.topics))
-                .reduce((a,b) => a.concat(b)))
-            .reduce((a,b) => a.concat(b)))])
 
     t0.on("end", () => {
         tooltip.innerHTML = `
@@ -1712,79 +1705,6 @@ function fourth_slide(no_transition = false) {
             .attr("y", 0)
             .attr("width", 100)
             .attr("height", 20)
-        // Function to update the tooltip with randomnly chosen speeches
-        window.update_speech_tooltip = function() {
-            // Randomly choose a new speech from the selected MP
-            var chosen_mp = speech_samples_data[selected_mp || 0].values
-
-            chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
-            new_speech = chosen_speech
-            while(new_speech == chosen_speech) {
-                new_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
-            }
-
-            // Fill in all the blanks
-            d3.select("#slide4-mp-image")
-                .html(`${typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" +
-    "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
-                `)
-
-            d3.select("#slide4-mp-name").html(chosen_speech.mp_name)
-            d3.select("#slide4-speech-debate").html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"}) + ")"))
-            d3.select("#slide4-speech").html(chosen_speech.body)
-
-            // Stack topics in speech to make a stacked horizontal bar graph
-            var stack = d3.stack()
-                .keys(Object.keys(chosen_speech.topics))
-
-            var stacked = stack([chosen_speech.topics])
-
-            // JOIN new data with old elements
-            var topic_bar = d3.select("#slide4-speech-topic-bar")
-                .selectAll(".rect-fg")
-                .data(stacked)
-
-            // EXIT old elements not present in new data.
-            topic_bar
-                .exit()
-                .transition().duration(1000)
-                .attr("x", topicBarScale(1))
-                .style("opacity", 0)
-                .remove()
-
-            // UPDATE old elements present in new data.
-            topic_bar
-                .transition()
-                .attr("fill", d => topicColorScale(d.key))
-                .attr("x", d => topicBarScale(d[0][0]))
-                .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
-                .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
-
-            // ENTER new elements present in new data.
-            topic_bar
-                .enter()
-                .append("rect")
-                .attr("class", "rect-fg")
-                .attr("fill", d => topicColorScale(d.key))
-                .attr("x", topicBarScale(1))
-                .transition()
-                .attr("x", d => topicBarScale(d[0][0]))
-                .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
-                .attr("y", 0)
-                .attr("height", 20)
-                .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
-
-            d3.select(".rect-bg")
-                .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
-
-
-            $(".rect-fg,.rect-bg")
-                .popup({
-                    duration: 100,
-                    position: "top right",
-                    transition: "fade",
-                    variation: "inverted"})
-        }
 
         // Load mp dropdown with the list of mps
         $("#slide4-mp-dropdown")
@@ -1792,19 +1712,118 @@ function fourth_slide(no_transition = false) {
                 values: speech_samples_data.map((d, i) => ({
                     name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
                     value: i,
-                    selected: true,
+                    selected: i==0,
                 })),
                 fullTextSearch: true,
-                onChange: function(text, value) {
-                    window.selected_mp = text
-                    update_speech_tooltip()
+                onChange: function(value) {
+                    if(selected_mp != value) {
+                        selected_mp = value
+                        update_speech_tooltip()
+                    }
                 }
             })
-
-        update_speech_tooltip()
+        // Default to the first MP (Caroline Lucas)
+        $("#slide4-mp-dropdown")
+            .dropdown("set selected","0")
 
     })
 }
+
+// Define scales for topics if not yet defined
+function define_topic_scales() {
+    if (topicColorScale == null) {
+    // Find all unique topics and use that for domain
+        topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
+            .domain([...new Set(speech_samples_data
+                .map(d => d.values
+                    .map(s => Object.keys(s.topics))
+                    .reduce((a,b) => a.concat(b)))
+                .reduce((a,b) => a.concat(b)))])
+    }
+
+    if (topicBarScale == null) {
+        topicBarScale = d3.scaleLinear().domain([0, 1]).range([0, 100])
+    }
+}
+
+// Function to update the tooltip with randomnly chosen speeches
+function update_speech_tooltip() {
+    console.log(selected_mp)
+    // Define color scale
+    define_topic_scales()
+
+    // Randomly choose a new speech from the selected MP
+    var chosen_mp = speech_samples_data[selected_mp || 0].values
+
+    var chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
+    var old_speech = chosen_speech
+    while(old_speech == chosen_speech) {
+        chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
+    }
+
+    // Fill in all the blanks
+    d3.select("#slide4-mp-image")
+        .html(`${typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" +
+    "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                `)
+
+    d3.select("#slide4-mp-name").html(chosen_speech.mp_name)
+    d3.select("#slide4-speech-debate").html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"}) + ")"))
+    d3.select("#slide4-speech").html(chosen_speech.body)
+
+    // Stack topics in speech to make a stacked horizontal bar graph
+    var stack = d3.stack()
+        .keys(Object.keys(chosen_speech.topics))
+
+    var stacked = stack([chosen_speech.topics])
+
+    // JOIN new data with old elements
+    var topic_bar = d3.select("#slide4-speech-topic-bar")
+        .selectAll(".rect-fg")
+        .data(stacked)
+
+    // EXIT old elements not present in new data.
+    topic_bar
+        .exit()
+        .transition().duration(1000)
+        .attr("x", topicBarScale(1))
+        .style("opacity", 0)
+        .remove()
+
+    // UPDATE old elements present in new data.
+    topic_bar
+        .transition()
+        .attr("fill", d => topicColorScale(d.key))
+        .attr("x", d => topicBarScale(d[0][0]))
+        .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
+        .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
+
+    // ENTER new elements present in new data.
+    topic_bar
+        .enter()
+        .append("rect")
+        .attr("class", "rect-fg")
+        .attr("fill", d => topicColorScale(d.key))
+        .attr("x", topicBarScale(1))
+        .transition()
+        .attr("x", d => topicBarScale(d[0][0]))
+        .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
+        .attr("y", 0)
+        .attr("height", 20)
+        .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
+
+    d3.select(".rect-bg")
+        .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
+
+
+    $(".rect-fg,.rect-bg")
+        .popup({
+            duration: 100,
+            position: "top right",
+            transition: "fade",
+            variation: "inverted"})
+}
+
 // ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
 // ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗

@@ -121,6 +121,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .x-axis path,
 .y-axis line,
 .y-axis path {
+  // stroke-opacity: 0;
   stroke: invert($graph-background);
   stroke-width: .5;
 }
@@ -219,7 +220,7 @@ $tip-padding: 1;
   line-height: 1;
   overflow: hidden;
   padding: $tip-padding + em;
-  pointer-events: none;
+  // pointer-events: none;
   position: absolute;
   left: 20%;
   top: 10%;
@@ -341,7 +342,10 @@ $speech-flex-row-height: 5;
 .speech-flex-row {
   display: flex;
   align-items: flex-start;
+  flex: 0 0 $speech-flex-row-height + rem;
   button {
+    margin-top: auto;
+    margin-bottom: auto;
     width: $speech-flex-row-height + rem;
     height: $speech-flex-row-height + rem;
   }
