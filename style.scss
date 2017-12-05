@@ -343,6 +343,7 @@ $speech-flex-row-height: 5;
   display: flex;
   align-items: flex-start;
   flex: 0 0 $speech-flex-row-height + rem;
+
   button {
     margin-top: auto;
     margin-bottom: auto;
@@ -358,6 +359,7 @@ $speech-flex-row-height: 5;
     }
 
     .mp-name {
+      margin: auto;
       flex-grow: 1;
       font-weight: lighter;
       font-size: 2rem;
@@ -413,7 +415,11 @@ $speech-flex-row-height: 5;
     #slide4-speech-topic-bar {
       flex: 0 0 3rem;
       margin: auto auto 0;
-      text-shadow: 1px 1px 1px rgba(black, .5);
+      .rect-label {
+        // font-size: 3px;
+        text-shadow: 1px 1px 1px rgba(black, .5);
+        pointer-events: none;
+      }
     }
   }
 }

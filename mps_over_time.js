@@ -1697,14 +1697,14 @@ function fourth_slide(no_transition = false) {
     </div>`
 
 
-        d3.select("#slide4-speech-topic-bar")
-            .append("rect")
-            .attr("class", "rect-bg")
-            .attr("fill", colors["Hover"])
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 100)
-            .attr("height", 20)
+        // d3.select("#slide4-speech-topic-bar")
+        //     .append("rect")
+        //     .attr("class", "rect-bg")
+        //     .attr("fill", colors["Hover"])
+        //     .attr("x", 0)
+        //     .attr("y", 0)
+        //     .attr("width", 100)
+        //     .attr("height", 20)
 
         // Load mp dropdown with the list of mps
         $("#slide4-mp-dropdown")
@@ -1748,7 +1748,6 @@ function define_topic_scales() {
 
 // Function to update the tooltip with randomnly chosen speeches
 function update_speech_tooltip() {
-    console.log(selected_mp)
     // Define color scale
     define_topic_scales()
 
@@ -1770,6 +1769,12 @@ function update_speech_tooltip() {
     d3.select("#slide4-mp-name").html(chosen_speech.mp_name)
     d3.select("#slide4-speech-debate").html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"}) + ")"))
     d3.select("#slide4-speech").html(chosen_speech.body)
+
+    // Sum up remaining fraction
+    chosen_speech.topics.others = 1 - Object.entries(chosen_speech.topics)
+        .filter(d => d[0] != "others")
+        .map(d => d[1])
+        .reduce((a,b) => a+b)
 
     // Stack topics in speech to make a stacked horizontal bar graph
     var stack = d3.stack()
@@ -1793,7 +1798,7 @@ function update_speech_tooltip() {
     // UPDATE old elements present in new data.
     topic_bar
         .transition()
-        .attr("fill", d => topicColorScale(d.key))
+        .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
         .attr("x", d => topicBarScale(d[0][0]))
         .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
         .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
@@ -1803,7 +1808,7 @@ function update_speech_tooltip() {
         .enter()
         .append("rect")
         .attr("class", "rect-fg")
-        .attr("fill", d => topicColorScale(d.key))
+        .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
         .attr("x", topicBarScale(1))
         .transition()
         .attr("x", d => topicBarScale(d[0][0]))
@@ -1812,11 +1817,56 @@ function update_speech_tooltip() {
         .attr("height", 20)
         .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
 
-    d3.select(".rect-bg")
-        .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
+    // JOIN new data with old elements
+    var topic_bar_label = d3.select("#slide4-speech-topic-bar")
+        .selectAll(".rect-label")
+        .data(stacked)
 
+    // EXIT old elements not present in new data.
+    topic_bar_label
+        .exit()
+        .transition().duration(1000)
+        .attr("x", topicBarScale(1))
+        .style("opacity", 0)
+        .remove()
 
-    $(".rect-fg,.rect-bg")
+    function adjust_text_width(d) {
+        var text = d3.select(this).text(d.key)
+        var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0]) -topicBarScale(0.02)
+        var needs_elipsis = false
+        while(text.node().getComputedTextLength() > bar_width) {
+            if (bar_width <= 0) break
+            text.text(text.text().slice(0, -2))
+            needs_elipsis = true
+        }
+        if (needs_elipsis) text.text(text.text() + "...")
+    }
+
+    // UPDATE old elements present in new data.
+    topic_bar_label
+        .transition()
+        .attr("x", d => topicBarScale(d[0][0]))
+        .style("font-size", 2000/width + "px")
+        .each(adjust_text_width)
+
+    // ENTER new elements present in new data.
+    topic_bar_label
+        .enter()
+        .append("text")
+        .attr("class", "rect-label")
+        .attr("x", topicBarScale(1))
+        .transition()
+        .attr("x", d => topicBarScale(d[0][0]))
+        .attr("y", 5)
+        .style("font-size", 2000/width + "px")
+        .each(adjust_text_width)
+
+    // // Put a title on the "other" segment
+    // d3.select(".rect-bg")
+    //     .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
+
+    // Add tooltips for all the topic segments
+    $(".rect-fg")//,.rect-bg")
         .popup({
             duration: 100,
             position: "top right",
