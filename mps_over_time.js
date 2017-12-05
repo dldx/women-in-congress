@@ -104,6 +104,8 @@ var clippedArea,
     lineThickness,
     circleRadius,
     selected_mp,
+    topic_bar_width,
+    topic_bar_height,
     topicBarScale,
     topicColorScale,
     mps_over_time_data,
@@ -1693,7 +1695,7 @@ function fourth_slide(no_transition = false) {
     </div>
     <div class="speech-debate" id="slide4-speech-debate"></div>
     <p class="blockquote" id="slide4-speech"></p>
-    <svg id="slide4-speech-topic-bar" width="80%" viewbox="0 0 100 2"></svg>
+    <svg id="slide4-speech-topic-bar" width="500" height="50"></svg>
     </div>`
 
 
@@ -1741,9 +1743,16 @@ function define_topic_scales() {
                 .reduce((a,b) => a.concat(b)))])
     }
 
+    topic_bar_width = d3.select("#tooltip").node().clientWidth * 0.8
+    topic_bar_height = 30
+    d3.select("#slide4-speech-topic-bar")
+        .attr("width", topic_bar_width)
+        .attr("height", topic_bar_height)
+
     if (topicBarScale == null) {
-        topicBarScale = d3.scaleLinear().domain([0, 1]).range([0, 100])
+        topicBarScale = d3.scaleLinear().domain([0, 1])
     }
+    topicBarScale.range([0, topic_bar_width])
 }
 
 // Function to update the tooltip with randomnly chosen speeches
@@ -1798,6 +1807,7 @@ function update_speech_tooltip() {
     // UPDATE old elements present in new data.
     topic_bar
         .transition()
+        .style("opacity", 1)
         .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
         .attr("x", d => topicBarScale(d[0][0]))
         .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
@@ -1811,10 +1821,11 @@ function update_speech_tooltip() {
         .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
         .attr("x", topicBarScale(1))
         .transition()
+        .style("opacity", 1)
         .attr("x", d => topicBarScale(d[0][0]))
         .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
         .attr("y", 0)
-        .attr("height", 20)
+        .attr("height", topic_bar_height)
         .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
 
     // JOIN new data with old elements
@@ -1832,21 +1843,20 @@ function update_speech_tooltip() {
 
     function adjust_text_width(d) {
         var text = d3.select(this).text(d.key)
-        var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0]) -topicBarScale(0.02)
+        var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0])
         var needs_elipsis = false
         while(text.node().getComputedTextLength() > bar_width) {
             if (bar_width <= 0) break
-            text.text(text.text().slice(0, -2))
+            text.text(text.text().slice(0, -1))
             needs_elipsis = true
         }
-        if (needs_elipsis) text.text(text.text() + "...")
+        if (needs_elipsis) text.text(text.text().trim().slice(0, -2) + "...")
     }
 
     // UPDATE old elements present in new data.
     topic_bar_label
         .transition()
         .attr("x", d => topicBarScale(d[0][0]))
-        .style("font-size", 2000/width + "px")
         .each(adjust_text_width)
 
     // ENTER new elements present in new data.
@@ -1855,10 +1865,10 @@ function update_speech_tooltip() {
         .append("text")
         .attr("class", "rect-label")
         .attr("x", topicBarScale(1))
+        .attr("alignment-baseline", "middle")
         .transition()
         .attr("x", d => topicBarScale(d[0][0]))
-        .attr("y", 5)
-        .style("font-size", 2000/width + "px")
+        .attr("y", topic_bar_height/2)
         .each(adjust_text_width)
 
     // // Put a title on the "other" segment
