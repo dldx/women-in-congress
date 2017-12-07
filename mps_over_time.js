@@ -1699,6 +1699,14 @@ function fourth_slide(no_transition = false) {
     <p class="blockquote" id="slide4-speech"></p>
     <svg id="slide4-speech-topic-bar"></svg>
     </div>`
+    
+        // Set width based on header width
+        topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
+        topic_bar_height = 30
+        d3.select("#slide4-speech-topic-bar")
+            .attr("width", topic_bar_width)
+            .attr("height", topic_bar_height)
+
 
 
         // d3.select("#slide4-speech-topic-bar")
@@ -1718,18 +1726,20 @@ function fourth_slide(no_transition = false) {
                     value: i,
                     selected: i==0,
                 })),
-                fullTextSearch: true,
-                onChange: function(value) {
-                    if(selected_mp != value) {
-                        selected_mp = value
-                        update_speech_tooltip()
-                    }
-                }
+                fullTextSearch: true
             })
         // Default to the first MP (Caroline Lucas)
         $("#slide4-mp-dropdown")
             .dropdown("set selected","0")
 
+        update_speech_tooltip()
+        $("#slide4-mp-dropdown")
+            .dropdown("setting", "onChange", function(value) {
+                if(selected_mp != value) {
+                    selected_mp = value
+                    update_speech_tooltip()
+                }
+            })
     })
 }
 
@@ -1744,13 +1754,6 @@ function define_topic_scales() {
                     .reduce((a,b) => a.concat(b)))
                 .reduce((a,b) => a.concat(b)))])
     }
-
-    // Set width based on header width
-    topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
-    topic_bar_height = 30
-    d3.select("#slide4-speech-topic-bar")
-        .attr("width", topic_bar_width)
-        .attr("height", topic_bar_height)
 
     if (topicBarScale == null) {
         topicBarScale = d3.scaleLinear().domain([0, 1])
