@@ -1662,13 +1662,12 @@ function to_fourth_slide(current_slide) {
                 .style("height", "80%")
                 .style("top", "10%")
                 .style("left", "10%")
-                .html("")
-                .transition()
-                .duration(1000)
-                .style("opacity", 1)
+            fourth_slide(false)
         })
+        .transition()
+        .duration(1000)
+        .style("opacity", 1)
 
-    fourth_slide(false)
 }
 
 // ----------------------------------------------------------------------------
@@ -1689,8 +1688,7 @@ function fourth_slide(no_transition = false) {
     //     .append("g")
     //     .attr("id", "slide4-group")
 
-    t0.on("end", () => {
-        tooltip.innerHTML = `
+    tooltip.innerHTML = `
     <div class="slide4-tooltip">
     <h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
     <div id="slide4-mp-dropdown" class="ui inline dropdown search">
@@ -1710,12 +1708,12 @@ function fourth_slide(no_transition = false) {
     <svg id="slide4-speech-topic-bar"></svg>
     </div>`
 
-        // Set width based on header width
-        topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
-        topic_bar_height = 30
-        d3.select("#slide4-speech-topic-bar")
-            .attr("width", topic_bar_width)
-            .attr("height", topic_bar_height)
+    // Set width based on header width
+    topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
+    topic_bar_height = 30
+    d3.select("#slide4-speech-topic-bar")
+        .attr("width", topic_bar_width)
+        .attr("height", topic_bar_height)
 
         // d3.select("#slide4-speech-topic-bar")
         //     .append("rect")
@@ -1727,28 +1725,27 @@ function fourth_slide(no_transition = false) {
         //     .attr("height", 20)
 
         // Load mp dropdown with the list of mps
-        $("#slide4-mp-dropdown")
-            .dropdown({
-                values: speech_samples_data.map((d, i) => ({
-                    name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
-                    value: i,
-                    selected: i==0,
-                })),
-                fullTextSearch: true
-            })
+    $("#slide4-mp-dropdown")
+        .dropdown({
+            values: speech_samples_data.map((d, i) => ({
+                name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
+                value: i,
+                selected: i==0,
+            })),
+            fullTextSearch: true
+        })
         // Default to the first MP (Caroline Lucas)
-        $("#slide4-mp-dropdown")
-            .dropdown("set selected","0")
+    $("#slide4-mp-dropdown")
+        .dropdown("set selected","0")
 
-        update_speech_tooltip()
-        $("#slide4-mp-dropdown")
-            .dropdown("setting", "onChange", function(value) {
-                if(selected_mp != value) {
-                    selected_mp = value
-                    update_speech_tooltip()
-                }
-            })
-    })
+    update_speech_tooltip()
+    $("#slide4-mp-dropdown")
+        .dropdown("setting", "onChange", function(value) {
+            if(selected_mp != value) {
+                selected_mp = value
+                update_speech_tooltip()
+            }
+        })
 }
 
 // Define scales for topics if not yet defined
