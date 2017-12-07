@@ -204,7 +204,6 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
     stroke-width: 10;
   }
 }
-
 $tip-padding: 1;
 
 #tooltip {
@@ -327,7 +326,7 @@ $tip-padding: 1;
     flex-direction: column;
     justify-content: space-between;
     animation: fadein 1s;
-  pointer-events: auto;
+    pointer-events: auto;
     @keyframes fadein {
       from {
         opacity: 0;
@@ -337,22 +336,22 @@ $tip-padding: 1;
         opacity: 1;
       }
     }
-$speech-flex-row-height: 5;
+    $speech-flex-row-height: 5;
 
-.speech-flex-row {
-  display: flex;
-  align-items: flex-start;
-  flex: 0 0 $speech-flex-row-height + rem;
-  padding-bottom: 2rem;
+    .speech-flex-row {
+      display: flex;
+      align-items: flex-start;
+      flex: 0 0 $speech-flex-row-height + rem;
+      padding-bottom: 2rem;
 
-  button {
-    margin-top: auto;
-    margin-bottom: auto;
-    width: $speech-flex-row-height + rem;
-    height: $speech-flex-row-height + rem;
-  }
+      button {
+        margin-top: auto;
+        margin-bottom: auto;
+        width: $speech-flex-row-height + rem;
+        height: $speech-flex-row-height + rem;
+      }
+    }
 
-}
     .mp-image-parent {
       margin-top: auto;
       margin-bottom: auto;
@@ -361,68 +360,68 @@ $speech-flex-row-height: 5;
 
     .mp-name-debate {
       flex-grow: 1;
-    margin-top: auto;
-    margin-bottom: auto;
+      margin-top: auto;
+      margin-bottom: auto;
     }
 
     .mp-name {
       margin: auto;
       font-weight: lighter;
       font-size: 2rem;
-      padding: 0.5rem;
+      padding: .5rem;
     }
 
-  .blockquote {
-    margin-left: 20px;
-    padding-left: $tip-padding * 1.5 + rem;
-    text-align: left;
-    flex-grow: 1;
-    overflow: auto;
-    margin: auto;
-    font-family: "Open Sans script=all rev=2", sans-serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    pointer-events: all;
+    .blockquote {
+      margin-left: 20px;
+      padding-left: $tip-padding * 1.5 + rem;
+      text-align: left;
+      flex-grow: 1;
+      overflow: auto;
+      margin: auto;
+      font-family: "Open Sans script=all rev=2", sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      pointer-events: all;
 
-    &::before {
-      // top: 0;
-      left: $tip-padding + rem;
-      color: #fff;
-      content: '“';
-      font-size: 4em;
-      position: absolute;
-      // text-shadow: -3px 0 #c2c2c2;
+      &::before {
+        // top: 0;
+        left: $tip-padding + rem;
+        color: #fff;
+        content: '“';
+        font-size: 4em;
+        position: absolute;
+        // text-shadow: -3px 0 #c2c2c2;
+      }
+      // &::after {
+      //   right: 16px;
+      //   color: #fff;
+      //   content: '”';
+      //   bottom: -32px;
+      //   font-size: 4em;
+      //   position: absolute;
+      //   // text-shadow: 3px 0 #c2c2c2;
+      // }
     }
 
-    // &::after {
-    //   right: 16px;
-    //   color: #fff;
-    //   content: '”';
-    //   bottom: -32px;
-    //   font-size: 4em;
-    //   position: absolute;
-    //   // text-shadow: 3px 0 #c2c2c2;
-    // }
-  }
-  .end-quote {
+    .end-quote {
       color: #fff;
       font-size: 4em;
-      margin-right: 0px;
+      margin-right: 0;
+    }
 
-  }
-
-  .speech-debate {
-    font-size: 0.7rem;
-    font-weight: 400;
-    padding: 0.5rem;
-  }
+    .speech-debate {
+      font-size: .7rem;
+      font-weight: 400;
+      padding: .5rem;
+    }
 
     #slide4-speech-topic-bar {
       padding-top: $tip-padding + rem;
       flex: 0 0 2rem;
       margin: auto auto 0;
+
       .rect-label {
         // font-size: 6px;
         text-shadow: 1px 1px 1px rgba(black, .5);

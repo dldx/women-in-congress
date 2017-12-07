@@ -1272,7 +1272,7 @@ function second_slide(no_transition = false) {
 }
 
 // ----------------------------------------------------------------------------
-// TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// TRANSITION TO THIRD SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
 function to_third_slide(current_slide) {
     "use strict"
@@ -1593,6 +1593,9 @@ function third_slide(no_transition = false) {
     }
 }
 
+// ----------------------------------------------------------------------------
+// TRANSITION TO FOURTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
 function to_fourth_slide(current_slide) {
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 3) {
@@ -1668,16 +1671,23 @@ function to_fourth_slide(current_slide) {
     fourth_slide(false)
 }
 
+// ----------------------------------------------------------------------------
+// ███████╗ ██████╗ ██╗   ██╗██████╗ ████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██╔═══██╗██║   ██║██╔══██╗╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// █████╗  ██║   ██║██║   ██║██████╔╝   ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
+// ██╔══╝  ██║   ██║██║   ██║██╔══██╗   ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ██║     ╚██████╔╝╚██████╔╝██║  ██║   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
+// ╚═╝      ╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// Go to the fourth slide
+// ----------------------------------------------------------------------------
 function fourth_slide(no_transition = false) {
     var t0 = svg
         .transition()
         .duration(1000)
 
-
-    slide4Group = zoomedArea
-        .append("g")
-        .attr("id", "slide4-group")
-
+    // slide4Group = zoomedArea
+    //     .append("g")
+    //     .attr("id", "slide4-group")
 
     t0.on("end", () => {
         tooltip.innerHTML = `
@@ -1699,15 +1709,13 @@ function fourth_slide(no_transition = false) {
     <p class="blockquote" id="slide4-speech"></p>
     <svg id="slide4-speech-topic-bar"></svg>
     </div>`
-    
+
         // Set width based on header width
         topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
         topic_bar_height = 30
         d3.select("#slide4-speech-topic-bar")
             .attr("width", topic_bar_width)
             .attr("height", topic_bar_height)
-
-
 
         // d3.select("#slide4-speech-topic-bar")
         //     .append("rect")
