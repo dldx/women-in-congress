@@ -219,7 +219,7 @@ $tip-padding: 1;
   width: 20rem;
   line-height: 1;
   overflow: hidden;
-  padding: $tip-padding + em;
+  padding: $tip-padding + rem;
   // pointer-events: none;
   position: absolute;
   left: 20%;
@@ -343,6 +343,7 @@ $speech-flex-row-height: 5;
   display: flex;
   align-items: flex-start;
   flex: 0 0 $speech-flex-row-height + rem;
+  padding-bottom: 2rem;
 
   button {
     margin-top: auto;
@@ -358,17 +359,22 @@ $speech-flex-row-height: 5;
       flex: 0 0 $speech-flex-row-height + rem;
     }
 
-    .mp-name {
-      margin: auto;
+    .mp-name-debate {
       flex-grow: 1;
-      font-weight: lighter;
-      font-size: 2rem;
-      padding: $tip-padding/2 + em;
+    margin-top: auto;
+    margin-bottom: auto;
     }
 
-  p {
+    .mp-name {
+      margin: auto;
+      font-weight: lighter;
+      font-size: 2rem;
+      padding: 0.5rem;
+    }
+
+  .blockquote {
     margin-left: 20px;
-    padding-left: 10px;
+    padding-left: $tip-padding * 1.5 + rem;
     text-align: left;
     flex-grow: 1;
     overflow: auto;
@@ -382,7 +388,7 @@ $speech-flex-row-height: 5;
 
     &::before {
       // top: 0;
-      left: 0px;
+      left: $tip-padding + rem;
       color: #fff;
       content: '“';
       font-size: 4em;
@@ -408,15 +414,17 @@ $speech-flex-row-height: 5;
   }
 
   .speech-debate {
+    font-size: 0.7rem;
     font-weight: 400;
-    padding: 1.5rem;
+    padding: 0.5rem;
   }
 
     #slide4-speech-topic-bar {
-      flex: 0 0 3rem;
+      padding-top: $tip-padding + rem;
+      flex: 0 0 2rem;
       margin: auto auto 0;
       .rect-label {
-        font-size: 6px;
+        // font-size: 6px;
         text-shadow: 1px 1px 1px rgba(black, .5);
         pointer-events: none;
       }

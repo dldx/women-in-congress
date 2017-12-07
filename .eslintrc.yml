@@ -18,3 +18,4 @@ rules:
 
 globals:
     d3: false
+    $: false
