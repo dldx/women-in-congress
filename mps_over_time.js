@@ -732,7 +732,7 @@ function to_second_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 1) {
-        second_slide(true)
+        second_slide(false)
         // Update transition counter
         lastTransitioned = 1
     } else {
@@ -1278,7 +1278,7 @@ function to_third_slide(current_slide) {
     "use strict"
 
     if (lastTransitioned < 2) {
-        third_slide(true)
+        third_slide(false)
         // Update transition counter
         lastTransitioned = 2
     } else {
@@ -1680,9 +1680,6 @@ function to_fourth_slide(current_slide) {
 // Go to the fourth slide
 // ----------------------------------------------------------------------------
 function fourth_slide(no_transition = false) {
-    var t0 = svg
-        .transition()
-        .duration(1000)
 
     // slide4Group = zoomedArea
     //     .append("g")
