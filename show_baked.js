@@ -77,7 +77,7 @@ var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
 var yAxis = d3.axisLeft(y)
 // wrapper.append("g")
 //     .attr("class", "y-axis")
-//     .attr("transform", "translate(" + x(0)+ ", 0)")
+//     .attr("transform", "translate(" + (x(0)) + ", 0)")
 //     .call(yAxis)
 
 var baked_positions = []
@@ -151,13 +151,13 @@ d3.queue()
 
                 nodes_male.map(function (d) {
                     var n = baked_data.filter(n => n.id == d.id)[0]
-                    d.x = x(n.x)-25
+                    d.x = x(n.x) - 10
                     d.y = y(n.y)
                 })
 
                 nodes_female.map(function (d) {
                     var n = baked_data.filter(n => n.id == d.id)[0]
-                    d.x = x(n.x)+25
+                    d.x = x(n.x) + 10
                     d.y = y(n.y)
                 })
 
@@ -188,7 +188,7 @@ d3.queue()
                     .attr("cy", d => d.y)
                     .style("opacity", 0.0)
                     .transition(transition)
-                    .delay((d, i) => 100*Math.sqrt(i))
+                    .delay((d, i) => 100 * Math.sqrt(i))
                     .style("opacity", 0.7)
                     .attr("cx", d => d.x)
                     .attr("cy", d => d.y)
@@ -219,74 +219,89 @@ d3.queue()
                     .attr("cy", d => d.y)
                     .style("opacity", 0.0)
                     .transition(transition)
-                    .delay((d, i) => 100*Math.sqrt(i))
+                    .delay((d, i) => 100 * Math.sqrt(i))
                     .style("opacity", 0.7)
                     .attr("cx", d => d.x)
                     .attr("cy", d => d.y)
 
+                // Median connector line
+                // Join
+                var median_connector_line = wrapper
+                    .selectAll(".median-connector")
+                    .data([topic_medians[topic_name]])
 
-                var min_male_hist = Math.min(...nodes_male.map(d => d.x))
-                var max_female_hist = Math.max(...nodes_female.map(d => d.x))
+                // Update
+                median_connector_line
+                    .transition(transition)
+                    .attr("y1", d => y(d["female"]))
+                    .attr("y2", d => y(d["male"]))
+
+                // Enter
+                median_connector_line
+                    .enter()
+                    .append("line")
+                    .attr("class", "median-connector")
+                    .attr("x1", x(0))
+                    .attr("x2", x(0))
+                    .transition(transition)
+                    .delay(3000)
+                    .attr("y1", d => y(d["female"]))
+                    .attr("y2", d => y(d["male"]))
+                    .style("stroke-width", 1)
+                    .style("stroke", "white")
 
                 // Male median fraction
                 // Join
-                var male_median_line = wrapper
+                var male_median_circle = wrapper
                     .selectAll(".male-median")
                     .data([topic_medians[topic_name]["male"]])
 
                 // Update
-                male_median_line
+                male_median_circle
                     .transition(transition)
-                    .attr("x1", min_male_hist - 10)
-                    .attr("x2", min_male_hist - 50)
-                    .attr("y1", d => y(d))
-                    .attr("y2", d => y(d))
+                    .attr("cy", d => y(d))
 
                 // Enter
-                male_median_line
+                male_median_circle
                     .enter()
-                    .append("line")
+                    .append("circle")
                     .attr("class", "male-median")
-                    .attr("y1", y(0))
-                    .attr("y2", y(0))
+                    .attr("cy", y(0))
+                    .attr("cx", x(0))
                     .transition(transition)
                     .delay(2000)
-                    .attr("x1", min_male_hist - 10)
-                    .attr("x2", min_male_hist - 50)
-                    .attr("y1", d => y(d))
-                    .attr("y2", d => y(d))
-                    .style("stroke-width", 2)
-                    .style("stroke", "red")
+                    .attr("cy", d => y(d))
+                    .attr("r", 3)
+                    .style("fill", "red")
+                // .style("stroke-width", 1)
+                // .style("stroke", "white")
 
                 // Female median fraction
                 // Join
-                var female_median_line = wrapper
+                var female_median_circle = wrapper
                     .selectAll(".female-median")
                     .data([topic_medians[topic_name]["female"]])
 
                 // Update
-                female_median_line
+                female_median_circle
                     .transition(transition)
-                    .attr("x1", max_female_hist + 10)
-                    .attr("x2", max_female_hist + 50)
-                    .attr("y1", d => y(d))
-                    .attr("y2", d => y(d))
+                    .attr("cy", d => y(d))
 
                 // Enter
-                female_median_line
+                female_median_circle
                     .enter()
-                    .append("line")
+                    .append("circle")
                     .attr("class", "female-median")
-                    .attr("x1", max_female_hist + 10)
-                    .attr("x2", max_female_hist + 50)
-                    .attr("y1", y(0))
-                    .attr("y2", y(0))
+                    .attr("cy", y(0))
+                    .attr("cx", x(0))
                     .transition(transition)
                     .delay(2000)
-                    .attr("y1", d => y(d))
-                    .attr("y2", d => y(d))
-                    .style("stroke-width", 2)
-                    .style("stroke", "lightblue")
+                    .attr("cy", d => y(d))
+                    .attr("r", 3)
+                    .style("fill", "lightblue")
+                // .style("stroke-width", 1)
+                // .style("stroke", "white")
+
             }
 
             var topic_dropdown = d3.select("body")
