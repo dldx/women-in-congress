@@ -9,14 +9,16 @@ var margin = {
 
 var svg = d3.select("body")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
+    // .attr("width", width + margin.left + margin.right)
+    .attr("width", 1000)
     .attr("height", height + margin.top + margin.bottom)
     .attr("shape-rendering", "geometric-precision")
 
 var wrapper = svg
     .append("g")
     .attr("class", "wrapper")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .attr("transform", "scale(" + width/3000 + ")")
 
 var topic_name = "european union"
 // var topics = ["Male", "Female"]
@@ -51,19 +53,13 @@ var xAxisTitle = svg.append("text")
     .attr("class", "axisTitle")
     .text("Topic")
 
-xAxisTitle
-    .attr("x", width - xAxisTitle.node()
-        .getBBox()
-        .width + margin.right)
-    .attr("y", margin.top + (height / 2) - xAxisTitle.node()
-        .getBBox()
-        .height)
-
-wrapper.append("text")
-    .attr("x", 50)
-    .attr("y", 30)
-    .attr("dy", "0.71em")
-    .text("What topics are MPs interested in?")
+// xAxisTitle
+//     .attr("x", width - xAxisTitle.node()
+//         .getBBox()
+//         .width + margin.right)
+//     .attr("y", margin.top + (height / 2) - xAxisTitle.node()
+//         .getBBox()
+//         .height)
 
 // nodes = nodes.filter(node => ["welfare reforms"].indexOf(node.topic_name) >= 0)
 var colorScale = d3.scaleOrdinal(d3.schemeCategory10)

@@ -81,7 +81,7 @@ var clippedArea,
     pointsGroup,
     slide2Group,
     slide3Group,
-    slide4Group,
+    slide5Group,
     max_mps_line,
     max_mps_path,
     max_mps_area,
@@ -108,13 +108,23 @@ var clippedArea,
     topic_bar_height,
     topicBarScale,
     topicColorScale,
-    mps_over_time_data,
+    selected_topic,
+    circle_male,
+    circle_female,
+    slide5_xScale,
+    slide5_yScale
+
+var mps_over_time_data,
     number_women_over_time_data,
     total_mps_over_time_data,
     women_in_govt_data,
     mp_base64_data,
     info_bubbles_data,
-    speech_samples_data
+    speech_samples_data,
+    topic_medians_data,
+    baked_positions_data,
+    nodes_male,
+    nodes_female
 
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
@@ -193,6 +203,9 @@ function update_state() {
         } else if (new_slide == 3) {
             // Load fourth slide
             reset_zoom(to_fourth_slide, current_slide)
+        } else if (new_slide == 4) {
+            // Load fourth slide
+            reset_zoom(to_fifth_slide, current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -1597,6 +1610,7 @@ function third_slide(no_transition = false) {
 // TRANSITION TO FOURTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
 // ----------------------------------------------------------------------------
 function to_fourth_slide(current_slide) {
+    "use strict"
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 3) {
         lastTransitioned = 3
@@ -1747,6 +1761,7 @@ function fourth_slide(no_transition = false) {
 
 // Define scales for topics if not yet defined
 function define_topic_scales() {
+    "use strict"
     if (topicColorScale == null) {
     // Find all unique topics and use that for domain
         topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
@@ -1765,6 +1780,7 @@ function define_topic_scales() {
 
 // Function to update the tooltip with randomnly chosen speeches
 function update_speech_tooltip() {
+    "use strict"
     // Define color scale
     define_topic_scales()
 
@@ -1895,6 +1911,286 @@ function update_speech_tooltip() {
 }
 
 // ----------------------------------------------------------------------------
+// TRANSITION TO FIFTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_fifth_slide(current_slide) {
+    "use strict"
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 4) {
+        lastTransitioned = 4
+    }
+    var t0 = svg
+        .transition()
+        .duration(1000)
+
+    // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+    case 0:
+        // If we're coming from the first slide
+        t0.select("#slide1-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 1:
+        // If we're coming from the first slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 2:
+        // Fade all objects belonging to third slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+
+        t0.select("#slide3-group")
+            .style("opacity", 0)
+            .remove()
+        break
+    }
+
+    // Fade tooltip
+    d3.select("#tooltip")
+        .transition(t0)
+        .style("opacity", 0)
+        .remove()
+
+    // Remove Election rectangles
+    electionRects
+        .transition(t0)
+        .style("opacity", 0)
+        .remove()
+
+    gX
+        .transition(t0)
+        .style("opacity", 0)
+    gY
+        .transition(t0)
+        .style("opacity", 0)
+
+    xLabel
+        .transition(t0)
+        .style("opacity", 0)
+    yLabel
+        .transition(t0)
+        .style("opacity", 0)
+
+    fifth_slide()
+
+}
+// ----------------------------------------------------------------------------
+// ███████╗██╗███████╗████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██║██╔════╝╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// █████╗  ██║█████╗     ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
+// ██╔══╝  ██║██╔══╝     ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ██║     ██║██║        ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
+// ╚═╝     ╚═╝╚═╝        ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// Go to the fifth slide
+// ----------------------------------------------------------------------------
+function fifth_slide(no_transition = false) {
+
+    d3.select("#topic-dropdown").remove()
+    d3.select("body")
+        .insert("select", ":first-child")
+        .attr("id", "topic-dropdown")
+        .on("change", update_fifth_slide)
+        .selectAll(".topic")
+        .data(baked_positions_data.map(topic => topic.key))
+        .enter()
+        .append("option")
+        .text(d => d)
+
+        // Scales for this data
+    slide5_xScale = d3.scaleLinear()
+        .domain([-300, 150])
+        .range([0, width + margin.left + margin.right])
+
+    slide5_yScale = d3.scaleLinear()
+        .domain([0, 0.3])
+        .range([height, 0])
+
+    d3.select("#slide5-group").remove()
+
+    // Create group for this slide
+    slide5Group = svg
+        .append("g")
+        .attr("id", "slide5-group")
+        .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
+        // .attr("transform", "scale(" + width/1900 + ")")
+
+    // Call function initially
+    update_fifth_slide()
+
+}
+
+function update_fifth_slide() {
+    // Get value of topic dropdown
+    selected_topic = d3.select("#topic-dropdown")
+        .property("value")
+
+    var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
+
+    nodes_male.map(function (d) {
+        var n = baked_data.filter(n => n.id == d.id)[0]
+        d.x = slide5_xScale(n.x) - 10
+        d.y = slide5_yScale(n.y)
+    })
+
+    nodes_female.map(function (d) {
+        var n = baked_data.filter(n => n.id == d.id)[0]
+        d.x = slide5_xScale(n.x) + 10
+        d.y = slide5_yScale(n.y)
+    })
+
+
+    // transition
+    var t0 = d3.transition()
+        .duration(1000)
+
+    // transition
+    var t1 = t0.transition()
+        .delay(2000)
+        .duration(1000)
+
+    // JOIN
+    circle_male =  slide5Group.selectAll(".male-node")
+        .data(nodes_male)
+
+    // UPDATE
+    circle_male
+        .transition(t0)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
+    // ENTER
+    circle_male
+        .enter()
+        .append("circle")
+        .attr("class", "male-node")
+        .style("fill", "red")
+        .attr("r", 1.8)
+        // .on("mouseover", tip.show)
+        // .on("mouseout", tip.hide)
+        .attr("cx", slide5_xScale(0))
+        .attr("cy", d => d.y)
+        .style("opacity", 0.0)
+        .transition(t0)
+        .delay((d, i) => 100 * Math.sqrt(i))
+        .style("opacity", 0.7)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
+    // Female nodes
+    // JOIN
+    circle_female =  slide5Group.selectAll(".female-node")
+        .data(nodes_female)
+
+    // UPDATE
+    circle_female
+        .transition(t0)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
+    // ENTER
+    circle_female
+        .enter()
+        .append("circle")
+        .attr("class", "female-node")
+        .style("fill", "lightblue")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 1.8)
+        // .on("mouseover", tip.show)
+        // .on("mouseout", tip.hide)
+        .attr("cx", x(0))
+        .attr("cy", d => d.y)
+        .style("opacity", 0.0)
+        .transition(t0)
+        .delay((d, i) => 100 * Math.sqrt(i))
+        .style("opacity", 0.7)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
+    // Median connector line
+    // Join
+    var median_connector_line = slide5Group
+        .selectAll(".median-connector")
+        .data([topic_medians_data[selected_topic]])
+
+    // Update
+    median_connector_line
+        .transition(t0)
+        .attr("y1", d => slide5_yScale(d["female"]))
+        .attr("y2", d => slide5_yScale(d["male"]))
+
+    // Enter
+    median_connector_line
+        .enter()
+        .append("line")
+        .attr("class", "median-connector")
+        .attr("x1", slide5_xScale(0))
+        .attr("x2", slide5_xScale(0))
+        .style("stroke-width", 1)
+        .style("stroke", "white")
+        .transition(t1)
+        .attr("y1", d => slide5_yScale(d["female"]))
+        .attr("y2", d => slide5_yScale(d["male"]))
+
+    // Male median fraction
+    // Join
+    var male_median_circle = slide5Group
+        .selectAll(".male-median")
+        .data([topic_medians_data[selected_topic]["male"]])
+
+    // Update
+    male_median_circle
+        .transition(t0)
+        .attr("cy", d => slide5_yScale(d))
+
+    // Enter
+    male_median_circle
+        .enter()
+        .append("circle")
+        .attr("class", "male-median")
+        .attr("cx", slide5_xScale(0))
+        .attr("cy", slide5_yScale(0))
+        .style("fill", "red")
+        .attr("r", 3)
+        .style("opacity", 0)
+        .transition(t1)
+        .style("opacity", 1)
+        .attr("cy", d => slide5_yScale(d))
+
+    // Female median fraction
+    // Join
+    var female_median_circle = slide5Group
+        .selectAll(".female-median")
+        .data([topic_medians_data[selected_topic]["female"]])
+
+    // Update
+    female_median_circle
+        .transition(t0)
+        .attr("cy", d => slide5_yScale(d))
+
+    // Enter
+    female_median_circle
+        .enter()
+        .append("circle")
+        .attr("class", "female-median")
+        .attr("cx", slide5_xScale(0))
+        .attr("cy", slide5_yScale(0))
+        .attr("r", 3)
+        .style("fill", "lightblue")
+        .style("opacity", 0)
+        .transition(t1)
+        .style("opacity", 1)
+        .attr("cy", d => slide5_yScale(d))
+
+}
+
+// ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
 // ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
 // ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║    ██║  ██║███████║   ██║   ███████║
@@ -1958,7 +2254,8 @@ function download_data() {
             draw_graph()
         })
 
-    // These file can download later because we don't need to wait for it
+    // These files can download later because we don't need to wait for them
+    // to load initial view
     d3.queue()
         .defer(d3.csv, "mp_base64.csv", function (d) {
             return {
@@ -1975,7 +2272,18 @@ function download_data() {
             }
         })
         .defer(d3.json, "speech_samples.json")
-        .await(function (error, mp_base64, women_in_govt, speech_samples) {
+        .defer(d3.csv,
+            "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
+        )
+        .defer(d3.csv,
+            "data.csv" + "?" + Math.floor(Math.random() * 1000)
+        )
+        .defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100),
+            function(d) {
+                return { topic: d.topic, male: Math.pow(10, +d.male),
+                    female: Math.pow(10, +d.female) }
+            })
+        .await(function (error, mp_base64, women_in_govt, speech_samples, baked_mp_positions, mp_topics, topic_medians) {
             // Turn d3 array into a pythonic dictionary
             mp_base64_data = {}
             for (var i = 0; i < mp_base64.length; i++) {
@@ -1991,6 +2299,57 @@ function download_data() {
             speech_samples_data = d3.nest()
                 .key(d => d.mp_name)
                 .entries(speech_samples)
+
+            topic_medians_data = {}
+            baked_positions_data = []
+            var nodes = []
+
+            topic_medians.forEach(a => {
+                topic_medians_data[a.topic] = { male: a.male,
+                    female: a.female }
+            })
+
+            baked_mp_positions.forEach(function (row) {
+
+                Object.keys(row)
+                    .forEach(
+                        function (colname) {
+                            if (colname == "id" || colname.slice(-1) == "y") return
+                            var topic = colname.slice(0, -2)
+                            baked_positions_data.push({
+                                "id": +row["id"],
+
+                                "topic": topic,
+                                "x": +row[topic + "_x"],
+                                "y": +row[topic + "_y"],
+                            })
+                        }
+                    )
+            })
+
+            baked_positions_data = d3.nest()
+                .key(d => d.topic)
+                .entries(baked_positions_data)
+
+            // Convert wide data to long
+            nodes = mp_topics.map(function (d) {
+                var node = {
+                    "id": +d.id,
+                    "full_name": d.full_name,
+                    "party": d.Party,
+                    "gender": d.is_female == 1 ? "Female" : "Male",
+                }
+                Object.keys(d)
+                    .forEach(function (key) {
+                        if (key != "id" & key != "full_name" & key != "Party" & key != "is_female") {
+                            node[key] = d[key] == "-inf" ? 0 : Math.pow(10, +d[key])
+                        }
+                    })
+                return node
+            })
+
+            nodes_male = nodes.filter(d => d.gender == "Male")
+            nodes_female = nodes.filter(d => d.gender != "Male")
 
         })
 
