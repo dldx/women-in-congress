@@ -35,9 +35,13 @@ var margin = {
 // a few additional functions
 var colors = {
     "Lab": "#C61148",
+    "Labour": "#C61148",
     "Con": "#0096DB",
+    "Conservative": "#0096DB",
     "SNP": "#FCCA46",
+    "Scottish National Party": "#FCCA46",
     "Lib Dem": "#F37A48",
+    "Liberal Democrat": "#F37A48",
     "LD": "#F37A48",
     "Green": "#A1C181",
     "SF": "#008e4b",
@@ -1569,8 +1573,6 @@ function third_slide(no_transition = false) {
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
 
-
-
     function mouseover(d) {
         // If country line is on screen, then enable mouseover
         if (country_on_screen.indexOf(d.data.country) > -1) {
@@ -1720,39 +1722,42 @@ function fourth_slide(no_transition = false) {
     </div>`
 
     // Set width based on header width
-    topic_bar_width = d3.select(".slide4-tooltip").select("h1").node().offsetWidth//d3.select("#tooltip").node().clientWidth
+    topic_bar_width = d3.select(".slide4-tooltip")
+        .select("h1")
+        .node()
+        .offsetWidth //d3.select("#tooltip").node().clientWidth
     topic_bar_height = 30
     d3.select("#slide4-speech-topic-bar")
         .attr("width", topic_bar_width)
         .attr("height", topic_bar_height)
 
-        // d3.select("#slide4-speech-topic-bar")
-        //     .append("rect")
-        //     .attr("class", "rect-bg")
-        //     .attr("fill", colors["Hover"])
-        //     .attr("x", 0)
-        //     .attr("y", 0)
-        //     .attr("width", 100)
-        //     .attr("height", 20)
+    // d3.select("#slide4-speech-topic-bar")
+    //     .append("rect")
+    //     .attr("class", "rect-bg")
+    //     .attr("fill", colors["Hover"])
+    //     .attr("x", 0)
+    //     .attr("y", 0)
+    //     .attr("width", 100)
+    //     .attr("height", 20)
 
-        // Load mp dropdown with the list of mps
+    // Load mp dropdown with the list of mps
     $("#slide4-mp-dropdown")
         .dropdown({
             values: speech_samples_data.map((d, i) => ({
                 name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
                 value: i,
-                selected: i==0,
+                selected: i == 0,
             })),
             fullTextSearch: true
         })
-        // Default to the first MP (Caroline Lucas)
+    // Default to the first MP (Caroline Lucas)
     $("#slide4-mp-dropdown")
-        .dropdown("set selected","0")
+        .dropdown("set selected", "0")
 
     update_speech_tooltip()
     $("#slide4-mp-dropdown")
-        .dropdown("setting", "onChange", function(value) {
-            if(selected_mp != value) {
+        .dropdown("setting", "onChange", function (value) {
+            if (selected_mp != value) {
                 selected_mp = value
                 update_speech_tooltip()
             }
@@ -1763,17 +1768,18 @@ function fourth_slide(no_transition = false) {
 function define_topic_scales() {
     "use strict"
     if (topicColorScale == null) {
-    // Find all unique topics and use that for domain
+        // Find all unique topics and use that for domain
         topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
             .domain([...new Set(speech_samples_data
                 .map(d => d.values
                     .map(s => Object.keys(s.topics))
-                    .reduce((a,b) => a.concat(b)))
-                .reduce((a,b) => a.concat(b)))])
+                    .reduce((a, b) => a.concat(b)))
+                .reduce((a, b) => a.concat(b)))])
     }
 
     if (topicBarScale == null) {
-        topicBarScale = d3.scaleLinear().domain([0, 1])
+        topicBarScale = d3.scaleLinear()
+            .domain([0, 1])
     }
     topicBarScale.range([0, topic_bar_width])
 }
@@ -1789,7 +1795,7 @@ function update_speech_tooltip() {
 
     var chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
     var old_speech = chosen_speech
-    while(old_speech == chosen_speech) {
+    while (old_speech == chosen_speech) {
         chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
     }
 
@@ -1799,15 +1805,19 @@ function update_speech_tooltip() {
     "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                 `)
 
-    d3.select("#slide4-mp-name").html(chosen_speech.mp_name)
-    d3.select("#slide4-speech-debate").html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date)).toLocaleDateString("en-GB", {year: "numeric", month: "short"}) + ")"))
-    d3.select("#slide4-speech").html(chosen_speech.body)
+    d3.select("#slide4-mp-name")
+        .html(chosen_speech.mp_name)
+    d3.select("#slide4-speech-debate")
+        .html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date))
+            .toLocaleDateString("en-GB", { year: "numeric", month: "short" }) + ")"))
+    d3.select("#slide4-speech")
+        .html(chosen_speech.body)
 
     // Sum up remaining fraction
     chosen_speech.topics.others = 1 - Object.entries(chosen_speech.topics)
         .filter(d => d[0] != "others")
         .map(d => d[1])
-        .reduce((a,b) => a+b)
+        .reduce((a, b) => a + b)
 
     // Stack topics in speech to make a stacked horizontal bar graph
     var stack = d3.stack()
@@ -1823,7 +1833,8 @@ function update_speech_tooltip() {
     // EXIT old elements not present in new data.
     topic_bar
         .exit()
-        .transition().duration(1000)
+        .transition()
+        .duration(1000)
         .attr("x", topicBarScale(1))
         .attr("height", topic_bar_height)
         .style("opacity", 0)
@@ -1862,21 +1873,27 @@ function update_speech_tooltip() {
     // EXIT old elements not present in new data.
     topic_bar_label
         .exit()
-        .transition().duration(1000)
+        .transition()
+        .duration(1000)
         .attr("x", topicBarScale(1))
         .style("opacity", 0)
         .remove()
 
     function adjust_text_width(d) {
-        var text = d3.select(this).text(d.key)
+        var text = d3.select(this)
+            .text(d.key)
         var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0])
         var needs_elipsis = false
-        while(text.node().getComputedTextLength() > bar_width) {
+        while (text.node()
+            .getComputedTextLength() > bar_width) {
             if (bar_width <= 0) break
-            text.text(text.text().slice(0, -1))
+            text.text(text.text()
+                .slice(0, -1))
             needs_elipsis = true
         }
-        if (needs_elipsis) text.text(text.text().trim().slice(0, -2) + "...")
+        if (needs_elipsis) text.text(text.text()
+            .trim()
+            .slice(0, -2) + "...")
     }
 
     // UPDATE old elements present in new data.
@@ -1894,7 +1911,7 @@ function update_speech_tooltip() {
         .attr("alignment-baseline", "middle")
         .transition()
         .attr("x", d => 5 + topicBarScale(d[0][0]))
-        .attr("y", topic_bar_height/2)
+        .attr("y", topic_bar_height / 2)
         .each(adjust_text_width)
 
     // // Put a title on the "other" segment
@@ -1902,12 +1919,13 @@ function update_speech_tooltip() {
     //     .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
 
     // Add tooltips for all the topic segments
-    $(".rect-fg")//,.rect-bg")
+    $(".rect-fg") //,.rect-bg")
         .popup({
             duration: 100,
             position: "top right",
             transition: "fade",
-            variation: "inverted"})
+            variation: "inverted"
+        })
 }
 
 // ----------------------------------------------------------------------------
@@ -1955,7 +1973,7 @@ function to_fifth_slide(current_slide) {
     d3.select("#tooltip")
         .transition(t0)
         .style("opacity", 0)
-        .remove()
+        .on("end", function () { this.innerHTML = "" })
 
     // Remove Election rectangles
     electionRects
@@ -1991,7 +2009,8 @@ function to_fifth_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function fifth_slide(no_transition = false) {
 
-    d3.select("#topic-dropdown").remove()
+    d3.select("#topic-dropdown")
+        .remove()
     d3.select("body")
         .insert("select", ":first-child")
         .attr("id", "topic-dropdown")
@@ -2002,7 +2021,7 @@ function fifth_slide(no_transition = false) {
         .append("option")
         .text(d => d)
 
-        // Scales for this data
+    // Scales for this data
     slide5_xScale = d3.scaleLinear()
         .domain([-300, 150])
         .range([0, width + margin.left + margin.right])
@@ -2011,15 +2030,15 @@ function fifth_slide(no_transition = false) {
         .domain([0, 0.3])
         .range([height, 0])
 
-    d3.select("#slide5-group").remove()
+    d3.select("#slide5-group")
+        .remove()
 
     // Create group for this slide
-    slide5Group = svg
+    slide5Group = zoomedArea
         .append("g")
         .attr("id", "slide5-group")
-        .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
-        // .attr("transform", "scale(" + width/1900 + ")")
-
+        // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
+    // .attr("transform", "scale(" + width/1900 + ")")
     // Call function initially
     update_fifth_slide()
 
@@ -2055,7 +2074,7 @@ function update_fifth_slide() {
         .duration(1000)
 
     // JOIN
-    circle_male =  slide5Group.selectAll(".male-node")
+    circle_male = slide5Group.selectAll(".male-node")
         .data(nodes_male)
 
     // UPDATE
@@ -2069,10 +2088,10 @@ function update_fifth_slide() {
         .enter()
         .append("circle")
         .attr("class", "male-node")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
         .style("fill", "red")
         .attr("r", 1.8)
-        // .on("mouseover", tip.show)
-        // .on("mouseout", tip.hide)
         .attr("cx", slide5_xScale(0))
         .attr("cy", d => d.y)
         .style("opacity", 0.0)
@@ -2082,9 +2101,44 @@ function update_fifth_slide() {
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
 
+    function mouseover(d) {
+        d3.select("#tooltip")
+            .transition()
+            .duration(0)
+            .style("opacity", 1)
+            .style("left", Math.max(Math.min(this.getBoundingClientRect().left - tooltip.offsetWidth/2,
+                width - tooltip.offsetWidth/2 - margin.right),
+            0 + margin.left))
+            .style("top", Math.max(Math.min(this.getBoundingClientRect().top - tooltip.offsetHeight - 20,
+                height + tooltip.offsetHeight - 20), margin.top))
+            .style("pointer-events", "none")
+
+        var partyLogo = partyHasLogo.indexOf(d.party) != -1
+        // Show relevant tooltip info
+        tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${colorParty(d.party)};">${d.full_name}</h1>
+                    <div class="mp-image-parent">
+                    ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    </div>
+                    <p>${d[selected_topic].toFixed(2)}</p>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
+</div>`
+    }
+
+    function mouseout(d) {
+        d3.select("#tooltip")
+            .transition()
+            .delay(3000)
+            .duration(1000)
+            .style("opacity", 0)
+    }
+
     // Female nodes
     // JOIN
-    circle_female =  slide5Group.selectAll(".female-node")
+    circle_female = slide5Group.selectAll(".female-node")
         .data(nodes_female)
 
     // UPDATE
@@ -2098,12 +2152,12 @@ function update_fifth_slide() {
         .enter()
         .append("circle")
         .attr("class", "female-node")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
         .style("fill", "lightblue")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", 1.8)
-        // .on("mouseover", tip.show)
-        // .on("mouseout", tip.hide)
         .attr("cx", x(0))
         .attr("cy", d => d.y)
         .style("opacity", 0.0)
@@ -2158,6 +2212,7 @@ function update_fifth_slide() {
         .attr("cy", slide5_yScale(0))
         .style("fill", "red")
         .attr("r", 3)
+        .attr("title", d => `Male average: ${d.toFixed(2)}`)
         .style("opacity", 0)
         .transition(t1)
         .style("opacity", 1)
@@ -2182,12 +2237,14 @@ function update_fifth_slide() {
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
+        .attr("title", d => `Female average: ${d.toFixed(2)}`)
         .style("fill", "lightblue")
         .style("opacity", 0)
         .transition(t1)
         .style("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
 
+    $(".male-median,.female-median").popup({position: "top center", variation: "inverted"})
 }
 
 // ----------------------------------------------------------------------------
@@ -2276,12 +2333,15 @@ function download_data() {
             "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
         )
         .defer(d3.csv,
-            "data.csv" + "?" + Math.floor(Math.random() * 1000)
+            "mp_topic_fraction.csv" + "?" + Math.floor(Math.random() * 1000)
         )
         .defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100),
-            function(d) {
-                return { topic: d.topic, male: Math.pow(10, +d.male),
-                    female: Math.pow(10, +d.female) }
+            function (d) {
+                return {
+                    topic: d.topic,
+                    male: Math.pow(10, +d.male),
+                    female: Math.pow(10, +d.female)
+                }
             })
         .await(function (error, mp_base64, women_in_govt, speech_samples, baked_mp_positions, mp_topics, topic_medians) {
             // Turn d3 array into a pythonic dictionary
@@ -2305,8 +2365,10 @@ function download_data() {
             var nodes = []
 
             topic_medians.forEach(a => {
-                topic_medians_data[a.topic] = { male: a.male,
-                    female: a.female }
+                topic_medians_data[a.topic] = {
+                    male: a.male,
+                    female: a.female
+                }
             })
 
             baked_mp_positions.forEach(function (row) {
