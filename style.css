@@ -136,7 +136,7 @@ body {
 .women-in-govt-path.hover {
   stroke-width: 10; }
 
-#tooltip {
+#tooltip, #slide4 {
   background-color: rgba(19, 19, 19, 0.8);
   color: #ececec;
   border: solid 1px #131313;
@@ -154,41 +154,53 @@ body {
   top: 10%; }
   #tooltip .slide2-tooltip,
   #tooltip .slide3-tooltip,
-  #tooltip .slide4-tooltip {
+  #tooltip .slide4-tooltip, #slide4 .slide2-tooltip,
+  #slide4 .slide3-tooltip,
+  #slide4 .slide4-tooltip {
     font-size: 1rem;
     font-weight: 200;
     text-align: center;
     vertical-align: middle; }
     #tooltip .slide2-tooltip span,
     #tooltip .slide3-tooltip span,
-    #tooltip .slide4-tooltip span {
+    #tooltip .slide4-tooltip span, #slide4 .slide2-tooltip span,
+    #slide4 .slide3-tooltip span,
+    #slide4 .slide4-tooltip span {
       font-weight: bold; }
     #tooltip .slide2-tooltip .female,
     #tooltip .slide3-tooltip .female,
-    #tooltip .slide4-tooltip .female {
+    #tooltip .slide4-tooltip .female, #slide4 .slide2-tooltip .female,
+    #slide4 .slide3-tooltip .female,
+    #slide4 .slide4-tooltip .female {
       color: #e5e5e5; }
     #tooltip .slide2-tooltip .male,
     #tooltip .slide3-tooltip .male,
-    #tooltip .slide4-tooltip .male {
+    #tooltip .slide4-tooltip .male, #slide4 .slide2-tooltip .male,
+    #slide4 .slide3-tooltip .male,
+    #slide4 .slide4-tooltip .male {
       color: #c61148; }
     #tooltip .slide2-tooltip .gender-ratio,
     #tooltip .slide3-tooltip .gender-ratio,
-    #tooltip .slide4-tooltip .gender-ratio {
+    #tooltip .slide4-tooltip .gender-ratio, #slide4 .slide2-tooltip .gender-ratio,
+    #slide4 .slide3-tooltip .gender-ratio,
+    #slide4 .slide4-tooltip .gender-ratio {
       font-size: 5rem; }
     #tooltip .slide2-tooltip h1,
     #tooltip .slide3-tooltip h1,
-    #tooltip .slide4-tooltip h1 {
+    #tooltip .slide4-tooltip h1, #slide4 .slide2-tooltip h1,
+    #slide4 .slide3-tooltip h1,
+    #slide4 .slide4-tooltip h1 {
       background-color: #a1c181; }
-  #tooltip .info-bubble-tip {
+  #tooltip .info-bubble-tip, #slide4 .info-bubble-tip {
     font-size: .8rem;
     font-weight: 200; }
-    #tooltip .info-bubble-tip h1 {
+    #tooltip .info-bubble-tip h1, #slide4 .info-bubble-tip h1 {
       background-color: #0096db; }
-    #tooltip .info-bubble-tip .date {
+    #tooltip .info-bubble-tip .date, #slide4 .info-bubble-tip .date {
       font-weight: bold; }
-    #tooltip .info-bubble-tip .body {
+    #tooltip .info-bubble-tip .body, #slide4 .info-bubble-tip .body {
       margin-top: .8em; }
-  #tooltip h1 {
+  #tooltip h1, #slide4 h1 {
     display: block;
     font-size: 1rem;
     font-weight: bold;
@@ -197,7 +209,8 @@ body {
     text-align: center;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); }
   #tooltip .mp-party,
-  #tooltip .mp-party-logo {
+  #tooltip .mp-party-logo, #slide4 .mp-party,
+  #slide4 .mp-party-logo {
     width: 4rem;
     height: 4rem;
     display: flex;
@@ -209,53 +222,56 @@ body {
     font-size: 2rem;
     font-weight: bolder;
     word-break: break-all; }
-  #tooltip .mp-party {
+  #tooltip .mp-party, #slide4 .mp-party {
     background-color: #50514f; }
-  #tooltip .mp-image-parent {
+  #tooltip .mp-image-parent, #slide4 .mp-image-parent {
     width: 5rem;
     height: 5rem;
     overflow: hidden; }
-  #tooltip .mp-image {
+  #tooltip .mp-image, #slide4 .mp-image {
     width: 100%;
     height: 100%;
     transform: translate(0, -5rem);
     transition: opacity .5s linear; }
-  #tooltip .mp-image-blurred {
+  #tooltip .mp-image-blurred, #slide4 .mp-image-blurred {
     width: 100%;
     height: 100%;
     filter: blur(4px); }
-  #tooltip .slide4-tooltip {
+  #tooltip .slide4-tooltip, #slide4 .slide4-tooltip {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    animation: fadein 1s;
     pointer-events: auto; }
 @keyframes fadein {
   from {
     opacity: 0; }
   to {
     opacity: 1; } }
-    #tooltip .slide4-tooltip .speech-flex-row {
+    #tooltip .slide4-tooltip .speech-flex-row, #slide4 .slide4-tooltip .speech-flex-row {
       display: flex;
       align-items: flex-start;
-      flex: 0 0 5rem; }
-      #tooltip .slide4-tooltip .speech-flex-row button {
+      flex: 0 0 5rem;
+      padding-bottom: 2rem; }
+      #tooltip .slide4-tooltip .speech-flex-row button, #slide4 .slide4-tooltip .speech-flex-row button {
         margin-top: auto;
         margin-bottom: auto;
         width: 5rem;
         height: 5rem; }
-    #tooltip .slide4-tooltip .mp-image-parent {
+    #tooltip .slide4-tooltip .mp-image-parent, #slide4 .slide4-tooltip .mp-image-parent {
       margin-top: auto;
       margin-bottom: auto;
       flex: 0 0 5rem; }
-    #tooltip .slide4-tooltip .mp-name {
-      margin: auto;
+    #tooltip .slide4-tooltip .mp-name-debate, #slide4 .slide4-tooltip .mp-name-debate {
       flex-grow: 1;
+      margin-top: auto;
+      margin-bottom: auto; }
+    #tooltip .slide4-tooltip .mp-name, #slide4 .slide4-tooltip .mp-name {
+      margin: auto;
       font-weight: lighter;
       font-size: 2rem;
-      padding: 0.5em; }
-    #tooltip .slide4-tooltip p {
+      padding: .5rem; }
+    #tooltip .slide4-tooltip .blockquote, #slide4 .slide4-tooltip .blockquote {
       margin-left: 20px;
       padding-left: 1.5rem;
       text-align: left;
@@ -268,25 +284,25 @@ body {
       font-size: 1rem;
       line-height: 1.5rem;
       pointer-events: all; }
-      #tooltip .slide4-tooltip p::before {
+      #tooltip .slide4-tooltip .blockquote::before, #slide4 .slide4-tooltip .blockquote::before {
         left: 1rem;
         color: #fff;
         content: '“';
         font-size: 4em;
         position: absolute; }
-    #tooltip .slide4-tooltip .end-quote {
+    #tooltip .slide4-tooltip .end-quote, #slide4 .slide4-tooltip .end-quote {
       color: #fff;
       font-size: 4em;
-      margin-right: 0px; }
-    #tooltip .slide4-tooltip .speech-debate {
-      font-size: 0.7rem;
+      margin-right: 0; }
+    #tooltip .slide4-tooltip .speech-debate, #slide4 .slide4-tooltip .speech-debate {
+      font-size: .7rem;
       font-weight: 400;
-      padding: 1.5rem; }
-    #tooltip .slide4-tooltip #slide4-speech-topic-bar {
+      padding: .5rem; }
+    #tooltip .slide4-tooltip #slide4-speech-topic-bar, #slide4 .slide4-tooltip #slide4-speech-topic-bar {
       padding-top: 1rem;
       flex: 0 0 2rem;
       margin: auto auto 0; }
-      #tooltip .slide4-tooltip #slide4-speech-topic-bar .rect-label {
+      #tooltip .slide4-tooltip #slide4-speech-topic-bar .rect-label, #slide4 .slide4-tooltip #slide4-speech-topic-bar .rect-label {
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         pointer-events: none; }
 

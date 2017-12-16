@@ -1673,16 +1673,8 @@ function to_fourth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () {
-            d3.select("#tooltip")
-                .style("width", "80%")
-                .style("height", "80%")
-                .style("top", "10%")
-                .style("left", "10%")
             fourth_slide(false)
         })
-        .transition()
-        .duration(1000)
-        .style("opacity", 1)
 
 }
 
@@ -1697,13 +1689,17 @@ function to_fourth_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function fourth_slide(no_transition = false) {
 
-    // slide4Group = zoomedArea
-    //     .append("g")
-    //     .attr("id", "slide4-group")
-
-    tooltip.innerHTML = `
-    <div class="slide4-tooltip">
-    <h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
+    // First remove old div
+    d3.select("#slide4").remove()
+    // Add a new div that goes over everything to store contents of this slide
+    d3.select("body")
+        .append("div")
+        .attr("id", "slide4")
+        .style("width", "80%")
+        .style("height", "80%")
+        .style("top", "10%")
+        .style("left", "10%")
+        .html(`<div class="slide4-tooltip"><h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
     <div id="slide4-mp-dropdown" class="ui inline dropdown search">
     <div class="text"></div> <i class="dropdown icon"></i>
   </div>
@@ -1718,27 +1714,16 @@ function fourth_slide(no_transition = false) {
     <button class="ui icon button" onclick="update_speech_tooltip()"><i class="random big icon"></i></button>
     </div>
     <p class="blockquote" id="slide4-speech"></p>
-    <svg id="slide4-speech-topic-bar"></svg>
-    </div>`
+    <svg id="slide4-speech-topic-bar"></svg></div>`)
+        .style("opacity", 1)
 
     // Set width based on header width
-    topic_bar_width = d3.select(".slide4-tooltip")
-        .select("h1")
-        .node()
-        .offsetWidth //d3.select("#tooltip").node().clientWidth
+    topic_bar_width = document.querySelector("#slide4 > div > h1")
+        .offsetWidth
     topic_bar_height = 30
     d3.select("#slide4-speech-topic-bar")
         .attr("width", topic_bar_width)
         .attr("height", topic_bar_height)
-
-    // d3.select("#slide4-speech-topic-bar")
-    //     .append("rect")
-    //     .attr("class", "rect-bg")
-    //     .attr("fill", colors["Hover"])
-    //     .attr("x", 0)
-    //     .attr("y", 0)
-    //     .attr("width", 100)
-    //     .attr("height", 20)
 
     // Load mp dropdown with the list of mps
     $("#slide4-mp-dropdown")
@@ -1974,6 +1959,11 @@ function to_fifth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () { this.innerHTML = "" })
+
+    d3.select("#slide4")
+        .transition(t0)
+        .style("opacity", 0)
+        .on("end", function() {this.remove()})
 
     // Remove Election rectangles
     electionRects

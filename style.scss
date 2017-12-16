@@ -207,7 +207,8 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 }
 $tip-padding: 1;
 
-#tooltip {
+#tooltip,#slide4 {
+  opacity: 0;
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
   border: solid 1px $tip-background;
