@@ -208,8 +208,11 @@ function update_state() {
             // Load fourth slide
             reset_zoom(to_fourth_slide, current_slide)
         } else if (new_slide == 4) {
-            // Load fourth slide
-            reset_zoom(to_fifth_slide, current_slide)
+            // Load fifth slide
+            // Add zoom capabilities for the points
+            zoom.on("zoom", zoomed)
+            svg.call(zoom)
+            to_fifth_slide(current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -1918,10 +1921,6 @@ function update_speech_tooltip() {
 // ----------------------------------------------------------------------------
 function to_fifth_slide(current_slide) {
     "use strict"
-    // Increment lastTransitioned counter if it is less than 0
-    if (lastTransitioned < 4) {
-        lastTransitioned = 4
-    }
     var t0 = svg
         .transition()
         .duration(1000)
@@ -1985,7 +1984,13 @@ function to_fifth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
 
-    fifth_slide()
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 4) {
+        lastTransitioned = 4
+        t0.on("end", () => fifth_slide(false))
+    } else {
+        t0.on("end", () => fifth_slide(true))
+    }
 
 }
 // ----------------------------------------------------------------------------
@@ -2030,11 +2035,11 @@ function fifth_slide(no_transition = false) {
         // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
     // .attr("transform", "scale(" + width/1900 + ")")
     // Call function initially
-    update_fifth_slide()
+    update_fifth_slide(no_transition)
 
 }
 
-function update_fifth_slide() {
+function update_fifth_slide(no_transition) {
     // Get value of topic dropdown
     selected_topic = d3.select("#topic-dropdown")
         .property("value")
@@ -2052,44 +2057,6 @@ function update_fifth_slide() {
         d.x = slide5_xScale(n.x) + 10
         d.y = slide5_yScale(n.y)
     })
-
-
-    // transition
-    var t0 = d3.transition()
-        .duration(1000)
-
-    // transition
-    var t1 = t0.transition()
-        .delay(2000)
-        .duration(1000)
-
-    // JOIN
-    circle_male = slide5Group.selectAll(".male-node")
-        .data(nodes_male)
-
-    // UPDATE
-    circle_male
-        .transition(t0)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-
-    // ENTER
-    circle_male
-        .enter()
-        .append("circle")
-        .attr("class", "male-node")
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
-        .style("fill", "red")
-        .attr("r", 1.8)
-        .attr("cx", slide5_xScale(0))
-        .attr("cy", d => d.y)
-        .style("opacity", 0.0)
-        .transition(t0)
-        .delay((d, i) => 100 * Math.sqrt(i))
-        .style("opacity", 0.7)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
 
     function mouseover(d) {
         d3.select("#tooltip")
@@ -2121,10 +2088,47 @@ function update_fifth_slide() {
     function mouseout(d) {
         d3.select("#tooltip")
             .transition()
-            .delay(3000)
+            .delay(2000)
             .duration(1000)
             .style("opacity", 0)
     }
+
+    // transition
+    var t0 = d3.transition()
+        .duration(no_transition ? 1000 : 2000)
+
+    // transition
+    var t1 = t0.transition()
+        .delay(no_transition ? 1000 : 2000)
+        .duration(1000)
+
+    // JOIN
+    circle_male = slide5Group.selectAll(".male-node")
+        .data(nodes_male)
+
+    // UPDATE
+    circle_male
+        .transition(t0)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
+    // ENTER
+    circle_male
+        .enter()
+        .append("circle")
+        .attr("class", "male-node")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
+        .attr("r", 1.8)
+        .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
+        .attr("cy", d => d.y)
+        .style("opacity", 0.0)
+        .transition(t0)
+        .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
+        .style("opacity", 0.7)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+
 
     // Female nodes
     // JOIN
@@ -2144,15 +2148,14 @@ function update_fifth_slide() {
         .attr("class", "female-node")
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
-        .style("fill", "lightblue")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", 1.8)
-        .attr("cx", x(0))
+        .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
         .style("opacity", 0.0)
         .transition(t0)
-        .delay((d, i) => 100 * Math.sqrt(i))
+        .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
         .style("opacity", 0.7)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
@@ -2182,6 +2185,31 @@ function update_fifth_slide() {
         .attr("y1", d => slide5_yScale(d["female"]))
         .attr("y2", d => slide5_yScale(d["male"]))
 
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1)
+    }
+
+    // Mouseover for medians
+    function median_mouseover(d) {
+        let gender = this.className.baseVal.split("-")[0]
+        d3.select("#tooltip")
+            .transition()
+            .duration(0)
+            .style("opacity", 1)
+            .style("left", Math.max(Math.min(this.getBoundingClientRect().left - tooltip.offsetWidth/2,
+                width - tooltip.offsetWidth/2 - margin.right),
+            0 + margin.left))
+            .style("top", Math.max(Math.min(this.getBoundingClientRect().top - tooltip.offsetHeight - 20,
+                height + tooltip.offsetHeight - 20), margin.top))
+            .style("pointer-events", "none")
+
+        // Show relevant tooltip info
+        tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${gender == "female" ? colors["Hover"] : colors["Lab"]};">${gender.capitalize()}</h1>
+                    The average ${gender.capitalize()} MP spends ${(d*100).toFixed(1)}% of ${gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
+</div>`
+    }
     // Male median fraction
     // Join
     var male_median_circle = slide5Group
@@ -2198,11 +2226,11 @@ function update_fifth_slide() {
         .enter()
         .append("circle")
         .attr("class", "male-median")
+        .on("mouseover", median_mouseover)
+        .on("mouseout", mouseout)
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
-        .style("fill", "red")
         .attr("r", 3)
-        .attr("title", d => `Male average: ${d.toFixed(2)}`)
         .style("opacity", 0)
         .transition(t1)
         .style("opacity", 1)
@@ -2224,17 +2252,16 @@ function update_fifth_slide() {
         .enter()
         .append("circle")
         .attr("class", "female-median")
+        .on("mouseover", median_mouseover)
+        .on("mouseout", mouseout)
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
-        .attr("title", d => `Female average: ${d.toFixed(2)}`)
-        .style("fill", "lightblue")
         .style("opacity", 0)
         .transition(t1)
         .style("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
 
-    $(".male-median,.female-median").popup({position: "top center", variation: "inverted"})
 }
 
 // ----------------------------------------------------------------------------

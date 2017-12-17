@@ -146,7 +146,6 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .x-label {
   alignment-baseline: hanging;
 }
-
 @media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 13 / 10), only screen and (min-resolution: 120dpi) {
   .x-axis text,
   .x-label text,
@@ -205,9 +204,32 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
     stroke-width: 10;
   }
 }
+
+.female-node,
+.female-median {
+  fill: $female;
+}
+
+.male-node,
+.male-median {
+  fill: $male;
+}
+
+.female-node:hover,
+.female-median:hover,
+.male-node:hover,
+.male-median:hover {
+  fill: map-get($colors, Hover);
+}
+
+.line-connect .hover {
+  transform: scale(10);
+}
+
 $tip-padding: 1;
 
-#tooltip,#slide4 {
+#slide4,
+#tooltip {
   opacity: 0;
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
