@@ -27,7 +27,8 @@ body {
 }
 
 .tracker {
-  position: relative;
+  transform: translateZ(0);
+  position: absolute;
   z-index: 2;
   height: 60px;
   width: 150px;
@@ -163,13 +164,14 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 }
 
-.d3-graph {
+#timeline {
+  transform: translateZ(0);
   background-color: $graph-background;
   border-radius: 1px;
   bottom: 0;
   left: 0;
   margin: 10px;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 0;
 }
@@ -205,31 +207,61 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 }
 
-.female-node,
-.female-median {
+.female-median,
+.female-node {
   fill: $female;
 }
 
-.male-node,
-.male-median {
+.male-median,
+.male-node {
   fill: $male;
 }
 
-.female-node:hover,
 .female-median:hover,
-.male-node:hover,
-.male-median:hover {
+.female-node:hover,
+.male-median:hover,
+.male-node:hover {
   fill: map-get($colors, Hover);
 }
 
-.line-connect .hover {
-  transform: scale(10);
+.line-connect {
+  opacity: .8;
+  stroke-linecap: round;
+
+  &.hover {
+    opacity: 1;
+    transform: scaleY(2);
+  }
+
+}
+#holding-div {
+  position: absolute;
+  pointer-events: none;
+  // opacity: 0;
+  display: none;
+  top: 0px;
+  left: 0px;
 }
 
+.line-connect-pre-transition {
+  position: absolute;
+  opacity: .8;
+  stroke-linecap: round;
+  transform: translateZ(0);
+  transform-origin: left;
+}
+  // Transitioning nodes from slide 1 to 2
+  .line-connect-transition {
+    transform: scaleX(.02) !important;
+    opacity: 0;
+    transition: transform 0.5s,
+    opacity .25s 3.5s;
+  }
 $tip-padding: 1;
 
 #slide4,
 #tooltip {
+  transform: translateZ(0);
   opacity: 0;
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
@@ -319,6 +351,13 @@ $tip-padding: 1;
     word-break: break-all;
   }
 
+  .mp-constituency {
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .mp-party {
     background-color: map-get($colors, Other);
   }
@@ -349,7 +388,7 @@ $tip-padding: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    // animation: fadein 1s;
+    animation: fadein 1s;
     pointer-events: auto;
     @keyframes fadein {
       from {
@@ -456,7 +495,7 @@ $tip-padding: 1;
 }
 @media screen and (min-height: 500px) {
   .mp-party,
-  svg {
+  #timeline > svg {
     bottom: 1.5 * $tip-padding + em;
     right: 1.5 * $tip-padding + em;
   }
@@ -485,6 +524,17 @@ $tip-padding: 1;
   stroke-linejoin: round;
   stroke-linecap: round;
   fill: none;
+
+  &.transition {
+animation: dash 3s ease-in-out forwards;
+animation-delay: 1s;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 }
 
 .max-mps-path,

@@ -393,7 +393,7 @@ function initial_render() {
     // Initialise info bubble
     d3.select("#tooltip")
         .remove()
-    d3.select("#timeline")
+    d3.select("body")
         .append("div")
         .attr("id", "tooltip")
     tooltip = document.getElementById("tooltip")
@@ -567,7 +567,6 @@ function first_slide() {
         .append("line")
         .attr("class", "line-connect")
         .style("stroke-width", lineThickness)
-        .style("stroke-linecap", "round")
 
     // Use a hidden rect to catch mouseovers more easily (similar to voronoi mouseover grid)
     instance
@@ -591,7 +590,26 @@ function first_slide() {
         })
         .attr("stroke", function (d) {
             return colorParty(d.party)
+        }) // Need to set origins manually because of bug
+        // .style("transform-origin", function (d) {
+        //     return x(d.term_start) + "px " + y(d.stream) + "px"
+        // })
+    // .style("will-change", "transform")
+    var holding_html = ""
+
+    pointsGroup
+        .selectAll(".line-connect")
+        .each(function (d) {
+            let position = this.getBoundingClientRect()
+            holding_html += `
+<div class="line-connect-pre-transition" style="left: ${position.left}px; top: ${position.top}px;">
+<svg height="${lineThickness}" width="${x(d.term_end) - x(d.term_start)}" style="overflow: visible;">
+<line x1=0 x2="${this.getAttribute("x2") - this.getAttribute("x1")}" y1=0 y2=0 stroke="${this.getAttribute("stroke")}" style="stroke-width: ${lineThickness}px;"></line>
+</svg></div>
+`
         })
+    document.body.insertAdjacentHTML("beforeend", "<div id=\"holding-div\">" + holding_html + "</div>")
+    // document.body.appendChild(holding_div)
 
     // For each hidden rectangle belonging to a point, set position and size
     // so that it covers the space between points
@@ -632,13 +650,9 @@ function first_slide() {
 
             // Increase line thickness of all terms of the same MP
             pointsGroup
-                .selectAll("g")
-                .style("opacity", function (a) {
-                    return (d.clean_name == a.clean_name) ? 1.0 : 0.6
-                })
                 .selectAll(".line-connect")
-                .style("stroke-width", function (a) {
-                    return (d.clean_name == a.clean_name) ? 2 * lineThickness : lineThickness
+                .classed("hover", function (a) {
+                    return (d.clean_name == a.clean_name)
                 })
         }
         d3.event.preventDefault()
@@ -649,16 +663,16 @@ function first_slide() {
         .on("mouseout", function () {
             pointsGroup
                 .selectAll("g")
-                .style("opacity", function (a) {
-                    if (partyToggled != false) {
-                        return (a.party == partyToggled) ? 1.0 : 0.1
-                    } else {
-                        return 1.0
-                    }
-                })
+            // .style("opacity", function (a) {
+            //     if (partyToggled != false) {
+            //         return (a.party == partyToggled) ? 1.0 : 0.1
+            //     } else {
+            //         return 1.0
+            //     }
+            // })
             pointsGroup
                 .selectAll(".line-connect")
-                .style("stroke-width", lineThickness)
+                .classed("hover", false)
         })
         .on("touchend", mpMouseover)
         // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
@@ -803,8 +817,13 @@ function to_second_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function second_slide(no_transition = false) {
     // Set all points to full opacity in case they were filtered previously
-    pointsGroup.selectAll("g")
-        .style("opacity", 1)
+    // pointsGroup.selectAll("g")
+    //     .style("opacity", 1)
+    d3.select("#slide1-group")
+        .remove()
+
+    d3.select("#holding-div")
+        .style("display", "unset")
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
         .remove()
@@ -901,15 +920,16 @@ function second_slide(no_transition = false) {
     total_women_mps_path = slide2Group.append("path")
         .attr("class", "total-women-mps-path slide2")
         .datum(number_women_over_time_data)
-        .attr("fill", "none")
         .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", total_women_mps_line)
-        .attr("stroke-dasharray", function () {
-            return this.getTotalLength()
-        })
-        .attr("stroke-dashoffset", function () {
-            return this.getTotalLength()
-        })
+
+    let path_length = total_women_mps_path.node().getTotalLength()
+    let path_node = total_women_mps_path.node()
+    path_node.style.transition = "none"
+    path_node.style.strokeDasharray = path_length
+    path_node.style.strokeDashoffset = path_length
+
+    path_node.getBoundingClientRect()
 
     // Area curve for total number of women MPs
     total_women_mps_area = d3.area()
@@ -964,13 +984,10 @@ function second_slide(no_transition = false) {
     })
         .left
 
-    pointsGroup.selectAll(".line-connect")
-        .transition()
-        .delay(no_transition ? 500 : 0)
-        .duration(no_transition ? 0 : 500)
-        .attr("x2", function (a) {
-            return x(a.term_start)
-        })
+    // Using CSS transitions here because it's much faster
+    d3
+        .selectAll(".line-connect-pre-transition")
+        .classed("line-connect-transition", true)
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -981,20 +998,18 @@ function second_slide(no_transition = false) {
     // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝
     // MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
     // ----------------------------------------------------------------------------
-    pointsGroup.selectAll(".line-connect")
-        .transition()
-        .delay(no_transition ? 500 : 500)
-        .duration(no_transition ? 0 : 500)
-        .attr("y1", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
-        .attr("y2", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
-        .transition()
-        .delay(no_transition ? 0 : 2000)
-        .duration(no_transition ? 0 : 250)
-        .style("opacity", 0)
+    // pointsGroup.selectAll("g")
+    //     .style("transition", "transform 0.5s 0.5s")
+    //     .style("transform", function (a) {
+    //         return `translateY(${y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)-y(a.stream)}px)`
+    //     })
+    // .attr("y2", function (a) {
+    //     return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+    // })
+    // .transition()
+    // .delay(no_transition ? 0 : 2000)
+    // .duration(no_transition ? 0 : 250)
+    // .style("opacity", 0)
 
 
     // ----------------------------------------------------------------------------
@@ -1006,12 +1021,16 @@ function second_slide(no_transition = false) {
     // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚═════╝
     // DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
     // ----------------------------------------------------------------------------
-    total_women_mps_path
-        .transition()
-        .delay(no_transition ? 0 : 1000)
-        .ease(d3.easeCubic)
-        .duration(no_transition ? 0 : 3000)
-        .attr("stroke-dashoffset", 0)
+    // total_women_mps_path
+    //     .classed("transition", true)
+    // total_women_mps_path
+    //     .transition()
+    //     .delay(no_transition ? 0 : 1000)
+    //     .ease(d3.easeCubic)
+    //     .duration(no_transition ? 0 : 3000)
+    //     .attr("st
+    path_node.style.transition = "stroke-dashoffset 3s ease-in-out 1s"
+    path_node.style.strokeDashoffset = "0"
 
     // Draw women mps line
     total_women_mps_path
@@ -1693,7 +1712,8 @@ function to_fourth_slide(current_slide) {
 function fourth_slide(no_transition = false) {
 
     // First remove old div
-    d3.select("#slide4").remove()
+    d3.select("#slide4")
+        .remove()
     // Add a new div that goes over everything to store contents of this slide
     d3.select("body")
         .append("div")
@@ -1962,7 +1982,7 @@ function to_fifth_slide(current_slide) {
     d3.select("#slide4")
         .transition(t0)
         .style("opacity", 0)
-        .on("end", function() {this.remove()})
+        .on("end", function () { this.remove() })
 
     // Remove Election rectangles
     electionRects
@@ -2032,7 +2052,7 @@ function fifth_slide(no_transition = false) {
     slide5Group = zoomedArea
         .append("g")
         .attr("id", "slide5-group")
-        // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
+    // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
     // .attr("transform", "scale(" + width/1900 + ")")
     // Call function initially
     update_fifth_slide(no_transition)
@@ -2063,11 +2083,13 @@ function update_fifth_slide(no_transition) {
             .transition()
             .duration(0)
             .style("opacity", 1)
-            .style("left", Math.max(Math.min(this.getBoundingClientRect().left - tooltip.offsetWidth/2,
-                width - tooltip.offsetWidth/2 - margin.right),
+            .style("left", Math.max(Math.min(this.getBoundingClientRect()
+                .left - tooltip.offsetWidth / 2,
+            width - tooltip.offsetWidth / 2 - margin.right),
             0 + margin.left))
-            .style("top", Math.max(Math.min(this.getBoundingClientRect().top - tooltip.offsetHeight - 20,
-                height + tooltip.offsetHeight - 20), margin.top))
+            .style("top", Math.max(Math.min(this.getBoundingClientRect()
+                .top - tooltip.offsetHeight - 20,
+            height + tooltip.offsetHeight - 20), margin.top))
             .style("pointer-events", "none")
 
         var partyLogo = partyHasLogo.indexOf(d.party) != -1
@@ -2185,8 +2207,9 @@ function update_fifth_slide(no_transition) {
         .attr("y1", d => slide5_yScale(d["female"]))
         .attr("y2", d => slide5_yScale(d["male"]))
 
-    String.prototype.capitalize = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1)
+    String.prototype.capitalize = function () {
+        return this.charAt(0)
+            .toUpperCase() + this.slice(1)
     }
 
     // Mouseover for medians
@@ -2196,11 +2219,13 @@ function update_fifth_slide(no_transition) {
             .transition()
             .duration(0)
             .style("opacity", 1)
-            .style("left", Math.max(Math.min(this.getBoundingClientRect().left - tooltip.offsetWidth/2,
-                width - tooltip.offsetWidth/2 - margin.right),
+            .style("left", Math.max(Math.min(this.getBoundingClientRect()
+                .left - tooltip.offsetWidth / 2,
+            width - tooltip.offsetWidth / 2 - margin.right),
             0 + margin.left))
-            .style("top", Math.max(Math.min(this.getBoundingClientRect().top - tooltip.offsetHeight - 20,
-                height + tooltip.offsetHeight - 20), margin.top))
+            .style("top", Math.max(Math.min(this.getBoundingClientRect()
+                .top - tooltip.offsetHeight - 20,
+            height + tooltip.offsetHeight - 20), margin.top))
             .style("pointer-events", "none")
 
         // Show relevant tooltip info
