@@ -1,4 +1,4 @@
-export { queue } from "d3-queue";
+export { queue } from "d3-queue"
 export { csv, json } from "d3-request"
 export { select, selectAll, selection, event } from "d3-selection"
 export { scaleTime, scaleLinear, scaleOrdinal, schemeCategory20 } from "d3-scale"
@@ -12,3 +12,4 @@ export { easeCubic, easeBounce } from "d3-ease"
 export { voronoi } from "d3-voronoi"
 export { nest } from "d3-collection"
 export { transition } from "d3-transition"
+export * from "d3-jetpack"

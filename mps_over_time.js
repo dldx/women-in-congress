@@ -73,11 +73,19 @@ var timeline = document.getElementById("timeline")
 var svg = d3.select(timeline)
     .append("svg")
 
+var canvas = d3.select(timeline)
+    .append("canvas")
+
+var context = canvas
+    .node()
+    .getContext("2d")
+
 
 var width = 0,
     height = 0
 
-var clippedArea,
+var ratio,
+    clippedArea,
     electionRects,
     zoom,
     wrapper,
@@ -326,7 +334,7 @@ function initialise_tracker() {
     ///////////////////////////////////////////////////////////////////////////
     /////////////////////// Hexagon ///////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
+    // Thanks Nadieh Bremer!
     var SQRT3 = Math.sqrt(3),
         hexRadius = tracker_outer_radius,
         hexagonPoly = [
@@ -1029,23 +1037,56 @@ function second_slide(no_transition = false) {
     //     .ease(d3.easeCubic)
     //     .duration(no_transition ? 0 : 3000)
     //     .attr("st
-    path_node.style.transition = "stroke-dashoffset 3s ease-in-out 1s"
-    path_node.style.strokeDashoffset = "0"
+    // path_node.style.transition = "stroke-dashoffset 3s ease-in-out 1s"
+    // path_node.style.strokeDashoffset = "0"
 
     // Draw women mps line
-    total_women_mps_path
-        .transition()
-        .delay(no_transition ? 0 : 4000)
-        .duration(no_transition ? 0 : 750)
-        .attr("d", total_women_mps_line)
+    // total_women_mps_path
+    //     .transition()
+    //     .delay(no_transition ? 0 : 4000)
+    //     .duration(no_transition ? 0 : 750)
+    //     .attr("d", total_women_mps_line)
 
-    // Fade in women mps area
-    total_women_mps_path_area
-        .transition()
-        .delay(no_transition ? 0 : 4000)
-        .duration(no_transition ? 0 : 750)
-        .attr("d", total_women_mps_area)
-        .style("opacity", 1)
+    let total_women_mps_line_canvas = d3.line()
+        .x(function (d) {
+            return x(d.year)
+        })
+        .y(function (d) {
+            return y(d.total_women_mps)
+        })
+        .curve(d3.curveBasis)
+        .context(context)
+    context.globalCompositeOperation="copy"
+    context.scale(ratio, ratio)
+    context.translate(margin.left, margin.top)
+
+    context.lineWidth = 6
+    context.strokeStyle = colors["Hover"]
+    const path_len = 3000
+    context.setLineDash([path_len])
+    context.beginPath()
+    const ease = d3.easeCubic
+    let t = d3.timer(function(elapsed) {
+        const frac = ease(elapsed/3000)*path_len
+        // const fraction_complete = parseInt(frac * 206)
+        total_women_mps_line_canvas(number_women_over_time_data)//.slice(0,fraction_complete))
+        context.lineDashOffset = -(frac+path_len)
+        context.stroke()
+
+        if (elapsed > 3000) {
+            // Rescale y axis to include all MPs
+            y.domain([0, 750])
+            // Fade in women mps area
+            total_women_mps_path_area
+                .transition()
+                // .delay(no_transition ? 0 : 4000)
+                .duration(no_transition ? 0 : 750)
+                .attr("d", total_women_mps_area)
+                .style("opacity", 1)
+            t.stop()
+        }
+    }, 1000)
+
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██╗  ██╗
@@ -1058,8 +1099,6 @@ function second_slide(no_transition = false) {
     // ----------------------------------------------------------------------------
 
 
-    // Rescale y axis to include all MPs
-    y.domain([0, 750])
 
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
@@ -2462,6 +2501,21 @@ function download_data() {
 // GET ALL DATA
 download_data()
 
+function getRetinaRatio() {
+    var devicePixelRatio = window.devicePixelRatio || 1
+    var c = document.createElement("canvas").getContext("2d")
+    var backingStoreRatio = [
+        c.webkitBackingStorePixelRatio,
+        c.mozBackingStorePixelRatio,
+        c.msBackingStorePixelRatio,
+        c.oBackingStorePixelRatio,
+        c.backingStorePixelRatio,
+        1
+    ].reduce(function(a, b) { return a || b })
+
+    return devicePixelRatio / backingStoreRatio
+}
+
 
 // ----------------------------------------------------------------------------
 // ██╗███╗   ██╗██╗████████╗
@@ -2492,6 +2546,16 @@ function draw_graph() {
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+
+
+        ratio = getRetinaRatio()
+        context.scale(ratio, ratio)
+        canvas
+            .attr("width", ratio*(width + margin.left + margin.right))
+            .attr("height",ratio*(height + margin.top + margin.bottom))
+            .style("width", (width + margin.left + margin.right))
+            .style("height", (height + margin.top + margin.bottom))
+
         new_slide = 0
         current_slide = -1
         // REDRAW
