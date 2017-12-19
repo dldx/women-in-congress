@@ -531,22 +531,15 @@ $tip-padding: 1;
   stroke-linejoin: round;
   stroke-linecap: round;
   fill: none;
-
-  &.transition {
-animation: dash 3s ease-in-out forwards;
-animation-delay: 1s;
 }
 
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
+.max-mps-path {
+  stroke: $female;
 }
-}
-
-.max-mps-path,
 .total-women-mps-path {
   stroke: $female;
+  opacity: 0;
+  stroke-dasharray: 0;
 }
 
 .half-max-mps-path {

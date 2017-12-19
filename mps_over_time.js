@@ -830,8 +830,8 @@ function second_slide(no_transition = false) {
     d3.select("#slide1-group")
         .remove()
 
-    d3.select("#holding-div")
-        .style("display", "unset")
+    d3.select("#holding-div").remove()
+    // .style("display", "unset")
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
         .remove()
@@ -931,11 +931,10 @@ function second_slide(no_transition = false) {
         .attr("stroke-width", 1.5 * lineThickness)
         .attr("d", total_women_mps_line)
 
-    let path_length = total_women_mps_path.node().getTotalLength()
     let path_node = total_women_mps_path.node()
-    path_node.style.transition = "none"
-    path_node.style.strokeDasharray = path_length
-    path_node.style.strokeDashoffset = path_length
+    // path_node.style.transition = "none"
+    // path_node.style.strokeDasharray = path_length
+    // path_node.style.strokeDashoffset = path_length
 
     path_node.getBoundingClientRect()
 
@@ -1040,31 +1039,29 @@ function second_slide(no_transition = false) {
     // path_node.style.transition = "stroke-dashoffset 3s ease-in-out 1s"
     // path_node.style.strokeDashoffset = "0"
 
-    // Draw women mps line
-    // total_women_mps_path
-    //     .transition()
-    //     .delay(no_transition ? 0 : 4000)
-    //     .duration(no_transition ? 0 : 750)
-    //     .attr("d", total_women_mps_line)
 
+    let y_canvas = d3.scaleLinear()
+        .domain([0, 210]) // Almost 210 MPs by 2020
+        .range([height, 0])
     let total_women_mps_line_canvas = d3.line()
         .x(function (d) {
             return x(d.year)
         })
         .y(function (d) {
-            return y(d.total_women_mps)
+            return y_canvas(d.total_women_mps)
         })
         .curve(d3.curveBasis)
         .context(context)
+
+
     context.globalCompositeOperation="copy"
     context.scale(ratio, ratio)
     context.translate(margin.left, margin.top)
 
-    context.lineWidth = 6
-    context.strokeStyle = colors["Hover"]
-    const path_len = 3000
+    context.lineWidth = 1.5*lineThickness
+    context.strokeStyle = "#CDCDCD"
+    const path_len = total_women_mps_path.node().getTotalLength()
     context.setLineDash([path_len])
-    context.beginPath()
     const ease = d3.easeCubic
     let t = d3.timer(function(elapsed) {
         const frac = ease(elapsed/3000)*path_len
@@ -1074,19 +1071,14 @@ function second_slide(no_transition = false) {
         context.stroke()
 
         if (elapsed > 3000) {
-            // Rescale y axis to include all MPs
-            y.domain([0, 750])
-            // Fade in women mps area
-            total_women_mps_path_area
-                .transition()
-                // .delay(no_transition ? 0 : 4000)
-                .duration(no_transition ? 0 : 750)
-                .attr("d", total_women_mps_area)
-                .style("opacity", 1)
             t.stop()
         }
     }, 1000)
-
+    d3.select("#timeline canvas")
+        .transition()
+        .delay(4000)
+        .duration(200)
+        .style("opacity", 0)
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██╗  ██╗
@@ -1098,7 +1090,16 @@ function second_slide(no_transition = false) {
     // RESCALE Y AXIS, FADE IN MP AREAS AND LINES
     // ----------------------------------------------------------------------------
 
+    // // Fade in women mps area
+    total_women_mps_path_area
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
+        .attr("d", total_women_mps_area)
+        .style("opacity", 1)
 
+    // Rescale y axis to include all MPs
+    y.domain([0, 750])
 
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
@@ -1121,17 +1122,19 @@ function second_slide(no_transition = false) {
         .call(yAxis)
 
     // Now rescale the women mps line and area to fit new axis
-    total_women_mps_path
-        .transition()
-        .delay(no_transition ? 0 : 5500)
-        .duration(no_transition ? 0 : 750)
-        .attr("d", total_women_mps_line)
 
     total_women_mps_path_area
         .transition()
         .delay(no_transition ? 0 : 5500)
         .duration(no_transition ? 0 : 750)
         .attr("d", total_women_mps_area)
+
+    total_women_mps_path
+        .transition()
+        .delay(no_transition ? 0 : 5500+750)
+        .duration(0)
+        .attr("d", total_women_mps_line)
+        .style("opacity", 1)
 
     // Draw a line and area for the total number of MPs
     max_mps_path
@@ -1506,8 +1509,6 @@ function third_slide(no_transition = false) {
 
     total_women_mps_path
         .transition(t1)
-        .attr("stroke-dasharray", null)
-        .attr("stroke-dashoffset", null)
         .attr("d", total_women_mps_line)
 
     total_women_mps_path_area
