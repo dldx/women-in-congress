@@ -471,6 +471,7 @@ function initial_render() {
         .scaleExtent([0.95, 40])
         .on("zoom", zoomed)
     svg.call(zoom)
+    // canvas.call(zoom)
 
 }
 
@@ -479,7 +480,13 @@ function initial_render() {
 // ----------------------------------------------------------------------------
 function zoomed() {
     "use strict"
-    zoomedArea.attr("transform", d3.event.transform)
+    let transform = d3.event.transform
+    zoomedArea.attr("transform", transform)
+    context.save()
+    context.translate(transform.x, transform.y)
+    context.scale(transform.k, transform.k)
+    draw()
+    context.restore()
     gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
     gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
 }

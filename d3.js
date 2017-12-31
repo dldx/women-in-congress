@@ -6533,6 +6533,12 @@ Transform.prototype = {
 
 var identity$6 = new Transform(1, 0, 0);
 
+transform.prototype = Transform.prototype;
+
+function transform(node) {
+  return node.__zoom || identity$6;
+}
+
 function nopropagation$1() {
   exports.event.stopImmediatePropagation();
 }
@@ -8498,6 +8504,7 @@ exports.axisBottom = axisBottom;
 exports.axisLeft = axisLeft;
 exports.zoom = zoom;
 exports.zoomIdentity = identity$6;
+exports.zoomTransform = transform;
 exports.bisector = bisector;
 exports.merge = merge;
 exports.easeCubic = cubicInOut;
