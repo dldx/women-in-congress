@@ -32,6 +32,44 @@ var y = d3.scaleLinear()
     .domain([0, 0.3])
     .range([height, 0])
 
+d3.select("body")
+    .append("div")
+    .attr("id", "tooltip")
+tooltip = document.getElementById("tooltip")
+
+// ----------------------------------------------------------------------------
+// WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
+// IF PARTY ISN'T FOUND
+// ----------------------------------------------------------------------------
+function colorParty(party) {
+    "use strict"
+    if (colors[party] !== undefined) {
+        return colors[party]
+    }
+    return colors.Other
+}
+
+// These are the colours used to identify each political party as well as
+// a few additional functions
+var colors = {
+    "Lab": "#C61148",
+    "Labour": "#C61148",
+    "Con": "#0096DB",
+    "Conservative": "#0096DB",
+    "SNP": "#FCCA46",
+    "Scottish National Party": "#FCCA46",
+    "Lib Dem": "#F37A48",
+    "Liberal Democrat": "#F37A48",
+    "LD": "#F37A48",
+    "Green": "#A1C181",
+    "SF": "#008e4b",
+    "Other": "#50514F", // Used as fallback when no party colour has been defined
+    "Hover": "#e5e5e5", // Used when hovering over an item
+    "Active": "#A1C181" // Used for the active slide on the tracker
+}
+// If a political party has a colour defined,
+// then it also has an SVG logo that we can use
+var partyHasLogo = Object.keys(colors)
 
 var tip = d3.tip()
     .attr("class", "d3-tip")
@@ -46,7 +84,7 @@ var tip = d3.tip()
 </div>`
     })
 
-svg.call(tip)
+// svg.call(tip)
 
 
 var xAxisTitle = svg.append("text")
@@ -84,11 +122,22 @@ d3.queue()
         "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
     )
     .defer(d3.csv,
-        "data.csv" + "?" + Math.floor(Math.random() * 1000)
+        "mp_topic_fraction.csv" + "?" + Math.floor(Math.random() * 1000)
     )
     .defer(d3.csv, "topic_medians.csv", (d) => ({ topic: d.topic, male: Math.pow(10, +d.male), female: Math.pow(10, +d.female) }))
+    .defer(d3.csv, "mp_base64.csv", function (d) {
+        return {
+            id: d.id,
+            base64: d.base64
+        }
+    })
     .await(
-        function (error, baked_data, mp_data, topic_medians_data) {
+        function (error, baked_data, mp_data, topic_medians_data, mp_base64) {
+            // Turn d3 array into a pythonic dictionary
+            mp_base64_data = {}
+            for (var i = 0; i < mp_base64.length; i++) {
+                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
+            }
 
             var topic_medians = {}
             topic_medians_data.forEach(a => { topic_medians[a.topic] = { male: a.male, female: a.female } })
@@ -137,6 +186,45 @@ d3.queue()
             var nodes_male = nodes.filter(d => d.gender == "Male")
             var nodes_female = nodes.filter(d => d.gender != "Male")
 
+            function mouseover(d) {
+                d3.select("#tooltip")
+                    .transition()
+                    .duration(0)
+                    .style("opacity", 1)
+                    .style("left", Math.max(Math.min(this.getBoundingClientRect()
+                        .left - tooltip.offsetWidth / 2,
+                    width - tooltip.offsetWidth / 2 - margin.right),
+                    0 + margin.left)+"px")
+                    .style("top", Math.max(Math.min(this.getBoundingClientRect()
+                        .top - tooltip.offsetHeight - 20,
+                    height + tooltip.offsetHeight - 20), margin.top)+"px")
+                    .style("pointer-events", "none")
+
+                var partyLogo = partyHasLogo.indexOf(d.party) != -1
+                // Show relevant tooltip info
+                tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${colorParty(d.party)};">${d.full_name}</h1>
+                    <div style="display: flex;">
+                    <div class="mp-image-parent" style="flex: 0 0 5rem;">
+                    ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    </div>
+                    <p style="padding-left: 1rem;">${(d[topic_name] * 100).toFixed(2)}% of ${d.full_name}'s time spent on ${topic_name}</p>
+                    </div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
+</div>`
+            }
+
+            function mouseout(d) {
+                d3.select("#tooltip")
+                    .transition()
+                    .delay(2000)
+                    .duration(1000)
+                    .style("opacity", 0)
+            }
+
             function update() {
                 // Get value of topic dropdown
                 topic_name = d3.select("#topic-dropdown")
@@ -178,8 +266,8 @@ d3.queue()
                     .attr("class", "male-node")
                     .style("fill", "red")
                     .attr("r", 1.8)
-                    .on("mouseover", tip.show)
-                    .on("mouseout", tip.hide)
+                    .on("mouseover", mouseover)
+                    .on("mouseout", mouseout)
                     .attr("cx", x(0))
                     .attr("cy", d => d.y)
                     .style("opacity", 0.0)
@@ -209,8 +297,8 @@ d3.queue()
                     .attr("cx", d => d.x)
                     .attr("cy", d => d.y)
                     .attr("r", 1.8)
-                    .on("mouseover", tip.show)
-                    .on("mouseout", tip.hide)
+                    .on("mouseover", mouseover)
+                    .on("mouseout", mouseout)
                     .attr("cx", x(0))
                     .attr("cy", d => d.y)
                     .style("opacity", 0.0)
@@ -309,6 +397,8 @@ d3.queue()
                 .enter()
                 .append("option")
                 .text(d => d)
+
+            d3.select("#topic-dropdown").style("width", "100%")
 
             // Call function initially
             update()
