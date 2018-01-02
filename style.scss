@@ -586,3 +586,10 @@ $tip-padding: 1;
 .women-pct-track {
   stroke: steelblue;
 }
+
+#topic-dropdown {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  z-index: 999;
+}

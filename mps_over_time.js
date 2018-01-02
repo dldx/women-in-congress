@@ -1079,6 +1079,10 @@ function second_slide(no_transition = false) {
     d3.select("#tooltip")
         .style("opacity", 0)
 
+    // Disable all pointer events for canvas
+    canvas.style("pointer-events", "none")
+
+
     // ----------------------------------------------------------------------------
     // █████╗  ██████╗████████╗     ██╗
     // ██╔══██╗██╔════╝╚══██╔══╝    ███║
@@ -1167,12 +1171,25 @@ function second_slide(no_transition = false) {
         }
     }, 1000)
 
+    // ----------------------------------------------------------------------------
+    //  █████╗  ██████╗████████╗    ██████╗
+    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
+    // ███████║██║        ██║        █████╔╝
+    // ██╔══██║██║        ██║        ╚═══██╗
+    // ██║  ██║╚██████╗   ██║       ██████╔╝
+    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚═════╝
+    // HIDE CANVAS
+    // ----------------------------------------------------------------------------
+
     d3.selectAll("#timeline canvas")
         .transition()
         .delay(4000)
         .duration(500)
         .style("opacity", 0)
-        .style("display", "none")
+        .on("end", function() {
+            d3.select(this)
+                .style("display", "none")
+        })
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██╗  ██╗
@@ -1669,10 +1686,11 @@ function third_slide(no_transition = false) {
     var t2 = t1.transition()
         .duration(no_transition ? 1000 : 2000)
 
+    // Start drawing all the other countries, one by one, speeding up as we go along
     var country_on_screen = []
     women_in_govt_paths
         .transition(t2)
-        .delay((d, i) => no_transition ? 0 : (1000 + i * 1000 - Math.pow(i, 1.3) * 100))
+        .delay((d, i) => no_transition ? 0 : (2500 + i * 1000 - Math.pow(i, 1.5) * 100))
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
@@ -2086,6 +2104,10 @@ function to_fifth_slide(current_slide) {
         t0.select("#slide1-group")
             .style("opacity", 0)
             .remove()
+
+        d3.select("#visible-canvas")
+            .transition(t0)
+            .style("opacity", 0)
         break
 
     case 1:
