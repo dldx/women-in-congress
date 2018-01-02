@@ -420,7 +420,7 @@ function initialise_tracker() {
 function initial_render() {
     "use strict"
     // INITIALISE THE X AND Y AXIS SCALES AND RANGES
-    x = d3.scaleTime()
+    x = d3.scaleUtc()
         .domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
         .range([0, width])
 

@@ -4293,6 +4293,10 @@ var time = function() {
   return calendar(year, month, sunday, day, hour, minute, second, millisecond, exports.timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]);
 };
 
+var utcTime = function() {
+  return calendar(utcYear, utcMonth, utcSunday, utcDay, utcHour, utcMinute, second, millisecond, utcFormat).domain([Date.UTC(2000, 0, 1), Date.UTC(2000, 0, 2)]);
+};
+
 var colors = function(s) {
   return s.match(/.{6}/g).map(function(x) {
     return "#" + x;
@@ -8481,6 +8485,7 @@ exports.selectAll = selectAll;
 exports.selection = selection;
 exports.mouse = mouse;
 exports.scaleTime = time;
+exports.scaleUtc = utcTime;
 exports.scaleLinear = linear;
 exports.scaleOrdinal = ordinal;
 exports.schemeCategory20 = category20;
