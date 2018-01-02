@@ -247,29 +247,6 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 
 }
-#holding-div {
-  position: absolute;
-  pointer-events: none;
-  // opacity: 0;
-  display: none;
-  top: 0px;
-  left: 0px;
-}
-
-.line-connect-pre-transition {
-  position: absolute;
-  opacity: .8;
-  stroke-linecap: round;
-  transform: translateZ(0);
-  transform-origin: left;
-}
-  // Transitioning nodes from slide 1 to 2
-  .line-connect-transition {
-    transform: scaleX(.02) !important;
-    opacity: 0;
-    transition: transform 0.5s,
-    opacity .25s 3.5s;
-  }
 $tip-padding: 1;
 
 #slide4,
@@ -516,6 +493,12 @@ $tip-padding: 1;
       }
     }
   }
+}
+
+#slide4 {
+  opacity: 0;
+    transition: opacity 1s linear;
+
 }
 @media screen and (min-height: 500px) {
   .mp-party,

@@ -1708,7 +1708,7 @@ function third_slide(no_transition = false) {
     var country_on_screen = []
     women_in_govt_paths
         .transition(t2)
-        .delay((d, i) => no_transition ? 0 : (2500 + i * 1000 - Math.pow(i, 1.5) * 100))
+        .delay((d, i) => no_transition ? 0 : (2200 + i * 1000 - Math.pow(i, 1.5) * 100))
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
@@ -1908,6 +1908,11 @@ function fourth_slide(no_transition = false) {
     </div>
     <p class="blockquote" id="slide4-speech"></p>
     <svg id="slide4-speech-topic-bar"></svg></div>`)
+
+
+    d3.select("#slide4")
+        .transition()
+        .delay(1000)
         .style("opacity", 1)
 
     // Set width based on header width
