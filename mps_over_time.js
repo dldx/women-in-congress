@@ -748,6 +748,7 @@ function first_slide() {
             var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
             var tooltip_innerHTML = `
                     <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
+                    <div class="body-container">
                 <div class="mp-image-parent">`
 
             if(typeof(mp_base64_data) == "undefined") {
@@ -764,10 +765,13 @@ function first_slide() {
                 }
             }
             tooltip_innerHTML += `</div>
+            <div class="body">
                     <div class="mp-term">${d3.timeFormat("%Y")(nodeData.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(nodeData.term_end)}</div>
-                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
                     <div class="mp-constituency">${nodeData.constituency}</div>
+                    </div>
+                    </div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
                     `
 
@@ -2269,12 +2273,12 @@ function update_fifth_slide(no_transition) {
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
                     <h1 style="background-color: ${colorParty(d.party)};">${d.full_name}</h1>
-                    <div style="display: flex;">
-                    <div class="mp-image-parent" style="flex: 0 0 5rem;">
+                    <div class="body-container">
+                    <div class="mp-image-parent">
                     ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
                     "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
-                    <p style="padding-left: 1rem;">${(d[selected_topic] * 100).toFixed(2)}% of ${d.full_name}'s time spent on ${selected_topic}</p>
+                    <p class="body">${(d[selected_topic] * 100).toFixed(2)}% of ${d.full_name}'s time spent on ${selected_topic}</p>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
