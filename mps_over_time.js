@@ -648,10 +648,10 @@ function first_slide() {
             return x(d.term_start)
         })
         .attr("y1", function (d) {
-            return y(d.stream)
+            return y(0)
         })
         .attr("y2", function (d) {
-            return y(d.stream)
+            return y(0)
         })
         .attr("strokeStyle", function (d) {
             return colorParty(d.party)
@@ -666,7 +666,20 @@ function first_slide() {
             return d.hiddenCol
         })
         .transition()
-        .delay(1000)
+        .delay(function(d, i) {
+            return 500+i*2
+        })
+        .duration(1000)
+        .attr("y1", function (d) {
+            return y(d.stream)
+        })
+        .attr("y2", function (d) {
+            return y(d.stream)
+        })
+        .transition()
+        .delay(function(d, i) {
+            return 200 + i*2
+        })
         .duration(1000)
         .attr("x2", function (d) {
             return x(d.term_end) - lineThickness * 1.2
@@ -705,8 +718,9 @@ function first_slide() {
     // Animate node entrances
     var t = d3.timer((elapsed) => {
         draw(context, false)
-        if(elapsed > 2000) {
+        if(elapsed > 5000) {
             t.stop()
+            draw(context)
             draw(context_hidden, true)
         }
     })
@@ -2108,6 +2122,8 @@ function to_fifth_slide(current_slide) {
         d3.select("#visible-canvas")
             .transition(t0)
             .style("opacity", 0)
+            .style("pointer-events", "none")
+
         break
 
     case 1:
