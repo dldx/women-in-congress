@@ -116,11 +116,14 @@ body {
   position: absolute;
   right: 0;
   top: 0; }
-  #timeline canvas {
-    top: 0;
-    left: 0;
-    position: absolute;
-    pointer-events: none; }
+
+#visible-canvas, #hidden-canvas {
+  top: 0;
+  left: 0;
+  position: absolute; }
+
+#visible-canvas {
+  pointer-events: none; }
 
 .info-bubble {
   fill: #0096db;
@@ -415,10 +418,13 @@ body {
   stroke-linecap: round;
   fill: none; }
 
-.max-mps-path,
+.max-mps-path {
+  stroke: #e5e5e5; }
+
 .total-women-mps-path {
   stroke: #e5e5e5;
-  opacity: 0; }
+  opacity: 0;
+  stroke-dasharray: 0; }
 
 .half-max-mps-path {
   stroke-dasharray: 5,10;

@@ -175,12 +175,15 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   right: 0;
   top: 0;
 
-  canvas {
-    top: 0;
-    left: 0;
-    position: absolute;
-    pointer-events: none;
-  }
+}
+#visible-canvas, #hidden-canvas {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+#hidden-canvas {
+  display: none;
+  pointer-events: none;
 }
 
 .info-bubble {

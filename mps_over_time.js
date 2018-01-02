@@ -73,19 +73,37 @@ var timeline = document.getElementById("timeline")
 var svg = d3.select(timeline)
     .append("svg")
 
+// Add a canvas above the svg
 var canvas = d3.select(timeline)
     .append("canvas")
+    .attr("id", "visible-canvas")
 
 var context = canvas
     .node()
     .getContext("2d")
 
+// Add a hidden canvas to catch mouseover events
+var canvas_hidden = d3.select(timeline)
+    .append("canvas")
+    .attr("id", "hidden-canvas")
+
+var context_hidden = canvas_hidden
+    .node()
+    .getContext("2d")
+
+// Create an in memory only element of type 'custom'
+var detachedContainer = document.createElement("custom")
+
+// Create a d3 selection for the detached container. We won't
+// actually be attaching it to the DOM.
+var dataContainer = d3.select(detachedContainer)
 
 var width = 0,
     height = 0
 
 var ratio,
     clippedArea,
+    colourToNode,
     electionRects,
     zoom,
     wrapper,
@@ -155,6 +173,27 @@ function colorParty(party) {
     return colors.Other
 }
 
+
+// ----------------------------------------------------------------------------
+// GENERATES A UNIQUE COLOUR EVERY TIME THIS FUNCTION IS CALLED
+// USED FOR MAPPING CANVAS INTERACTIONS TO NODES
+// ----------------------------------------------------------------------------
+var nextCol = 1
+function genColor(){
+
+    var ret = []
+    if(nextCol < 16777215){
+
+        ret.push(nextCol & 0xff) // R
+        ret.push((nextCol & 0xff00) >> 8) // G
+        ret.push((nextCol & 0xff0000) >> 16) // B
+        nextCol += 1
+
+    }
+    var col = "rgb(" + ret.join(",") + ")"
+    return col
+}
+
 // ----------------------------------------------------------------------------
 // FORMAT DATE AS Jan 2016
 // ----------------------------------------------------------------------------
@@ -177,13 +216,13 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 function reset_zoom(callback, current_slide) {
     "use strict"
-    svg.transition()
+    canvas.transition()
         .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
         .on("end", () => {
             zoomedArea.attr("transform", null)
             zoom.on("zoom", null)
-            svg.on("wheel.zoom", null)
+            canvas.on("wheel.zoom", null)
                 .on("wheel.zoom", null)
                 .on("mousedown.zoom", null)
                 .on("dblclick.zoom", null)
@@ -224,7 +263,8 @@ function update_state() {
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
-            svg.call(zoom)
+            // svg.call(zoom)
+            canvas.call(zoom)
             to_first_slide(current_slide)
         }
         current_slide = new_slide
@@ -470,8 +510,8 @@ function initial_render() {
     zoom = d3.zoom()
         .scaleExtent([0.95, 40])
         .on("zoom", zoomed)
-    svg.call(zoom)
-    // canvas.call(zoom)
+    // svg.call(zoom)
+    canvas.call(zoom)
 
 }
 
@@ -482,11 +522,21 @@ function zoomed() {
     "use strict"
     let transform = d3.event.transform
     zoomedArea.attr("transform", transform)
+    // Scale the canvas
     context.save()
     context.translate(transform.x, transform.y)
     context.scale(transform.k, transform.k)
-    draw()
+    draw(context, false)
     context.restore()
+
+    // And do the same for the hidden canvas
+    context_hidden.save()
+    context_hidden.translate(transform.x, transform.y)
+    context_hidden.scale(transform.k, transform.k)
+    draw(context_hidden, true)
+    context_hidden.restore()
+
+    // And the svg axes
     gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
     gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
 }
@@ -570,27 +620,20 @@ function first_slide() {
     pointsGroup = zoomedArea
         .append("g")
         .attr("id", "slide1-group")
+
     // Add a group to contain each data point and bind to timeline data
-    instance = pointsGroup
-        .selectAll("g")
+    instance = dataContainer
+        .selectAll("custom.line")
         .data(mps_over_time_data)
-        .enter()
-        .append("g")
+
+    // Map to track the colour of nodes.
+    colourToNode = {}
 
     // Add a line connecting start and end of term
     instance
-        .append("line")
-        .attr("class", "line-connect")
-        .style("stroke-width", lineThickness)
-
-    // Use a hidden rect to catch mouseovers more easily (similar to voronoi mouseover grid)
-    instance
-        .append("rect")
-        .attr("class", "hover-rect")
-        .style("opacity", 0)
-
-    // For each MP line, set position and stroke colour
-    instance.selectAll(".line-connect")
+        .enter()
+        .append("custom")
+        .attr("class", "line")
         .attr("x1", function (d) {
             return x(d.term_start)
         })
@@ -603,77 +646,99 @@ function first_slide() {
         .attr("y2", function (d) {
             return y(d.stream)
         })
-        .attr("stroke", function (d) {
+        .attr("strokeStyle", function (d) {
             return colorParty(d.party)
-        }) // Need to set origins manually because of bug
-        // .style("transform-origin", function (d) {
-        //     return x(d.term_start) + "px " + y(d.stream) + "px"
-        // })
-    // .style("will-change", "transform")
-    var holding_html = ""
+        })
+        .attr("hiddenStrokeStyle", function (d) {
+            if (!d.hiddenCol) {
+                d.hiddenCol = genColor()
+                colourToNode[d.hiddenCol] = d
+            }
+            // Here you (1) add a unique colour as property to each element
+            // and(2) map the colour to the node in the colourToNode-map.
+            return d.hiddenCol
+        })
 
-    pointsGroup
-        .selectAll(".line-connect")
-        .each(function (d) {
-            let position = this.getBoundingClientRect()
-            holding_html += `
-<div class="line-connect-pre-transition" style="left: ${position.left}px; top: ${position.top}px;">
-<svg height="${lineThickness}" width="${x(d.term_end) - x(d.term_start)}" style="overflow: visible;">
-<line x1=0 x2="${this.getAttribute("x2") - this.getAttribute("x1")}" y1=0 y2=0 stroke="${this.getAttribute("stroke")}" style="stroke-width: ${lineThickness}px;"></line>
-</svg></div>
-`
-        })
-    document.body.insertAdjacentHTML("beforeend", "<div id=\"holding-div\">" + holding_html + "</div>")
-    // document.body.appendChild(holding_div)
+    context.scale(ratio, ratio)
+    context.translate(margin.left, margin.top)
+    context.rect(0,0,width,height)
+    context.clip()
 
-    // For each hidden rectangle belonging to a point, set position and size
-    // so that it covers the space between points
-    instance.selectAll(".hover-rect")
-        .attr("x", function (d) {
-            return x(d.term_start) - circleRadius / 2
+    context_hidden.scale(ratio, ratio)
+    context_hidden.translate(margin.left, margin.top)
+    context_hidden.rect(0,0,width,height)
+    context_hidden.clip()
+
+    window.draw = function(context, hidden=false) {
+        context.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
+
+        dataContainer.selectAll("custom.line").each(function(){
+            let node = d3.select(this)
+            context.beginPath()
+            context.lineWidth = hidden ? lineThickness * 1.3 : lineThickness
+            context.strokeStyle = hidden ? node.attr("hiddenStrokeStyle") : node.attr("strokeStyle")
+            if(!hidden) {
+                context.lineCap="round"
+                context.moveTo(node.attr("x1"),node.attr("y1"))
+                context.lineTo(node.attr("x2"),node.attr("y2"))
+            } else {
+                context.moveTo(node.attr("x1") - circleRadius,node.attr("y1"))
+                context.lineTo(+node.attr("x2") + circleRadius,node.attr("y2"))
+            }
+            context.stroke()
         })
-        .attr("y", function (d) {
-            return y(d.stream) - (y(1) - y(2)) / 2
-        })
-        .attr("width", function (d) {
-            return x(d.term_end) - x(d.term_start) + circleRadius
-        })
-        .attr("height", y(1) - y(2)) // height of rectangle is one unit of the y axis
+    }
+
+    draw(context, false)
+    draw(context_hidden, true)
 
     // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
-    function mpMouseover(d) {
+    function mpMouseover() {
+
+        // Get mouse positions from the main canvas.
+        var mousePos = d3.mouse(this)
+
+        // Pick the colour from the mouse position.
+        context_hidden.save()
+        var col = context_hidden.getImageData(mousePos[0]*ratio, mousePos[1]*ratio, 1, 1).data
+        context_hidden.restore()
+        // Then stringify the values in a way our map-object can read it.
+        var colKey = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")"
+        // Get the data from our map!
+        var nodeData = colourToNode[colKey]
+
         // Only show mouseover if MP is in toggled party or if no party is filtered
-        if (partyToggled == false || d.party == partyToggled) {
+        if (partyToggled == false || nodeData.party == partyToggled) {
             d3.select(this)
                 .moveToFront()
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
-            var partyLogo = partyHasLogo.indexOf(d.party) != -1
+            var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
             tooltip.innerHTML = `
-                    <h1 style="background-color: ${colorParty(d.party)};">${d.name}</h1>
+                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
                     <div class="mp-image-parent">
-                    ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;nodeData.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
-                    <div class="mp-term">${d3.timeFormat("%Y")(d.term_start)} &rarr; \
-                    ${d3.timeFormat("%Y")(d.term_end)}</div>
-                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
-                    <div class="mp-constituency">${d.constituency}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
+                    <div class="mp-term">${d3.timeFormat("%Y")(nodeData.term_start)} &rarr; \
+                    ${d3.timeFormat("%Y")(nodeData.term_end)}</div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
+                    <div class="mp-constituency">${nodeData.constituency}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
                     `
 
-            // Increase line thickness of all terms of the same MP
-            pointsGroup
-                .selectAll(".line-connect")
-                .classed("hover", function (a) {
-                    return (d.clean_name == a.clean_name)
-                })
+            // // Increase line thickness of all terms of the same MP
+            // pointsGroup
+            //     .selectAll(".line-connect")
+            //     .classed("hover", function (a) {
+            //         return (d.clean_name == a.clean_name)
+            //     })
         }
         d3.event.preventDefault()
     }
-    instance
-        .on("mouseover", mpMouseover)
+    canvas
+        .on("mousemove", mpMouseover)
         // On mouse out, change everything back
         .on("mouseout", function () {
             pointsGroup
@@ -837,7 +902,8 @@ function second_slide(no_transition = false) {
     d3.select("#slide1-group")
         .remove()
 
-    d3.select("#holding-div").remove()
+    d3.select("#holding-div")
+        .remove()
     // .style("display", "unset")
     // Remove elements from this slide if already created
     d3.select("#slide2-group")
@@ -1061,31 +1127,31 @@ function second_slide(no_transition = false) {
         .context(context)
 
 
-    context.globalCompositeOperation="copy"
-    context.scale(ratio, ratio)
-    context.translate(margin.left, margin.top)
+    context.globalCompositeOperation = "copy"
 
-    context.lineWidth = 1.5*lineThickness
+    context.lineWidth = 1.5 * lineThickness
     context.strokeStyle = "#CDCDCD"
-    const path_len = total_women_mps_path.node().getTotalLength()
+    const path_len = total_women_mps_path.node()
+        .getTotalLength()
     context.setLineDash([path_len])
     const ease = d3.easeCubic
-    let t = d3.timer(function(elapsed) {
-        const frac = ease(elapsed/3000)*path_len
+    let t = d3.timer(function (elapsed) {
+        const frac = ease(elapsed / 3000) * path_len
         // const fraction_complete = parseInt(frac * 206)
-        total_women_mps_line_canvas(number_women_over_time_data)//.slice(0,fraction_complete))
-        context.lineDashOffset = -(frac+path_len)
+        total_women_mps_line_canvas(number_women_over_time_data) //.slice(0,fraction_complete))
+        context.lineDashOffset = -(frac + path_len)
         context.stroke()
 
         if (elapsed > 3000) {
             t.stop()
         }
     }, 1000)
-    d3.select("#timeline canvas")
+    d3.selectAll("#timeline canvas")
         .transition()
         .delay(4000)
         .duration(200)
         .style("opacity", 0)
+        .style("display", "none")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██╗  ██╗
@@ -1138,7 +1204,7 @@ function second_slide(no_transition = false) {
 
     total_women_mps_path
         .transition()
-        .delay(no_transition ? 0 : 5500+750)
+        .delay(no_transition ? 0 : 5500 + 750)
         .duration(0)
         .attr("d", total_women_mps_line)
         .style("opacity", 1)
@@ -2511,7 +2577,8 @@ download_data()
 
 function getRetinaRatio() {
     var devicePixelRatio = window.devicePixelRatio || 1
-    var c = document.createElement("canvas").getContext("2d")
+    var c = document.createElement("canvas")
+        .getContext("2d")
     var backingStoreRatio = [
         c.webkitBackingStorePixelRatio,
         c.mozBackingStorePixelRatio,
@@ -2519,7 +2586,7 @@ function getRetinaRatio() {
         c.oBackingStorePixelRatio,
         c.backingStorePixelRatio,
         1
-    ].reduce(function(a, b) { return a || b })
+    ].reduce(function (a, b) { return a || b })
 
     return devicePixelRatio / backingStoreRatio
 }
@@ -2556,11 +2623,28 @@ function draw_graph() {
             .attr("height", height + margin.top + margin.bottom)
 
 
+        // Scale the canvas correctly
         ratio = getRetinaRatio()
         context.scale(ratio, ratio)
+        context.translate(margin.left, margin.top)
+
         canvas
-            .attr("width", ratio*(width + margin.left + margin.right))
-            .attr("height",ratio*(height + margin.top + margin.bottom))
+            .attr("width", ratio * (width + margin.left + margin.right))
+            .attr("height", ratio * (height + margin.top + margin.bottom))
+            // .attr("width", (width + margin.left + margin.right))
+            // .attr("height", (height + margin.top + margin.bottom))
+            .style("width", (width + margin.left + margin.right))
+            .style("height", (height + margin.top + margin.bottom))
+
+        // And do the same for the hidden canvas
+        context_hidden.scale(ratio, ratio)
+        context_hidden.translate(margin.left, margin.top)
+
+        canvas_hidden
+            .attr("width", ratio * (width + margin.left + margin.right))
+            .attr("height", ratio * (height + margin.top + margin.bottom))
+            // .attr("width", (width + margin.left + margin.right))
+            // .attr("height", (height + margin.top + margin.bottom))
             .style("width", (width + margin.left + margin.right))
             .style("height", (height + margin.top + margin.bottom))
 

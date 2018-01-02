@@ -1,6 +1,6 @@
 export { queue } from "d3-queue"
 export { csv, json } from "d3-request"
-export { select, selectAll, selection, event } from "d3-selection"
+export { select, selectAll, selection, event, mouse } from "d3-selection"
 export { scaleTime, scaleLinear, scaleOrdinal, schemeCategory20 } from "d3-scale"
 export { pie, area, line, arc, curveBasis, curveCardinal, curveBundle, stack } from "d3-shape"
 export { interpolate } from "d3-interpolate"
