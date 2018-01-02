@@ -2269,11 +2269,13 @@ function update_fifth_slide(no_transition) {
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
                     <h1 style="background-color: ${colorParty(d.party)};">${d.full_name}</h1>
-                    <div class="mp-image-parent">
+                    <div style="display: flex;">
+                    <div class="mp-image-parent" style="flex: 0 0 5rem;">
                     ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
                     "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
-                    <p>${d[selected_topic].toFixed(2)}</p>
+                    <p style="padding-left: 1rem;">${(d[selected_topic] * 100).toFixed(2)}% of ${d.full_name}'s time spent on ${selected_topic}</p>
+                    </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
 </div>`
