@@ -709,24 +709,36 @@ function first_slide() {
 
         // Only show mouseover if MP is in toggled party or if no party is filtered
         if (partyToggled == false || nodeData.party == partyToggled) {
-            d3.select(this)
-                .moveToFront()
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
             var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
-            tooltip.innerHTML = `
+            var tooltip_innerHTML = `
                     <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
-                    <div class="mp-image-parent">
-                    ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;nodeData.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
-                    </div>
+                <div class="mp-image-parent">`
+
+            if(typeof(mp_base64_data) == "undefined") {
+                tooltip_innerHTML += `<img class="mp-image-blurred" style="opacity: 0;"/>
+                <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" />
+                `
+
+            } else {
+                // If mp has a photo
+                if(typeof(mp_base64_data[nodeData.id]) !== "undefined") {
+                    tooltip_innerHTML += `<img class="mp-image-blurred" src="data:image/jpeg;base64, ${mp_base64_data[nodeData.id]}"/>
+                <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
+                `
+                }
+            }
+            tooltip_innerHTML += `</div>
                     <div class="mp-term">${d3.timeFormat("%Y")(nodeData.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(nodeData.term_end)}</div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
                     <div class="mp-constituency">${nodeData.constituency}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
                     `
+
+            tooltip.innerHTML = tooltip_innerHTML
 
             // // Increase line thickness of all terms of the same MP
             // pointsGroup
