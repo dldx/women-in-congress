@@ -524,6 +524,7 @@ function zoomed() {
     zoomedArea.attr("transform", transform)
     // Scale the canvas
     context.save()
+    context.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
     context.translate(transform.x, transform.y)
     context.scale(transform.k, transform.k)
     draw(context, false)
@@ -531,6 +532,7 @@ function zoomed() {
 
     // And do the same for the hidden canvas
     context_hidden.save()
+    context_hidden.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
     context_hidden.translate(transform.x, transform.y)
     context_hidden.scale(transform.k, transform.k)
     draw(context_hidden, true)
@@ -631,6 +633,11 @@ function first_slide() {
 
     // Add a line connecting start and end of term
     instance
+        .attr("x2", function (d) {
+            return x(d.term_end) - lineThickness * 1.2
+        })
+
+    instance
         .enter()
         .append("custom")
         .attr("class", "line")
@@ -638,7 +645,7 @@ function first_slide() {
             return x(d.term_start)
         })
         .attr("x2", function (d) {
-            return x(d.term_end) - lineThickness * 1.2
+            return x(d.term_start)
         })
         .attr("y1", function (d) {
             return y(d.stream)
@@ -657,6 +664,12 @@ function first_slide() {
             // Here you (1) add a unique colour as property to each element
             // and(2) map the colour to the node in the colourToNode-map.
             return d.hiddenCol
+        })
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .attr("x2", function (d) {
+            return x(d.term_end) - lineThickness * 1.2
         })
 
     context.scale(ratio, ratio)
@@ -689,12 +702,18 @@ function first_slide() {
         })
     }
 
-    draw(context, false)
-    draw(context_hidden, true)
+    // Animate node entrances
+    var t = d3.timer((elapsed) => {
+        draw(context, false)
+        if(elapsed > 2000) {
+            t.stop()
+            draw(context_hidden, true)
+        }
+    })
+    // Draw hidden canvas nodes to catch interactions
 
-    // Each group includes the start and end cirles, line inbetween and the hidden hover rectangle
+    // mouseover function for getting MP info
     function mpMouseover() {
-
         // Get mouse positions from the main canvas.
         var mousePos = d3.mouse(this)
 
@@ -708,7 +727,7 @@ function first_slide() {
         var nodeData = colourToNode[colKey]
 
         // Only show mouseover if MP is in toggled party or if no party is filtered
-        if (partyToggled == false || nodeData.party == partyToggled) {
+        if (typeof(nodeData) !== "undefined") {
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
@@ -1068,6 +1087,7 @@ function second_slide(no_transition = false) {
     // ██║  ██║╚██████╗   ██║        ██║
     // ╚═╝  ╚═╝ ╚═════╝   ╚═╝        ╚═╝
     // SQUASH CONNECTING LINE AND TERM END CIRCLE INTO TERM START CIRCLE
+    // MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
     // ----------------------------------------------------------------------------
 
     // Create a bisector method to find the nearest point in the total mp data
@@ -1076,10 +1096,31 @@ function second_slide(no_transition = false) {
     })
         .left
 
-    // Using CSS transitions here because it's much faster
-    d3
-        .selectAll(".line-connect-pre-transition")
-        .classed("line-connect-transition", true)
+    // Change length to 0
+    dataContainer.selectAll("custom.line")
+        .transition()
+        // .delay(no_transition ? 500 : 0)
+        .duration(no_transition ? 0 : 500)
+        .attr("x2", function (a) {
+            return x(a.term_start) + circleRadius
+        })
+        .transition()
+        .duration(500)
+        .attr("y1", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+        .attr("y2", function (a) {
+            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+        })
+
+    // Animate line squashing
+    var t_ = d3.timer((elapsed) => {
+        // console.log(elapsed)
+        draw(context, false)
+        if(elapsed > 1000) {
+            t_.stop()
+        }
+    })
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1088,42 +1129,8 @@ function second_slide(no_transition = false) {
     // ██╔══██║██║        ██║       ██╔═══╝
     // ██║  ██║╚██████╗   ██║       ███████╗
     // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝
-    // MOVE CIRCLES TO NEAREST POINT ON TOTAL WOMEN MP LINE
-    // ----------------------------------------------------------------------------
-    // pointsGroup.selectAll("g")
-    //     .style("transition", "transform 0.5s 0.5s")
-    //     .style("transform", function (a) {
-    //         return `translateY(${y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)-y(a.stream)}px)`
-    //     })
-    // .attr("y2", function (a) {
-    //     return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-    // })
-    // .transition()
-    // .delay(no_transition ? 0 : 2000)
-    // .duration(no_transition ? 0 : 250)
-    // .style("opacity", 0)
-
-
-    // ----------------------------------------------------------------------------
-    //  █████╗  ██████╗████████╗    ██████╗
-    // ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗
-    // ███████║██║        ██║        █████╔╝
-    // ██╔══██║██║        ██║        ╚═══██╗
-    // ██║  ██║╚██████╗   ██║       ██████╔╝
-    // ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚═════╝
     // DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
     // ----------------------------------------------------------------------------
-    // total_women_mps_path
-    //     .classed("transition", true)
-    // total_women_mps_path
-    //     .transition()
-    //     .delay(no_transition ? 0 : 1000)
-    //     .ease(d3.easeCubic)
-    //     .duration(no_transition ? 0 : 3000)
-    //     .attr("st
-    // path_node.style.transition = "stroke-dashoffset 3s ease-in-out 1s"
-    // path_node.style.strokeDashoffset = "0"
-
 
     let y_canvas = d3.scaleLinear()
         .domain([0, 210]) // Almost 210 MPs by 2020
@@ -1138,11 +1145,12 @@ function second_slide(no_transition = false) {
         .curve(d3.curveBasis)
         .context(context)
 
+    d3.timeout(() => {
+        // context.globalCompositeOperation = "copy"
+        context.lineWidth = 1.5 * lineThickness
+        context.strokeStyle = "#CDCDCD"
+    }, 1000)
 
-    context.globalCompositeOperation = "copy"
-
-    context.lineWidth = 1.5 * lineThickness
-    context.strokeStyle = "#CDCDCD"
     const path_len = total_women_mps_path.node()
         .getTotalLength()
     context.setLineDash([path_len])
@@ -1158,10 +1166,11 @@ function second_slide(no_transition = false) {
             t.stop()
         }
     }, 1000)
+
     d3.selectAll("#timeline canvas")
         .transition()
         .delay(4000)
-        .duration(200)
+        .duration(500)
         .style("opacity", 0)
         .style("display", "none")
 
@@ -2487,6 +2496,15 @@ function download_data() {
                 base64: d.base64
             }
         })
+        .await(function (error, mp_base64) {
+            // Turn d3 array into a pythonic dictionary
+            mp_base64_data = {}
+            for (var i = 0; i < mp_base64.length; i++) {
+                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
+            }
+        })
+
+    d3.queue()
         .defer(d3.csv, "women_in_govt.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
@@ -2510,13 +2528,7 @@ function download_data() {
                     female: Math.pow(10, +d.female)
                 }
             })
-        .await(function (error, mp_base64, women_in_govt, speech_samples, baked_mp_positions, mp_topics, topic_medians) {
-            // Turn d3 array into a pythonic dictionary
-            mp_base64_data = {}
-            for (var i = 0; i < mp_base64.length; i++) {
-                mp_base64_data[mp_base64[i].id] = mp_base64[i].base64
-            }
-
+        .await(function (error, women_in_govt, speech_samples, baked_mp_positions, mp_topics, topic_medians) {
             // Group stats by country
             women_in_govt_data = d3.nest()
                 .key(d => d.country)
