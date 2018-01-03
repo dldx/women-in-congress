@@ -179,10 +179,11 @@ function colorParty(party) {
 // USED FOR MAPPING CANVAS INTERACTIONS TO NODES
 // ----------------------------------------------------------------------------
 var nextCol = 1
-function genColor(){
+
+function genColor() {
 
     var ret = []
-    if(nextCol < 16777215){
+    if (nextCol < 16777215) {
 
         ret.push(nextCol & 0xff) // R
         ret.push((nextCol & 0xff00) >> 8) // G
@@ -193,6 +194,21 @@ function genColor(){
     var col = "rgb(" + ret.join(",") + ")"
     return col
 }
+// ----------------------------------------------------------------------------
+// CONVERT HEX TO RGBA
+// ----------------------------------------------------------------------------
+function hexToRGBA(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16)
+
+    if (alpha) {
+        return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")"
+    } else {
+        return "rgb(" + r + ", " + g + ", " + b + ")"
+    }
+}
+
 
 // ----------------------------------------------------------------------------
 // FORMAT DATE AS Jan 2016
@@ -521,10 +537,10 @@ function initial_render() {
 function zoomed() {
     "use strict"
     let transform = d3.event.transform
-    zoomedArea.attr("transform", transform)
+    if (current_slide == 0) zoomedArea.attr("transform", transform)
     // Scale the canvas
     context.save()
-    context.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
+    context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
     context.translate(transform.x, transform.y)
     context.scale(transform.k, transform.k)
     draw(context, false)
@@ -532,15 +548,23 @@ function zoomed() {
 
     // And do the same for the hidden canvas
     context_hidden.save()
-    context_hidden.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
+    context_hidden.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
     context_hidden.translate(transform.x, transform.y)
     context_hidden.scale(transform.k, transform.k)
     draw(context_hidden, true)
     context_hidden.restore()
 
     // And the svg axes
-    gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
-    gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
+    if (current_slide == 0) {
+        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
+    } else {
+        d3.event.transform.rescaleX(x)
+    }
+    if (current_slide == 0) {
+        gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
+    } else {
+        d3.event.transform.rescaleY(y)
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -666,8 +690,8 @@ function first_slide() {
             return d.hiddenCol
         })
         .transition()
-        .delay(function(d, i) {
-            return 500+i*2
+        .delay(function (d, i) {
+            return 500 + i * 2
         })
         .duration(1000)
         .attr("y1", function (d) {
@@ -677,8 +701,8 @@ function first_slide() {
             return y(d.stream)
         })
         .transition()
-        .delay(function(d, i) {
-            return 200 + i*2
+        .delay(function (d, i) {
+            return 200 + i * 2
         })
         .duration(1000)
         .attr("x2", function (d) {
@@ -687,44 +711,45 @@ function first_slide() {
 
     context.scale(ratio, ratio)
     context.translate(margin.left, margin.top)
-    context.rect(0,0,width,height)
+    context.rect(0, 0, width, height)
     context.clip()
 
     context_hidden.scale(ratio, ratio)
     context_hidden.translate(margin.left, margin.top)
-    context_hidden.rect(0,0,width,height)
+    context_hidden.rect(0, 0, width, height)
     context_hidden.clip()
 
-    window.draw = function(context, hidden=false) {
-        context.clearRect(0, 0, width+margin.left+margin.right, height+margin.bottom+margin.top)
+    window.draw = function (context, hidden = false) {
+        context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
 
-        dataContainer.selectAll("custom.line").each(function(){
-            let node = d3.select(this)
-            context.beginPath()
-            context.lineWidth = hidden ? lineThickness * 1.3 : lineThickness
-            context.strokeStyle = hidden ? node.attr("hiddenStrokeStyle") : node.attr("strokeStyle")
-            if(!hidden) {
-                context.lineCap="round"
-                context.moveTo(node.attr("x1"),node.attr("y1"))
-                context.lineTo(node.attr("x2"),node.attr("y2"))
-            } else {
-                context.moveTo(node.attr("x1") - circleRadius,node.attr("y1"))
-                context.lineTo(+node.attr("x2") + circleRadius,node.attr("y2"))
-            }
-            context.stroke()
-        })
+        dataContainer.selectAll("custom.line")
+            .each(function () {
+                let node = d3.select(this)
+                context.beginPath()
+                context.lineWidth = hidden ? lineThickness * 1.3 : lineThickness
+                context.strokeStyle = hidden ? node.attr("hiddenStrokeStyle") : node.attr("strokeStyle")
+                if (!hidden) {
+                    context.lineCap = "round"
+                    context.moveTo(node.attr("x1"), node.attr("y1"))
+                    context.lineTo(node.attr("x2"), node.attr("y2"))
+                } else {
+                    context.moveTo(node.attr("x1") - circleRadius, node.attr("y1"))
+                    context.lineTo(+node.attr("x2") + circleRadius, node.attr("y2"))
+                }
+                context.stroke()
+            })
     }
 
     // Animate node entrances
     var t = d3.timer((elapsed) => {
         draw(context, false)
-        if(elapsed > 5000) {
+        if (elapsed > 5000) {
             t.stop()
             draw(context)
+            // Draw hidden canvas nodes to catch interactions
             draw(context_hidden, true)
         }
     })
-    // Draw hidden canvas nodes to catch interactions
 
     // mouseover function for getting MP info
     function mpMouseover() {
@@ -733,7 +758,8 @@ function first_slide() {
 
         // Pick the colour from the mouse position.
         context_hidden.save()
-        var col = context_hidden.getImageData(mousePos[0]*ratio, mousePos[1]*ratio, 1, 1).data
+        var col = context_hidden.getImageData(mousePos[0] * ratio, mousePos[1] * ratio, 1, 1)
+            .data
         context_hidden.restore()
         // Then stringify the values in a way our map-object can read it.
         var colKey = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")"
@@ -741,24 +767,30 @@ function first_slide() {
         var nodeData = colourToNode[colKey]
 
         // Only show mouseover if MP is in toggled party or if no party is filtered
-        if (typeof(nodeData) !== "undefined") {
+        if (typeof (nodeData) !== "undefined") {
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
+                .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                    width - tooltip.offsetWidth / 2 - margin.right),
+                0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                    height + tooltip.offsetHeight - 20), margin.top)}px)`)
+                .style("pointer-events", "none")
+
             var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
             var tooltip_innerHTML = `
                     <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
                     <div class="body-container">
                 <div class="mp-image-parent">`
 
-            if(typeof(mp_base64_data) == "undefined") {
+            if (typeof (mp_base64_data) == "undefined") {
                 tooltip_innerHTML += `<img class="mp-image-blurred" style="opacity: 0;"/>
                 <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" />
                 `
 
             } else {
                 // If mp has a photo
-                if(typeof(mp_base64_data[nodeData.id]) !== "undefined") {
+                if (typeof (mp_base64_data[nodeData.id]) !== "undefined") {
                     tooltip_innerHTML += `<img class="mp-image-blurred" src="data:image/jpeg;base64, ${mp_base64_data[nodeData.id]}"/>
                 <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
                 `
@@ -789,36 +821,7 @@ function first_slide() {
     canvas
         .on("mousemove", mpMouseover)
         // On mouse out, change everything back
-        .on("mouseout", function () {
-            pointsGroup
-                .selectAll("g")
-            // .style("opacity", function (a) {
-            //     if (partyToggled != false) {
-            //         return (a.party == partyToggled) ? 1.0 : 0.1
-            //     } else {
-            //         return 1.0
-            //     }
-            // })
-            pointsGroup
-                .selectAll(".line-connect")
-                .classed("hover", false)
-        })
         .on("touchend", mpMouseover)
-        // When an MP point is clicked, toggle show all MPs from the same party and hide the rest
-        .on("mousedown", function (d) {
-            if (partyToggled == false) {
-                // Store toggled party
-                partyToggled = d.party
-            } else {
-                partyToggled = false
-            }
-            pointsGroup.selectAll("g")
-                .style("opacity", function (a) {
-                    return (d.party == a.party) ? 1.0 : ((partyToggled == false) ? 1.0 : 0.1)
-                })
-                .moveToFront()
-            d3.event.preventDefault()
-        })
 
     // Exit
     instance
@@ -1139,7 +1142,7 @@ function second_slide(no_transition = false) {
     var t_ = d3.timer((elapsed) => {
         // console.log(elapsed)
         draw(context, false)
-        if(elapsed > 1000) {
+        if (elapsed > 1000) {
             t_.stop()
         }
     })
@@ -1204,7 +1207,7 @@ function second_slide(no_transition = false) {
         .delay(4000)
         .duration(500)
         .style("opacity", 0)
-        .on("end", function() {
+        .on("end", function () {
             d3.select(this)
                 .style("display", "none")
         })
@@ -1361,8 +1364,17 @@ function second_slide(no_transition = false) {
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
+                    // Get mouse positions
+                    var mousePos = d3.mouse(this)
+
                     d3.select("#tooltip")
                         .style("opacity", 1)
+                        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                            width - tooltip.offsetWidth / 2 - margin.right),
+                        0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                            height + tooltip.offsetHeight - 20), margin.top)}px)`)
+                        .style("pointer-events", "none")
+
                     d3.select(this)
                         .classed("hover", true)
                     // Reconfigure tooltip to show different information
@@ -1458,8 +1470,17 @@ function second_slide(no_transition = false) {
                         .ease(d3.easeBounce)
                         .attr("r", 10 * circleRadius)
 
+                    // Get mouse positions
+                    var mousePos = d3.mouse(this)
+
                     d3.select("#tooltip")
                         .style("opacity", 1)
+                        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                            width - tooltip.offsetWidth / 2 - margin.right),
+                        0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                            height + tooltip.offsetHeight - 20), margin.top)}px)`)
+                        .style("pointer-events", "none")
+
                     // Show relevant tooltip info
                     tooltip.innerHTML = `
                             <div class="info-bubble-tip">
@@ -1717,6 +1738,7 @@ function third_slide(no_transition = false) {
             if (current_slide == 2) {
                 d3.select("#tooltip")
                     .style("opacity", 1)
+
                 // Show relevant tooltip info
                 var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
                 tooltip.innerHTML = `
@@ -1768,8 +1790,16 @@ function third_slide(no_transition = false) {
     function mouseover(d) {
         // If country line is on screen, then enable mouseover
         if (country_on_screen.indexOf(d.data.country) > -1) {
+            // Get mouse positions
+            var mousePos = d3.mouse(this)
+
             d3.select("#tooltip")
                 .style("opacity", 1)
+                .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                    width - tooltip.offsetWidth / 2 - margin.right),
+                0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                    height + tooltip.offsetHeight - 20), margin.top)}px)`)
+                .style("pointer-events", "none")
             // Show relevant tooltip info
             var gender_ratio = 100 / d.data.women_pct - 1
             tooltip.innerHTML = `
@@ -2128,11 +2158,6 @@ function to_fifth_slide(current_slide) {
             .style("opacity", 0)
             .remove()
 
-        d3.select("#visible-canvas")
-            .transition(t0)
-            .style("opacity", 0)
-            .style("pointer-events", "none")
-
         break
 
     case 1:
@@ -2159,6 +2184,13 @@ function to_fifth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () { this.innerHTML = "" })
+
+    // Enable canvas
+    d3.select("#visible-canvas")
+        .style("opacity", 1)
+        .style("display", null)
+        .style("pointer-events", "all")
+
 
     d3.select("#slide4")
         .transition(t0)
@@ -2235,12 +2267,15 @@ function fifth_slide(no_transition = false) {
         .attr("id", "slide5-group")
     // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
     // .attr("transform", "scale(" + width/1900 + ")")
+
+    // Map to track the colour of nodes.
+    colourToNode = {}
+    update_fifth_slide(no_transition, initial = true)
     // Call function initially
-    update_fifth_slide(no_transition)
 
 }
 
-function update_fifth_slide(no_transition) {
+function update_fifth_slide(no_transition, initial = false) {
     // Get value of topic dropdown
     selected_topic = d3.select("#topic-dropdown")
         .property("value")
@@ -2259,48 +2294,10 @@ function update_fifth_slide(no_transition) {
         d.y = slide5_yScale(n.y)
     })
 
-    function mouseover(d) {
-        d3.select("#tooltip")
-            .transition()
-            .duration(0)
-            .style("opacity", 1)
-            .style("left", Math.max(Math.min(this.getBoundingClientRect()
-                .left - tooltip.offsetWidth / 2,
-            width - tooltip.offsetWidth / 2 - margin.right),
-            0 + margin.left))
-            .style("top", Math.max(Math.min(this.getBoundingClientRect()
-                .top - tooltip.offsetHeight - 20,
-            height + tooltip.offsetHeight - 20), margin.top))
-            .style("pointer-events", "none")
-
-        var partyLogo = partyHasLogo.indexOf(d.party) != -1
-        // Show relevant tooltip info
-        tooltip.innerHTML = `
-                            <div class="slide5-tooltip">
-                    <h1 style="background-color: ${colorParty(d.party)};">${d.full_name}</h1>
-                    <div class="body-container">
-                    <div class="mp-image-parent">
-                    ${typeof mp_base64_data[d.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[d.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + d.id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
-                    </div>
-                    <p class="body">${(d[selected_topic] * 100).toFixed(2)}% of ${d.full_name}'s time spent on ${selected_topic}</p>
-                    </div>
-                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${d.party}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${d.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${d.party}.svg"/>` : ""}
-</div>`
-    }
-
-    function mouseout(d) {
-        d3.select("#tooltip")
-            .transition()
-            .delay(2000)
-            .duration(1000)
-            .style("opacity", 0)
-    }
 
     // transition
     var t0 = d3.transition()
-        .duration(no_transition ? 1000 : 2000)
+        .duration(no_transition ? 3000 : 3000)
 
     // transition
     var t1 = t0.transition()
@@ -2308,7 +2305,8 @@ function update_fifth_slide(no_transition) {
         .duration(1000)
 
     // JOIN
-    circle_male = slide5Group.selectAll(".male-node")
+    circle_male = dataContainer
+        .selectAll(".male-node")
         .data(nodes_male)
 
     // UPDATE
@@ -2320,24 +2318,30 @@ function update_fifth_slide(no_transition) {
     // ENTER
     circle_male
         .enter()
-        .append("circle")
+        .append("custom")
         .attr("class", "male-node")
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
         .attr("r", 1.8)
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
-        .style("opacity", 0.0)
+        .attr("opacity", 0.0)
+        .attr("hiddenFillStyle", function (d) {
+            if (!d.hiddenCol) {
+                d.hiddenCol = genColor()
+                colourToNode[d.hiddenCol] = d
+            }
+            // Here you (1) add a unique colour as property to each element
+            // and(2) map the colour to the node in the colourToNode-map.
+            return d.hiddenCol
+        })
         .transition(t0)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
-        .style("opacity", 0.7)
+        .attr("opacity", 0.7)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
 
-
     // Female nodes
     // JOIN
-    circle_female = slide5Group.selectAll(".female-node")
+    circle_female = dataContainer.selectAll(".female-node")
         .data(nodes_female)
 
     // UPDATE
@@ -2349,25 +2353,32 @@ function update_fifth_slide(no_transition) {
     // ENTER
     circle_female
         .enter()
-        .append("circle")
+        .append("custom")
         .attr("class", "female-node")
-        .on("mouseover", mouseover)
-        .on("mouseout", mouseout)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", 1.8)
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
-        .style("opacity", 0.0)
+        .attr("opacity", 0.0)
+        .attr("hiddenFillStyle", function (d) {
+            if (!d.hiddenCol) {
+                d.hiddenCol = genColor()
+                colourToNode[d.hiddenCol] = d
+            }
+            // Here you (1) add a unique colour as property to each element
+            // and(2) map the colour to the node in the colourToNode-map.
+            return d.hiddenCol
+        })
         .transition(t0)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
-        .style("opacity", 0.7)
+        .attr("opacity", 0.7)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
 
     // Median connector line
     // Join
-    var median_connector_line = slide5Group
+    var median_connector_line = dataContainer
         .selectAll(".median-connector")
         .data([topic_medians_data[selected_topic]])
 
@@ -2380,47 +2391,17 @@ function update_fifth_slide(no_transition) {
     // Enter
     median_connector_line
         .enter()
-        .append("line")
+        .append("custom")
         .attr("class", "median-connector")
         .attr("x1", slide5_xScale(0))
         .attr("x2", slide5_xScale(0))
-        .style("stroke-width", 1)
-        .style("stroke", "white")
         .transition(t1)
         .attr("y1", d => slide5_yScale(d["female"]))
         .attr("y2", d => slide5_yScale(d["male"]))
 
-    String.prototype.capitalize = function () {
-        return this.charAt(0)
-            .toUpperCase() + this.slice(1)
-    }
-
-    // Mouseover for medians
-    function median_mouseover(d) {
-        let gender = this.className.baseVal.split("-")[0]
-        d3.select("#tooltip")
-            .transition()
-            .duration(0)
-            .style("opacity", 1)
-            .style("left", Math.max(Math.min(this.getBoundingClientRect()
-                .left - tooltip.offsetWidth / 2,
-            width - tooltip.offsetWidth / 2 - margin.right),
-            0 + margin.left))
-            .style("top", Math.max(Math.min(this.getBoundingClientRect()
-                .top - tooltip.offsetHeight - 20,
-            height + tooltip.offsetHeight - 20), margin.top))
-            .style("pointer-events", "none")
-
-        // Show relevant tooltip info
-        tooltip.innerHTML = `
-                            <div class="slide5-tooltip">
-                    <h1 style="background-color: ${gender == "female" ? colors["Hover"] : colors["Lab"]};">${gender.capitalize()}</h1>
-                    The average ${gender.capitalize()} MP spends ${(d*100).toFixed(1)}% of ${gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
-</div>`
-    }
     // Male median fraction
     // Join
-    var male_median_circle = slide5Group
+    var male_median_circle = dataContainer
         .selectAll(".male-median")
         .data([topic_medians_data[selected_topic]["male"]])
 
@@ -2432,21 +2413,28 @@ function update_fifth_slide(no_transition) {
     // Enter
     male_median_circle
         .enter()
-        .append("circle")
+        .append("custom")
         .attr("class", "male-median")
-        .on("mouseover", median_mouseover)
-        .on("mouseout", mouseout)
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
-        .style("opacity", 0)
+        .attr("opacity", 0)
+        .attr("hiddenFillStyle", function (d) {
+            if (!d.hiddenCol) {
+                var hiddenCol = genColor()
+                colourToNode[hiddenCol] = { male_median: d }
+            }
+            // Here you (1) add a unique colour as property to each element
+            // and(2) map the colour to the node in the colourToNode-map.
+            return hiddenCol
+        })
         .transition(t1)
-        .style("opacity", 1)
+        .attr("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
 
     // Female median fraction
     // Join
-    var female_median_circle = slide5Group
+    var female_median_circle = dataContainer
         .selectAll(".female-median")
         .data([topic_medians_data[selected_topic]["female"]])
 
@@ -2458,17 +2446,170 @@ function update_fifth_slide(no_transition) {
     // Enter
     female_median_circle
         .enter()
-        .append("circle")
+        .append("custom")
         .attr("class", "female-median")
-        .on("mouseover", median_mouseover)
-        .on("mouseout", mouseout)
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
-        .style("opacity", 0)
+        .attr("opacity", 0)
+        .attr("hiddenFillStyle", function (d) {
+            if (!d.hiddenCol) {
+                var hiddenCol = genColor()
+                colourToNode[hiddenCol] = { female_median: d }
+            }
+            // Here you (1) add a unique colour as property to each element
+            // and(2) map the colour to the node in the colourToNode-map.
+            return hiddenCol
+        })
         .transition(t1)
-        .style("opacity", 1)
+        .attr("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
+
+    // Clear the hidden canvas so that we don't catch the wrong hover info
+    context_hidden.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
+
+    window.draw = function (context, hidden = false) {
+        context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
+
+        dataContainer.selectAll("custom.male-node")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
+
+        dataContainer.selectAll("custom.female-node")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
+
+        dataContainer.select("custom.median-connector")
+            .each(function () {
+                let node = d3.select(this)
+                context.beginPath()
+                context.lineWidth = 1
+                context.strokeStyle = "white"
+                context.moveTo(node.attr("x1"), node.attr("y1"))
+                context.lineTo(+node.attr("x2"), node.attr("y2"))
+                context.stroke()
+            })
+
+        dataContainer.select("custom.male-median")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
+
+        dataContainer.select("custom.female-median")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
+
+    }
+
+    // Animate node entrances
+    var t = d3.timer((elapsed) => {
+        draw(context, false)
+        if ((initial & (elapsed > 5000)) | (initial != true & (elapsed > 2000))) {
+            t.stop()
+            draw(context)
+            // Draw hidden canvas nodes to catch interactions
+            draw(context_hidden, true)
+        }
+    })
+
+    // mouseover function for getting MP info
+    function mpMouseover() {
+        // Get mouse positions from the main canvas.
+        var mousePos = d3.mouse(this)
+
+        // Pick the colour from the mouse position.
+        context_hidden.save()
+        var col = context_hidden.getImageData(mousePos[0] * ratio, mousePos[1] * ratio, 1, 1)
+            .data
+        context_hidden.restore()
+        // Then stringify the values in a way our map-object can read it.
+        var colKey = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")"
+        // Get the data from our map!
+        var nodeData = colourToNode[colKey]
+
+        // Only show mouseover if MP is in toggled party or if no party is filtered
+        if (typeof (nodeData) !== "undefined") {
+            // If we're dealing with mp nodes
+            if (typeof (nodeData.id) !== "undefined") {
+                // For each point group, set tooltip to display on mouseover
+                d3.select("#tooltip")
+                    .style("opacity", 1)
+                    .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                        width - tooltip.offsetWidth / 2 - margin.right),
+                    0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                        height + tooltip.offsetHeight - 20), margin.top)}px)`)
+                    .style("pointer-events", "none")
+
+                var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
+                // Show relevant tooltip info
+                tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
+                    <div class="body-container">
+                    <div class="mp-image-parent">
+                    ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    </div>
+                    <p class="body">${(nodeData[selected_topic] * 100).toFixed(2)}% of ${nodeData.full_name}'s time spent on ${selected_topic}</p>
+                    </div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
+</div>`
+            } else {
+                median_mouseover(nodeData, mousePos)
+            }
+        }
+        d3.event.preventDefault()
+    }
+
+    canvas
+        .on("mousemove", mpMouseover)
+        .on("touchend", mpMouseover)
+
+
+    String.prototype.capitalize = function () {
+        return this.charAt(0)
+            .toUpperCase() + this.slice(1)
+    }
+
+    // Mouseover for medians
+    function median_mouseover(d, mousePos) {
+        let gender = Object.keys(d)[0].split("_")[0]
+        d = Object.values(d)[0]
+        d3.select("#tooltip")
+            .style("opacity", 1)
+            .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                width - tooltip.offsetWidth / 2 - margin.right),
+            0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                height + tooltip.offsetHeight - 20), margin.top)}px)`)
+            .style("pointer-events", "none")
+
+        // Show relevant tooltip info
+        tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${gender == "female" ? colors["Hover"] : colors["Lab"]};">${gender.capitalize()}</h1>
+                    The average ${gender.capitalize()} MP spends ${(d*100).toFixed(1)}% of ${gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
+</div>`
+    }
 
 }
 

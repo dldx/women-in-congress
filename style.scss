@@ -495,11 +495,16 @@ $tip-padding: 1;
   }
 }
 
+#tooltip {
+  left: 0;
+  top: 0;
+  transition: transform .1s ease-in-out;
+}
 #slide4 {
   opacity: 0;
     transition: opacity 1s linear;
-
 }
+
 @media screen and (min-height: 500px) {
   .mp-party,
   #timeline > svg {
