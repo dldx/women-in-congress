@@ -112,6 +112,7 @@ var ratio,
     slide2Group,
     slide3Group,
     slide5Group,
+    slide6Group,
     max_mps_line,
     max_mps_path,
     max_mps_area,
@@ -276,6 +277,9 @@ function update_state() {
             zoom.on("zoom", zoomed)
             canvas.call(zoom)
             to_fifth_slide(current_slide)
+        } else if (new_slide == 5) {
+            // Load sixth slide
+            reset_zoom(to_sixth_slide, current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -1527,6 +1531,12 @@ function to_third_slide(current_slide) {
                 .style("opacity", 0)
                 .remove()
             break
+        case 3:
+            // If we're coming from the fourth slide
+            d3.select("#slide4")
+                .style("opacity", 0)
+                .on("end", function () { this.remove() })
+            break
         }
         third_slide(true)
     }
@@ -1549,7 +1559,7 @@ function third_slide(no_transition = false) {
     d3.select("#info-bubbles")
         .remove()
 
-    // Add group to hold second slide lines
+    // Add group to hold third slide lines
     slide3Group = zoomedArea
         .append("g")
         .attr("id", "slide3-group")
@@ -2405,6 +2415,7 @@ function update_fifth_slide(no_transition, initial = false) {
         .attr("y1", d => slide5_yScale(d["female"]))
         .attr("y2", d => slide5_yScale(d["male"]))
 
+
     // Male median fraction
     // Join
     var male_median_circle = dataContainer
@@ -2437,6 +2448,7 @@ function update_fifth_slide(no_transition, initial = false) {
         .transition(t1)
         .attr("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
+
 
     // Female median fraction
     // Join
@@ -2618,6 +2630,314 @@ function update_fifth_slide(no_transition, initial = false) {
 </div>`
     }
 
+}
+
+// ----------------------------------------------------------------------------
+// TRANSITION TO SIXTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_sixth_slide(current_slide) {
+    "use strict"
+    var t0 = svg
+        .transition()
+        .duration(1000)
+
+    // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+    case 0:
+        // If we're coming from the first slide
+        t0.select("#slide1-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 1:
+        // If we're coming from the second slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 2:
+        // Fade all objects belonging to third slide
+        t0.select("#slide2-group")
+            .style("opacity", 0)
+            .on("end", function () { this.remove() })
+
+        t0.select("#slide3-group")
+            .style("opacity", 0)
+            .on("end", function () { this.remove() })
+        break
+
+    case 3:
+        d3.select("#slide4")
+            .style("opacity", 0)
+            .on("end", function () { this.remove() })
+        break
+
+    }
+
+    // Fade tooltip
+    d3.select("#tooltip")
+        .transition(t0)
+        .style("opacity", 0)
+        .on("end", function () { this.innerHTML = "" })
+
+
+    // Remove Election rectangles
+    electionRects
+        .transition(t0)
+        .style("opacity", 0)
+        .remove()
+
+
+    // Change scales
+    x = d3.scaleLinear()
+        .range([0, width])
+        .domain([0, 0.05])
+
+    y = d3.scalePoint()
+        .range([height, 0])
+        .padding(1)
+
+    // Redraw axes
+    xAxis = d3.axisBottom(x)
+    gX.transition().call(xAxis)
+
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 5) {
+        lastTransitioned = 5
+        t0.on("end", () => sixth_slide(false))
+    } else {
+        t0.on("end", () => sixth_slide(true))
+    }
+
+}
+
+// ----------------------------------------------------------------------------
+// ███████╗██╗██╗  ██╗████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██║╚██╗██╔╝╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// ███████╗██║ ╚███╔╝    ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
+// ╚════██║██║ ██╔██╗    ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ███████║██║██╔╝ ██╗   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
+// ╚══════╝╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// SHOW HOW OFTEN EACH GENDER TALKS ABOUT EVERY TOPIC
+// ----------------------------------------------------------------------------
+function sixth_slide(no_transition = false) {
+    // Remove elements from this slide if already created
+    d3.select("#slide6-group")
+        .remove()
+
+    // Add group to hold sixth slide lines
+    slide6Group = zoomedArea
+        .append("g")
+        .attr("id", "slide6-group")
+
+    // Hide canvas
+    canvas
+        .style("opacity", 0)
+        .style("display", null)
+        .style("pointer-events", "none")
+
+    // remove dropdown
+    d3.select("#topic-dropdown")
+        .style("opacity", 0)
+        .remove()
+
+    // Set the topics that will appear on the y axis
+    let sorted_topics = Object.entries(topic_medians_data)
+        .sort((a, b) => (a[1]["female"] - a[1]["male"]) - (b[1]["female"] - b[1]["male"]))
+
+    y.domain(sorted_topics.map(d => d[0]))
+    yAxis = d3.axisLeft(y)
+    gY.transition().call(yAxis)
+
+    // Only show selected topic's label for now
+    d3.selectAll(".y-axis > .tick text")
+        .style("opacity", d => d == selected_topic ? 1 : 0)
+    // Hide axis line and ticks
+    d3.select(".y-axis > path")
+        .style("opacity", 0)
+    d3.selectAll(".y-axis > .tick line")
+        .style("opacity", 0)
+
+
+    var t0 = d3.transition()
+        .duration(1000)
+
+    // Draw svg version of median topic line for current topic
+    var median_connector_line_svg = slide6Group
+        .selectAll(".median-connector")
+        .data([topic_medians_data[selected_topic]])
+
+    median_connector_line_svg
+        .enter()
+        .append("line")
+        .attr("class", "median-connector tmp")
+        .attr("stroke-width", 1)
+        .attr("x1", slide5_xScale(0))
+        .attr("x2", slide5_xScale(0))
+        .attr("y1", d => slide5_yScale(d["female"]))
+        .attr("y2", d => slide5_yScale(d["male"]))
+        .transition(t0)
+        .attr("x1", d => x(d["female"]))
+        .attr("x2", d => x(d["male"]))
+        .attr("y1", y(selected_topic))
+        .attr("y2", y(selected_topic))
+
+    // Add hidden svg circle
+    var male_median_circle_svg = slide6Group
+        .selectAll(".male-median")
+        .data([topic_medians_data[selected_topic]["male"]])
+
+    male_median_circle_svg
+        .enter()
+        .append("circle")
+        .attr("class", "male-median tmp")
+        .attr("cx", slide5_xScale(0))
+        .attr("cy", d => slide5_yScale(d))
+        .attr("r", 3)
+        .transition(t0)
+        .attr("cx", d => {return x(d)})
+        .attr("cy", y(selected_topic))
+
+    // Add hidden svg circle
+    var female_median_circle_svg = slide6Group
+        .selectAll(".female-median")
+        .data([topic_medians_data[selected_topic]["female"]])
+
+    female_median_circle_svg
+        .enter()
+        .append("circle")
+        .attr("class", "female-median tmp")
+        .attr("cx", slide5_xScale(0))
+        .attr("cy", d => slide5_yScale(d))
+        .attr("r", 3)
+        .transition(t0)
+        .attr("cx", d => {return x(d)})
+        .attr("cy", y(selected_topic))
+        .on("end", () => {
+
+            gX.style("opacity", 1)
+            gY.style("opacity", 1)
+            xLabel
+                .text("Average % of time spent on topic").style("opacity", 1)
+            // yLabel.style("opacity", 1)
+        })
+
+        // Next transition
+    var t1 = t0.transition()
+        .duration(500)
+
+    // Add all the other topics too
+    median_connector_line_svg
+        .data(sorted_topics)
+        .enter()
+        .append("line")
+        .attr("class", (d, i) => "median-connector topic-"+i)
+        .attr("stroke-width", 1)
+        .attr("x1", x(0))
+        .attr("x2", x(0))
+        .attr("y1", d => y(d[0]))
+        .attr("y2", d => y(d[0]))
+        .attr("opacity", 0)
+        .transition(t1)
+        .delay((d, i) => 1000 + i*50)
+        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+        .attr("x1", d => x(d[1]["female"]))
+        .attr("x2", d => x(d[1]["male"]))
+
+    male_median_circle_svg
+        .data(sorted_topics)
+        .enter()
+        .append("circle")
+        .attr("class", (d, i) => "male-median topic-"+i)
+        .attr("r", 3)
+        .attr("cx", x(0))
+        .attr("cy", d => y(d[0]))
+        .attr("opacity", 0)
+        .transition(t1)
+        .delay((d, i) => 1000 + i*50)
+        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+        .attr("cx", d => x(d[1]["male"]))
+
+    female_median_circle_svg
+        .data(sorted_topics)
+        .enter()
+        .append("circle")
+        .attr("class", (d, i) => "female-median topic-"+i)
+        .attr("r", 3)
+        .attr("cx", x(0))
+        .attr("cy", d => y(d[0]))
+        .attr("opacity", 0)
+        .transition(t1)
+        .delay((d, i) => 1000 + i*50)
+        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+        .attr("cx", d => x(d[1]["female"]))
+
+    t2 = t1.transition().delay(3400)
+        .on("end", () => {
+            slide6Group
+                .selectAll(".topic-"+sorted_topics.map(d => d[0]).indexOf(selected_topic))
+                .attr("opacity", 1)
+            slide6Group.selectAll(".tmp").remove()
+            // Make all axis tick labels visible
+            d3.selectAll(".y-axis > .tick text").style("opacity", 1)
+        })
+
+    // Hover rects to catch mouseovers
+    slide6Group
+        .selectAll(".hover-rect")
+        .data(sorted_topics)
+        .enter()
+        .append("rect")
+        .attr("class", "hover-rect")
+        .attr("x", x(0))
+        .attr("y", d => y(d[0]) - y.step()/2)
+        .attr("width", width)
+        .attr("height", y.step())
+        .on("mouseover", (d, i) => {
+            slide6Group.selectAll("circle.topic-"+i)
+                .attr("r", 6)
+            slide6Group.select("line.topic-"+i)
+                .attr("stroke-width", 3)
+        })
+        .on("mouseout", (d, i) => {
+            slide6Group.selectAll("circle.topic-"+i)
+                .attr("r", 3)
+            slide6Group.select("line.topic-"+i)
+                .attr("stroke-width", 1)
+        })
+
+    // Switch to relative change view
+    t3 = t2.transition().delay(1000)
+        .on("end", () => {
+            x.domain([-0.04, 0.04])
+            xAxis = d3.axisBottom(x)
+            gX.transition()
+                .call(xAxis)
+                .on("end", () => {
+                    var t_ = d3.transition()
+                        .duration(1000)
+
+                    slide6Group.selectAll(".median-connector")
+                        .transition(t_)
+                        .delay((d, i) => i*100)
+                        .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
+                        .attr("x2", x(0))
+
+                    slide6Group.selectAll(".female-median")
+                        .transition(t_)
+                        .delay((d, i) => i*100)
+                        .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+
+                    slide6Group.selectAll(".male-median")
+                        .transition(t_)
+                        .delay((d, i) => i*100)
+                        .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+
+                })
+
+        })
 }
 
 // ----------------------------------------------------------------------------

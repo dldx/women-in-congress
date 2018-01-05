@@ -1,7 +1,7 @@
 export { queue } from "d3-queue"
 export { csv, json } from "d3-request"
 export { select, selectAll, selection, event, mouse } from "d3-selection"
-export { scaleTime, scaleUtc, scaleLinear, scaleOrdinal, schemeCategory20 } from "d3-scale"
+export { scaleTime, scaleUtc, scaleLinear, scaleOrdinal, scalePoint, schemeCategory20 } from "d3-scale"
 export { pie, area, line, arc, curveBasis, curveCardinal, curveBundle, stack } from "d3-shape"
 export { interpolate } from "d3-interpolate"
 export { axisTop, axisRight, axisBottom, axisLeft } from "d3-axis"

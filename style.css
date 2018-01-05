@@ -7,7 +7,8 @@ body {
 
 .tracker {
   transform: translateZ(0);
-  position: absolute;
+  position: fixed;
+  top: 20px;
   z-index: 2;
   height: 60px;
   width: 150px;
@@ -85,11 +86,15 @@ body {
   font-size: 1rem;
   font-weight: 500; }
 
+.x-axis, .y-axis {
+  transition: opacity 1s ease-in-out; }
+
 .x-label,
 .y-label {
   text-anchor: middle;
   font-size: 1.1rem;
-  font-weight: 500; }
+  font-weight: 500;
+  transition: opacity 1s ease-in-out; }
 
 .x-label {
   alignment-baseline: hanging; }
@@ -107,22 +112,26 @@ body {
   .y-axis text {
     font-size: .8rem; } }
 #timeline {
-  transform: translateZ(0);
   background-color: #252525;
   border-radius: 1px;
   bottom: 0;
   left: 0;
   margin: 10px;
-  position: absolute;
+  position: fixed;
+  height: 100%;
   right: 0;
   top: 0; }
+  #timeline svg, #timeline canvas {
+    transform: translateZ(0); }
 
 #visible-canvas, #hidden-canvas {
-  top: 0;
-  left: 0;
-  position: absolute; }
+  vertical-align: top;
+  left: 0px;
+  position: absolute;
+  transition: opacity 1s ease-in-out; }
 
-#visible-canvas {
+#hidden-canvas {
+  display: none;
   pointer-events: none; }
 
 .info-bubble {
@@ -167,24 +176,11 @@ body {
     opacity: 1;
     transform: scaleY(2); }
 
-#holding-div {
-  position: absolute;
-  pointer-events: none;
-  display: none;
-  top: 0px;
-  left: 0px; }
+.median-connector {
+  stroke: #fff; }
 
-.line-connect-pre-transition {
-  position: absolute;
-  opacity: .8;
-  stroke-linecap: round;
-  transform: translateZ(0);
-  transform-origin: left; }
-
-.line-connect-transition {
-  transform: scaleX(0.02) !important;
-  opacity: 0;
-  transition: transform 0.5s, opacity .25s 3.5s; }
+.hover-rect {
+  opacity: 0; }
 
 #slide4,
 #tooltip {
@@ -300,7 +296,8 @@ body {
   #tooltip .mp-image-parent {
     width: 5rem;
     height: 5rem;
-    overflow: hidden; }
+    overflow: hidden;
+    flex: 0 0 5rem; }
   #slide4 .mp-image,
   #tooltip .mp-image {
     width: 100%;
@@ -312,6 +309,14 @@ body {
     width: 100%;
     height: 100%;
     filter: blur(4px); }
+  #slide4 .body-container,
+  #tooltip .body-container {
+    display: flex; }
+  #slide4 .body,
+  #tooltip .body {
+    margin: 0px;
+    width: 99%;
+    padding: 1rem; }
   #slide4 .slide4-tooltip,
   #tooltip .slide4-tooltip {
     height: 100%;
@@ -394,6 +399,15 @@ body {
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
         pointer-events: none; }
 
+#tooltip {
+  left: 0;
+  top: 0;
+  transition: transform .1s ease-in-out; }
+
+#slide4 {
+  opacity: 0;
+  transition: opacity 1s linear; }
+
 @media screen and (min-height: 500px) {
   .mp-party,
   #timeline > svg {
@@ -456,5 +470,11 @@ body {
 
 .women-pct-track {
   stroke: steelblue; }
+
+#topic-dropdown {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  z-index: 999; }
 
 /*# sourceMappingURL=style.css.map */
