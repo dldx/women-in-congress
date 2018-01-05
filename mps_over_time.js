@@ -274,7 +274,7 @@ function update_state() {
             // Load fifth slide
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
-            svg.call(zoom)
+            canvas.call(zoom)
             to_fifth_slide(current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
@@ -555,12 +555,12 @@ function zoomed() {
     context_hidden.restore()
 
     // And the svg axes
-    if (current_slide == 0) {
+    if (current_slide == 0 | current_slide == 1) {
         gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
     } else {
         d3.event.transform.rescaleX(x)
     }
-    if (current_slide == 0) {
+    if (current_slide == 0 | current_slide == 1) {
         gY.call(yAxis.scale(d3.event.transform.rescaleY(y)))
     } else {
         d3.event.transform.rescaleY(y)
@@ -772,7 +772,7 @@ function first_slide() {
             d3.select("#tooltip")
                 .style("opacity", 1)
                 .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                    width - tooltip.offsetWidth / 2 - margin.right),
+                    width - tooltip.offsetWidth - margin.right),
                 0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
                     height + tooltip.offsetHeight - 20), margin.top)}px)`)
                 .style("pointer-events", "none")
@@ -1208,6 +1208,8 @@ function second_slide(no_transition = false) {
         .duration(500)
         .style("opacity", 0)
         .on("end", function () {
+            // Clear canvas
+            context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
             d3.select(this)
                 .style("display", "none")
         })
@@ -1737,6 +1739,8 @@ function third_slide(no_transition = false) {
         .on("start", d => {
             if (current_slide == 2) {
                 d3.select("#tooltip")
+                    .style("transform", "translate(50vw, 20vh)")
+                    .style("transform-origin", "50% 50%")
                     .style("opacity", 1)
 
                 // Show relevant tooltip info
@@ -2270,9 +2274,8 @@ function fifth_slide(no_transition = false) {
 
     // Map to track the colour of nodes.
     colourToNode = {}
-    update_fifth_slide(no_transition, initial = true)
     // Call function initially
-
+    update_fifth_slide(no_transition, true)
 }
 
 function update_fifth_slide(no_transition, initial = false) {
@@ -2554,7 +2557,7 @@ function update_fifth_slide(no_transition, initial = false) {
                 d3.select("#tooltip")
                     .style("opacity", 1)
                     .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                        width - tooltip.offsetWidth / 2 - margin.right),
+                        width - tooltip.offsetWidth/2 - margin.right),
                     0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
                         height + tooltip.offsetHeight - 20), margin.top)}px)`)
                     .style("pointer-events", "none")
@@ -2583,6 +2586,7 @@ function update_fifth_slide(no_transition, initial = false) {
 
     canvas
         .on("mousemove", mpMouseover)
+        .on("drag", mpMouseover)
         .on("touchend", mpMouseover)
 
 

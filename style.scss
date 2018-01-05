@@ -28,7 +28,8 @@ body {
 
 .tracker {
   transform: translateZ(0);
-  position: absolute;
+  position: fixed;
+  top: 20px;
   z-index: 2;
   height: 60px;
   width: 150px;
@@ -163,14 +164,17 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
     font-size: .8rem;
   }
 }
+#narrative {
 
+}
 #timeline {
   background-color: $graph-background;
   border-radius: 1px;
   bottom: 0;
   left: 0;
   margin: 10px;
-  position: absolute;
+  position: fixed;
+  height: 100%;
   right: 0;
   top: 0;
 
@@ -180,8 +184,9 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 }
 
 #visible-canvas, #hidden-canvas {
-  top: 0;
-  left: 0;
+  // top: 0;
+  vertical-align: top;
+  left: 0px;
   position: absolute;
 }
 #hidden-canvas {
