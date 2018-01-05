@@ -1727,6 +1727,11 @@ function third_slide(no_transition = false) {
     var t2 = t1.transition()
         .duration(no_transition ? 1000 : 2000)
 
+    // Move tooltip to better location
+    d3.select("#tooltip")
+        .style("transform", "translate(50vw, 20vh)")
+        .style("transform-origin", "50% 50%")
+
     // Start drawing all the other countries, one by one, speeding up as we go along
     var country_on_screen = []
     women_in_govt_paths
@@ -1739,8 +1744,6 @@ function third_slide(no_transition = false) {
         .on("start", d => {
             if (current_slide == 2) {
                 d3.select("#tooltip")
-                    .style("transform", "translate(50vw, 20vh)")
-                    .style("transform-origin", "50% 50%")
                     .style("opacity", 1)
 
                 // Show relevant tooltip info
