@@ -813,12 +813,6 @@ function first_slide() {
 
             tooltip.innerHTML = tooltip_innerHTML
 
-            // // Increase line thickness of all terms of the same MP
-            // pointsGroup
-            //     .selectAll(".line-connect")
-            //     .classed("hover", function (a) {
-            //         return (d.clean_name == a.clean_name)
-            //     })
         }
         d3.event.preventDefault()
     }
@@ -2202,17 +2196,6 @@ function to_fifth_slide(current_slide) {
         .style("opacity", 0)
         .on("end", function () { this.innerHTML = "" })
 
-    // Enable canvas
-    d3.select("#visible-canvas")
-        .style("opacity", 1)
-        .style("display", null)
-        .style("pointer-events", "all")
-
-
-    d3.select("#slide4")
-        .transition(t0)
-        .style("opacity", 0)
-        .on("end", function () { this.remove() })
 
     // Remove Election rectangles
     electionRects
@@ -2252,49 +2235,118 @@ function to_fifth_slide(current_slide) {
 // ╚═╝     ╚═╝╚═╝        ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
 // Go to the fifth slide
 // ----------------------------------------------------------------------------
-function fifth_slide(no_transition = false) {
+function fifth_slide(no_transition = false, topic_selection = false) {
 
     d3.select("#topic-dropdown")
         .remove()
+
+    // Switching from 4th slide
+    // Get the position of the first label in the topic selection
+    var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg").node().getBoundingClientRect()
+
+    // Append a new svg to the document containing a copy of this label
     d3.select("body")
-        .insert("select", ":first-child")
-        .attr("id", "topic-dropdown")
-        .on("change", update_fifth_slide)
-        .selectAll(".topic")
-        .data(baked_positions_data.map(topic => topic.key))
-        .enter()
-        .append("option")
-        .text(d => d)
+        .append("svg")
+        .attr("id", "floating-topic")
+        .style("top", 0)
+        .style("left", 0)
+        .style("position", "absolute")
+        .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
+        .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
+        .node()
+        .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg").node().cloneNode())
+        .parentNode
+        .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label").node().cloneNode())
 
-    // Scales for this data
-    slide5_xScale = d3.scaleLinear()
-        .domain([-300, 150])
-        .range([0, width + margin.left + margin.right])
+        // Fade out slide4
+    d3.select("#slide4")
+        .style("opacity", 0)
+        .transition()
+        .duration(1000)
+        .on("end", function () { this.remove() })
 
-    slide5_yScale = d3.scaleLinear()
-        .domain([0, 0.3])
-        .range([height, 0])
+    // Resize the label rect
+    d3.select("#floating-topic")
+        .attr("width", label_pos.width)
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .attr("width", width/2)
 
-    d3.select("#slide5-group")
-        .remove()
+        // Set the label text because it doesn't get copied for some reason
+    d3.select("#floating-topic > .rect-label")
+        .html(function() {
+            selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title").split(":")[0]
+            return selected_topic
+        })
 
-    // Create group for this slide
-    slide5Group = zoomedArea
-        .append("g")
-        .attr("id", "slide5-group")
-    // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
-    // .attr("transform", "scale(" + width/1900 + ")")
+        // Finally, move the label to a better location
+    d3.timeout(() => {
+        d3.select("#floating-topic")
+            .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+            .transition()
+            .delay(1000)
+            .style("fill", "white")
+            .select(".rect-fg")
+            .style("opacity", 0)
+    }, 1000)
 
-    // Map to track the colour of nodes.
-    colourToNode = {}
-    // Call function initially
-    update_fifth_slide(no_transition, true)
+    // Wait for 3 secs before doing this next bit
+    d3.timeout(() => {
+    // Enable canvas
+        d3.select("#visible-canvas")
+            .style("opacity", 1)
+            .style("display", null)
+            .style("pointer-events", "all")
+
+        // Add a dropdown to select different topics
+        if (topic_selection) {
+            d3.select("body")
+                .insert("select", ":first-child")
+                .attr("id", "topic-dropdown")
+                .on("change", update_fifth_slide)
+                .selectAll(".topic")
+                .data(baked_positions_data.map(topic => topic.key))
+                .enter()
+                .append("option")
+                .text(d => d)
+        }
+
+
+        // Scales for this data
+        slide5_xScale = d3.scaleLinear()
+            .domain([-300, 150])
+            .range([0, width + margin.left + margin.right])
+
+        slide5_yScale = d3.scaleLinear()
+            .domain([0, 0.3])
+            .range([height, 0])
+
+        d3.select("#slide5-group")
+            .remove()
+
+        // Create group for this slide
+        slide5Group = zoomedArea
+            .append("g")
+            .attr("id", "slide5-group")
+        // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
+        // .attr("transform", "scale(" + width/1900 + ")")
+
+        // Map to track the colour of nodes.
+        colourToNode = {}
+        // Call function initially
+        update_fifth_slide(no_transition, true)
+    }, 3000)
 }
 
 function update_fifth_slide(no_transition, initial = false) {
     // Get value of topic dropdown
-    selected_topic = d3.select("#topic-dropdown")
-        .property("value")
+    try {
+        selected_topic = d3.select("#topic-dropdown")
+            .property("value")
+    } catch(err) {
+        //pass
+    }
 
     var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
 
@@ -2572,7 +2624,7 @@ function update_fifth_slide(no_transition, initial = false) {
                 d3.select("#tooltip")
                     .style("opacity", 1)
                     .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                        width - tooltip.offsetWidth/2 - margin.right),
+                        width - tooltip.offsetWidth - margin.right),
                     0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
                         height + tooltip.offsetHeight - 20), margin.top)}px)`)
                     .style("pointer-events", "none")
@@ -2671,9 +2723,18 @@ function to_sixth_slide(current_slide) {
     case 3:
         d3.select("#slide4")
             .style("opacity", 0)
+            .transition()
+            .delay(1000)
             .on("end", function () { this.remove() })
         break
 
+    case 4:
+        d3.select("#floating-topic")
+            .style("opacity", 0)
+            .transition()
+            .delay(1000)
+            .on("end", function () { this.remove() })
+        break
     }
 
     // Fade tooltip
@@ -2701,10 +2762,11 @@ function to_sixth_slide(current_slide) {
 
     // Redraw axes
     xAxis = d3.axisBottom(x)
+        .tickFormat(d => (d * 100).toFixed(1) + "%")
     gX.transition().call(xAxis)
 
     // Increment lastTransitioned counter if it is less than 0
-    if (lastTransitioned < 5) {
+    if (lastTransitioned < 5 & current_slide == 4) {
         lastTransitioned = 5
         t0.on("end", () => sixth_slide(false))
     } else {
@@ -2751,80 +2813,109 @@ function sixth_slide(no_transition = false) {
     yAxis = d3.axisLeft(y)
     gY.transition().call(yAxis)
 
-    // Only show selected topic's label for now
-    d3.selectAll(".y-axis > .tick text")
-        .style("opacity", d => d == selected_topic ? 1 : 0)
     // Hide axis line and ticks
     d3.select(".y-axis > path")
         .style("opacity", 0)
+
     d3.selectAll(".y-axis > .tick line")
         .style("opacity", 0)
-
 
     var t0 = d3.transition()
         .duration(1000)
 
-    // Draw svg version of median topic line for current topic
-    var median_connector_line_svg = slide6Group
-        .selectAll(".median-connector")
-        .data([topic_medians_data[selected_topic]])
+    // Make y-axis topic labels all uppercase
+    d3.selectAll(".y-axis > .tick text")
+        .style("text-transform", "uppercase")
 
-    median_connector_line_svg
-        .enter()
-        .append("line")
-        .attr("class", "median-connector tmp")
-        .attr("stroke-width", 1)
-        .attr("x1", slide5_xScale(0))
-        .attr("x2", slide5_xScale(0))
-        .attr("y1", d => slide5_yScale(d["female"]))
-        .attr("y2", d => slide5_yScale(d["male"]))
-        .transition(t0)
-        .attr("x1", d => x(d["female"]))
-        .attr("x2", d => x(d["male"]))
-        .attr("y1", y(selected_topic))
-        .attr("y2", y(selected_topic))
+    if(no_transition == false) {
+    // Only show selected topic's label for now
+        d3.selectAll(".y-axis > .tick text")
+            .style("opacity", d => d == selected_topic ? 1 : 0)
 
-    // Add hidden svg circle
-    var male_median_circle_svg = slide6Group
-        .selectAll(".male-median")
-        .data([topic_medians_data[selected_topic]["male"]])
+        // Draw svg version of median topic line for current topic
+        var median_connector_line_svg = slide6Group
+            .selectAll(".median-connector")
+            .data([topic_medians_data[selected_topic]])
 
-    male_median_circle_svg
-        .enter()
-        .append("circle")
-        .attr("class", "male-median tmp")
-        .attr("cx", slide5_xScale(0))
-        .attr("cy", d => slide5_yScale(d))
-        .attr("r", 3)
-        .transition(t0)
-        .attr("cx", d => {return x(d)})
-        .attr("cy", y(selected_topic))
+        median_connector_line_svg
+            .enter()
+            .append("line")
+            .attr("class", "median-connector tmp")
+            .attr("stroke-width", 1)
+            .attr("x1", slide5_xScale(0))
+            .attr("x2", slide5_xScale(0))
+            .attr("y1", d => slide5_yScale(d["female"]))
+            .attr("y2", d => slide5_yScale(d["male"]))
+            .transition(t0)
+            .attr("x1", d => x(d["female"]))
+            .attr("x2", d => x(d["male"]))
+            .attr("y1", y(selected_topic))
+            .attr("y2", y(selected_topic))
 
-    // Add hidden svg circle
-    var female_median_circle_svg = slide6Group
-        .selectAll(".female-median")
-        .data([topic_medians_data[selected_topic]["female"]])
+        // Add hidden svg circle
+        var male_median_circle_svg = slide6Group
+            .selectAll(".male-median")
+            .data([topic_medians_data[selected_topic]["male"]])
 
-    female_median_circle_svg
-        .enter()
-        .append("circle")
-        .attr("class", "female-median tmp")
-        .attr("cx", slide5_xScale(0))
-        .attr("cy", d => slide5_yScale(d))
-        .attr("r", 3)
-        .transition(t0)
-        .attr("cx", d => {return x(d)})
-        .attr("cy", y(selected_topic))
-        .on("end", () => {
+        male_median_circle_svg
+            .enter()
+            .append("circle")
+            .attr("class", "male-median tmp")
+            .attr("cx", slide5_xScale(0))
+            .attr("cy", d => slide5_yScale(d))
+            .attr("r", 3)
+            .transition(t0)
+            .attr("cx", d => {return x(d)})
+            .attr("cy", y(selected_topic))
 
-            gX.style("opacity", 1)
-            gY.style("opacity", 1)
-            xLabel
-                .text("Average % of time spent on topic").style("opacity", 1)
+        // Add hidden svg circle
+        var female_median_circle_svg = slide6Group
+            .selectAll(".female-median")
+            .data([topic_medians_data[selected_topic]["female"]])
+
+        female_median_circle_svg
+            .enter()
+            .append("circle")
+            .attr("class", "female-median tmp")
+            .attr("cx", slide5_xScale(0))
+            .attr("cy", d => slide5_yScale(d))
+            .attr("r", 3)
+            .transition(t0)
+            .attr("cx", d => {return x(d)})
+            .attr("cy", y(selected_topic))
+            .on("end", () => {
+
+                gX.style("opacity", 1)
+                gY.style("opacity", 1)
+                xLabel
+                    .text("Average % of time spent on topic").style("opacity", 1)
             // yLabel.style("opacity", 1)
-        })
+            })
 
-        // Next transition
+    } else {
+        var median_connector_line_svg = slide6Group
+            .selectAll(".median-connector")
+            .data(sorted_topics)
+
+        // Add hidden svg circle
+        var male_median_circle_svg = slide6Group
+            .selectAll(".male-median")
+            .data(sorted_topics)
+
+        // Add hidden svg circle
+        var female_median_circle_svg = slide6Group
+            .selectAll(".female-median")
+            .data(sorted_topics)
+
+        xLabel
+            .text("Average % of time spent on topic")
+            .style("opacity", 1)
+
+        yLabel.style("opacity", 0)
+
+    }// endif no_transition == false
+
+    // Next transition
     var t1 = t0.transition()
         .duration(500)
 
@@ -2881,7 +2972,9 @@ function sixth_slide(no_transition = false) {
                 .attr("opacity", 1)
             slide6Group.selectAll(".tmp").remove()
             // Make all axis tick labels visible
-            d3.selectAll(".y-axis > .tick text").style("opacity", 1)
+            d3.selectAll(".y-axis > .tick text")
+                .style("opacity", 1)
+                .style("transition", "opacity 0.2s ease-in-out")
         })
 
     // Hover rects to catch mouseovers
@@ -2913,6 +3006,7 @@ function sixth_slide(no_transition = false) {
         .on("end", () => {
             x.domain([-0.04, 0.04])
             xAxis = d3.axisBottom(x)
+                .tickFormat(d => (d * 100).toFixed(0) + "%")
             gX.transition()
                 .call(xAxis)
                 .on("end", () => {
@@ -2921,23 +3015,47 @@ function sixth_slide(no_transition = false) {
 
                     slide6Group.selectAll(".median-connector")
                         .transition(t_)
-                        .delay((d, i) => i*100)
+                        .delay((d, i) => i*50)
                         .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
                         .attr("x2", x(0))
 
                     slide6Group.selectAll(".female-median")
                         .transition(t_)
-                        .delay((d, i) => i*100)
+                        .delay((d, i) => i*50)
                         .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
 
                     slide6Group.selectAll(".male-median")
                         .transition(t_)
-                        .delay((d, i) => i*100)
+                        .delay((d, i) => i*50)
                         .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+                        .on("end", (d, i) => {
+                            d3.selectAll(".y-axis > .tick text")
+                                // .filter(c => d[0] == c)
+                                .style("opacity", 0)
+                        })
 
                 })
 
         })
+
+    let label_pos = sorted_topics
+        .map(d => d[1]["female"] - d[1]["male"] > 0)
+
+    t4 = t3.transition()
+
+    d3.selectAll(".y-axis > .tick text")
+        .filter(d => Object.keys(topic_medians_data).indexOf(d) != -1)
+        .transition(t4)
+        .delay((d, i) => 3000)
+        .duration(1000)
+        .style("text-anchor", (d,i) => {
+            return label_pos[i] ? "end" : "start"
+        })
+        .attr("x", (d,i) => label_pos[i] ? x.domain([-0.04, 0.04])(-0.001) : x.domain([-0.04, 0.04])(0.001))
+        .transition()
+        .delay(500)
+        .duration(500)
+        .style("opacity", 1)
 }
 
 // ----------------------------------------------------------------------------

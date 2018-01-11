@@ -139,7 +139,8 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   transition: opacity 1s ease-in-out;
 }
 
-.x-axis, .y-axis {
+.x-axis,
+.y-axis {
   transition: opacity 1s ease-in-out;
 }
 
@@ -182,18 +183,21 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   right: 0;
   top: 0;
 
-  svg, canvas {
+  canvas,
+  svg {
     transform: translateZ(0);
   }
 }
 
-#visible-canvas, #hidden-canvas {
+#hidden-canvas,
+#visible-canvas {
   // top: 0;
   vertical-align: top;
-  left: 0px;
+  left: 0;
   position: absolute;
   transition: opacity 1s ease-in-out;
 }
+
 #hidden-canvas {
   display: none;
   pointer-events: none;
@@ -254,7 +258,6 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .hover-rect {
   opacity: 0;
 }
-
 $tip-padding: 1;
 
 #slide4,
@@ -387,7 +390,7 @@ $tip-padding: 1;
   }
 
   .body {
-    margin: 0px;
+    margin: 0;
     width: 99%;
     padding: 1rem;
   }
@@ -488,19 +491,21 @@ $tip-padding: 1;
       font-weight: 400;
       padding: .5rem;
     }
-
-    #slide4-speech-topic-bar {
-      padding-top: $tip-padding + rem;
-      flex: 0 0 2rem;
-      margin: auto auto 0;
-
-      .rect-label {
-        // font-size: 6px;
-        text-shadow: 1px 1px 1px rgba(black, .5);
-        pointer-events: none;
-      }
-    }
   }
+}
+
+#slide4-speech-topic-bar {
+  padding-top: $tip-padding + rem;
+  flex: 0 0 2rem;
+  margin: auto auto 0;
+}
+
+.rect-label {
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 200;
+  text-shadow: 1px 1px 1px rgba(black, .5);
+  pointer-events: none;
 }
 
 #tooltip {
@@ -508,14 +513,14 @@ $tip-padding: 1;
   top: 0;
   transition: transform .1s ease-in-out;
 }
+
 #slide4 {
   opacity: 0;
-    transition: opacity 1s linear;
+  transition: opacity 1s linear;
 }
-
 @media screen and (min-height: 500px) {
-  .mp-party,
-  #timeline > svg {
+  #timeline > svg,
+  .mp-party {
     bottom: 1.5 * $tip-padding + em;
     right: 1.5 * $tip-padding + em;
   }
@@ -549,6 +554,7 @@ $tip-padding: 1;
 .max-mps-path {
   stroke: $female;
 }
+
 .total-women-mps-path {
   stroke: $female;
   opacity: 0;
@@ -599,6 +605,5 @@ $tip-padding: 1;
   top: 10%;
   left: 10%;
   z-index: 999;
-
   transition: opacity 1s ease-in-out;
 }

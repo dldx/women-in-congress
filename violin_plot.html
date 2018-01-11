@@ -91,9 +91,9 @@
                 .html(function(d) {
                     return `<p><strong> ${d.key} </strong></p>
                 <div>${d.values[0].key}</div>
-                <div>${median(d.values[0].values.map(function(i) { return i.value}))}</div>
+                <div>${(median(d.values[0].values.map(function(i) { return i.value}))*100).toFixed(1)}</div>
                 <div>${d.values[1].key}</div>
-                <div>${median(d.values[1].values.map(function(i) { return i.value}))}</div>
+                <div>${(median(d.values[1].values.map(function(i) { return i.value}))*100).toFixed(1)}</div>
     </p>`;
                 });
 
@@ -122,7 +122,7 @@
                 });
 
                 if (error) throw error;
-                
+
                 // Group MPs by topic and gender
                 nodes = d3.nest()
                     .key(function(d) {
