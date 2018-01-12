@@ -2188,6 +2188,10 @@ function to_fifth_slide(current_slide) {
             .style("opacity", 0)
             .remove()
         break
+    case 5:
+    // Fade out sixth slide
+        slide6Group.style("opacity", 0)
+        break
     }
 
     // Fade tooltip
@@ -2237,59 +2241,85 @@ function to_fifth_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function fifth_slide(no_transition = false, topic_selection = false) {
 
-    d3.select("#topic-dropdown")
-        .remove()
+    d3.select("#topic-dropdown").remove()
+
+    d3.select("#floating-topic").remove()
 
     // Switching from 4th slide
+    try {
     // Get the position of the first label in the topic selection
-    var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg").node().getBoundingClientRect()
+        var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg").node().getBoundingClientRect()
 
-    // Append a new svg to the document containing a copy of this label
-    d3.select("body")
-        .append("svg")
-        .attr("id", "floating-topic")
-        .style("top", 0)
-        .style("left", 0)
-        .style("position", "absolute")
-        .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
-        .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
-        .node()
-        .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg").node().cloneNode())
-        .parentNode
-        .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label").node().cloneNode())
+        // Append a new svg to the document containing a copy of this label
+        d3.select("body")
+            .append("svg")
+            .attr("id", "floating-topic")
+            .style("top", 0)
+            .style("left", 0)
+            .style("position", "absolute")
+            .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
+            .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
+            .node()
+            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg").node().cloneNode())
+            .parentNode
+            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label").node().cloneNode())
 
         // Fade out slide4
-    d3.select("#slide4")
-        .style("opacity", 0)
-        .transition()
-        .duration(1000)
-        .on("end", function () { this.remove() })
+        d3.select("#slide4")
+            .style("opacity", 0)
+            .transition()
+            .duration(1000)
+            .on("end", function () { this.remove() })
 
-    // Resize the label rect
-    d3.select("#floating-topic")
-        .attr("width", label_pos.width)
-        .transition()
-        .delay(1000)
-        .duration(1000)
-        .attr("width", width/2)
-
-        // Set the label text because it doesn't get copied for some reason
-    d3.select("#floating-topic > .rect-label")
-        .html(function() {
-            selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title").split(":")[0]
-            return selected_topic
-        })
-
-        // Finally, move the label to a better location
-    d3.timeout(() => {
+        // Resize the label rect
         d3.select("#floating-topic")
-            .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+            .attr("width", label_pos.width)
             .transition()
             .delay(1000)
+            .duration(1000)
+            .attr("width", width/2)
+
+        // Set the label text because it doesn't get copied for some reason
+        d3.select("#floating-topic > .rect-label")
+            .html(function() {
+                selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title").split(":")[0]
+                return selected_topic
+            })
+
+        // Finally, move the label to a better location
+        d3.timeout(() => {
+            d3.select("#floating-topic")
+                .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+                .transition()
+                .delay(1000)
+                .style("fill", "white")
+                .select(".rect-fg")
+                .style("opacity", 0)
+        }, 1000)
+
+    } catch(e) {
+        // If we can't find a topic bar, then we just create a new one in the correct location
+
+        // Append a new svg to the document containing a copy of this label
+        d3.select("body")
+            .append("svg")
+            .attr("id", "floating-topic")
+            .style("top", 0)
+            .style("left", 0)
+            .style("position", "absolute")
+            .attr("width", width/2)
+            .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+            .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
+            .append("text")
+            .attr("class", "rect-label")
+            .attr("x", 0)
+            .attr("y", 0)
             .style("fill", "white")
-            .select(".rect-fg")
-            .style("opacity", 0)
-    }, 1000)
+            .attr("alignment-baseline", "hanging")
+            .html(selected_topic)
+
+
+    }
 
     // Wait for 3 secs before doing this next bit
     d3.timeout(() => {
@@ -2322,6 +2352,8 @@ function fifth_slide(no_transition = false, topic_selection = false) {
             .domain([0, 0.3])
             .range([height, 0])
 
+        y = slide5_yScale
+
         d3.select("#slide5-group")
             .remove()
 
@@ -2345,7 +2377,9 @@ function update_fifth_slide(no_transition, initial = false) {
         selected_topic = d3.select("#topic-dropdown")
             .property("value")
     } catch(err) {
-        //pass
+        let topics = Object.keys(topic_medians_data)
+        // If there is no selected topic or no dropdown, select a random one
+        selected_topic = selected_topic || topics[Math.floor(Math.random()*topics.length)]
     }
 
     var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
@@ -2999,6 +3033,12 @@ function sixth_slide(no_transition = false) {
                 .attr("r", 3)
             slide6Group.select("line.topic-"+i)
                 .attr("stroke-width", 1)
+        })
+        .on("click", d => {
+            selected_topic = d[0]
+            new_slide = 4
+            update_state()
+
         })
 
     // Switch to relative change view

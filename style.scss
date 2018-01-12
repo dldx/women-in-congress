@@ -132,6 +132,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .x-label,
 .y-axis text,
 .y-label {
+  pointer-events: none;
   fill: invert($graph-background);
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
