@@ -2339,6 +2339,7 @@ function fifth_slide(no_transition = false) {
                 .data(baked_positions_data.map(topic => topic.key))
                 .enter()
                 .append("option")
+                .attr("selected", d => d == selected_topic ? "selected" : null)
                 .text(d => d)
         }
 
@@ -2801,8 +2802,10 @@ function to_sixth_slide(current_slide) {
 
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 5) {
-        lastTransitioned = 5
-        t0.on("end", () => sixth_slide(current_slide != 4))
+        t0.on("end", () => {
+            sixth_slide(false)
+            lastTransitioned = 5
+        })
     } else {
         t0.on("end", () => sixth_slide(true))
     }
@@ -2819,14 +2822,19 @@ function to_sixth_slide(current_slide) {
 // SHOW HOW OFTEN EACH GENDER TALKS ABOUT EVERY TOPIC
 // ----------------------------------------------------------------------------
 function sixth_slide(no_transition = false) {
-    // Remove elements from this slide if already created
-    d3.select("#slide6-group")
-        .remove()
+    // If we've already visited this slide, set no_transition to true
+    no_transition = lastTransitioned >= 5
 
-    // Add group to hold sixth slide lines
-    slide6Group = zoomedArea
-        .append("g")
-        .attr("id", "slide6-group")
+    if(no_transition == false) {
+        // Remove elements from this slide if already created
+        d3.select("#slide6-group")
+            .remove()
+
+        // Add group to hold sixth slide lines
+        slide6Group = zoomedArea
+            .append("g")
+            .attr("id", "slide6-group")
+    }
 
     // Hide canvas
     canvas
@@ -2861,7 +2869,8 @@ function sixth_slide(no_transition = false) {
     d3.selectAll(".y-axis > .tick text")
         .style("text-transform", "uppercase")
 
-    if(no_transition == false) {
+    // Only do the ollowing steps if we'e coming from slide 5
+    if(current_slide == 4) {
     // Only show selected topic's label for now
         d3.selectAll(".y-axis > .tick text")
             .style("opacity", d => d == selected_topic ? 1 : 0)
@@ -2955,141 +2964,150 @@ function sixth_slide(no_transition = false) {
     var t1 = t0.transition()
         .duration(500)
 
+
+    if(no_transition == false) {
     // Add all the other topics too
-    median_connector_line_svg
-        .data(sorted_topics)
-        .enter()
-        .append("line")
-        .attr("class", (d, i) => "median-connector topic-"+i)
-        .attr("stroke-width", 1)
-        .attr("x1", x(0))
-        .attr("x2", x(0))
-        .attr("y1", d => y(d[0]))
-        .attr("y2", d => y(d[0]))
-        .attr("opacity", 0)
-        .transition(t1)
-        .delay((d, i) => 1000 + i*50)
-        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
-        .attr("x1", d => x(d[1]["female"]))
-        .attr("x2", d => x(d[1]["male"]))
+        median_connector_line_svg
+            .data(sorted_topics)
+            .enter()
+            .append("line")
+            .attr("class", (d, i) => "median-connector topic-"+i)
+            .attr("stroke-width", 1)
+            .attr("x1", x(0))
+            .attr("x2", x(0))
+            .attr("y1", d => y(d[0]))
+            .attr("y2", d => y(d[0]))
+            .attr("opacity", 0)
+            .transition(t1)
+            .delay((d, i) => 1000 + i*50)
+            .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+            .attr("x1", d => x(d[1]["female"]))
+            .attr("x2", d => x(d[1]["male"]))
 
-    male_median_circle_svg
-        .data(sorted_topics)
-        .enter()
-        .append("circle")
-        .attr("class", (d, i) => "male-median topic-"+i)
-        .attr("r", 3)
-        .attr("cx", x(0))
-        .attr("cy", d => y(d[0]))
-        .attr("opacity", 0)
-        .transition(t1)
-        .delay((d, i) => 1000 + i*50)
-        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
-        .attr("cx", d => x(d[1]["male"]))
+        male_median_circle_svg
+            .data(sorted_topics)
+            .enter()
+            .append("circle")
+            .attr("class", (d, i) => "male-median topic-"+i)
+            .attr("r", 3)
+            .attr("cx", x(0))
+            .attr("cy", d => y(d[0]))
+            .attr("opacity", 0)
+            .transition(t1)
+            .delay((d, i) => 1000 + i*50)
+            .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+            .attr("cx", d => x(d[1]["male"]))
 
-    female_median_circle_svg
-        .data(sorted_topics)
-        .enter()
-        .append("circle")
-        .attr("class", (d, i) => "female-median topic-"+i)
-        .attr("r", 3)
-        .attr("cx", x(0))
-        .attr("cy", d => y(d[0]))
-        .attr("opacity", 0)
-        .transition(t1)
-        .delay((d, i) => 1000 + i*50)
-        .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
-        .attr("cx", d => x(d[1]["female"]))
+        female_median_circle_svg
+            .data(sorted_topics)
+            .enter()
+            .append("circle")
+            .attr("class", (d, i) => "female-median topic-"+i)
+            .attr("r", 3)
+            .attr("cx", x(0))
+            .attr("cy", d => y(d[0]))
+            .attr("opacity", 0)
+            .transition(t1)
+            .delay((d, i) => 1000 + i*50)
+            .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
+            .attr("cx", d => x(d[1]["female"]))
 
-    t2 = t1.transition().delay(3400)
-        .on("end", () => {
-            slide6Group
-                .selectAll(".topic-"+sorted_topics.map(d => d[0]).indexOf(selected_topic))
-                .attr("opacity", 1)
-            slide6Group.selectAll(".tmp").remove()
-            // Make all axis tick labels visible
-            d3.selectAll(".y-axis > .tick text")
-                .style("opacity", 1)
-                .style("transition", "opacity 0.2s ease-in-out")
-        })
+        t2 = t1.transition().delay(3400)
+            .on("end", () => {
+                slide6Group
+                    .selectAll(".topic-"+sorted_topics.map(d => d[0]).indexOf(selected_topic))
+                    .attr("opacity", 1)
+                slide6Group.selectAll(".tmp").remove()
+                // Make all axis tick labels visible
+                d3.selectAll(".y-axis > .tick text")
+                    .style("opacity", 1)
+                    .style("transition", "opacity 0.2s ease-in-out")
+            })
 
-    // Hover rects to catch mouseovers
-    slide6Group
-        .selectAll(".hover-rect")
-        .data(sorted_topics)
-        .enter()
-        .append("rect")
-        .attr("class", "hover-rect")
-        .attr("x", x(0))
-        .attr("y", d => y(d[0]) - y.step()/2)
-        .attr("width", width)
-        .attr("height", y.step())
-        .on("mouseover", (d, i) => {
-            slide6Group.selectAll("circle.topic-"+i)
-                .attr("r", 6)
-            slide6Group.select("line.topic-"+i)
-                .attr("stroke-width", 3)
-        })
-        .on("mouseout", (d, i) => {
-            slide6Group.selectAll("circle.topic-"+i)
-                .attr("r", 3)
-            slide6Group.select("line.topic-"+i)
-                .attr("stroke-width", 1)
-        })
-        .on("click", d => {
-            selected_topic = d[0]
-            new_slide = 4
-            update_state()
+        // Hover rects to catch mouseovers
+        slide6Group
+            .selectAll(".hover-rect")
+            .data(sorted_topics)
+            .enter()
+            .append("rect")
+            .attr("class", "hover-rect")
+            .attr("x", x(0))
+            .attr("y", d => y(d[0]) - y.step()/2)
+            .attr("width", width)
+            .attr("height", y.step())
+            .on("mouseover", (d, i) => {
+                slide6Group.selectAll("circle.topic-"+i)
+                    .attr("r", 6)
+                slide6Group.select("line.topic-"+i)
+                    .attr("stroke-width", 3)
+            })
+            .on("mouseout", (d, i) => {
+                slide6Group.selectAll("circle.topic-"+i)
+                    .attr("r", 3)
+                slide6Group.select("line.topic-"+i)
+                    .attr("stroke-width", 1)
+            })
+            .on("click", d => {
+                selected_topic = d[0]
+                new_slide = 4
+                update_state()
 
-        })
+            })
 
-    // Switch to relative change view
-    t3 = t2.transition().delay(1000)
-        .on("end", () => {
-            x.domain([-0.04, 0.04])
-            xAxis = d3.axisBottom(x)
-                .tickFormat(d => (d * 100).toFixed(0) + "%")
-            gX.transition()
-                .call(xAxis)
-                .on("end", () => {
-                    var t_ = d3.transition()
-                        .duration(1000)
+        // Switch to relative change view
+        t3 = t2.transition().delay(1000)
+            .on("end", () => {
+                x.domain([-0.04, 0.04])
+                xAxis = d3.axisBottom(x)
+                    .tickFormat(d => (d * 100).toFixed(0) + "%")
+                gX.transition()
+                    .call(xAxis)
+                    .on("end", () => {
+                        var t_ = d3.transition()
+                            .duration(1000)
 
-                    slide6Group.selectAll(".median-connector")
-                        .transition(t_)
-                        .delay((d, i) => i*50)
-                        .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
-                        .attr("x2", x(0))
+                        slide6Group.selectAll(".median-connector")
+                            .transition(t_)
+                            .delay((d, i) => i*50)
+                            .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
+                            .attr("x2", x(0))
 
-                    slide6Group.selectAll(".female-median")
-                        .transition(t_)
-                        .delay((d, i) => i*50)
-                        .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+                        slide6Group.selectAll(".female-median")
+                            .transition(t_)
+                            .delay((d, i) => i*50)
+                            .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
 
-                    slide6Group.selectAll(".male-median")
-                        .transition(t_)
-                        .delay((d, i) => i*50)
-                        .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
-                        .on("end", (d, i) => {
-                            d3.selectAll(".y-axis > .tick text")
+                        slide6Group.selectAll(".male-median")
+                            .transition(t_)
+                            .delay((d, i) => i*50)
+                            .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+                            .on("end", (d, i) => {
+                                d3.selectAll(".y-axis > .tick text")
                                 // .filter(c => d[0] == c)
-                                .style("opacity", 0)
-                        })
+                                    .style("opacity", 0)
+                            })
 
-                })
+                    })
 
-        })
+            })
+        t4 = t3.transition()
+    } else {
+        // Just make it visible because it already exists
+        t4 = d3.transition()
+            .on("end", () => {
+                slide6Group.style("opacity", 1)
+            })
+    }
 
     let label_pos = sorted_topics
         .map(d => d[1]["female"] - d[1]["male"] > 0)
 
-    t4 = t3.transition()
 
     d3.selectAll(".y-axis > .tick text")
         .filter(d => Object.keys(topic_medians_data).indexOf(d) != -1)
         .transition(t4)
-        .delay((d, i) => 3000)
-        .duration(1000)
+        .delay((d, i) => no_transition ? 0 : 3000)
+        .duration(no_transition ? 1 : 1000)
         .style("text-anchor", (d,i) => {
             return label_pos[i] ? "end" : "start"
         })
