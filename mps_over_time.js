@@ -2239,7 +2239,7 @@ function to_fifth_slide(current_slide) {
 // ╚═╝     ╚═╝╚═╝        ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
 // Go to the fifth slide
 // ----------------------------------------------------------------------------
-function fifth_slide(no_transition = false, topic_selection = false) {
+function fifth_slide(no_transition = false) {
 
     d3.select("#topic-dropdown").remove()
 
@@ -2330,7 +2330,7 @@ function fifth_slide(no_transition = false, topic_selection = false) {
             .style("pointer-events", "all")
 
         // Add a dropdown to select different topics
-        if (topic_selection) {
+        if (lastTransitioned > 4) {
             d3.select("body")
                 .insert("select", ":first-child")
                 .attr("id", "topic-dropdown")
@@ -2800,9 +2800,9 @@ function to_sixth_slide(current_slide) {
     gX.transition().call(xAxis)
 
     // Increment lastTransitioned counter if it is less than 0
-    if (lastTransitioned < 5 & current_slide == 4) {
+    if (lastTransitioned < 5) {
         lastTransitioned = 5
-        t0.on("end", () => sixth_slide(false))
+        t0.on("end", () => sixth_slide(current_slide != 4))
     } else {
         t0.on("end", () => sixth_slide(true))
     }
@@ -2945,6 +2945,8 @@ function sixth_slide(no_transition = false) {
             .text("Average % of time spent on topic")
             .style("opacity", 1)
 
+        gX.style("opacity", 1)
+        gY.style("opacity", 1)
         yLabel.style("opacity", 0)
 
     }// endif no_transition == false
