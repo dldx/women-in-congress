@@ -277,7 +277,7 @@ $tip-padding: 1;
   line-height: 1;
   overflow: hidden;
   padding: $tip-padding + rem;
-  // pointer-events: none;
+  pointer-events: none;
   position: absolute;
   left: 20%;
   top: 10%;
@@ -517,8 +517,31 @@ $tip-padding: 1;
 
 #slide4 {
   opacity: 0;
-  transition: opacity 1s linear;
+  transition: opacity 1s ease-in-out;
 }
+
+.slide5-dropdown {
+  background-color: rgba(0, 0, 0, 0) !important;
+  transform: translateZ(0);
+  font-size: 1rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  color: white !important;
+  border-color: white !important;
+  min-height: 0px !important;
+  position: absolute;
+  z-index: 999;
+
+  &>.text:not(.default) {
+  font-weight: 200 !important;
+    color: white !important;
+  }
+}
+
+#slide6-group {
+  transition: opacity 1s ease-in-out;
+}
+
 @media screen and (min-height: 500px) {
   #timeline > svg,
   .mp-party {
@@ -599,12 +622,4 @@ $tip-padding: 1;
 
 .women-pct-track {
   stroke: steelblue;
-}
-
-#topic-dropdown {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  z-index: 999;
-  transition: opacity 1s ease-in-out;
 }

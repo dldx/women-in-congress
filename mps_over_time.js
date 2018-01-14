@@ -2190,7 +2190,8 @@ function to_fifth_slide(current_slide) {
         break
     case 5:
     // Fade out sixth slide
-        slide6Group.style("opacity", 0)
+        d3.select("#slide6-group")
+            .style("opacity", 0)
         break
     }
 
@@ -2205,28 +2206,26 @@ function to_fifth_slide(current_slide) {
     electionRects
         .transition(t0)
         .style("opacity", 0)
-        .remove()
+        .on("end", function() {
+            this.remove()
+        })
 
     gX
-        .transition(t0)
         .style("opacity", 0)
     gY
-        .transition(t0)
         .style("opacity", 0)
 
     xLabel
-        .transition(t0)
         .style("opacity", 0)
     yLabel
-        .transition(t0)
         .style("opacity", 0)
 
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 4) {
         lastTransitioned = 4
-        t0.on("end", () => fifth_slide(false))
+        fifth_slide(false)
     } else {
-        t0.on("end", () => fifth_slide(true))
+        fifth_slide(true)
     }
 
 }
@@ -2298,27 +2297,7 @@ function fifth_slide(no_transition = false) {
         }, 1000)
 
     } catch(e) {
-        // If we can't find a topic bar, then we just create a new one in the correct location
-
-        // Append a new svg to the document containing a copy of this label
-        d3.select("body")
-            .append("svg")
-            .attr("id", "floating-topic")
-            .style("top", 0)
-            .style("left", 0)
-            .style("position", "absolute")
-            .attr("width", width/2)
-            .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
-            .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
-            .append("text")
-            .attr("class", "rect-label")
-            .attr("x", 0)
-            .attr("y", 0)
-            .style("fill", "white")
-            .attr("alignment-baseline", "hanging")
-            .html(selected_topic)
-
-
+        //pass
     }
 
     // Wait for 3 secs before doing this next bit
@@ -2340,7 +2319,18 @@ function fifth_slide(no_transition = false) {
                 .enter()
                 .append("option")
                 .attr("selected", d => d == selected_topic ? "selected" : null)
-                .text(d => d)
+                .attr("value", d => d)
+                .text(d => d.toUpperCase())
+
+            $("#topic-dropdown").dropdown()
+            d3.select("#topic-dropdown")
+                .node()
+                .parentNode
+                .className += " slide5-dropdown"
+
+            d3.select(".slide5-dropdown")
+                .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+
         }
 
 
@@ -2369,7 +2359,7 @@ function fifth_slide(no_transition = false) {
         colourToNode = {}
         // Call function initially
         update_fifth_slide(no_transition, true)
-    }, 3000)
+    }, no_transition ? 500 : 3000)
 }
 
 function update_fifth_slide(no_transition, initial = false) {
@@ -2382,6 +2372,10 @@ function update_fifth_slide(no_transition, initial = false) {
         // If there is no selected topic or no dropdown, select a random one
         selected_topic = selected_topic || topics[Math.floor(Math.random()*topics.length)]
     }
+
+    // Change the floating label
+    d3.select("#floating-topic > .rect-label")
+        .html(selected_topic)
 
     var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
 
