@@ -263,6 +263,7 @@ $tip-padding: 1;
 
 #slide4,
 #tooltip {
+  z-index: 99;
   transform: translateZ(0);
   opacity: 0;
   background-color: rgba($tip-background, .8);
@@ -530,7 +531,7 @@ $tip-padding: 1;
   border-color: white !important;
   min-height: 0px !important;
   position: absolute;
-  z-index: 999;
+  z-index: 50;
 
   &>.text:not(.default) {
   font-weight: 200 !important;

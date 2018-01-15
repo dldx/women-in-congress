@@ -103,7 +103,6 @@ var width = 0,
 
 var ratio,
     clippedArea,
-    colourToNode,
     electionRects,
     zoom,
     wrapper,
@@ -161,6 +160,10 @@ var mps_over_time_data,
 // then it also has an SVG logo that we can use
 var partyHasLogo = Object.keys(colors)
 
+// Dict to track the colours of nodes for the canvas mouseovers
+var colourToNode = {}
+var colourToNode_slide5 = {}
+var initial_slide5 = true
 
 // ----------------------------------------------------------------------------
 // WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
@@ -655,9 +658,6 @@ function first_slide() {
     instance = dataContainer
         .selectAll("custom.line")
         .data(mps_over_time_data)
-
-    // Map to track the colour of nodes.
-    colourToNode = {}
 
     // Add a line connecting start and end of term
     instance
@@ -2356,14 +2356,12 @@ function fifth_slide(no_transition = false) {
         // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
         // .attr("transform", "scale(" + width/1900 + ")")
 
-        // Map to track the colour of nodes.
-        colourToNode = {}
         // Call function initially
-        update_fifth_slide(no_transition, true)
+        update_fifth_slide(no_transition)
     }, no_transition ? 500 : 3000)
 }
 
-function update_fifth_slide(no_transition, initial = false) {
+function update_fifth_slide(no_transition) {
     // Get value of topic dropdown
     try {
         selected_topic = d3.select("#topic-dropdown")
@@ -2425,10 +2423,10 @@ function update_fifth_slide(no_transition, initial = false) {
         .attr("hiddenFillStyle", function (d) {
             if (!d.hiddenCol) {
                 d.hiddenCol = genColor()
-                colourToNode[d.hiddenCol] = d
+                colourToNode_slide5[d.hiddenCol] = d
             }
             // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode-map.
+            // and(2) map the colour to the node in the colourToNode_slide5-map.
             return d.hiddenCol
         })
         .transition(t0)
@@ -2462,7 +2460,7 @@ function update_fifth_slide(no_transition, initial = false) {
         .attr("hiddenFillStyle", function (d) {
             if (!d.hiddenCol) {
                 d.hiddenCol = genColor()
-                colourToNode[d.hiddenCol] = d
+                colourToNode_slide5[d.hiddenCol] = d
             }
             // Here you (1) add a unique colour as property to each element
             // and(2) map the colour to the node in the colourToNode-map.
@@ -2521,7 +2519,7 @@ function update_fifth_slide(no_transition, initial = false) {
         .attr("hiddenFillStyle", function (d) {
             if (!d.hiddenCol) {
                 var hiddenCol = genColor()
-                colourToNode[hiddenCol] = { male_median: d }
+                colourToNode_slide5[hiddenCol] = { male_median: d }
             }
             // Here you (1) add a unique colour as property to each element
             // and(2) map the colour to the node in the colourToNode-map.
@@ -2555,7 +2553,7 @@ function update_fifth_slide(no_transition, initial = false) {
         .attr("hiddenFillStyle", function (d) {
             if (!d.hiddenCol) {
                 var hiddenCol = genColor()
-                colourToNode[hiddenCol] = { female_median: d }
+                colourToNode_slide5[hiddenCol] = { female_median: d }
             }
             // Here you (1) add a unique colour as property to each element
             // and(2) map the colour to the node in the colourToNode-map.
@@ -2623,11 +2621,13 @@ function update_fifth_slide(no_transition, initial = false) {
     // Animate node entrances
     var t = d3.timer((elapsed) => {
         draw(context, false)
-        if ((initial & (elapsed > 5000)) | (initial != true & (elapsed > 2000))) {
+        if ((initial_slide5 & (elapsed > 5000)) | (initial_slide5 != true & (elapsed > 1000))) {
             t.stop()
             draw(context)
             // Draw hidden canvas nodes to catch interactions
             draw(context_hidden, true)
+            // First time we run this, we record the fact it was run
+            initial_slide5 = false
         }
     })
 
@@ -2644,7 +2644,7 @@ function update_fifth_slide(no_transition, initial = false) {
         // Then stringify the values in a way our map-object can read it.
         var colKey = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")"
         // Get the data from our map!
-        var nodeData = colourToNode[colKey]
+        var nodeData = colourToNode_slide5[colKey]
 
         // Only show mouseover if MP is in toggled party or if no party is filtered
         if (typeof (nodeData) !== "undefined") {
