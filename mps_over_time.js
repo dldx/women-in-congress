@@ -562,8 +562,12 @@ function zoomed() {
     context_hidden.restore()
 
     // And the svg axes
-    if (current_slide == 0 | current_slide == 1) {
+    if (current_slide == 0 |
+        current_slide == 1) {
         gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
+    } else if(current_slide == 4) {
+        gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale)).ticks(20))
+        draw_custom_labels()
     } else {
         d3.event.transform.rescaleX(x)
     }
@@ -2189,7 +2193,7 @@ function to_fifth_slide(current_slide) {
             .remove()
         break
     case 5:
-    // Fade out sixth slide
+        // Fade out sixth slide
         d3.select("#slide6-group")
             .style("opacity", 0)
         break
@@ -2206,7 +2210,7 @@ function to_fifth_slide(current_slide) {
     electionRects
         .transition(t0)
         .style("opacity", 0)
-        .on("end", function() {
+        .on("end", function () {
             this.remove()
         })
 
@@ -2240,15 +2244,26 @@ function to_fifth_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function fifth_slide(no_transition = false) {
 
-    d3.select("#topic-dropdown").remove()
-    d3.selectAll(".slide5-dropdown").remove()
+    d3.select("#topic-dropdown")
+        .remove()
 
-    d3.select("#floating-topic").remove()
+    d3.selectAll(".slide5-dropdown")
+        .remove()
+
+    d3.select("#floating-topic")
+        .remove()
+
+    wrapper.select(".x-custom-axis").remove()
+    wrapper.append("g")
+        .attr("class", "x-custom-axis")
+        .attr("transform", "translate(0," + height + ")")
 
     // Switching from 4th slide
     try {
-    // Get the position of the first label in the topic selection
-        var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg").node().getBoundingClientRect()
+        // Get the position of the first label in the topic selection
+        var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg")
+            .node()
+            .getBoundingClientRect()
 
         // Append a new svg to the document containing a copy of this label
         d3.select("body")
@@ -2260,9 +2275,13 @@ function fifth_slide(no_transition = false) {
             .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
             .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
             .node()
-            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg").node().cloneNode())
+            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg")
+                .node()
+                .cloneNode())
             .parentNode
-            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label").node().cloneNode())
+            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label")
+                .node()
+                .cloneNode())
 
         // Fade out slide4
         d3.select("#slide4")
@@ -2277,12 +2296,13 @@ function fifth_slide(no_transition = false) {
             .transition()
             .delay(1000)
             .duration(1000)
-            .attr("width", width/2)
+            .attr("width", width / 2)
 
         // Set the label text because it doesn't get copied for some reason
         d3.select("#floating-topic > .rect-label")
-            .html(function() {
-                selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title").split(":")[0]
+            .html(function () {
+                selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title")
+                    .split(":")[0]
                 return selected_topic
             })
 
@@ -2297,11 +2317,11 @@ function fifth_slide(no_transition = false) {
                 .style("opacity", 0)
         }, 1000)
 
-    } catch(e) {
+    } catch (e) {
         // Not coming from slide 4 so we can just put text in the right location without animation
 
-        if(lastTransitioned < 5) {
-        // Append a new svg to the document containing a copy of this label
+        if (lastTransitioned < 5) {
+            // Append a new svg to the document containing a copy of this label
             d3.select("body")
                 .append("svg")
                 .attr("id", "floating-topic")
@@ -2323,7 +2343,7 @@ function fifth_slide(no_transition = false) {
 
     // Wait for 3 secs before doing this next bit
     d3.timeout(() => {
-    // Enable canvas
+        // Enable canvas
         d3.select("#visible-canvas")
             .style("opacity", 1)
             .style("display", null)
@@ -2343,7 +2363,8 @@ function fifth_slide(no_transition = false) {
                 .attr("value", d => d)
                 .text(d => d.toUpperCase())
 
-            $("#topic-dropdown").dropdown()
+            $("#topic-dropdown")
+                .dropdown()
             d3.select("#topic-dropdown")
                 .node()
                 .parentNode
@@ -2386,10 +2407,10 @@ function update_fifth_slide(no_transition) {
     try {
         selected_topic = d3.select("#topic-dropdown")
             .property("value")
-    } catch(err) {
+    } catch (err) {
         let topics = Object.keys(topic_medians_data)
         // If there is no selected topic or no dropdown, select a random one
-        selected_topic = selected_topic || topics[Math.floor(Math.random()*topics.length)]
+        selected_topic = selected_topic || topics[Math.floor(Math.random() * topics.length)]
     }
 
     // Change the floating label
@@ -2635,7 +2656,6 @@ function update_fifth_slide(no_transition) {
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
             })
-
     }
 
     // Animate node entrances
@@ -2650,6 +2670,51 @@ function update_fifth_slide(no_transition) {
             initial_slide5 = false
         }
     })
+
+    window.draw_custom_labels = function() {
+        let xlabels = d3.selectAll(".x-axis text").nodes()
+        let female_label = xlabels[xlabels.map(d => +d.textContent).indexOf(8)]
+        if (typeof(female_label) == "undefined") {
+            female_label = xlabels.filter(d => +d.textContent > 0)[0]
+        }
+        let male_label = xlabels[xlabels.map(d => +d.textContent).indexOf(-8)]
+        if (typeof(male_label) == "undefined") {
+            male_label = xlabels.filter(d => +d.textContent < 0)
+            male_label = male_label[male_label.length - 1]
+        }
+
+        // Clear old labels
+        wrapper.select(".x-custom-axis")
+            .selectAll("*")
+            .remove()
+
+        // Draw axis labels for men and women if within range
+        if (typeof (male_label) != "undefined") {
+            wrapper.select(".x-custom-axis")
+                .append("text")
+                .attr("class", "x-label x-custom-label")
+                .attr("transform", male_label.parentNode.getAttribute("transform"))
+                .attr("dy", 10)
+                .style("text-anchor", "end")
+                .style("fill", colors["Lab"])
+                .html("Men")
+        }
+
+        if (typeof (female_label) != "undefined") {
+            wrapper.select(".x-custom-axis")
+                .append("text")
+                .attr("class", "x-label x-custom-label")
+                .attr("transform", female_label.parentNode.getAttribute("transform"))
+                .attr("dy", 10)
+                .style("text-anchor", "start")
+                .style("fill", colors["Hover"])
+                .html("Women")
+        }
+
+    }
+    // Update axis ticks and draw custom labels for Men and Women on x-axis
+    gX.call(d3.axisBottom(slide5_xScale).ticks(20))
+    draw_custom_labels()
 
     // mouseover function for getting MP info
     function mpMouseover() {
@@ -2779,7 +2844,7 @@ function to_sixth_slide(current_slide) {
         break
 
     case 4:
-        d3.selectAll("#floating-topic, .slide5-dropdown")
+        d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis")
             .style("opacity", 0)
             .transition()
             .delay(1000)
@@ -2808,7 +2873,8 @@ function to_sixth_slide(current_slide) {
             .domain([0, 0.05])
         // Redraw axes
         xAxis = d3.axisBottom(x)
-            .tickFormat(d => (d * 100).toFixed(1) + "%")
+            .tickFormat(d => (d * 100)
+                .toFixed(1) + "%")
     } else {
         // Use x scale at end of transition instead
         x = d3.scaleLinear()
@@ -2816,9 +2882,11 @@ function to_sixth_slide(current_slide) {
             .domain([-0.04, 0.04])
         // Redraw axes
         xAxis = d3.axisBottom(x)
-            .tickFormat(d => (d * 100).toFixed(0) + "%")
+            .tickFormat(d => (d * 100)
+                .toFixed(0) + "%")
     }
-    gX.transition().call(xAxis)
+    gX.transition()
+        .call(xAxis)
 
     y = d3.scalePoint()
         .range([height, 0])
@@ -2850,7 +2918,7 @@ function sixth_slide(no_transition = false) {
     // If we've already visited this slide, set no_transition to true
     no_transition = lastTransitioned >= 5
 
-    if(no_transition == false) {
+    if (no_transition == false) {
         // Remove elements from this slide if already created
         d3.select("#slide6-group")
             .remove()
@@ -2878,7 +2946,8 @@ function sixth_slide(no_transition = false) {
 
     y.domain(sorted_topics.map(d => d[0]))
     yAxis = d3.axisLeft(y)
-    gY.transition().call(yAxis)
+    gY.transition()
+        .call(yAxis)
 
     // Hide axis line and ticks
     d3.select(".y-axis > path")
@@ -2895,8 +2964,8 @@ function sixth_slide(no_transition = false) {
         .style("text-transform", "uppercase")
 
     // Only do the ollowing steps if we'e coming from slide 5
-    if(lastTransitioned == 4) {
-    // Only show selected topic's label for now
+    if (lastTransitioned == 4) {
+        // Only show selected topic's label for now
         d3.selectAll(".y-axis > .tick text")
             .style("opacity", d => d == selected_topic ? 1 : 0)
 
@@ -2933,7 +3002,7 @@ function sixth_slide(no_transition = false) {
             .attr("cy", d => slide5_yScale(d))
             .attr("r", 3)
             .transition(t0)
-            .attr("cx", d => {return x(d)})
+            .attr("cx", d => { return x(d) })
             .attr("cy", y(selected_topic))
 
         // Add hidden svg circle
@@ -2949,15 +3018,16 @@ function sixth_slide(no_transition = false) {
             .attr("cy", d => slide5_yScale(d))
             .attr("r", 3)
             .transition(t0)
-            .attr("cx", d => {return x(d)})
+            .attr("cx", d => { return x(d) })
             .attr("cy", y(selected_topic))
             .on("end", () => {
 
                 gX.style("opacity", 1)
                 gY.style("opacity", 1)
                 xLabel
-                    .text("Average % of time spent on topic").style("opacity", 1)
-            // yLabel.style("opacity", 1)
+                    .text("Average % of time spent on topic")
+                    .style("opacity", 1)
+                // yLabel.style("opacity", 1)
             })
 
     } else {
@@ -2983,20 +3053,20 @@ function sixth_slide(no_transition = false) {
         gY.style("opacity", 1)
         yLabel.style("opacity", 0)
 
-    }// endif no_transition == false
+    } // endif no_transition == false
 
     // Next transition
     var t1 = t0.transition()
         .duration(500)
 
 
-    if(no_transition == false) {
-    // Add all the other topics too
+    if (no_transition == false) {
+        // Add all the other topics too
         median_connector_line_svg
             .data(sorted_topics)
             .enter()
             .append("line")
-            .attr("class", (d, i) => "median-connector topic-"+i)
+            .attr("class", (d, i) => "median-connector topic-" + i)
             .attr("stroke-width", 1)
             .attr("x1", x(0))
             .attr("x2", x(0))
@@ -3004,7 +3074,7 @@ function sixth_slide(no_transition = false) {
             .attr("y2", d => y(d[0]))
             .attr("opacity", 0)
             .transition(t1)
-            .delay((d, i) => 1000 + i*50)
+            .delay((d, i) => 1000 + i * 50)
             .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
             .attr("x1", d => x(d[1]["female"]))
             .attr("x2", d => x(d[1]["male"]))
@@ -3013,13 +3083,13 @@ function sixth_slide(no_transition = false) {
             .data(sorted_topics)
             .enter()
             .append("circle")
-            .attr("class", (d, i) => "male-median topic-"+i)
+            .attr("class", (d, i) => "male-median topic-" + i)
             .attr("r", 3)
             .attr("cx", x(0))
             .attr("cy", d => y(d[0]))
             .attr("opacity", 0)
             .transition(t1)
-            .delay((d, i) => 1000 + i*50)
+            .delay((d, i) => 1000 + i * 50)
             .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
             .attr("cx", d => x(d[1]["male"]))
 
@@ -3027,22 +3097,25 @@ function sixth_slide(no_transition = false) {
             .data(sorted_topics)
             .enter()
             .append("circle")
-            .attr("class", (d, i) => "female-median topic-"+i)
+            .attr("class", (d, i) => "female-median topic-" + i)
             .attr("r", 3)
             .attr("cx", x(0))
             .attr("cy", d => y(d[0]))
             .attr("opacity", 0)
             .transition(t1)
-            .delay((d, i) => 1000 + i*50)
+            .delay((d, i) => 1000 + i * 50)
             .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
             .attr("cx", d => x(d[1]["female"]))
 
-        t2 = t1.transition().delay(3400)
+        t2 = t1.transition()
+            .delay(3400)
             .on("end", () => {
                 slide6Group
-                    .selectAll(".topic-"+sorted_topics.map(d => d[0]).indexOf(selected_topic))
+                    .selectAll(".topic-" + sorted_topics.map(d => d[0])
+                        .indexOf(selected_topic))
                     .attr("opacity", 1)
-                slide6Group.selectAll(".tmp").remove()
+                slide6Group.selectAll(".tmp")
+                    .remove()
                 // Make all axis tick labels visible
                 d3.selectAll(".y-axis > .tick text")
                     .style("opacity", 1)
@@ -3057,19 +3130,19 @@ function sixth_slide(no_transition = false) {
             .append("rect")
             .attr("class", "hover-rect")
             .attr("x", x(0))
-            .attr("y", d => y(d[0]) - y.step()/2)
+            .attr("y", d => y(d[0]) - y.step() / 2)
             .attr("width", width)
             .attr("height", y.step())
             .on("mouseover", (d, i) => {
-                slide6Group.selectAll("circle.topic-"+i)
+                slide6Group.selectAll("circle.topic-" + i)
                     .attr("r", 6)
-                slide6Group.select("line.topic-"+i)
+                slide6Group.select("line.topic-" + i)
                     .attr("stroke-width", 3)
             })
             .on("mouseout", (d, i) => {
-                slide6Group.selectAll("circle.topic-"+i)
+                slide6Group.selectAll("circle.topic-" + i)
                     .attr("r", 3)
-                slide6Group.select("line.topic-"+i)
+                slide6Group.select("line.topic-" + i)
                     .attr("stroke-width", 1)
             })
             .on("click", d => {
@@ -3080,11 +3153,13 @@ function sixth_slide(no_transition = false) {
             })
 
         // Switch to relative change view
-        t3 = t2.transition().delay(1000)
+        t3 = t2.transition()
+            .delay(1000)
             .on("end", () => {
                 x.domain([-0.04, 0.04])
                 xAxis = d3.axisBottom(x)
-                    .tickFormat(d => (d * 100).toFixed(0) + "%")
+                    .tickFormat(d => (d * 100)
+                        .toFixed(0) + "%")
                 gX.transition()
                     .call(xAxis)
                     .on("end", () => {
@@ -3093,22 +3168,22 @@ function sixth_slide(no_transition = false) {
 
                         slide6Group.selectAll(".median-connector")
                             .transition(t_)
-                            .delay((d, i) => i*50)
+                            .delay((d, i) => i * 50)
                             .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
                             .attr("x2", x(0))
 
                         slide6Group.selectAll(".female-median")
                             .transition(t_)
-                            .delay((d, i) => i*50)
+                            .delay((d, i) => i * 50)
                             .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
 
                         slide6Group.selectAll(".male-median")
                             .transition(t_)
-                            .delay((d, i) => i*50)
+                            .delay((d, i) => i * 50)
                             .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
                             .on("end", (d, i) => {
                                 d3.selectAll(".y-axis > .tick text")
-                                // .filter(c => d[0] == c)
+                                    // .filter(c => d[0] == c)
                                     .style("opacity", 0)
                             })
 
@@ -3140,14 +3215,15 @@ function sixth_slide(no_transition = false) {
 
 
     d3.selectAll(".y-axis > .tick text")
-        .filter(d => Object.keys(topic_medians_data).indexOf(d) != -1)
+        .filter(d => Object.keys(topic_medians_data)
+            .indexOf(d) != -1)
         .transition(t4)
         .delay((d, i) => no_transition ? 0 : 3000)
         .duration(no_transition ? 1 : 1000)
-        .style("text-anchor", (d,i) => {
+        .style("text-anchor", (d, i) => {
             return label_pos[i] ? "end" : "start"
         })
-        .attr("x", (d,i) => label_pos[i] ? x.domain([-0.04, 0.04])(-0.001) : x.domain([-0.04, 0.04])(0.001))
+        .attr("x", (d, i) => label_pos[i] ? x.domain([-0.04, 0.04])(-0.001) : x.domain([-0.04, 0.04])(0.001))
         .transition()
         .delay(500)
         .duration(500)

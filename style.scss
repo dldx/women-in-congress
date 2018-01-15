@@ -140,6 +140,10 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   transition: opacity 1s ease-in-out;
 }
 
+.x-custom-axis {
+  transition: opacity 1s ease-in-out;
+}
+
 .x-axis,
 .y-axis {
   transition: opacity 1s ease-in-out;
