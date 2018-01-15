@@ -2298,7 +2298,27 @@ function fifth_slide(no_transition = false) {
         }, 1000)
 
     } catch(e) {
-        //pass
+        // Not coming from slide 4 so we can just put text in the right location without animation
+
+        if(lastTransitioned < 5) {
+        // Append a new svg to the document containing a copy of this label
+            d3.select("body")
+                .append("svg")
+                .attr("id", "floating-topic")
+                .style("top", 0)
+                .style("left", 0)
+                .style("position", "absolute")
+                .style("transform", `translate(${width/4 + 20}px, ${margin.top*2 + 10}px) translateZ(0)`)
+                .style("transition", " opacity 1s ease-in-out")
+                .append("text")
+                .attr("class", "rect-label")
+                .attr("alignment-baseline", "middle")
+                .attr("x", 5)
+                .attr("y", 15)
+                .style("fill", "white")
+                .html(selected_topic)
+        }
+
     }
 
     // Wait for 3 secs before doing this next bit
@@ -2875,7 +2895,7 @@ function sixth_slide(no_transition = false) {
         .style("text-transform", "uppercase")
 
     // Only do the ollowing steps if we'e coming from slide 5
-    if(current_slide == 4) {
+    if(lastTransitioned == 4) {
     // Only show selected topic's label for now
         d3.selectAll(".y-axis > .tick text")
             .style("opacity", d => d == selected_topic ? 1 : 0)
