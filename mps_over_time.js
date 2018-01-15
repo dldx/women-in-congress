@@ -2241,6 +2241,7 @@ function to_fifth_slide(current_slide) {
 function fifth_slide(no_transition = false) {
 
     d3.select("#topic-dropdown").remove()
+    d3.selectAll(".slide5-dropdown").remove()
 
     d3.select("#floating-topic").remove()
 
@@ -2758,7 +2759,7 @@ function to_sixth_slide(current_slide) {
         break
 
     case 4:
-        d3.select("#floating-topic")
+        d3.selectAll("#floating-topic, .slide5-dropdown")
             .style("opacity", 0)
             .transition()
             .delay(1000)
