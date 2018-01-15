@@ -2781,19 +2781,29 @@ function to_sixth_slide(current_slide) {
         .remove()
 
 
-    // Change scales
-    x = d3.scaleLinear()
-        .range([0, width])
-        .domain([0, 0.05])
+    if (lastTransitioned < 5) {
+        // Change scales
+        x = d3.scaleLinear()
+            .range([0, width])
+            .domain([0, 0.05])
+        // Redraw axes
+        xAxis = d3.axisBottom(x)
+            .tickFormat(d => (d * 100).toFixed(1) + "%")
+    } else {
+        // Use x scale at end of transition instead
+        x = d3.scaleLinear()
+            .range([0, width])
+            .domain([-0.04, 0.04])
+        // Redraw axes
+        xAxis = d3.axisBottom(x)
+            .tickFormat(d => (d * 100).toFixed(0) + "%")
+    }
+    gX.transition().call(xAxis)
 
     y = d3.scalePoint()
         .range([height, 0])
         .padding(1)
 
-    // Redraw axes
-    xAxis = d3.axisBottom(x)
-        .tickFormat(d => (d * 100).toFixed(1) + "%")
-    gX.transition().call(xAxis)
 
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 5) {
@@ -3087,7 +3097,18 @@ function sixth_slide(no_transition = false) {
             })
         t4 = t3.transition()
     } else {
-        // Just make it visible because it already exists
+        // Switch to relative change view in case this was skipped before
+        slide6Group.selectAll(".median-connector")
+            .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
+            .attr("x2", x(0))
+
+        slide6Group.selectAll(".female-median")
+            .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+
+        slide6Group.selectAll(".male-median")
+            .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+
+        // Now fade in the slide
         t4 = d3.transition()
             .on("end", () => {
                 slide6Group.style("opacity", 1)
