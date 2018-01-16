@@ -268,7 +268,6 @@ $tip-padding: 1;
 #slide4,
 #tooltip {
   z-index: 99;
-  transform: translate(20vh, 25vh) translateZ(0);
   opacity: 1;
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
@@ -517,6 +516,7 @@ $tip-padding: 1;
 #tooltip {
   left: 0;
   top: 0;
+  transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
 }
 
