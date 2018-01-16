@@ -468,6 +468,8 @@ function initial_render() {
         .append("div")
         .attr("id", "tooltip")
     tooltip = document.getElementById("tooltip")
+    tooltip.innerHTML = `<div style='padding: 2rem'>
+    You can hover on everything in this visualisation so go ahead and explore. Click the <em>Next</em> button when you're ready to continue.</div>`
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
