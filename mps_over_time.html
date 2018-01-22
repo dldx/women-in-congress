@@ -8,21 +8,57 @@
     </head>
 
     <body>
-        <div id="narrative">
+        <section id="header">
+            <h1>Women in Parliament</h1>
+            <h2>Celebrating 100 Years of Women in the House of Commons</h2>
+            <p>
+                This year marks a century since women in the United Kingdom were first given the right to vote in and stand for elections.
+                Today, in early 2018, there are 208 women from various parties and politicial persuassions serving their constituents in the House of Commons.
+                So how did we arrive here?
+                And what contribution have women MPs made to democracy in the UK? Let's dive in and take a look!
+            </p>
+        </section>
+        <section id="scroll">
+            <div class="scroll__graphic sticky">
+                <div class="chart" id="timeline"></div>
+            </div>
+            <!--  step/text container  -->
+            <div class="scroll__text">
+                <div class='step' data-step='1'>
+                    <p>STEP 1</p>
+                </div>
+                <div class='step' data-step='2'>
+                    <p>STEP 2</p>
+                </div>
+                <div class='step' data-step='3'>
+                    <p>STEP 3</p>
+                </div>
+                <div class='step' data-step='4'>
+                    <p>STEP 4</p>
+                </div>
+                <div class='step' data-step='5'>
+                    <p>STEP 5</p>
+                </div>
+                <div class='step' data-step='6'>
+                    <p>STEP 6</p>
+                </div>
+            </div>
+        </section>
+        <section id="footer">
+            <p>
 
-        </div>
-        <div id="timeline" class="d3-graph">
-        </div>
+                Data about MPs is from TheyWorkForYou.
+            </p>
+        </section>
 
         <!-- <script src="external/d3.v4.min.js"></script> -->
         <script src="d3.min.js"></script>
+        <script src="https://unpkg.com/scrollama"></script>
+        <script src="https://rawgit.com/wilddeer/stickyfill/master/dist/stickyfill.min.js"></script>
         <script src="mps_over_time.js"></script>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script src="semantic/dist/semantic.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="semantic/dist/semantic.min.js"></script>
     </body>
 
 </html>

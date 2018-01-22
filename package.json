@@ -24,11 +24,17 @@
     "d3-voronoi": "^1.1.2",
     "d3-zoom": "^1.7.1",
     "npm": "^5.4.1",
+    "scrollama": "^1.0.0",
     "semantic-ui": "^2.2.13",
+    "stickyfilljs": "^2.0.3",
     "svg2png": "^4.1.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dldx/women-in-parliament.git"
+  },
+  "devDependencies": {
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.2"
   }
 }

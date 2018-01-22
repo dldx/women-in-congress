@@ -55,6 +55,8 @@ var new_slide = 0
 var current_slide = -1
 var partyToggled = false
 var lastTransitioned = -1
+// define scroller
+scroller = scrollama()
 
 // These are the labels for each slide
 var tracker_data = [
@@ -278,7 +280,7 @@ function update_state() {
             // Load fifth slide
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
-            canvas.call(zoom)
+            // canvas.call(zoom)
             to_fifth_slide(current_slide)
         } else if (new_slide == 5) {
             // Load sixth slide
@@ -287,7 +289,7 @@ function update_state() {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
             // svg.call(zoom)
-            canvas.call(zoom)
+            // canvas.call(zoom)
             to_first_slide(current_slide)
         }
         current_slide = new_slide
@@ -475,7 +477,7 @@ function initial_render() {
     // the chart area when we zoom in
     wrapper
         .append("rect")
-        .style("opacity", 0.0)
+        .style("opacity", 0)
         .attr("width", width)
         .attr("height", height)
 
@@ -536,7 +538,7 @@ function initial_render() {
         .scaleExtent([0.95, 40])
         .on("zoom", zoomed)
     // svg.call(zoom)
-    canvas.call(zoom)
+    // canvas.call(zoom)
 
 }
 
@@ -567,8 +569,9 @@ function zoomed() {
     if (current_slide == 0 |
         current_slide == 1) {
         gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
-    } else if(current_slide == 4) {
-        gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale)).ticks(20))
+    } else if (current_slide == 4) {
+        gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale))
+            .ticks(20))
         draw_custom_labels()
     } else {
         d3.event.transform.rescaleX(x)
@@ -819,12 +822,23 @@ function first_slide() {
 
             tooltip.innerHTML = tooltip_innerHTML
 
+        } else {
+            d3.select(tooltip)
+                .transition()
+                .delay(3000)
+                .style("opacity", 0)
         }
         d3.event.preventDefault()
     }
     canvas
         .on("mousemove", mpMouseover)
         // On mouse out, change everything back
+        .on("mouseout", () => {
+            d3.select(tooltip)
+                .transition()
+                .delay(3000)
+                .style("opacity", 0)
+        })
         .on("touchend", mpMouseover)
 
     // Exit
@@ -1935,10 +1949,6 @@ function fourth_slide(no_transition = false) {
     d3.select("body")
         .append("div")
         .attr("id", "slide4")
-        .style("width", "80%")
-        .style("height", "80%")
-        .style("top", "10%")
-        .style("left", "10%")
         .html(`<div class="slide4-tooltip"><h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
     <div id="slide4-mp-dropdown" class="ui inline dropdown search">
     <div class="text"></div> <i class="dropdown icon"></i>
@@ -2255,7 +2265,8 @@ function fifth_slide(no_transition = false) {
     d3.select("#floating-topic")
         .remove()
 
-    wrapper.select(".x-custom-axis").remove()
+    wrapper.select(".x-custom-axis")
+        .remove()
     wrapper.append("g")
         .attr("class", "x-custom-axis")
         .attr("transform", "translate(0," + height + ")")
@@ -2273,7 +2284,7 @@ function fifth_slide(no_transition = false) {
             .attr("id", "floating-topic")
             .style("top", 0)
             .style("left", 0)
-            .style("position", "absolute")
+            .style("position", "fixed")
             .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
             .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
             .node()
@@ -2673,14 +2684,17 @@ function update_fifth_slide(no_transition) {
         }
     })
 
-    window.draw_custom_labels = function() {
-        let xlabels = d3.selectAll(".x-axis text").nodes()
-        let female_label = xlabels[xlabels.map(d => +d.textContent).indexOf(8)]
-        if (typeof(female_label) == "undefined") {
+    window.draw_custom_labels = function () {
+        let xlabels = d3.selectAll(".x-axis text")
+            .nodes()
+        let female_label = xlabels[xlabels.map(d => +d.textContent)
+            .indexOf(8)]
+        if (typeof (female_label) == "undefined") {
             female_label = xlabels.filter(d => +d.textContent > 0)[0]
         }
-        let male_label = xlabels[xlabels.map(d => +d.textContent).indexOf(-8)]
-        if (typeof(male_label) == "undefined") {
+        let male_label = xlabels[xlabels.map(d => +d.textContent)
+            .indexOf(-8)]
+        if (typeof (male_label) == "undefined") {
             male_label = xlabels.filter(d => +d.textContent < 0)
             male_label = male_label[male_label.length - 1]
         }
@@ -2715,7 +2729,8 @@ function update_fifth_slide(no_transition) {
 
     }
     // Update axis ticks and draw custom labels for Men and Women on x-axis
-    gX.call(d3.axisBottom(slide5_xScale).ticks(20))
+    gX.call(d3.axisBottom(slide5_xScale)
+        .ticks(20))
     draw_custom_labels()
 
     // mouseover function for getting MP info
@@ -3423,7 +3438,48 @@ function getRetinaRatio() {
 
     return devicePixelRatio / backingStoreRatio
 }
+// ----------------------------------------------------------------------------
+// ███████╗ ██████╗██████╗  ██████╗ ██╗     ██╗      █████╗ ███╗   ███╗ █████╗
+// ██╔════╝██╔════╝██╔══██╗██╔═══██╗██║     ██║     ██╔══██╗████╗ ████║██╔══██╗
+// ███████╗██║     ██████╔╝██║   ██║██║     ██║     ███████║██╔████╔██║███████║
+// ╚════██║██║     ██╔══██╗██║   ██║██║     ██║     ██╔══██║██║╚██╔╝██║██╔══██║
+// ███████║╚██████╗██║  ██║╚██████╔╝███████╗███████╗██║  ██║██║ ╚═╝ ██║██║  ██║
+// ╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
+// ----------------------------------------------------------------------------
+var $container = d3.select("#scroll")
+var $graphic = $container.select(".scroll__graphic")
+var $chart = $graphic.select(".chart")
+var $text = $container.select(".scroll__text")
+var $step = $text.selectAll(".step")
 
+function handleContainerEnter(response) {
+    // response = { direction }
+
+    // sticky the graphic
+    $graphic.classed("is-fixed", true)
+    $graphic.classed("is-bottom", false)
+}
+
+function handleContainerExit(response) {
+    // response = { direction }
+
+    // un-sticky the graphic, and pin to top/bottom of container
+    $graphic.classed("is-fixed", false)
+    $graphic.classed("is-bottom", response.direction === "down")
+}
+
+function handleStepEnter(response) {
+    // response = { element, direction, index }
+
+    // fade in current step
+    $step.classed("is-active", function (d, i) {
+        return i === response.index
+    })
+
+    // update graphic based on step here
+    new_slide = response.index
+    update_state()
+}
 
 // ----------------------------------------------------------------------------
 // ██╗███╗   ██╗██╗████████╗
@@ -3437,12 +3493,14 @@ function getRetinaRatio() {
 function draw_graph() {
     "use strict"
 
-    d3.select("svg")
-        .selectAll("*")
-        .remove()
+    // d3.select("svg")
+    //     .selectAll("*")
+    //     .remove()
     // Chart dimensions - use parent div size
     var new_width = timeline.clientWidth - margin.left - margin.right,
         new_height = timeline.clientHeight - margin.top - margin.bottom
+
+
 
     if (new_width != width | new_height != height) {
         width = new_width
@@ -3454,7 +3512,6 @@ function draw_graph() {
         svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-
 
         // Scale the canvas correctly
         ratio = getRetinaRatio()
@@ -3486,6 +3543,31 @@ function draw_graph() {
         // REDRAW
         initial_render()
         first_slide()
+
+        // bind scrollama event handlers
+        scroller
+            .setup({
+                container: "#scroll", // our outermost scrollytelling element
+                graphic: ".scroll__graphic", // the graphic
+                text: ".scroll__text", // the step container
+                step: ".scroll__text .step", // the step elements
+                offset: 0.9, // set the trigger to be 1/2 way down screen
+                debug: false, // display the trigger offset for testing
+            })
+            .onStepEnter(handleStepEnter)
+            .onContainerEnter(handleContainerEnter)
+            .onContainerExit(handleContainerExit)
+
+        d3.selectAll(".sticky")
+            .each(function () {
+                Stickyfill.add(this)
+            })
+
+        // Set height of each step
+        d3.selectAll(".step").style("margin-bottom", height)
+        // Move the footer down until it can be seen
+        d3.select("#footer").style("margin-top", (height + margin.top + margin.bottom)*1.1)
+
     }
 }
 // ----------------------------------------------------------------------------

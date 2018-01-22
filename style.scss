@@ -21,9 +21,94 @@ $info-bubble-header-color: map-get($colors, Con);
 
 body {
   background-color: $body-background;
+  color: invert($body-background);
   font-family: 'Quicksand', sans-serif;
-  font-size: .5em;
+  font-size: 1em;
   font-weight: 400;
+}
+
+#header {
+  margin: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50rem;
+
+  h1 {
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: bold;
+  }
+  h2 {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: lighter;
+  }
+
+  p {
+    margin: 3rem;
+  }
+}
+
+#scroll {
+  position: relative;
+}
+
+.scroll__graphic {
+  position: sticky;
+  top: -1px;
+  left: 0;
+  bottom: auto;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+
+  // &.is-fixed {
+  //   position: fixed;
+  // }
+  //
+  // &.is-bottom {
+  //   bottom: 0;
+  //   top: auto;
+  // }
+
+  .chart {
+    height: 95vh;
+    position: absolute;
+    right: 1rem;
+    // top: 50%;
+    // transform: translateY(-50%);
+  }
+}
+
+.scroll__text {
+  // padding: 5rem;
+  padding-top: 70vh;
+  max-width: 30rem;
+}
+
+.step {
+  opacity: 1;
+  transform: translateZ(0);
+  position: relative;
+  z-index: 99;
+  background-color: rgba($tip-background, .8);
+  color: invert($tip-background);
+  border: solid 1px $tip-background;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba($tip-background, .8);
+  font-size: 1rem;
+  font-weight: 500;
+  height: 10rem;
+  width: 20rem;
+  line-height: 1;
+  padding: 2rem;
+  margin-bottom: 100vh;
+  transition: opacity 1s ease-in-out;
+
+  &.is-active {
+    opacity: 1;
+  }
 }
 
 .tracker {
@@ -36,6 +121,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: .5em;
 
   svg {
     width: 60px;
@@ -180,14 +266,13 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 #timeline {
   background-color: $graph-background;
   border-radius: 1px;
-  bottom: 0;
+  // bottom: 0;
   left: 0;
   margin: 10px;
-  position: fixed;
-  height: 100%;
+  // position: absolute;
+  // height: 100%;
   right: 0;
-  top: 0;
-
+  // top: 0;
   canvas,
   svg {
     transform: translateZ(0);
@@ -514,13 +599,20 @@ $tip-padding: 1;
 }
 
 #tooltip {
+  position: fixed;
   left: 0;
   top: 0;
+  opacity: 0;
   transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
 }
 
 #slide4 {
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  position: fixed;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -533,12 +625,12 @@ $tip-padding: 1;
   text-transform: uppercase;
   color: white !important;
   border-color: white !important;
-  min-height: 0px !important;
-  position: absolute;
+  min-height: 0 !important;
+  position: fixed !important;
   z-index: 50;
 
-  &>.text:not(.default) {
-  font-weight: 200 !important;
+  & > .text:not(.default) {
+    font-weight: 200 !important;
     color: white !important;
   }
 }
@@ -546,7 +638,6 @@ $tip-padding: 1;
 #slide6-group {
   transition: opacity 1s ease-in-out;
 }
-
 @media screen and (min-height: 500px) {
   #timeline > svg,
   .mp-party {
