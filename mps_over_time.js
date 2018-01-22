@@ -648,8 +648,7 @@ function add_election_rects() {
 // ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝       ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════
 // ALL WOMEN MPS OVER TIME
 // ----------------------------------------------------------------------------
-function first_slide() {
-    "use strict"
+function first_slide(no_transition = false) {
     d3.select("#slide1-group")
         .remove()
     d3.select("#election-rects")
@@ -674,63 +673,81 @@ function first_slide() {
             return x(d.term_end) - lineThickness * 1.2
         })
 
-    instance
-        .enter()
-        .append("custom")
-        .attr("class", "line")
-        .attr("x1", function (d) {
-            return x(d.term_start)
-        })
-        .attr("x2", function (d) {
-            return x(d.term_start)
-        })
-        .attr("y1", function (d) {
-            return y(0)
-        })
-        .attr("y2", function (d) {
-            return y(0)
-        })
-        .attr("strokeStyle", function (d) {
-            return colorParty(d.party)
-        })
-        .attr("hiddenStrokeStyle", function (d) {
-            if (!d.hiddenCol) {
-                d.hiddenCol = genColor()
-                colourToNode[d.hiddenCol] = d
-            }
-            // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode-map.
-            return d.hiddenCol
-        })
-        .transition()
-        .delay(function (d, i) {
-            return 500 + i * 2
-        })
-        .duration(1000)
-        .attr("y1", function (d) {
-            return y(d.stream)
-        })
-        .attr("y2", function (d) {
-            return y(d.stream)
-        })
-        .transition()
-        .delay(function (d, i) {
-            return 200 + i * 2
-        })
-        .duration(1000)
-        .attr("x2", function (d) {
-            return x(d.term_end) - lineThickness * 1.2
-        })
+    if (no_transition == false) {
+        instance
+            .enter()
+            .append("custom")
+            .attr("class", "line")
+            .attr("x1", function (d) {
+                return x(d.term_start)
+            })
+            .attr("x2", function (d) {
+                return x(d.term_start)
+            })
+            .attr("y1", function (d) {
+                return y(0)
+            })
+            .attr("y2", function (d) {
+                return y(0)
+            })
+            .attr("strokeStyle", function (d) {
+                return colorParty(d.party)
+            })
+            .attr("hiddenStrokeStyle", function (d) {
+                if (!d.hiddenCol) {
+                    d.hiddenCol = genColor()
+                    colourToNode[d.hiddenCol] = d
+                }
+                // Here you (1) add a unique colour as property to each element
+                // and(2) map the colour to the node in the colourToNode-map.
+                return d.hiddenCol
+            })
+            .transition()
+            .delay(function (d, i) {
+                return 500 + i * 2
+            })
+            .duration(1000)
+            .attr("y1", function (d) {
+                return y(d.stream)
+            })
+            .attr("y2", function (d) {
+                return y(d.stream)
+            })
+            .transition()
+            .delay(function (d, i) {
+                return 200 + i * 2
+            })
+            .duration(1000)
+            .attr("x2", function (d) {
+                return x(d.term_end) - lineThickness * 1.2
+            })
+    } else {
+        dataContainer.selectAll("custom.line")
+            .attr("x1", function (d) {
+                return x(d.term_start)
+            })
+            .attr("y1", function (d) {
+                return y(d.stream)
+            })
+            .attr("y2", function (d) {
+                return y(d.stream)
+            })
+            .attr("x2", function (d) {
+                return x(d.term_end) - lineThickness * 1.2
+            })
+    }
+    if (no_transition == false) {
 
-    context.scale(ratio, ratio)
-    context.translate(margin.left, margin.top)
-    context.rect(0, 0, width, height)
-    context.clip()
+        context.scale(ratio, ratio)
+        context.translate(margin.left, margin.top)
+        context.rect(0, 0, width, height)
+        context.clip()
 
-    context_hidden.scale(ratio, ratio)
-    context_hidden.translate(margin.left, margin.top)
-    context_hidden.rect(0, 0, width, height)
-    context_hidden.clip()
+        context_hidden.scale(ratio, ratio)
+        context_hidden.translate(margin.left, margin.top)
+        context_hidden.rect(0, 0, width, height)
+        context_hidden.clip()
+    }
 
     window.draw = function (context, hidden = false) {
         context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
@@ -854,10 +871,6 @@ function first_slide() {
 // GO TO FIRST SLIDE FROM ANOTHER
 // ----------------------------------------------------------------------------
 function to_first_slide(current_slide) {
-    // Increment lastTransitioned counter if it is less than 0
-    if (lastTransitioned < 0) {
-        lastTransitioned = 0
-    }
     var t0 = svg
         .transition()
         .duration(1000)
@@ -894,6 +907,10 @@ function to_first_slide(current_slide) {
     d3.select("#tooltip")
         .style("opacity", 0)
 
+    // Show canvas
+    d3.select("#visible-canvas")
+        .style("opacity", 1)
+        .style("display", null)
     // Scale axes to fit all data
     y.domain([0, 210])
     gY.transition()
@@ -904,10 +921,19 @@ function to_first_slide(current_slide) {
         .duration(1000)
         .call(xAxis)
 
-    first_slide()
     pointsGroup.style("opacity", 0)
     t0.select("#slide1-group")
         .style("opacity", 1)
+    // Enable all pointer events for canvas
+    canvas.style("pointer-events", "all")
+
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 0) {
+        lastTransitioned = 0
+        first_slide(false)
+    } else {
+        first_slide(true)
+    }
 }
 // ----------------------------------------------------------------------------
 // TRANSITION TO SECOND SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
@@ -1138,32 +1164,34 @@ function second_slide(no_transition = false) {
         return a.year
     })
         .left
+    if (no_transition == false) {
 
-    // Change length to 0
-    dataContainer.selectAll("custom.line")
-        .transition()
+        // Change length to 0
+        dataContainer.selectAll("custom.line")
+            .transition()
         // .delay(no_transition ? 500 : 0)
-        .duration(no_transition ? 0 : 500)
-        .attr("x2", function (a) {
-            return x(a.term_start) + circleRadius
-        })
-        .transition()
-        .duration(500)
-        .attr("y1", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
-        .attr("y2", function (a) {
-            return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
-        })
+            .duration(500)
+            .attr("x2", function (a) {
+                return x(a.term_start) + circleRadius
+            })
+            .transition()
+            .duration(500)
+            .attr("y1", function (a) {
+                return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+            })
+            .attr("y2", function (a) {
+                return y(number_women_over_time_data[bisect(number_women_over_time_data, a.term_start)].total_women_mps)
+            })
 
-    // Animate line squashing
-    var t_ = d3.timer((elapsed) => {
+        // Animate line squashing
+        var t_ = d3.timer((elapsed) => {
         // console.log(elapsed)
-        draw(context, false)
-        if (elapsed > 1000) {
-            t_.stop()
-        }
-    })
+            draw(context, false)
+            if (elapsed > 1000) {
+                t_.stop()
+            }
+        })
+    }
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1178,6 +1206,7 @@ function second_slide(no_transition = false) {
     let y_canvas = d3.scaleLinear()
         .domain([0, 210]) // Almost 210 MPs by 2020
         .range([height, 0])
+
     let total_women_mps_line_canvas = d3.line()
         .x(function (d) {
             return x(d.year)
@@ -1188,27 +1217,30 @@ function second_slide(no_transition = false) {
         .curve(d3.curveBasis)
         .context(context)
 
-    d3.timeout(() => {
+    if (no_transition == false) {
+        d3.timeout(() => {
         // context.globalCompositeOperation = "copy"
-        context.lineWidth = 1.5 * lineThickness
-        context.strokeStyle = "#CDCDCD"
-    }, 1000)
+            context.lineWidth = 1.5 * lineThickness
+            context.strokeStyle = "#CDCDCD"
+        }, 1000)
 
-    const path_len = total_women_mps_path.node()
-        .getTotalLength()
-    context.setLineDash([path_len])
-    const ease = d3.easeCubic
-    let t = d3.timer(function (elapsed) {
-        const frac = ease(elapsed / 3000) * path_len
-        // const fraction_complete = parseInt(frac * 206)
-        total_women_mps_line_canvas(number_women_over_time_data) //.slice(0,fraction_complete))
-        context.lineDashOffset = -(frac + path_len)
-        context.stroke()
+        const path_len = total_women_mps_path.node()
+            .getTotalLength()
+        context.setLineDash([path_len])
+        const ease = d3.easeCubic
 
-        if (elapsed > 3000) {
-            t.stop()
-        }
-    }, 1000)
+        let t = d3.timer(function (elapsed) {
+            const frac = ease(elapsed / 3000) * path_len
+            // const fraction_complete = parseInt(frac * 206)
+            total_women_mps_line_canvas(number_women_over_time_data) //.slice(0,fraction_complete))
+            context.lineDashOffset = -(frac + path_len)
+            context.stroke()
+
+            if (elapsed > 3000) {
+                t.stop()
+            }
+        }, 1000)
+    }
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1222,7 +1254,7 @@ function second_slide(no_transition = false) {
 
     d3.selectAll("#timeline canvas")
         .transition()
-        .delay(4000)
+        .delay(no_transition ? 100 : 4000)
         .duration(500)
         .style("opacity", 0)
         .on("end", function () {
@@ -1548,10 +1580,17 @@ function to_third_slide(current_slide) {
         case 3:
             // If we're coming from the fourth slide
             d3.select("#slide4")
+                .transition(t0)
                 .style("opacity", 0)
                 .on("end", function () { this.remove() })
+
+            gX
+                .style("opacity", 1)
+            gY
+                .style("opacity", 1)
             break
         }
+
         third_slide(true)
     }
 }
@@ -3564,9 +3603,10 @@ function draw_graph() {
             })
 
         // Set height of each step
-        d3.selectAll(".step").style("margin-bottom", height)
+        $step.style("margin-bottom", height)
         // Move the footer down until it can be seen
-        d3.select("#footer").style("margin-top", (height + margin.top + margin.bottom)*1.1)
+        d3.select("#footer")
+            .style("margin-top", (height + margin.top + margin.bottom) * 1.1)
 
     }
 }
