@@ -285,7 +285,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   vertical-align: top;
   left: 0;
   position: absolute;
-  transition: opacity 1s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
 
 #hidden-canvas {
@@ -614,7 +614,7 @@ $tip-padding: 1;
   left: 10%;
   position: fixed;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
 
 .slide5-dropdown {
@@ -628,6 +628,7 @@ $tip-padding: 1;
   min-height: 0 !important;
   position: fixed !important;
   z-index: 50;
+  transition: opacity 1s ease-in-out;
 
   & > .text:not(.default) {
     font-weight: 200 !important;

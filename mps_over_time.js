@@ -55,8 +55,16 @@ var new_slide = 0
 var current_slide = -1
 var partyToggled = false
 var lastTransitioned = -1
+
 // define scroller
-scroller = scrollama()
+var scroller = scrollama()
+
+// ----------------------------------------------------------------------------
+// SCROLL TO TOP OF PAGE ON LOAD
+// ----------------------------------------------------------------------------
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0)
+}
 
 // These are the labels for each slide
 var tracker_data = [
@@ -1588,6 +1596,11 @@ function to_third_slide(current_slide) {
                 .style("opacity", 1)
             gY
                 .style("opacity", 1)
+
+
+            // Show 50% line again
+            d3.select("#slide2-group")
+                .style("opacity", 1)
             break
         }
 
@@ -1917,13 +1930,13 @@ function to_fourth_slide(current_slide) {
     switch (current_slide) {
     case 0:
         // If we're coming from the first slide
-        t0.select("#slide1-group")
+        canvas
             .style("opacity", 0)
-            .remove()
+            .style("pointer-events", "none")
         break
 
     case 1:
-        // If we're coming from the first slide
+        // If we're coming from the second slide
         t0.select("#slide2-group")
             .style("opacity", 0)
             .remove()
@@ -1931,13 +1944,25 @@ function to_fourth_slide(current_slide) {
 
     case 2:
         // Fade all objects belonging to third slide
-        t0.select("#slide2-group")
+        d3.select("#slide2-group")
             .style("opacity", 0)
-            .remove()
 
         t0.select("#slide3-group")
             .style("opacity", 0)
             .remove()
+        break
+    case 4:
+        // Fade canvas
+        canvas
+            .style("opacity", 0)
+            .style("pointer-events", "none")
+
+        d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis")
+            .style("opacity", 0)
+            .transition()
+            .delay(500)
+            .on("end", function () { this.remove() })
+
         break
     }
 
@@ -2235,9 +2260,8 @@ function to_fifth_slide(current_slide) {
 
     case 2:
         // Fade all objects belonging to third slide
-        t0.select("#slide2-group")
+        d3.select("#slide2-group")
             .style("opacity", 0)
-            .remove()
 
         t0.select("#slide3-group")
             .style("opacity", 0)
@@ -2875,16 +2899,14 @@ function to_sixth_slide(current_slide) {
 
     case 1:
         // If we're coming from the second slide
-        t0.select("#slide2-group")
+        d3.select("#slide2-group")
             .style("opacity", 0)
-            .remove()
         break
 
     case 2:
         // Fade all objects belonging to third slide
-        t0.select("#slide2-group")
+        d3.select("#slide2-group")
             .style("opacity", 0)
-            .on("end", function () { this.remove() })
 
         t0.select("#slide3-group")
             .style("opacity", 0)
