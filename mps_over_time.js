@@ -539,7 +539,7 @@ function initial_render() {
         .attr("y", 0 - margin.left / 2)
         .attr("x", 0 - (height / 2))
         .attr("class", "y-label")
-        .text("Number of MPs")
+        .text("Number of Women MPs")
 
     // Add zoom capabilities for the points
     zoom = d3.zoom()
@@ -959,7 +959,7 @@ function to_second_slide(current_slide) {
             .duration(1000)
 
         yLabel.transition(t0)
-            .text("Number of Women MPs")
+            .text("Number of MPs")
 
         // Different actions depending on which slide we're coming from
         switch (current_slide) {
@@ -1592,15 +1592,37 @@ function to_third_slide(current_slide) {
                 .style("opacity", 0)
                 .on("end", function () { this.remove() })
 
-            gX
-                .style("opacity", 1)
-            gY
+
+            // Change scales
+            x = d3.scaleUtc()
+                .range([0, width])
+                .domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
+            // Redraw axes
+            xAxis = d3.axisBottom(x)
+
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d)
+
+            xLabel
+                .text("Time")
                 .style("opacity", 1)
 
+            yLabel
+                .style("opacity", 1)
+
+            gX.call(xAxis)
+                .style("opacity", 1)
+            gY.call(yAxis)
+                .style("opacity", 1)
+
+            d3.select(".y-axis > path")
+                .style("opacity", 1)
 
             // Show 50% line again
             d3.select("#slide2-group")
                 .style("opacity", 1)
+
+            d3.selectAll(".i5050-label").attr("startOffset", "90%")
             break
         }
 
