@@ -93,13 +93,15 @@ var context = canvas
     .getContext("2d")
 
 // Add a hidden canvas to catch mouseover events
-var canvas_hidden = d3.select(timeline)
-    .append("canvas")
-    .attr("id", "hidden-canvas")
+var canvas_hidden = d3.select(document.createElement("canvas"))
+// .append("canvas")
+// .attr("id", "hidden-canvas")
 
 var context_hidden = canvas_hidden
     .node()
     .getContext("2d")
+
+
 
 // Create an in memory only element of type 'custom'
 var detachedContainer = document.createElement("custom")
@@ -116,6 +118,7 @@ var ratio,
     electionRects,
     zoom,
     wrapper,
+    transform,
     zoomedArea,
     pointsGroup,
     slide2Group,
@@ -152,7 +155,8 @@ var ratio,
     circle_male,
     circle_female,
     slide5_xScale,
-    slide5_yScale
+    slide5_yScale,
+    quadtree
 
 var mps_over_time_data,
     number_women_over_time_data,
@@ -172,7 +176,6 @@ var partyHasLogo = Object.keys(colors)
 
 // Dict to track the colours of nodes for the canvas mouseovers
 var colourToNode = {}
-var colourToNode_slide5 = {}
 var initial_slide5 = true
 
 // ----------------------------------------------------------------------------
@@ -555,7 +558,7 @@ function initial_render() {
 // ----------------------------------------------------------------------------
 function zoomed() {
     "use strict"
-    let transform = d3.event.transform
+    transform = d3.event.transform
     if (current_slide == 0) zoomedArea.attr("transform", transform)
     // Scale the canvas
     context.save()
@@ -1147,7 +1150,7 @@ function second_slide(no_transition = false) {
         // Change length to 0
         dataContainer.selectAll("custom.line")
             .transition()
-        // .delay(no_transition ? 500 : 0)
+            // .delay(no_transition ? 500 : 0)
             .duration(500)
             .attr("x2", function (a) {
                 return x(a.term_start) + circleRadius
@@ -1163,7 +1166,6 @@ function second_slide(no_transition = false) {
 
         // Animate line squashing
         var t_ = d3.timer((elapsed) => {
-        // console.log(elapsed)
             draw(context, false)
             if (elapsed > 1000) {
                 t_.stop()
@@ -1197,7 +1199,7 @@ function second_slide(no_transition = false) {
 
     if (no_transition == false) {
         d3.timeout(() => {
-        // context.globalCompositeOperation = "copy"
+            // context.globalCompositeOperation = "copy"
             context.lineWidth = 1.5 * lineThickness
             context.strokeStyle = "#CDCDCD"
         }, 1000)
@@ -1592,7 +1594,8 @@ function to_third_slide(current_slide) {
             d3.select("#slide2-group")
                 .style("opacity", 1)
 
-            d3.selectAll(".i5050-label").attr("startOffset", "90%")
+            d3.selectAll(".i5050-label")
+                .attr("startOffset", "90%")
             break
         }
 
@@ -2342,6 +2345,7 @@ function fifth_slide(no_transition = false) {
             .style("position", "fixed")
             .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
             .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
+            .style("opacity", no_transition ? 0 : 1)
             .node()
             .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg")
                 .node()
@@ -2499,6 +2503,30 @@ function update_fifth_slide(no_transition) {
         d.y = slide5_yScale(n.y)
     })
 
+    // Make alternate data store for medians
+    var temp_medians = []
+
+    temp_medians.push({"x":slide5_xScale(0),
+        "y":slide5_yScale(topic_medians_data[selected_topic]["female"]),
+        "median":topic_medians_data[selected_topic]["female"],
+        "gender": "female"})
+
+    temp_medians.push({"x":slide5_xScale(0),
+        "y":slide5_yScale(topic_medians_data[selected_topic]["male"]),
+        "median":topic_medians_data[selected_topic]["male"],
+        "gender": "male"})
+
+    // Quadtree to look up points
+    quadtree = d3.quadtree()
+        .extent([
+            [-1, -1],
+            [width + 1, height + 1]
+        ])
+        .x((d) => d.x)
+        .y(d => d.y)
+        .addAll(nodes_male)
+        .addAll(nodes_female)
+        .addAll(temp_medians)
 
     // transition
     var t0 = d3.transition()
@@ -2529,15 +2557,6 @@ function update_fifth_slide(no_transition) {
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
         .attr("opacity", 0.0)
-        .attr("hiddenFillStyle", function (d) {
-            if (!d.hiddenCol) {
-                d.hiddenCol = genColor()
-                colourToNode_slide5[d.hiddenCol] = d
-            }
-            // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode_slide5-map.
-            return d.hiddenCol
-        })
         .transition(t0)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
         .attr("opacity", 0.7)
@@ -2566,15 +2585,6 @@ function update_fifth_slide(no_transition) {
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
         .attr("opacity", 0.0)
-        .attr("hiddenFillStyle", function (d) {
-            if (!d.hiddenCol) {
-                d.hiddenCol = genColor()
-                colourToNode_slide5[d.hiddenCol] = d
-            }
-            // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode-map.
-            return d.hiddenCol
-        })
         .transition(t0)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
         .attr("opacity", 0.7)
@@ -2625,15 +2635,6 @@ function update_fifth_slide(no_transition) {
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
         .attr("opacity", 0)
-        .attr("hiddenFillStyle", function (d) {
-            if (!d.hiddenCol) {
-                var hiddenCol = genColor()
-                colourToNode_slide5[hiddenCol] = { male_median: d }
-            }
-            // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode-map.
-            return hiddenCol
-        })
         .transition(t1)
         .attr("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
@@ -2659,15 +2660,6 @@ function update_fifth_slide(no_transition) {
         .attr("cy", slide5_yScale(0))
         .attr("r", 3)
         .attr("opacity", 0)
-        .attr("hiddenFillStyle", function (d) {
-            if (!d.hiddenCol) {
-                var hiddenCol = genColor()
-                colourToNode_slide5[hiddenCol] = { female_median: d }
-            }
-            // Here you (1) add a unique colour as property to each element
-            // and(2) map the colour to the node in the colourToNode-map.
-            return hiddenCol
-        })
         .transition(t1)
         .attr("opacity", 1)
         .attr("cy", d => slide5_yScale(d))
@@ -2675,13 +2667,13 @@ function update_fifth_slide(no_transition) {
     // Clear the hidden canvas so that we don't catch the wrong hover info
     context_hidden.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
 
-    window.draw = function (context, hidden = false) {
+    window.draw = function (context) {
         context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
 
         dataContainer.selectAll("custom.male-node")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2690,7 +2682,7 @@ function update_fifth_slide(no_transition) {
         dataContainer.selectAll("custom.female-node")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2710,7 +2702,7 @@ function update_fifth_slide(no_transition) {
         dataContainer.select("custom.male-median")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2719,7 +2711,7 @@ function update_fifth_slide(no_transition) {
         dataContainer.select("custom.female-median")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hidden ? node.attr("hiddenFillStyle") : hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2732,8 +2724,6 @@ function update_fifth_slide(no_transition) {
         if ((initial_slide5 & (elapsed > 5000)) | (initial_slide5 != true & (elapsed > 1000))) {
             t.stop()
             draw(context)
-            // Draw hidden canvas nodes to catch interactions
-            draw(context_hidden, true)
             // First time we run this, we record the fact it was run
             initial_slide5 = false
         }
@@ -2792,20 +2782,17 @@ function update_fifth_slide(no_transition) {
     function mpMouseover() {
         // Get mouse positions from the main canvas.
         var mousePos = d3.mouse(this)
-
-        // Pick the colour from the mouse position.
-        context_hidden.save()
-        var col = context_hidden.getImageData(mousePos[0] * ratio, mousePos[1] * ratio, 1, 1)
-            .data
-        context_hidden.restore()
-        // Then stringify the values in a way our map-object can read it.
-        var colKey = "rgb(" + col[0] + "," + col[1] + "," + col[2] + ")"
         // Get the data from our map!
-        var nodeData = colourToNode_slide5[colKey]
+        if (typeof (transform) !== "undefined") {
+            nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"],
+                (mousePos[1] - margin.top - transform["y"]) / transform["k"], 50)
+        } else {
+            nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50)
+        }
 
-        // Only show mouseover if MP is in toggled party or if no party is filtered
+        // Only show mouseover if hovering near a point
         if (typeof (nodeData) !== "undefined") {
-            // If we're dealing with mp nodes
+        // If we're dealing with mp nodes
             if (typeof (nodeData.id) !== "undefined") {
                 // For each point group, set tooltip to display on mouseover
                 d3.select("#tooltip")
@@ -2851,8 +2838,6 @@ function update_fifth_slide(no_transition) {
 
     // Mouseover for medians
     function median_mouseover(d, mousePos) {
-        let gender = Object.keys(d)[0].split("_")[0]
-        d = Object.values(d)[0]
         d3.select("#tooltip")
             .style("opacity", 1)
             .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
@@ -2864,8 +2849,8 @@ function update_fifth_slide(no_transition) {
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${gender == "female" ? colors["Hover"] : colors["Lab"]};">${gender.capitalize()}</h1>
-                    The average ${gender.capitalize()} MP spends ${(d*100).toFixed(1)}% of ${gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
+                    <h1 style="background-color: ${d.gender == "female" ? colors["Hover"] : colors["Lab"]};">${d.gender.capitalize()}</h1>
+                    The average ${d.gender.capitalize()} MP spends ${(d.median*100).toFixed(1)}% of ${d.gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
 </div>`
     }
 
