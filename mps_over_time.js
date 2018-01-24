@@ -779,6 +779,11 @@ function first_slide(no_transition = false) {
 
         // Only show mouseover if MP is in toggled party or if no party is filtered
         if (typeof (nodeData) !== "undefined") {
+            // Only match if within bounds to avoid problems with antialiasing
+            if (Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top)) > 2
+        && Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top - transform["y"]) / transform["k"]) > 2) {
+                return
+            }
             // For each point group, set tooltip to display on mouseover
             d3.select("#tooltip")
                 .style("opacity", 1)
@@ -820,11 +825,6 @@ function first_slide(no_transition = false) {
 
             tooltip.innerHTML = tooltip_innerHTML
 
-        } else {
-            d3.select(tooltip)
-                .transition()
-                .delay(3000)
-                .style("opacity", 0)
         }
         d3.event.preventDefault()
     }
