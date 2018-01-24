@@ -19,3 +19,5 @@ rules:
 globals:
     d3: false
     $: false
+    scrollama: false
+    Stickyfill: false

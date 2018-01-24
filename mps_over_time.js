@@ -53,7 +53,7 @@ var colors = {
 // Track the current and desired slides for transitioning
 var new_slide = 0
 var current_slide = -1
-var partyToggled = false
+// var partyToggled = false
 var lastTransitioned = -1
 
 // define scroller
@@ -120,7 +120,7 @@ var ratio,
     pointsGroup,
     slide2Group,
     slide3Group,
-    slide5Group,
+    // slide5Group,
     slide6Group,
     max_mps_line,
     max_mps_path,
@@ -677,30 +677,18 @@ function first_slide(no_transition = false) {
 
     // Add a line connecting start and end of term
     instance
-        .attr("x2", function (d) {
-            return x(d.term_end) - lineThickness * 1.2
-        })
+        .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
 
     if (no_transition == false) {
         instance
             .enter()
             .append("custom")
             .attr("class", "line")
-            .attr("x1", function (d) {
-                return x(d.term_start)
-            })
-            .attr("x2", function (d) {
-                return x(d.term_start)
-            })
-            .attr("y1", function (d) {
-                return y(0)
-            })
-            .attr("y2", function (d) {
-                return y(0)
-            })
-            .attr("strokeStyle", function (d) {
-                return colorParty(d.party)
-            })
+            .attr("x1", (d) => x(d.term_start))
+            .attr("x2", (d) => x(d.term_start))
+            .attr("y1", () => y(0))
+            .attr("y2", () => y(0))
+            .attr("strokeStyle", (d) => colorParty(d.party))
             .attr("hiddenStrokeStyle", function (d) {
                 if (!d.hiddenCol) {
                     d.hiddenCol = genColor()
@@ -711,38 +699,20 @@ function first_slide(no_transition = false) {
                 return d.hiddenCol
             })
             .transition()
-            .delay(function (d, i) {
-                return 500 + i * 2
-            })
+            .delay((d, i) => 500 + i * 2)
             .duration(1000)
-            .attr("y1", function (d) {
-                return y(d.stream)
-            })
-            .attr("y2", function (d) {
-                return y(d.stream)
-            })
+            .attr("y1", (d) => y(d.stream))
+            .attr("y2", (d) => y(d.stream))
             .transition()
-            .delay(function (d, i) {
-                return 200 + i * 2
-            })
+            .delay((d, i) => 200 + i * 2)
             .duration(1000)
-            .attr("x2", function (d) {
-                return x(d.term_end) - lineThickness * 1.2
-            })
+            .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
     } else {
         dataContainer.selectAll("custom.line")
-            .attr("x1", function (d) {
-                return x(d.term_start)
-            })
-            .attr("y1", function (d) {
-                return y(d.stream)
-            })
-            .attr("y2", function (d) {
-                return y(d.stream)
-            })
-            .attr("x2", function (d) {
-                return x(d.term_end) - lineThickness * 1.2
-            })
+            .attr("x1", (d) => x(d.term_start))
+            .attr("y1", (d) => y(d.stream))
+            .attr("y2", (d) => y(d.stream))
+            .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
     }
     if (no_transition == false) {
 
@@ -2026,7 +1996,7 @@ function to_fourth_slide(current_slide) {
 // ╚═╝      ╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
 // Go to the fourth slide
 // ----------------------------------------------------------------------------
-function fourth_slide(no_transition = false) {
+function fourth_slide() {
 
     // First remove old div
     d3.select("#slide4")
@@ -2489,9 +2459,9 @@ function fifth_slide(no_transition = false) {
             .remove()
 
         // Create group for this slide
-        slide5Group = zoomedArea
-            .append("g")
-            .attr("id", "slide5-group")
+        // slide5Group = zoomedArea
+        //     .append("g")
+        //     .attr("id", "slide5-group")
         // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
         // .attr("transform", "scale(" + width/1900 + ")")
 
@@ -3207,7 +3177,7 @@ function sixth_slide(no_transition = false) {
             .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
             .attr("cx", d => x(d[1]["female"]))
 
-        t2 = t1.transition()
+        var t2 = t1.transition()
             .delay(3400)
             .on("end", () => {
                 slide6Group
@@ -3253,7 +3223,7 @@ function sixth_slide(no_transition = false) {
             })
 
         // Switch to relative change view
-        t3 = t2.transition()
+        var t3 = t2.transition()
             .delay(1000)
             .on("end", () => {
                 x.domain([-0.04, 0.04])
@@ -3281,16 +3251,13 @@ function sixth_slide(no_transition = false) {
                             .transition(t_)
                             .delay((d, i) => i * 50)
                             .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
-                            .on("end", (d, i) => {
-                                d3.selectAll(".y-axis > .tick text")
-                                    // .filter(c => d[0] == c)
-                                    .style("opacity", 0)
-                            })
+                            .on("end", () => d3.selectAll(".y-axis > .tick text")
+                                .style("opacity", 0))
 
                     })
 
             })
-        t4 = t3.transition()
+        var t4 = t3.transition()
     } else {
         // Switch to relative change view in case this was skipped before
         slide6Group.selectAll(".median-connector")
@@ -3318,7 +3285,7 @@ function sixth_slide(no_transition = false) {
         .filter(d => Object.keys(topic_medians_data)
             .indexOf(d) != -1)
         .transition(t4)
-        .delay((d, i) => no_transition ? 0 : 3000)
+        .delay(() => no_transition ? 0 : 3000)
         .duration(no_transition ? 1 : 1000)
         .style("text-anchor", (d, i) => {
             return label_pos[i] ? "end" : "start"
