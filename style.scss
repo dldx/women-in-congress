@@ -28,19 +28,18 @@ body {
 }
 
 #header {
-  margin: 5rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 5rem auto;
   max-width: 50rem;
 
   h1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
     text-align: center;
     font-size: 5rem;
     font-weight: bold;
   }
+
   h2 {
-    margin-top: 0.5rem;
+    margin-top: .5rem;
     text-align: center;
     font-size: 1.5rem;
     font-weight: lighter;
@@ -62,7 +61,6 @@ body {
   bottom: auto;
   width: 100%;
   transform: translate3d(0, 0, 0);
-
   // &.is-fixed {
   //   position: fixed;
   // }
@@ -71,7 +69,6 @@ body {
   //   bottom: 0;
   //   top: auto;
   // }
-
   .chart {
     height: 95vh;
     position: absolute;
@@ -276,6 +273,27 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   canvas,
   svg {
     transform: translateZ(0);
+  }
+}
+
+#mouseover-svg {
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity .5s ease-in-out;
+
+  line {
+    opacity: 0;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke: map-get($colors, Hover);
+  }
+
+  circle {
+    opacity: 0;
+    fill: none;
+    stroke: map-get($colors, Hover);
   }
 }
 

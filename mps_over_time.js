@@ -92,6 +92,12 @@ var context = canvas
     .node()
     .getContext("2d")
 
+// Add another svg above the canvas for mouseovers
+var mouseover_svg = d3.select(timeline)
+    .append("svg")
+    .attr("id", "mouseover-svg")
+
+
 // Add a hidden canvas to catch mouseover events
 var canvas_hidden = d3.select(document.createElement("canvas"))
 // .append("canvas")
@@ -249,10 +255,12 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 function reset_zoom(callback, current_slide) {
     "use strict"
+    mouseover_svg.select("#zoomed-area").selectAll("*").remove()
     canvas.transition()
         .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
         .on("end", () => {
+            mouseover_svg.select("#zoomed-area").attr("transform", null)
             zoomedArea.attr("transform", null)
             zoom.on("zoom", null)
             canvas.on("wheel.zoom", null)
@@ -470,6 +478,11 @@ function initial_render() {
         .append("g")
         .attr("class", "timeline-wrapper")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    // Do the same for the mouseover svg
+    mouseover_svg
+        .append("g")
+        .attr("class", "timeline-wrapper")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // Initialise the hexagon tracker that tracks the state of the graph
     initialise_tracker()
@@ -496,14 +509,28 @@ function initial_render() {
     clippedArea = wrapper.append("g")
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
+    // Do the same for the mouseover svg
+    mouseover_svg.select(".timeline-wrapper").append("g")
+        .attr("id", "clippedArea")
+        .attr("clip-path", "url(#clip)")
 
     // Add a zoom area to hold all other groups
     zoomedArea = clippedArea
         .append("g")
         .attr("id", "zoomed-area")
+    // Do the same for the mouseover svg
+    mouseover_svg.select("#clippedArea")
+        .append("g")
+        .attr("id", "zoomed-area")
 
     // Create the clip rectangle used for the graph
     wrapper.append("clipPath")
+        .attr("id", "clip")
+        .append("rect")
+        .attr("width", width)
+        .attr("height", height)
+    // Do the same for the mouseover svg
+    mouseover_svg.select(".timeline-wrapper").append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", width)
@@ -559,7 +586,10 @@ function initial_render() {
 function zoomed() {
     "use strict"
     transform = d3.event.transform
-    if (current_slide == 0) zoomedArea.attr("transform", transform)
+    if (current_slide == 0) {
+        zoomedArea.attr("transform", transform)
+        mouseover_svg.select("#zoomed-area").attr("transform", transform)
+    }
     // Scale the canvas
     context.save()
     context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
@@ -681,6 +711,13 @@ function first_slide(no_transition = false) {
     // Add a line connecting start and end of term
     instance
         .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
+
+    // Add a line in the mouseover svg to handle hovers
+    mouseover_svg
+        .select("#zoomed-area").selectAll("*").remove()
+    mouseover_svg
+        .select("#zoomed-area")
+        .append("line")
 
     if (no_transition == false) {
         instance
@@ -825,6 +862,17 @@ function first_slide(no_transition = false) {
 
             tooltip.innerHTML = tooltip_innerHTML
 
+            // Also select the mouseover line and move it to the right location
+            mouseover_svg
+                .select("line")
+                .datum(nodeData)
+                .attr("x1", (d) => x(d.term_start))
+                .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
+                .attr("y1", (d) => y(d.stream))
+                .attr("y2", (d) => y(d.stream))
+                .style("stroke-width", lineThickness)
+                .style("opacity", 1)
+
         }
         d3.event.preventDefault()
     }
@@ -835,6 +883,11 @@ function first_slide(no_transition = false) {
             d3.select(tooltip)
                 .transition()
                 .delay(3000)
+                .style("opacity", 0)
+
+            // Also select the mouseover line and fade it out
+            mouseover_svg
+                .select("line")
                 .style("opacity", 0)
         })
         .on("touchend", mpMouseover)
@@ -1124,6 +1177,9 @@ function second_slide(no_transition = false) {
     // Hide the tooltip
     d3.select("#tooltip")
         .style("opacity", 0)
+
+    // Hide the mouseover line
+    mouseover_svg.select("line").style("opacity", 0)
 
     // Disable all pointer events for canvas
     canvas.style("pointer-events", "none")
@@ -1952,6 +2008,11 @@ function to_fourth_slide(current_slide) {
             .style("opacity", 0)
             .style("pointer-events", "none")
 
+        // Hide mouseover circle
+        mouseover_svg
+            .select("circle")
+            .style("opacity", 0)
+
         d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis")
             .style("opacity", 0)
             .transition()
@@ -2329,6 +2390,13 @@ function fifth_slide(no_transition = false) {
         .attr("class", "x-custom-axis")
         .attr("transform", "translate(0," + height + ")")
 
+    // Add a circle in the mouseover svg to handle hovers
+    mouseover_svg
+        .select("#zoomed-area").selectAll("*").remove()
+    mouseover_svg
+        .select("#zoomed-area")
+        .append("circle")
+
     // Switching from 4th slide
     try {
         // Get the position of the first label in the topic selection
@@ -2475,6 +2543,11 @@ function fifth_slide(no_transition = false) {
 }
 
 function update_fifth_slide(no_transition) {
+    // Hide mouseover circle
+    mouseover_svg
+        .select("circle")
+        .style("opacity", 0)
+
     // Get value of topic dropdown
     try {
         selected_topic = d3.select("#topic-dropdown")
@@ -2818,6 +2891,15 @@ function update_fifth_slide(no_transition) {
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
 </div>`
+                // Also select the mouseover circle and move it to the right location
+                mouseover_svg
+                    .select("circle")
+                    .datum(nodeData)
+                    .attr("cx", (d) => d.x)
+                    .attr("cy", (d) => d.y)
+                    .attr("r", 4.8)
+                    .style("opacity", 1)
+                    .style("stroke-width", 2)
             } else {
                 median_mouseover(nodeData, mousePos)
             }
@@ -2837,7 +2919,7 @@ function update_fifth_slide(no_transition) {
     }
 
     // Mouseover for medians
-    function median_mouseover(d, mousePos) {
+    function median_mouseover(nodeData, mousePos) {
         d3.select("#tooltip")
             .style("opacity", 1)
             .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
@@ -2849,9 +2931,17 @@ function update_fifth_slide(no_transition) {
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${d.gender == "female" ? colors["Hover"] : colors["Lab"]};">${d.gender.capitalize()}</h1>
-                    The average ${d.gender.capitalize()} MP spends ${(d.median*100).toFixed(1)}% of ${d.gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
+                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]};">${nodeData.gender.capitalize()}</h1>
+                    The average ${nodeData.gender.capitalize()} MP spends ${(nodeData.median*100).toFixed(1)}% of ${nodeData.gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
 </div>`
+        mouseover_svg
+            .select("circle")
+            .datum(nodeData)
+            .attr("cx", (d) => d.x)
+            .attr("cy", (d) => d.y)
+            .attr("r", 6)
+            .style("opacity", 1)
+            .style("stroke-width", 2)
     }
 
 }
@@ -2989,6 +3079,11 @@ function sixth_slide(no_transition = false) {
         .style("opacity", 0)
         .style("display", null)
         .style("pointer-events", "none")
+
+    // Hide mouseover circle
+    mouseover_svg
+        .select("circle")
+        .style("opacity", 0)
 
     // remove dropdown
     d3.select("#topic-dropdown")
@@ -3545,6 +3640,10 @@ function draw_graph() {
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
         circleRadius = lineThickness / 2
         svg
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+
+        mouseover_svg
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
 
