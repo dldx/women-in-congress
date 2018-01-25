@@ -183,6 +183,9 @@ var partyHasLogo = Object.keys(colors)
 // Dict to track the colours of nodes for the canvas mouseovers
 var colourToNode = {}
 var initial_slide5 = true
+// Used to make sure mouseout transitions don't clash with scrollytelling
+var IGNORE_STATE = false
+
 
 // ----------------------------------------------------------------------------
 // WHEN SUPPLIED WITH PARTY ACRONYM, RETURN PARTY COLOUR OR FALLBACK
@@ -255,12 +258,15 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 function reset_zoom(callback, current_slide) {
     "use strict"
-    mouseover_svg.select("#zoomed-area").selectAll("*").remove()
+    mouseover_svg.select("#zoomed-area")
+        .selectAll("*")
+        .remove()
     canvas.transition()
         .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
         .on("end", () => {
-            mouseover_svg.select("#zoomed-area").attr("transform", null)
+            mouseover_svg.select("#zoomed-area")
+                .attr("transform", null)
             zoomedArea.attr("transform", null)
             zoom.on("zoom", null)
             canvas.on("wheel.zoom", null)
@@ -493,6 +499,7 @@ function initial_render() {
     d3.select("body")
         .append("div")
         .attr("id", "tooltip")
+        .attr("class", "tooltip")
     tooltip = document.getElementById("tooltip")
     tooltip.innerHTML = `<div style='padding: 2rem'>
     You can hover on everything in this visualisation so go ahead and explore. Click the <em>Next</em> button when you're ready to continue.</div>`
@@ -510,7 +517,8 @@ function initial_render() {
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
     // Do the same for the mouseover svg
-    mouseover_svg.select(".timeline-wrapper").append("g")
+    mouseover_svg.select(".timeline-wrapper")
+        .append("g")
         .attr("id", "clippedArea")
         .attr("clip-path", "url(#clip)")
 
@@ -530,7 +538,8 @@ function initial_render() {
         .attr("width", width)
         .attr("height", height)
     // Do the same for the mouseover svg
-    mouseover_svg.select(".timeline-wrapper").append("clipPath")
+    mouseover_svg.select(".timeline-wrapper")
+        .append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", width)
@@ -583,19 +592,29 @@ function initial_render() {
 // ----------------------------------------------------------------------------
 // ZOOM function
 // ----------------------------------------------------------------------------
-function zoomed() {
+function zoomed(new_transform) {
     "use strict"
-    transform = d3.event.transform
+    transform = new_transform || d3.event.transform
     if (current_slide == 0) {
         zoomedArea.attr("transform", transform)
-        mouseover_svg.select("#zoomed-area").attr("transform", transform)
+        mouseover_svg.select("#zoomed-area")
+            .attr("transform", transform)
     }
     // Scale the canvas
     context.save()
     context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
     context.translate(transform.x, transform.y)
     context.scale(transform.k, transform.k)
+    // Animate node entrances
+    // var t = d3.timer((elapsed) => {
     draw(context, false)
+    //     if (elapsed > 1000) {
+    //         t.stop()
+    //         draw(context)
+    //         // Draw hidden canvas nodes to catch interactions
+    //         draw(context_hidden, true)
+    //     }
+    // })
     context.restore()
 
     // And do the same for the hidden canvas
@@ -714,7 +733,9 @@ function first_slide(no_transition = false) {
 
     // Add a line in the mouseover svg to handle hovers
     mouseover_svg
-        .select("#zoomed-area").selectAll("*").remove()
+        .select("#zoomed-area")
+        .selectAll("*")
+        .remove()
     mouseover_svg
         .select("#zoomed-area")
         .append("line")
@@ -791,7 +812,7 @@ function first_slide(no_transition = false) {
     // Animate node entrances
     var t = d3.timer((elapsed) => {
         draw(context, false)
-        if (elapsed > 5000) {
+        if (elapsed > 5000 | no_transition) {
             t.stop()
             draw(context)
             // Draw hidden canvas nodes to catch interactions
@@ -817,11 +838,11 @@ function first_slide(no_transition = false) {
         // Only show mouseover if MP is in toggled party or if no party is filtered
         if (typeof (nodeData) !== "undefined") {
             // Only match if within bounds to avoid problems with antialiasing
-            if (Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top)) > 2
-        && Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top - transform["y"]) / transform["k"]) > 2) {
+            if (Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top)) > 2 &&
+                Math.abs(y(nodeData.stream) - (mousePos[1] - margin.top - transform["y"]) / transform["k"]) > 2) {
                 return
             }
-            // For each point group, set tooltip to display on mouseover
+            // Display tooltip
             d3.select("#tooltip")
                 .style("opacity", 1)
                 .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
@@ -886,9 +907,11 @@ function first_slide(no_transition = false) {
                 .style("opacity", 0)
 
             // Also select the mouseover line and fade it out
-            mouseover_svg
-                .select("line")
-                .style("opacity", 0)
+            if(IGNORE_STATE == false) {
+                mouseover_svg
+                    .select("line")
+                    .style("opacity", 0)
+            }
         })
         .on("touchend", mpMouseover)
 
@@ -1179,7 +1202,8 @@ function second_slide(no_transition = false) {
         .style("opacity", 0)
 
     // Hide the mouseover line
-    mouseover_svg.select("line").style("opacity", 0)
+    mouseover_svg.select("line")
+        .style("opacity", 0)
 
     // Disable all pointer events for canvas
     canvas.style("pointer-events", "none")
@@ -1320,6 +1344,13 @@ function second_slide(no_transition = false) {
 
     // Rescale y axis to include all MPs
     y.domain([0, 750])
+
+    // Change y axis label
+    yLabel
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
+        .text("Number of MPs")
 
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
@@ -1863,7 +1894,7 @@ function third_slide(no_transition = false) {
     var country_on_screen = []
     women_in_govt_paths
         .transition(t2)
-        .delay((d, i) => no_transition ? 0 : (2200 + i * 1000 - Math.pow(i, 1.5) * 100))
+        .delay((d, i) => no_transition ? 0 : (1200 + i * 1000 - Math.pow(i, 1.5) * 100))
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
@@ -2392,7 +2423,9 @@ function fifth_slide(no_transition = false) {
 
     // Add a circle in the mouseover svg to handle hovers
     mouseover_svg
-        .select("#zoomed-area").selectAll("*").remove()
+        .select("#zoomed-area")
+        .selectAll("*")
+        .remove()
     mouseover_svg
         .select("#zoomed-area")
         .append("circle")
@@ -2579,15 +2612,19 @@ function update_fifth_slide(no_transition) {
     // Make alternate data store for medians
     var temp_medians = []
 
-    temp_medians.push({"x":slide5_xScale(0),
-        "y":slide5_yScale(topic_medians_data[selected_topic]["female"]),
-        "median":topic_medians_data[selected_topic]["female"],
-        "gender": "female"})
+    temp_medians.push({
+        "x": slide5_xScale(0),
+        "y": slide5_yScale(topic_medians_data[selected_topic]["female"]),
+        "median": topic_medians_data[selected_topic]["female"],
+        "gender": "female"
+    })
 
-    temp_medians.push({"x":slide5_xScale(0),
-        "y":slide5_yScale(topic_medians_data[selected_topic]["male"]),
-        "median":topic_medians_data[selected_topic]["male"],
-        "gender": "male"})
+    temp_medians.push({
+        "x": slide5_xScale(0),
+        "y": slide5_yScale(topic_medians_data[selected_topic]["male"]),
+        "median": topic_medians_data[selected_topic]["male"],
+        "gender": "male"
+    })
 
     // Quadtree to look up points
     quadtree = d3.quadtree()
@@ -2865,7 +2902,7 @@ function update_fifth_slide(no_transition) {
 
         // Only show mouseover if hovering near a point
         if (typeof (nodeData) !== "undefined") {
-        // If we're dealing with mp nodes
+            // If we're dealing with mp nodes
             if (typeof (nodeData.id) !== "undefined") {
                 // For each point group, set tooltip to display on mouseover
                 d3.select("#tooltip")
@@ -3598,6 +3635,42 @@ function handleContainerExit(response) {
     $graphic.classed("is-bottom", response.direction === "down")
 }
 
+// ----------------------------------------------------------------------------
+// Function to zoom into a particular mp on slide 1
+// ----------------------------------------------------------------------------
+function mpZoom(clean_name) {
+    // Find MP
+    let mp = mps_over_time_data.filter(d => d.clean_name == clean_name)[0]
+    // Transition zoom to MP
+    mouseover_svg.transition()
+        .duration(1000)
+        .call(zoom.transform, d3.zoomIdentity
+            .translate(width / 2, height / 2)
+            .scale(3)
+            .translate(-(x(mp.term_start)+x(mp.term_end))/2, -y(mp.stream)))
+        .on("end", () => {
+            d3.selectAll(".y-axis .tick")
+                .style("opacity", d => d >= 0 ? 1 : 0)
+        })
+    // Hide tooltip
+    d3.select(tooltip)
+        .style("opacity", 0)
+    // Set flag to not fade mouseover line
+    IGNORE_STATE = true
+    // Highlight MP
+    mouseover_svg
+        .select("line")
+        .datum(mp)
+        .attr("x1", (d) => x(d.term_start))
+        .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
+        .attr("y1", (d) => y(d.stream))
+        .attr("y2", (d) => y(d.stream))
+        .style("stroke-width", lineThickness)
+        .transition()
+        .delay(500)
+        .style("opacity", 1)
+}
+
 function handleStepEnter(response) {
     // response = { element, direction, index }
 
@@ -3606,9 +3679,40 @@ function handleStepEnter(response) {
         return i === response.index
     })
 
-    // update graphic based on step here
-    new_slide = response.index
+    // go to next slide based on slide attribute
+    new_slide = +$step.nodes()[response.index].getAttribute("data-slide")
     update_state()
+
+    // update current slide based on step attribute
+    let new_step = +$step.nodes()[response.index].getAttribute("data-step")
+    switch (new_step) {
+    case 0:
+    // Reset zoom
+        mouseover_svg.transition()
+            .duration(1000)
+            .call(zoom.transform, d3.zoomIdentity)
+        canvas.style("pointer-events", "all")
+        break
+
+    case 1:
+        // First step: zoom into first mp
+        mpZoom("constancemarkievicz")
+        canvas.style("pointer-events", "none")
+        break
+
+    case 2:
+        // Second step: first mp to take seat
+        mpZoom("nancyastor")
+        canvas.style("pointer-events", "none")
+        break
+
+    case 3:
+        // Third step: first prime minister to take seat
+        mpZoom("margaretthatcher")
+        canvas.style("pointer-events", "none")
+        break
+    }
+
 }
 
 // ----------------------------------------------------------------------------

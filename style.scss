@@ -87,7 +87,7 @@ body {
 .step {
   opacity: 1;
   transform: translateZ(0);
-  position: relative;
+  position: relative !important;
   z-index: 99;
   background-color: rgba($tip-background, .8);
   color: invert($tip-background);
@@ -96,12 +96,15 @@ body {
   box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
   font-weight: 500;
-  height: 10rem;
-  width: 20rem;
-  line-height: 1;
-  padding: 2rem;
+  // height: 33vh !important;
+  height: unset !important;
+  width: 50vw !important;
+  line-height: 1.3 !important;
+  padding: 1rem !important;
   margin-bottom: 100vh;
   transition: opacity 1s ease-in-out;
+  left: unset !important;
+  pointer-events: all !important;
 
   &.is-active {
     opacity: 1;
@@ -281,6 +284,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   left: 0;
   pointer-events: none;
   position: absolute;
+  opacity: .7;
   transition: opacity .5s ease-in-out;
 
   line {
@@ -366,10 +370,10 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .hover-rect {
   opacity: 0;
 }
-$tip-padding: 1;
+$tip-padding: .5;
 
 #slide4,
-#tooltip {
+.tooltip {
   z-index: 99;
   opacity: 1;
   background-color: rgba($tip-background, .8);
@@ -379,8 +383,8 @@ $tip-padding: 1;
   box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
   font-weight: 500;
-  height: 10rem;
-  width: 20rem;
+  height: 20vh;
+  width: 30vw;
   line-height: 1;
   overflow: hidden;
   padding: $tip-padding + rem;
@@ -440,10 +444,21 @@ $tip-padding: 1;
     font-size: 1rem;
     font-weight: bold;
     margin-top: 0;
+    margin-bottom: $tip-padding + rem;
     padding: .5rem;
     text-align: center;
     text-shadow: 1px 1px 1px rgba(black, .5);
   }
+
+  hr {
+    width: 50%;
+    margin-top: $tip-padding + rem;
+    margin-bottom: $tip-padding + rem;
+    border: 0;
+    height: 1px;
+    background: invert($tip-background);
+  }
+
   // This is for parties that don't have a logo
   .mp-party,
   .mp-party-logo {
@@ -460,11 +475,36 @@ $tip-padding: 1;
     word-break: break-all;
   }
 
+  .mp-term {
+    overflow: hidden;
+    margin-bottom: .5rem;
+
+    &::before {
+      content: 'TERM';
+      font-weight: bolder;
+      font-size: .8rem;
+      margin-right: .5rem;
+      padding: 2px;
+      background-color: invert($tip-background);
+      color: $tip-background;
+    }
+  }
+
   .mp-constituency {
-    width: 80%;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &::before {
+      content: 'CONSTITUENCY';
+      font-weight: bolder;
+      font-size: .8rem;
+      margin-right: .5rem;
+      padding: 2px;
+      background-color: invert($tip-background);
+      color: $tip-background;
+    }
   }
 
   .mp-party {
@@ -500,7 +540,9 @@ $tip-padding: 1;
   .body {
     margin: 0;
     width: 99%;
-    padding: 1rem;
+    padding: $tip-padding + rem;
+    padding-top: 0;
+    z-index: 5;
   }
 
   .slide4-tooltip {
