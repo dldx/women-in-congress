@@ -907,7 +907,7 @@ function first_slide(no_transition = false) {
                 .style("opacity", 0)
 
             // Also select the mouseover line and fade it out
-            if(IGNORE_STATE == false) {
+            if (IGNORE_STATE == false) {
                 mouseover_svg
                     .select("line")
                     .style("opacity", 0)
@@ -3638,16 +3638,16 @@ function handleContainerExit(response) {
 // ----------------------------------------------------------------------------
 // Function to zoom into a particular mp on slide 1
 // ----------------------------------------------------------------------------
-function mpZoom(clean_name) {
+function mpZoom(clean_name, focus = "mid", scale_level = 3, vshift = 0, hshift = 0) {
     // Find MP
     let mp = mps_over_time_data.filter(d => d.clean_name == clean_name)[0]
     // Transition zoom to MP
     mouseover_svg.transition()
         .duration(1000)
         .call(zoom.transform, d3.zoomIdentity
-            .translate(width / 2, height / 2)
-            .scale(3)
-            .translate(-(x(mp.term_start)+x(mp.term_end))/2, -y(mp.stream)))
+            .translate(width / 2 + hshift, height / 2 + vshift)
+            .scale(scale_level)
+            .translate(-(focus == "mid" ? ((x(mp.term_start) + x(mp.term_end)) / 2) : x(mp.term_end)), -y(mp.stream)))
         .on("end", () => {
             d3.selectAll(".y-axis .tick")
                 .style("opacity", d => d >= 0 ? 1 : 0)
@@ -3687,7 +3687,7 @@ function handleStepEnter(response) {
     let new_step = +$step.nodes()[response.index].getAttribute("data-step")
     switch (new_step) {
     case 0:
-    // Reset zoom
+        // Reset zoom
         mouseover_svg.transition()
             .duration(1000)
             .call(zoom.transform, d3.zoomIdentity)
@@ -3696,7 +3696,7 @@ function handleStepEnter(response) {
 
     case 1:
         // First step: zoom into first mp
-        mpZoom("constancemarkievicz")
+        mpZoom("constancemarkievicz", focus = "mid", scale_level = 10, vshift = 0, hshift = width / 4)
         canvas.style("pointer-events", "none")
         break
 
@@ -3707,13 +3707,131 @@ function handleStepEnter(response) {
         break
 
     case 3:
-        // Third step: first prime minister to take seat
+        // Third step: first mp to take seat
+        mpZoom("nancyastor", focus = "end", scale_level = 5, vshift = height / 4, hshift = width / 4)
+        canvas.style("pointer-events", "none")
+        break
+
+    case 4:
+        // Fourth step: first prime minister to take seat
         mpZoom("margaretthatcher")
         canvas.style("pointer-events", "none")
         break
+
+    case 5:
+        // Now talk about all women shortlists
+        // First reset zoom
+        if (response.direction == "down") {
+            mouseover_svg
+                .select("line")
+                .style("opacity", 0)
+
+            let mp = mps_over_time_data.filter(d => d.clean_name == "louiseellman")[0]
+            mouseover_svg.transition()
+                .duration(1000)
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(width * 3/4, height * 3/5 )
+                    .scale(1.5)
+                    .translate(-(x(mp.term_start) + x(mp.term_end)) / 2, -y(mp.stream)))
+                .on("end", () => {
+                    d3.selectAll(".y-axis .tick")
+                        .style("opacity", d => d >= 0 ? 1 : 0)
+                })
+        }
+
+        // Highlight Labour MPs that were elected in 1997
+        dataContainer.selectAll("custom.line")
+            .transition()
+            .delay(1000)
+            .duration(500)
+            .attr("strokeStyle", mp => !(mp.term_start >= new Date(1997, 4, 1)
+            & mp.term_start <= new Date(1997, 6, 1)
+            & mp.party == "Lab") ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party))
+
+        var t = d3.timer((elapsed) => {
+            draw(context, false)
+            if (elapsed > 500) {
+                t.stop()
+                draw(context)
+            }
+        }, 1000)
+        break
+
+    case 6:
+        // Show only MPs which were elected through AWS
+        dataContainer.selectAll("custom.line")
+            .transition()
+            .duration(500)
+            .attr("strokeStyle", mp => !(mp.term_start >= new Date(1997, 4, 1) &
+                mp.term_start <= new Date(1997, 6, 1) &
+                mp.party == "Lab" & ["annebegg", "judymallaber", "sandraosborne", "angelaesmith", "giselastuart", "annkeen", "janetdean",
+                    "chrismccafferty", "juliemorgan", "shonamcisaac", "kalimountford", "bettywilliams", "lauramoffatt",
+                    "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman",
+                    "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy",
+                    "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley",
+                    "melaniejohnson", "jennyjones"
+                ].indexOf(mp.clean_name) != -1) ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party))
+
+        var t = d3.timer((elapsed) => {
+            draw(context, false)
+            if (elapsed > 500) {
+                t.stop()
+                draw(context)
+            }
+        })
+
     }
 
 }
+
+function handleStepExit(response) {
+    // response = { element, direction, index }
+
+    // which step is exiting?
+    let current_step = +$step.nodes()[response.index].getAttribute("data-step")
+
+    // What to do when a step exits
+    switch (current_step) {
+    case 5:
+        if (response.direction == "up") {
+
+            // All women shortlists
+            // Unfade all MPs
+            dataContainer.selectAll("custom.line")
+                .transition()
+                .attr("strokeStyle", d => colorParty(d.party))
+
+            var t = d3.timer((elapsed) => {
+                draw(context, false)
+                if (elapsed > 500) {
+                    t.stop()
+                    draw(context)
+                }
+            })
+        }
+        break
+    case 6:
+        if (response.direction == "down") {
+
+            // All women shortlists
+            // Unfade all MPs
+            dataContainer.selectAll("custom.line")
+                .transition()
+                .attr("strokeStyle", d => colorParty(d.party))
+
+            var t = d3.timer((elapsed) => {
+                draw(context, false)
+                if (elapsed > 500) {
+                    t.stop()
+                    draw(context)
+                }
+            })
+        }
+
+        break
+    }
+}
+
 
 // ----------------------------------------------------------------------------
 // ██╗███╗   ██╗██╗████████╗
@@ -3793,6 +3911,7 @@ function draw_graph() {
                 debug: false, // display the trigger offset for testing
             })
             .onStepEnter(handleStepEnter)
+            .onStepExit(handleStepExit)
             .onContainerEnter(handleContainerEnter)
             .onContainerExit(handleContainerExit)
 
