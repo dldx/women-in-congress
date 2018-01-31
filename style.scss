@@ -81,7 +81,8 @@ body {
 
 .scroll__text {
   // padding: 5rem;
-  padding-top: 70vh;
+  padding-top: 30vh;
+  padding-left: 120px;
   max-width: 30rem;
 }
 
@@ -100,9 +101,11 @@ body {
   // height: 33vh !important;
   height: unset !important;
   width: 50vw !important;
+  max-width: 35rem !important;
   line-height: 1.5 !important;
   padding: 1rem !important;
-  margin-bottom: 100vh;
+  margin-top: 50vh;
+  margin-bottom: 50vh;
   transition: opacity 1s ease-in-out;
   left: unset !important;
   pointer-events: all !important;
@@ -391,7 +394,8 @@ $tip-padding: .5;
   font-size: 1rem;
   font-weight: 500;
   // height: 20vh;
-  width: 30vw;
+  width: 40vw;
+  max-width: 25rem;
   line-height: 1.5;
   overflow: hidden;
   padding: $tip-padding + rem;
@@ -407,6 +411,12 @@ $tip-padding: .5;
     font-weight: 200;
     text-align: center;
     vertical-align: middle;
+
+    p {
+      font-weight: 500;
+      font-size: 2rem;
+      margin: 0;
+    }
 
     span {
       font-weight: bold;
@@ -498,7 +508,7 @@ $tip-padding: .5;
   }
 
   .mp-constituency {
-    width: 100%;
+    width: 80%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -677,6 +687,7 @@ $tip-padding: .5;
 
 #slide4 {
   width: 80%;
+  max-width: unset;
   height: 80%;
   top: 10%;
   left: 10%;
