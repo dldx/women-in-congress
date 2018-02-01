@@ -4015,8 +4015,9 @@ function handleStepExit(response) {
                         d3.selectAll(".y-axis .tick")
                             .style("opacity", d => d >= 0 ? 1 : 0)
 
-                            // All women shortlists
-                            // Unfade all MPs
+                        // Set default mp_filter
+                        mp_filter = mps_over_time_data.map(mp => mp.clean_name)
+                        // Unfade all MPs
                         dataContainer.selectAll("custom.line")
                             .transition()
                             .attr("strokeStyle", d => colorParty(d.party))
