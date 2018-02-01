@@ -37,6 +37,7 @@ body {
     text-align: center;
     font-size: 5rem;
     font-weight: bold;
+    line-height: 1.5;
   }
 
   h2 {
@@ -45,10 +46,22 @@ body {
     font-size: 1.5rem;
     font-weight: lighter;
   }
+  h3 {
+    margin-top: .5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: lighter;
+  }
 
   p {
     margin: 3rem;
   }
+}
+
+#footer {
+  margin: 5rem auto;
+  max-width: 50rem;
+
 }
 
 #scroll {
@@ -121,6 +134,11 @@ body {
   }
 }
 
+a {
+  color: crimson;
+  text-decoration: none;
+}
+
 .tracker {
   transform: translateZ(0);
   position: fixed;
@@ -128,7 +146,8 @@ body {
   z-index: 2;
   height: 60px;
   width: 150px;
-  display: flex;
+  display: none;
+  // display: flex;
   justify-content: center;
   align-items: center;
   font-size: .5em;
@@ -395,7 +414,7 @@ $tip-padding: .5;
   font-weight: 500;
   // height: 20vh;
   width: 40vw;
-  max-width: 25rem;
+  max-width: 35rem;
   line-height: 1.5;
   overflow: hidden;
   padding: $tip-padding + rem;
@@ -580,6 +599,10 @@ $tip-padding: .5;
     }
     $speech-flex-row-height: 5;
 
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
     .speech-flex-row {
       display: flex;
       align-items: flex-start;
