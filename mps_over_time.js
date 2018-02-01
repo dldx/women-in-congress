@@ -3668,9 +3668,11 @@ function handleContainerExit(response) {
     $graphic.classed("is-fixed", false)
     $graphic.classed("is-bottom", response.direction === "down")
 
+    if (response.direction == "down" && lastTransitioned >= 4) {
     // Go to sixth slide
-    new_slide = 5
-    update_state()
+        new_slide = 5
+        update_state()
+    }
 }
 
 // ----------------------------------------------------------------------------
