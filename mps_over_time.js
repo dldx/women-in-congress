@@ -3667,6 +3667,10 @@ function handleContainerExit(response) {
     // un-sticky the graphic, and pin to top/bottom of container
     $graphic.classed("is-fixed", false)
     $graphic.classed("is-bottom", response.direction === "down")
+
+    // Go to sixth slide
+    new_slide = 5
+    update_state()
 }
 
 // ----------------------------------------------------------------------------
@@ -4054,6 +4058,7 @@ function handleStepExit(response) {
                     .style("opacity", 0)
             }
         }
+        break
     }
 }
 
