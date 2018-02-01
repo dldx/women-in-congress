@@ -196,7 +196,8 @@
                     I kept reading articles about how passionate an MP was about something but as a data nerd, I wanted something quantifiable. So I set about finding a way.
                     <p/> I downloaded all speeches made by every MP elected since 1970. This equates to 1,213,728 individual speeches, from brief comments or questions to long filibusters, made by 1783 male and 335 female MPs. I then used a few machine learning
                     techniques to identify all the topics present in the whole corpus. For the data scientists - I used Latent Dirichlet Allocation, a popular method for identifying topics in data without any prior labelling. It was important to use LDA
-                    because I had no idea what topics were even talked about in parliament, especially in the past, so I didn't want to spend too much time categorising the speeches myself. For more information on my method, check out the GitHub repo for this project.
+                    because I had no idea what topics were even talked about in parliament, especially in the past, so I didn't want to spend too much time categorising the speeches myself. For more information on my method, check out the GitHub repo
+                    for this project.
                     <p/> It's important to recognise that using machine learning in this way is very beneficial but it can also be imperfect and inaccurate. The longer the speech, the easier it is for the model to identify the topics within it due to the
                     statistical process underlying the model. In some instances, the model correctly identifies the most important topic but in other instances, it gets completely thrown off by similar words used in a different context. For example, a
                     speech about the law firm Mossack Fonseca being raided was miscategorised as "counter-terrorism" because of the word "raided". However, longer speeches do not suffer from these problems.
@@ -205,12 +206,13 @@
                 <div class="step" data-slide="3" data-step="2" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="3" data-step="3" style="z-index: 100; background-color: rgba(255, 255, 255, 0.93); color: #1a1a1a;">
-                    Once I identified the topics within each speech given by an MP, I then added together all the fractions, weighted by the length of each speech so that the longer speeches have precedence. This tells us how long an MP spends on each topic. Let's see the results.
+                    Once I identified the topics within each speech given by an MP, I then added together all the fractions, weighted by the length of each speech so that the longer speeches have precedence. This tells us how long an MP spends on each topic. Let's see the
+                    results.
                 </div>
                 <div class="step" data-slide="4" data-step="0">
                     This is just one topic identified by the model. In total, the model identified 100 different topics of which a large number were either nonsensical or irrelevant to our discussion. We focussed on the rest.
-                    <p/>
-                    Each dot in this visual represents one MP. Hover/tap on each dot to identify them! The higher the dot, the more time has been spent talking about this topic. The line in the represents the difference between the median fractions of time spent by each gender.
+                    <p/> Each dot in this visual represents one MP. Hover/tap on each dot to identify them! The higher the dot, the more time has been spent talking about this topic. The line in the represents the difference between the median fractions of
+                    time spent by each gender.
                 </div>
                 <div class="step" data-slide="4" data-step="1">
                     Let's take this median line and plot it with the median lines of all the other topics and see if we can discern any interesting trends.
@@ -218,47 +220,44 @@
                 <div class="step" data-slide="5" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="5">
-                    Here you see how each gender favours particular topics. Female MPs talk more often about WELFARE REFORMS, CHILD CARE, the NHS, and EDUCATION. Male MPs, on average, spend more time talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES. Ultimately, there is a lot of variation between MPs regardless of gender but there is still an overall gender bias towards these topics.
-                    <p/>
-                    Tap on a line to look closer at a topic.
+                    Here you see how each gender favours particular topics. Female MPs talk more often about WELFARE REFORMS, CHILD CARE, the NHS, and EDUCATION. Male MPs, on average, spend more time talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES.
+                    Ultimately, there is a lot of variation between MPs regardless of gender but there is still an overall gender bias towards these topics.
+                    <p/> Tap on a line to look closer at a topic.
                 </div>
             </div>
         </section>
         <section id="footer">
-            <p/>
-                So let's wrap this up! My topic modelling analysis shows that certain topics are attracted to certain genders. This disparity between genders exists even after accounting for party lines (which may influence the results due to female MPs belonging mostly to the Labour Party). It is important to keep in mind that these figures don't measure any kind of political views an MP might have. Two MPs might both talk about the NHS a lot, but one may be in favour of keeping it public while the other might be in favour of privatising it. This model can't differentiate between them.
-                <p/>
+            <p/> So let's wrap this up! My topic modelling analysis shows that certain topics are attracted to certain genders. This disparity between genders exists even after accounting for party lines (which may influence the results due to female MPs
+            belonging mostly to the Labour Party). It is important to keep in mind that these figures don't measure any kind of political views an MP might have. Two MPs might both talk about the NHS a lot, but one may be in favour of keeping it public
+            while the other might be in favour of privatising it. This model can't differentiate between them.
+            <p/> And while we could look at these topics and label "child care" a feminine subject and "economy" a masculine one, in reality, child care and economic policies affect both genders. Similarly, many of the topics identified are simply two sides
+            of the same coin. Climate Change is biased towards women but energy is mentioned by men more often, despite the fact that they should be addressed collectively. Perhaps our most polarised topics are simply gendered manifestations of the same
+            ones, where men and women might use different words but in reality, care about the same overarching subject.
 
-                And while we could look at these topics and label "child care" a feminine subject and "economy" a masculine one, in reality, child care and economic policies affect both genders. Similarly, many of the topics identified are simply two sides of the same coin. Climate Change is biased towards women but energy is mentioned by men more often, despite the fact that they should be addressed collectively. Perhaps our most polarised topics are simply gendered manifestations of the same ones, where men and women might use different words but in reality, care about the same overarching subject.
+            <p/> There is a lot more that can be derived from this and other datasets and future articles may address these. I would particularly like to answer questions such as:
+            <ul>
+                <li>
+                    Do women selected in All Women Shortlists behave differently to those who weren't?
+                </li>
+                <li>
+                    How do the speech styles of men and women differ? Do men use filibusters more often? Are women easier to understand?
+                </li>
+                <li>
+                    How are male and female MPs spoken about differently in newspapers, on TV or on social media?
+                </li>
+            </ul>
 
-                <p/>
-                There is a lot more that can be derived from this and other datasets and future articles may address these. I would particularly like to answer questions such as:
-                <ul>
-                    <li>
-                        Do women selected in All Women Shortlists behave differently to those who weren't?
-                    </li>
-                    <li>
-                        How do the speech styles of men and women differ? Do men use filibusters more often? Are women easier to understand?
-                    </li>
-                    <li>
-                        How are male and female MPs spoken about differently in newspapers, on TV or on social media?
-                    </li>
-                </ul>
+            Until then, thanks for reading!
 
-                Until then, thanks for reading!
-
-<p/>
-
-You may find all the code for this project at <a href="https://github.com/dldx/women-in-parliament">this github page</a>.
-                Data about MPs is from <a href="https://www.theyworkforyou.com/">TheyWorkForYou.com</a>. [Need to credit other sources here!]
+            <p/> You may find all the code for this project at <a href="https://github.com/dldx/women-in-parliament">this github page</a>. Data about MPs is from <a href="https://www.theyworkforyou.com/">TheyWorkForYou.com</a>. [Need to credit other sources
+            here!]
             </p>
         </section>
 
-        <!-- <script src="external/d3.v4.min.js"></script> -->
         <script src="d3.min.js"></script>
         <script src="https://unpkg.com/scrollama"></script>
         <script src="https://rawgit.com/wilddeer/stickyfill/master/dist/stickyfill.min.js"></script>
-        <script src="mps_over_time.js"></script>
+        <script src="mps_over_time.min.js"></script>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="semantic/dist/semantic.min.js"></script>
