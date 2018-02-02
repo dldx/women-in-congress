@@ -258,6 +258,9 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 .x-custom-axis {
   transition: opacity 1s ease-in-out;
 }
+.x-custom-label {
+  transition: opacity 1s ease-in-out;
+}
 
 .x-axis,
 .y-axis {

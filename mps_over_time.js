@@ -2389,6 +2389,12 @@ function to_fifth_slide(current_slide) {
         // Fade out sixth slide
         d3.select("#slide6-group")
             .style("opacity", 0)
+        d3.selectAll(".x-custom-label")
+            .style("opacity", 0)
+            .on("end", () => {
+                d3.selectAll(".x-custom-label")
+                    .remove()
+            })
         break
     }
 
@@ -3403,7 +3409,25 @@ function sixth_slide(no_transition = false) {
                                 .style("opacity", 0))
 
                         xLabel
-                            .text("Difference between median male and female MP (% points)")
+                            .text("Median female - Median male")
+
+                        wrapper.append("text")
+                            .attr("class", "x-custom-label")
+                            .attr("x", width - margin.right)
+                            .attr("y", height + margin.bottom / 2)
+                            .text("FEMALE FRIENDLY")
+                            .style("text-anchor", "middle")
+                            .style("fill", colors["Hover"])
+                            .style("alignment-baseline", "hanging")
+
+                        wrapper.append("text")
+                            .attr("class", "x-custom-label")
+                            .attr("x", margin.left)
+                            .attr("y", height + margin.bottom / 2)
+                            .text("MALE FRIENDLY")
+                            .style("text-anchor", "end")
+                            .style("fill", colors["Lab"])
+                            .style("alignment-baseline", "hanging")
 
                     })
 
@@ -3426,11 +3450,29 @@ function sixth_slide(no_transition = false) {
             .on("end", () => {
                 slide6Group.style("opacity", 1)
             })
+
+        wrapper.append("text")
+            .attr("class", "x-custom-label")
+            .attr("x", width - margin.right)
+            .attr("y", height + margin.bottom / 2)
+            .text("FEMALE FRIENDLY")
+            .style("text-anchor", "middle")
+            .style("fill", colors["Hover"])
+            .style("alignment-baseline", "hanging")
+
+        wrapper.append("text")
+            .attr("class", "x-custom-label")
+            .attr("x", margin.left)
+            .attr("y", height + margin.bottom / 2)
+            .text("MALE FRIENDLY")
+            .style("text-anchor", "end")
+            .style("fill", colors["Lab"])
+            .style("alignment-baseline", "hanging")
     }
+
 
     let label_pos = sorted_topics
         .map(d => d[1]["female"] - d[1]["male"] > 0)
-
 
     d3.selectAll(".y-axis > .tick text")
         .filter(d => Object.keys(topic_medians_data)
@@ -3446,6 +3488,8 @@ function sixth_slide(no_transition = false) {
         .delay(500)
         .duration(500)
         .style("opacity", 1)
+
+
 }
 
 // ----------------------------------------------------------------------------
