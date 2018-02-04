@@ -58,6 +58,7 @@ var lastTransitioned = -1
 
 // define scroller
 var scroller = scrollama()
+// import scrollama from 'scrollama'
 
 // ----------------------------------------------------------------------------
 // SCROLL TO TOP OF PAGE ON LOAD
@@ -810,17 +811,6 @@ function first_slide(no_transition = false) {
                 context.stroke()
             })
     }
-
-    // Animate node entrances
-    var t = d3.timer((elapsed) => {
-        draw(context, false)
-        if (elapsed > 0000 | no_transition) {
-            t.stop()
-            draw(context)
-            // Draw hidden canvas nodes to catch interactions
-            draw(context_hidden, true)
-        }
-    })
 
     // Set default mp_filter
     mp_filter = mps_over_time_data.map(mp => mp.clean_name)
@@ -4207,4 +4197,4 @@ function draw_graph() {
 // ----------------------------------------------------------------------------
 // REDRAW GRAPH ON WINDOW RESIZE
 // ----------------------------------------------------------------------------
-window.addEventListener("resize", draw_graph)
+// window.addEventListener("resize", draw_graph)

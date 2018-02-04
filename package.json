@@ -35,7 +35,10 @@
     "url": "git+https://github.com/dldx/women-in-parliament.git"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2"
-  }
+  },
+	    "presets": ["env"]
 }
