@@ -2850,7 +2850,7 @@ function handleStepEnter(response) {
 
                 case 1:
                     // First step: zoom into first mp
-                    mpZoom("constancemarkievicz", focus = "mid", scale_level = 10, vshift = 0, hshift = width / 4);
+                    mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
                     canvas.style("pointer-events", "none");
                     break;
 
@@ -2862,7 +2862,7 @@ function handleStepEnter(response) {
 
                 case 3:
                     // Third step: first mp to take seat
-                    mpZoom("nancyastor", focus = "end", scale_level = 5, vshift = height / 4, hshift = width / 4);
+                    mpZoom("nancyastor", "end", 5, height / 4, width / 4);
                     canvas.style("pointer-events", "none");
                     break;
 
