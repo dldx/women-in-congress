@@ -1,9 +1,8 @@
 <html>
 
     <head>
+        <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500|Lato:300|Open+Sans:300,300i" rel="stylesheet" type='text/css'>
         <link rel="stylesheet" href="style.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300i" rel="stylesheet">
         <title>Women MPs in the House of Commons</title>
     </head>
 
@@ -12,7 +11,7 @@
             <h1>Women in Parliament</h1>
             <h2>Celebrating 100 Years of Women in the House of Commons</h2>
             <p>
-                This year marks a century since women in the United Kingdom were first given the right to vote in and stand for elections. Today, in early 2018, there are 208 women from various parties and political persuasions serving their constituents in the House
+                This year marks a century since women in the United Kingdom were first awarded the right to vote in and stand for elections. Today, in early 2018, there are 208 women from various parties and political persuasions serving their constituents in the House
                 of Commons. So how did we arrive here? And what contribution have women MPs made to democracy in the UK? Let's dive in and take a look!
             </p>
             <h3>BY DURAND D'SOUZA</h3>
@@ -218,8 +217,8 @@
                 </div>
                 <div class="step" data-slide="4" data-step="0">
                     This is just one topic identified by the model. In total, the model identified 100 different topics of which a large number were either nonsensical or irrelevant to our discussion. We focussed on the rest.
-                    <p/> Each dot in this visual represents one MP. Hover/tap on each dot to identify them! The higher the dot, the more time has been spent talking about this topic. The line in between the dots represents the difference between the median fractions of
-                    time spent by each gender.
+                    <p/> Each dot in this visual represents one MP. Hover/tap on each dot to identify them! The higher the dot, the more time has been spent talking about this topic. The line in between the dots represents the difference between the median
+                    fractions of time spent by each gender.
                 </div>
                 <div class="step" data-slide="4" data-step="1">
                     Let's take this median line and plot it with the median lines of all the other topics and see if we can discern any interesting trends.
@@ -234,8 +233,8 @@
             </div>
         </section>
         <section id="footer">
-            <p/> So let's wrap this up! My topic modelling analysis shows that certain topics are more attractive to certain genders. This disparity between genders exists even after accounting for party lines (which may influence the results due to female MPs
-            belonging mostly to the Labour Party). It is important to keep in mind that these figures don't measure any kind of political views an MP might have. Two MPs might both talk about the NHS a lot, but one may be in favour of keeping it public
+            <p/> So let's wrap this up! My topic modelling analysis shows that certain topics are more attractive to certain genders. This disparity between genders exists even after accounting for party lines (which may influence the results due to female
+            MPs belonging mostly to the Labour Party). It is important to keep in mind that these figures don't measure any kind of political views an MP might have. Two MPs might both talk about the NHS a lot, but one may be in favour of keeping it public
             while the other might be in favour of privatising it. This model can't differentiate between them.
             <p/> And while we could look at these topics and label "child care" a feminine subject and "economy" a masculine one, in reality, child care and economic policies affect both genders. Similarly, many of the topics identified are simply two sides
             of the same coin. Climate Change is biased towards women but energy is mentioned by men more often, despite the fact that they should be addressed collectively. Perhaps our most polarised topics are simply gendered manifestations of the same
@@ -262,8 +261,10 @@
         </section>
 
         <script src="d3.min.js"></script>
-        <script src="external/scrollama.min.js"></script>
         <script src="https://rawgit.com/wilddeer/stickyfill/master/dist/stickyfill.min.js"></script>
+        <script src="external/scrollama.min.js"></script>
+        <script src="external/scrollama.js"></script>
+        <script src="node_modules/babel-polyfill/dist/polyfill.min.js"></script>
         <script src="mps_over_time.es5.js"></script>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

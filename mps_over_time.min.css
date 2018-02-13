@@ -1,31 +1,25 @@
 /*
-Error: Invalid CSS after "    right": expected ";", was ": 50,"
-        on line 29 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js
+Error: Invalid CSS after "...those who weren": expected "{", was "'t?"
+        on line 254 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.html
 
-24: // ----------------------------------------------------------------------------
-25: 
-26: // These are the margins for the SVG
-27: var margin = {
-28:     top: 60,
-29:     right: 50,
-30:     bottom: 60,
-31:     left: 100
-32: }
-33: 
-34: // These are the colours used to identify each political party as well as
+249:             ones, where men and women might use different words but in reality, care about the same overarching subject.
+250: 
+251:             <p/> There is a lot more that can be derived from this and other datasets and future articles may address these. I would particularly like to answer questions such as:
+252:             <ul>
+253:                 <li>
+254:                     Do women selected in All Women Shortlists behave differently to those who weren't?
+255:                 </li>
+256:                 <li>
+257:                     How do the speech styles of men and women differ? Do men use filibusters more often? Are women easier to understand?
+258:                 </li>
+259:                 <li>
 
 Backtrace:
-/home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js:29
+/home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.html:254
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1125:in `expected'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1120:in `tok!'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:777:in `block in try_declaration'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1165:in `rethrow'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:782:in `try_declaration'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:711:in `declaration_or_ruleset'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
-/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
+/var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:656:in `block'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:649:in `ruleset'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:675:in `block_child'
 /var/lib/gems/2.3.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
@@ -45,4 +39,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Invalid CSS after \"    right\": expected \";\", was \": 50,\"\A         on line 29 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.js\A \A 24: // ----------------------------------------------------------------------------\A 25: \A 26: // These are the margins for the SVG\A 27: var margin = {\A 28:     top: 60,\A 29:     right: 50,\A 30:     bottom: 60,\A 31:     left: 100\A 32: }\A 33: \A 34: // These are the colours used to identify each political party as well as"; }
+  content: "Error: Invalid CSS after \"...those who weren\": expected \"{\", was \"'t?\"\A         on line 254 of /home/durand/Stuff/Data_Science/women-in-parliament/mps_over_time.html\A \A 249:             ones, where men and women might use different words but in reality, care about the same overarching subject.\A 250: \A 251:             <p/> There is a lot more that can be derived from this and other datasets and future articles may address these. I would particularly like to answer questions such as:\A 252:             <ul>\A 253:                 <li>\A 254:                     Do women selected in All Women Shortlists behave differently to those who weren't?\A 255:                 </li>\A 256:                 <li>\A 257:                     How do the speech styles of men and women differ? Do men use filibusters more often? Are women easier to understand?\A 258:                 </li>\A 259:                 <li>"; }

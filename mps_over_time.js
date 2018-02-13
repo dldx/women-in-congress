@@ -56,9 +56,15 @@ var current_slide = -1
 // var partyToggled = false
 var lastTransitioned = -1
 
+
 // define scroller
 var scroller = scrollama()
-// import scrollama from 'scrollama'
+
+var $container = d3.select("#scroll")
+var $graphic = $container.select(".scroll__graphic")
+var $chart = $graphic.select(".chart")
+var $text = $container.select(".scroll__text")
+var $step = $text.selectAll(".step")
 
 // ----------------------------------------------------------------------------
 // SCROLL TO TOP OF PAGE ON LOAD
@@ -1519,115 +1525,6 @@ function second_slide(no_transition = false) {
                     d3.select(this)
                         .classed("hover", false)
                 })
-            // ----------------------------------------------------------------
-            // Add info bubbles to show information at specific points
-            // ----------------------------------------------------------------
-            /* Disable infobubbles
-
-            var parseDate = d3.timeParse("%Y-%m-%d")
-
-            // Remove old info bubbles
-            d3.select("#info-bubbles")
-                .remove()
-            var infoBubbles = zoomedArea
-                .append("g")
-                .attr("id", "info-bubbles")
-                .selectAll("g")
-                .data(info_bubbles_data.slide2)
-                .enter()
-                .append("g")
-            // Create a voronoi grid with clipPaths to use them to clip large circles
-            var voronoi = d3.voronoi()
-                .x(function (d) { return x(d3.timeParse("%Y-%m-%d")(d.x)) })
-                .y(function (d) { return y(d.y) })
-                .extent([
-                    [-margin.left, -margin.top],
-                    [width + margin.right, height + margin.bottom]
-                ])
-
-            d3.select("#info-bubbles")
-                .append("defs")
-                .selectAll("clipPath")
-                .data(voronoi.polygons(info_bubbles_data.slide2))
-                .enter()
-                .append("clipPath")
-                .attr("id", function (d, i) { return `voronoi-clip-${i}` })
-                .append("path")
-                .attr("d", function (d) { return d ? "M" + d.join("L") + "Z" : null })
-            // add large hidden circle to catch hover events
-            infoBubbles
-                .append("circle")
-                .attr("r", 50 * circleRadius)
-                .attr("class", "info-bubble-hidden")
-                .style("opacity", 0)
-                .attr("cx", function (d) {
-                    return x(parseDate(d.x))
-                })
-                .attr("cy", function (d) {
-                    return y(d.y)
-                })
-                .style("clip-path", function (d, i) { return `url(#voronoi-clip-${i})` })
-                .attr("clip-path", function (d, i) { return `url(#voronoi-clip-${i})` })
-            // Then add visible circle
-            infoBubbles
-                .append("circle")
-                .attr("r", 0)
-                .attr("class", "info-bubble")
-                .attr("stroke-width", 2 * circleRadius)
-                .attr("cx", function (d) {
-                    return x(parseDate(d.x))
-                })
-                .attr("cy", function (d) {
-                    return y(d.y)
-                })
-                .transition()
-                .delay(no_transition ? 0 : function (d, i) { return 1000 + i * 250 })
-                .duration(no_transition ? 0 : 1000)
-                .ease(d3.easeBounce)
-                .attr("r", 5 * circleRadius)
-            // Add the mouseover effects
-            infoBubbles
-                .on("mouseover", function (d) {
-                    d3.select(this)
-                        .moveToFront()
-                    d3.select(this)
-                        .select(".info-bubble")
-                        .classed("hover", true)
-                        .transition()
-                        .duration(500)
-                        .ease(d3.easeBounce)
-                        .attr("r", 10 * circleRadius)
-
-                    // Get mouse positions
-                    var mousePos = d3.mouse(this)
-
-                    d3.select("#tooltip")
-                        .style("opacity", 1)
-                        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                            width - tooltip.offsetWidth / 2 - margin.right),
-                        0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
-                            height + tooltip.offsetHeight - 20), margin.top)}px)`)
-                        .style("pointer-events", "none")
-
-                    // Show relevant tooltip info
-                    tooltip.innerHTML = `
-                            <div class="info-bubble-tip">
-                                <h1>${d.head}</h1>
-                                <div class="date">${formatDate(parseDate(d.x))}</div>
-                                <div class="body">${d.body}</div>
-                            </div>`
-                })
-                .on("mouseout", function () {
-                    d3.select(this)
-                        .select(".info-bubble")
-                        .classed("hover", false)
-                        .transition()
-                        .duration(500)
-                        .ease(d3.easeBounce)
-                        .attr("r", 5 * circleRadius)
-                })
-
-                */
         })
 
 }
@@ -1885,8 +1782,8 @@ function third_slide(no_transition = false) {
         .attr("d", function (d) { return women_in_govt_line(d.values) })
         .attr("class", "women-in-govt-path")
         .attr("id", d => d.key.replace(/[^a-zA-Z0-9s]/g, ""))
+        .attr("stroke-width", lineThickness * 2)
         .style("stroke", d => d.key == "United Kingdom" ? colors["Hover"] : countryColors(d.key))
-        .style("stroke-width", lineThickness * 2)
         .style("fill", "none")
         .style("opacity", 1)
         .attr("stroke-dasharray", function () {
@@ -1912,7 +1809,7 @@ function third_slide(no_transition = false) {
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
         .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
-        .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+        .attr("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
         .on("start", d => {
             if (current_slide == 2) {
                 d3.select("#tooltip")
@@ -1989,7 +1886,7 @@ function third_slide(no_transition = false) {
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
-                .style("stroke-width", d => d.key == "United Kingdom" ? 2 * lineThickness : lineThickness)
+                .attr("stroke-width", d => d.key == "United Kingdom" ? 2 * lineThickness : lineThickness)
                 .style("opacity", 1)
 
             // d.line.parentNode.appendChild(d.line);
@@ -2002,7 +1899,7 @@ function third_slide(no_transition = false) {
     function mouseout(d) {
         if (country_on_screen.indexOf(d.data.country) > -1) {
             d.line
-                .style("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+                .attr("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
                 .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
             // focus.attr("transform", "translate(-100,-100)")
         }
@@ -2654,7 +2551,7 @@ function update_fifth_slide(no_transition) {
     })
 
     // Quadtree to look up points
-    quadtree = d3.quadtree()
+    var quadtree = d3.quadtree()
         .extent([
             [-1, -1],
             [width + 1, height + 1]
@@ -2921,10 +2818,10 @@ function update_fifth_slide(no_transition) {
         var mousePos = d3.mouse(this)
         // Get the data from our map!
         if (typeof (transform) !== "undefined") {
-            nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"],
+            var nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"],
                 (mousePos[1] - margin.top - transform["y"]) / transform["k"], 50)
         } else {
-            nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50)
+            var nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50)
         }
 
         // Only show mouseover if hovering near a point
@@ -3681,12 +3578,6 @@ function getRetinaRatio() {
 // ███████║╚██████╗██║  ██║╚██████╔╝███████╗███████╗██║  ██║██║ ╚═╝ ██║██║  ██║
 // ╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
 // ----------------------------------------------------------------------------
-var $container = d3.select("#scroll")
-var $graphic = $container.select(".scroll__graphic")
-var $chart = $graphic.select(".chart")
-var $text = $container.select(".scroll__text")
-var $step = $text.selectAll(".step")
-
 function handleContainerEnter(response) {
     // response = { direction }
 
@@ -4114,15 +4005,23 @@ function draw_graph() {
     // d3.select("svg")
     //     .selectAll("*")
     //     .remove()
-    // Chart dimensions - use parent div size
+    // d3.selectAll(".sticky")
+    //     .each(function () {
+    //         Stickyfill.add(this)
+    //     })
+
+
     var new_width = timeline.clientWidth - margin.left - margin.right,
-        new_height = timeline.clientHeight - margin.top - margin.bottom
-
-
+        new_height = (window.innerHeight - margin.top - margin.bottom)
 
     if (new_width != width | new_height != height) {
         width = new_width
         height = new_height
+
+        // Chart dimensions - use parent div size
+        // $chart.style("height", height + margin.left + margin.right)
+        // $graphic.style("height", height + margin.left + margin.right)
+
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
         lineThickness = 0.0018 * height * 2
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
@@ -4145,8 +4044,8 @@ function draw_graph() {
             .attr("height", ratio * (height + margin.top + margin.bottom))
         // .attr("width", (width + margin.left + margin.right))
         // .attr("height", (height + margin.top + margin.bottom))
-            .style("width", (width + margin.left + margin.right))
-            .style("height", (height + margin.top + margin.bottom))
+            .style("width", width + margin.left + margin.right + "px")
+            .style("height", height + margin.top + margin.bottom + "px")
 
             // And do the same for the hidden canvas
         context_hidden.scale(ratio, ratio)
@@ -4157,8 +4056,8 @@ function draw_graph() {
             .attr("height", ratio * (height + margin.top + margin.bottom))
         // .attr("width", (width + margin.left + margin.right))
         // .attr("height", (height + margin.top + margin.bottom))
-            .style("width", (width + margin.left + margin.right))
-            .style("height", (height + margin.top + margin.bottom))
+            .style("width", width + margin.left + margin.right + "px")
+            .style("height", height + margin.top + margin.bottom + "px")
 
         new_slide = 0
         current_slide = -1
@@ -4166,31 +4065,32 @@ function draw_graph() {
         initial_render()
         first_slide()
 
-        // bind scrollama event handlers
-        scroller
-            .setup({
-                container: "#scroll", // our outermost scrollytelling element
-                graphic: ".scroll__graphic", // the graphic
-                text: ".scroll__text", // the step container
-                step: ".scroll__text .step", // the step elements
-                offset: 0.5, // set the trigger to be 1/2 way down screen
-                debug: false, // display the trigger offset for testing
-            })
-            .onStepEnter(handleStepEnter)
-            .onStepExit(handleStepExit)
-            .onContainerEnter(handleContainerEnter)
-            .onContainerExit(handleContainerExit)
+        // Set height of each step
+        // $step.style("height", height/2)
+        // $step.style("margin-top", height)
 
-        d3.selectAll(".sticky")
-            .each(function () {
-                Stickyfill.add(this)
-            })
-
-            // Set height of each step
-        $step.style("margin-bottom", height)
         // Move the footer down until it can be seen
-        d3.select("#footer")
-            .style("margin-top", (height + margin.top + margin.bottom) * 1.1)
+        // d3.select("#footer")
+        //     .style("margin-top", (height + margin.top + margin.bottom) * 1.1)
+
+        // 3. tell scrollama to update new element dimensions
+        // scroller.resize()
+
+        // bind scrollama event handlers
+        // scroller
+        //     .setup({
+        //         container: "#scroll", // our outermost scrollytelling element
+        //         graphic: ".scroll__graphic", // the graphic
+        //         text: ".scroll__text", // the step container
+        //         step: ".scroll__text .step", // the step elements
+        //         // offset: 0.5, // set the trigger to be 1/2 way down screen
+        //         debug: true, // display the trigger offset for testing
+        //     })
+        //     .onStepEnter(handleStepEnter)
+        //     .onStepExit(handleStepExit)
+        //     .onContainerEnter(handleContainerEnter)
+        //     .onContainerExit(handleContainerExit)
+
 
     }
 }
