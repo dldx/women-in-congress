@@ -1,12 +1,19 @@
+
+<!DOCTYPE html>
 <html>
 
-    <head>
-        <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500|Lato:300|Open+Sans:300,300i" rel="stylesheet" type='text/css'>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Women MPs in the House of Commons</title>
+	<meta name="description" content="Scrollama Demo: Sticky CSS">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500|Lato:300|Open+Sans:300,300i" rel="stylesheet" type='text/css'>
         <link rel="stylesheet" href="style.min.css">
-        <title>Women MPs in the House of Commons</title>
-    </head>
 
-    <body>
+</head>
+
+<body>
         <section id="header">
             <h1>Women in Parliament</h1>
             <h2>Celebrating 100 Years of Women in the House of Commons</h2>
@@ -15,7 +22,6 @@
                 of Commons. So how did we arrive here? And what contribution have women MPs made to democracy in the UK? Let's dive in and take a look!
             </p>
             <h3>BY DURAND D'SOUZA</h3>
-            <h3>WARNING: This site does not work in Safari or on iOS devices yet. Please use Chrome or Firefox!</h3>
             <h3 style="border: #e5e5e5 2px solid;
     padding: 10px;
     padding-left: 50px;
@@ -259,16 +265,110 @@
             here!]
             </p>
         </section>
-
+	<div class='debug'></div>
         <script src="d3.min.js"></script>
-        <script src="https://rawgit.com/wilddeer/stickyfill/master/dist/stickyfill.min.js"></script>
+        <script src="external/stickyfill.min.js"></script>
         <script src="external/scrollama.min.js"></script>
-        <script src="external/scrollama.js"></script>
         <script src="node_modules/babel-polyfill/dist/polyfill.min.js"></script>
         <script src="mps_over_time.es5.js"></script>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="semantic/dist/semantic.min.js"></script>
-    </body>
+	<script>
+		// using d3 for convenience
+		var container = d3.select('#scroll');
+		var graphic = container.select('.scroll__graphic');
+		var chart = graphic.select('.chart');
+		var text = container.select('.scroll__text');
+		var step = text.selectAll('.step');
+
+		// initialize the scrollama
+		var scroller = scrollama();
+
+		// generic window resize listener event
+		function handleResize() {
+			// 1. update height of step elements
+			var stepHeight = Math.floor(window.innerHeight * 0.75);
+			step.style('margin-bottom', stepHeight + 'px');
+
+			// 2. update width/height of graphic element
+			var bodyWidth = d3.select('body').node().offsetWidth;
+			var textWidth = text.node().offsetWidth;
+
+			var graphicWidth = bodyWidth - textWidth;
+
+			graphic
+				// .style('width', graphicWidth + 'px')
+				.style('height', window.innerHeight + 'px');
+
+			var chartMargin = 32;
+			var chartWidth = graphic.node().offsetWidth - chartMargin;
+
+			// chart
+			// 	.style('width', chartWidth + 'px')
+			// 	.style('height', Math.floor(window.innerHeight / 2) + 'px');
+
+
+			// 3. tell scrollama to update new element dimensions
+			scroller.resize();
+		}
+
+		// scrollama event handlers
+		// function handleStepEnter(response) {
+		// 	console.log("enter", response)
+		// 	// response = { element, direction, index }
+		//
+		// 	// add color to current step only
+		// 	step.classed('is-active', function (d, i) {
+		// 		return i === response.index;
+		// 	})
+		//
+		// 	// update graphic based on step
+		// 	chart.select('p').text(response.index + 1)
+		// }
+		//
+		// function handleContainerEnter(response) {
+		// 	// response = { direction }
+		// }
+		//
+		// function handleContainerExit(response) {
+		// 	// response = { direction }
+		// }
+
+		function setupStickyfill() {
+			d3.selectAll('.sticky').each(function () {
+				Stickyfill.add(this);
+			});
+		}
+
+		function init() {
+			setupStickyfill();
+
+			// 1. force a resize on load to ensure proper dimensions are sent to scrollama
+			handleResize();
+
+			// 2. setup the scroller passing options
+			// this will also initialize trigger observations
+			// 3. bind scrollama event handlers (this can be chained like below)
+			scroller.setup({
+				container: '#scroll',
+				graphic: '.scroll__graphic',
+				text: '.scroll__text',
+				step: '.scroll__text .step',
+				// debug: true,
+			})
+				.onStepEnter(handleStepEnter)
+				.onStepExit(handleStepExit)
+				.onContainerEnter(handleContainerEnter)
+				.onContainerExit(handleContainerExit);
+
+			// setup resize event
+			window.addEventListener('resize', handleResize);
+		}
+
+		// kick things off
+		init();
+	</script>
+</body>
 
 </html>

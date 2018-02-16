@@ -27,8 +27,8 @@
 var margin = {
     top: 30,
     right: 50,
-    bottom: 60,
-    left: 100
+    bottom: 30,
+    left: 70
 }
 
 // These are the colours used to identify each political party as well as
@@ -328,16 +328,16 @@ function update_state() {
         current_slide = new_slide
     }
     // Lastly update the hexagon tracker colours
-    d3.selectAll(".arc")
-        .classed("c-1", function (a) {
-            return a.index % 2 == 0
-        })
-        .classed("c-2", function (a) {
-            return a.index % 2 == 1
-        })
-        .classed("active", function (a) {
-            return a.index == current_slide
-        })
+    // d3.selectAll(".arc")
+    //     .classed("c-1", function (a) {
+    //         return a.index % 2 == 0
+    //     })
+    //     .classed("c-2", function (a) {
+    //         return a.index % 2 == 1
+    //     })
+    //     .classed("active", function (a) {
+    //         return a.index == current_slide
+    //     })
 }
 
 // ----------------------------------------------------------------------------
@@ -499,7 +499,7 @@ function initial_render() {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // Initialise the hexagon tracker that tracks the state of the graph
-    initialise_tracker()
+    // initialise_tracker()
 
     // Initialise info bubble
     d3.select("#tooltip")
@@ -555,6 +555,7 @@ function initial_render() {
 
     // Add the x axis to the bottom of the graph
     xAxis = d3.axisBottom(x)
+    if (width < 500) xAxis.ticks(5)
     gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
@@ -575,16 +576,18 @@ function initial_render() {
     //     .text("Women MPs in the House of Commons")
 
     // Add axes labels
-    xLabel = wrapper.append("text")
-        .attr("x", width / 2)
-        .attr("y", height + margin.bottom / 2)
+    xLabel = svg.append("text")
+        .attr("transform",
+            "translate(" + (width+margin.left+margin.right)/2 + " ," +
+                       (height + margin.top + margin.bottom) + ")")
         .attr("class", "x-label")
+        .style("text-anchor", "middle")
         .text("Time")
 
-    yLabel = wrapper.append("text")
+    yLabel = svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left / 2)
-        .attr("x", 0 - (height / 2))
+        .attr("y", margin.left/3)
+        .attr("x",0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
         .text("Number of Women MPs")
 
@@ -4012,7 +4015,7 @@ function draw_graph() {
 
 
     var new_width = timeline.clientWidth - margin.left - margin.right,
-        new_height = (window.innerHeight - margin.top - margin.bottom)
+        new_height = (timeline.clientHeight - margin.top - margin.bottom)
 
     if (new_width != width | new_height != height) {
         width = new_width
@@ -4028,11 +4031,11 @@ function draw_graph() {
         circleRadius = lineThickness / 2
         svg
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom * 2)
 
         mouseover_svg
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom * 2)
 
             // Scale the canvas correctly
         ratio = getRetinaRatio()
