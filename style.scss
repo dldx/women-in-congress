@@ -98,7 +98,11 @@ body {
   margin: 5rem auto;
   max-width: 50rem;
   @include phone {
-    margin: 2rem 1rem;
+    margin: 3rem 2rem;
+  }
+
+  @include tablet {
+    margin: 5rem 2rem;
   }
 }
 
