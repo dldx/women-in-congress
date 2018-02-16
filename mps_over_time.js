@@ -639,7 +639,7 @@ function zoomed(new_transform) {
     // And the svg axes
     if (current_slide == 0 |
         current_slide == 1) {
-        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)))
+        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)).ticks(width < 500 ? 4 : 8))
     } else if (current_slide == 4) {
         gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale))
             .ticks(20))
