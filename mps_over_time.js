@@ -3706,6 +3706,7 @@ function handleStepEnter(response) {
             break
 
         case 0.3:
+        // Draw lines for all women
             dataContainer.selectAll("custom.line")
                 .transition()
                 .delay((d, i) => 500 + i * 2)
@@ -3717,7 +3718,7 @@ function handleStepEnter(response) {
                 .duration(1000)
                 .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
             // Animate node entrances
-            var t = d3.timer((elapsed) => {
+            t = d3.timer((elapsed) => {
                 draw(context, false)
                 if (elapsed > 5000) {
                     t.stop()

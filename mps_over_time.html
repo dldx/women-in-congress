@@ -294,6 +294,11 @@
 
             // generic window resize listener event
             function handleResize() {
+                // Don't make it smaller, only bigger
+                if(typeof(old_height) != "undefined" && old_height > window.innerHeight) return
+
+                old_height = window.innerHeight
+
                 // 1. update height of step elements
                 var stepHeight = Math.floor(window.innerHeight * 0.75);
                 step.style('margin-bottom', stepHeight + 'px');
