@@ -3671,6 +3671,9 @@ function handleStepEnter(response) {
     case 0:
         switch (new_step) {
         case 0:
+            // Unhighlight 97 election
+            electionRects.filter((d, i) => i == 22)
+                .classed("hover", false)
             // Show election rects
             electionRects
                 .transition()
@@ -3683,6 +3686,9 @@ function handleStepEnter(response) {
                 .classed("hover", true)
             break
         case 0.2:
+            // Unhighlight 97 election
+            electionRects.filter((d, i) => i == 22)
+                .classed("hover", false)
             // Draw lines for longest serving woman
             dataContainer.selectAll("custom.line")
                 .filter(d => d.clean_name == "margaretbeckett")
@@ -3903,9 +3909,6 @@ function handleStepExit(response) {
     case 0:
         switch (current_step) {
         case 0.1:
-            // Unhighlight 97 election
-            electionRects.filter((d, i) => i == 22)
-                .classed("hover", false)
             break
         case 0.2:
             // Hide tooltip
