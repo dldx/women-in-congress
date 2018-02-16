@@ -30,7 +30,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 // These are the margins for the SVG
 var margin = {
     top: 30,
-    right: 50,
+    right: 30,
     bottom: 30,
     left: 70
 
@@ -2384,9 +2384,9 @@ function sixth_slide() {
 
                 xLabel.text("Median female - Median male");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom / 2).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom * 2 / 3).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom / 2).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom * 2 / 3).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
             });
         });
         var t4 = t3.transition();
@@ -2661,6 +2661,9 @@ function handleStepEnter(response) {
     $step.classed("is-active", function (d, i) {
         return i === response.index;
     });
+
+    // Hide tooltip
+    d3.select("#tooltip").style("opacity", 0);
 
     // go to next slide based on slide attribute
     new_slide = +$step.nodes()[response.index].getAttribute("data-slide");

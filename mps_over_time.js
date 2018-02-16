@@ -26,7 +26,7 @@
 // These are the margins for the SVG
 var margin = {
     top: 30,
-    right: 50,
+    right: 30,
     bottom: 30,
     left: 70
 }
@@ -3304,7 +3304,7 @@ function sixth_slide(no_transition = false) {
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", width - margin.right)
-                            .attr("y", height + margin.bottom / 2)
+                            .attr("y", height + margin.bottom * 2/3)
                             .text("FEMALE FRIENDLY")
                             .style("text-anchor", "middle")
                             .style("fill", colors["Hover"])
@@ -3313,7 +3313,7 @@ function sixth_slide(no_transition = false) {
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", margin.left)
-                            .attr("y", height + margin.bottom / 2)
+                            .attr("y", height + margin.bottom * 2/3)
                             .text("MALE FRIENDLY")
                             .style("text-anchor", "end")
                             .style("fill", colors["Lab"])
@@ -3646,6 +3646,10 @@ function handleStepEnter(response) {
     $step.classed("is-active", function (d, i) {
         return i === response.index
     })
+
+    // Hide tooltip
+    d3.select("#tooltip")
+        .style("opacity", 0)
 
     // go to next slide based on slide attribute
     new_slide = +$step.nodes()[response.index].getAttribute("data-slide")

@@ -243,6 +243,8 @@
                     Ultimately, there is a lot of variation between MPs regardless of gender but there is still an overall gender bias towards these topics.
                     <p/> Tap on a line to look closer at a topic.
                 </div>
+                <div class="step" data-slide="5" style="opacity: 0;">
+                </div>
             </div>
         </section>
         <section id="footer">
@@ -300,8 +302,10 @@
                 old_height = window.innerHeight
 
                 // 1. update height of step elements
-                var stepHeight = Math.floor(window.innerHeight * 0.75);
+                var stepHeight = Math.floor(window.innerHeight * 0.95);
                 step.style('margin-bottom', stepHeight + 'px');
+                // Remove margin from last step
+                d3.select(step.nodes()[step.nodes().length - 1]).style("margin-bottom", "50px")
 
                 // 2. update width/height of graphic element
                 var bodyWidth = d3.select('body').node().offsetWidth;
