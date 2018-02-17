@@ -30,7 +30,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 // These are the margins for the SVG
 var margin = {
     top: 30,
-    right: 30,
+    right: 20,
     bottom: 30,
     left: 70
 
@@ -111,7 +111,7 @@ var width = 0,
 
 var ratio, clippedArea, electionRects, zoom, wrapper, transform, zoomedArea, pointsGroup, slide2Group, slide3Group,
 // slide5Group,
-slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, quadtree, mp_filter;
+slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, quadtree, mp_filter, isMobile;
 
 var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data,
 // info_bubbles_data,
@@ -192,8 +192,10 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 function reset_zoom(callback, current_slide) {
     "use strict";
+    // mouseover_svg.select("#zoomed-area")
+    //     .selectAll("*")
+    //     .remove()
 
-    mouseover_svg.select("#zoomed-area").selectAll("*").remove();
     canvas.transition().duration(500).call(zoom.transform, d3.zoomIdentity).on("end", function () {
         mouseover_svg.select("#zoomed-area").attr("transform", null);
         zoomedArea.attr("transform", null);
@@ -203,7 +205,9 @@ function reset_zoom(callback, current_slide) {
         // Add the y axis to the left of the graph
         yAxis = d3.axisLeft(y);
         gY = d3.select(".y-axis").call(yAxis);
-        callback(current_slide);
+        if (typeof callback != "undefined") {
+            callback(current_slide);
+        }
     });
 }
 // ----------------------------------------------------------------------------
@@ -364,7 +368,9 @@ function initial_render() {
     d3.select("#tooltip").remove();
     d3.select("body").append("div").attr("id", "tooltip").attr("class", "tooltip");
     tooltip = document.getElementById("tooltip");
-    tooltip.innerHTML = "<div style='padding: 2rem'>\n    You can hover on everything in this visualisation so go ahead and explore. Click the <em>Next</em> button when you're ready to continue.</div>";
+
+    // Add a checkbox for zooming in
+    d3.select("body").append("div").attr("id", "zoom-checkbox").attr("class", "ui toggle checkbox").style("transform", "translateX(" + margin.left * (isMobile ? 1.2 : 2) + "px)").html("<input type=\"checkbox\" name=\"public\"><label>Make it zoomable</label>");
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
@@ -387,7 +393,7 @@ function initial_render() {
 
     // Add the x axis to the bottom of the graph
     xAxis = d3.axisBottom(x);
-    if (width < 500) xAxis.ticks(5);
+    if (isMobile) xAxis.ticks(5);
     gX = wrapper.append("g").attr("class", "x-axis").attr("transform", "translate(0," + height + ")").call(xAxis);
 
     // Add the y axis to the left of the graph
@@ -451,9 +457,9 @@ function zoomed(new_transform) {
 
     // And the svg axes
     if (current_slide == 0 | current_slide == 1) {
-        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)).ticks(width < 500 ? 4 : 8));
+        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)).ticks(isMobile ? 4 : 8));
     } else if (current_slide == 4) {
-        gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale)).ticks(20));
+        gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale)).ticks(isMobile ? 5 : 20));
         draw_custom_labels();
     } else {
         d3.event.transform.rescaleX(x);
@@ -670,9 +676,12 @@ function first_slide() {
 function show_mp_tooltip(nodeData, mousePos) {
     if (typeof mousePos === "undefined") {
         mousePos = [width * 3 / 4, height * 3 / 4];
+        if (isMobile) {
+            mousePos = [width / 2, 0];
+        }
     }
     // Display tooltip
-    d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
+    d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left / 2) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1;
     var tooltip_innerHTML = "\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body-container\">\n                <div class=\"mp-image-parent\">";
@@ -1115,6 +1124,7 @@ function to_third_slide(current_slide) {
                 x = d3.scaleUtc().range([0, width]).domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]);
                 // Redraw axes
                 xAxis = d3.axisBottom(x);
+                if (isMobile) xAxis.ticks(5);
 
                 yAxis = d3.axisLeft(y).tickFormat(function (d) {
                     return d;
@@ -2033,7 +2043,7 @@ function update_fifth_slide(no_transition) {
         }
     };
     // Update axis ticks and draw custom labels for Men and Women on x-axis
-    gX.call(d3.axisBottom(slide5_xScale).ticks(20));
+    gX.call(d3.axisBottom(slide5_xScale).ticks(isMobile ? 5 : 20));
     draw_custom_labels();
 
     // mouseover function for getting MP info
@@ -2628,6 +2638,8 @@ function mpZoom(clean_name) {
     var vshift = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
     var hshift = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
 
+    // Add zoom capabilities
+    zoom.on("zoom", zoomed);
     // Find MP
     var mp = mps_over_time_data.filter(function (d) {
         return d.clean_name == clean_name;
@@ -2700,6 +2712,20 @@ function handleStepEnter(response) {
                     }).classed("hover", true);
                     break;
                 case 0.2:
+                    if (response.direction == "up") {
+                        d3.select("#zoom-checkbox").style("opacity", 0);
+                        $("#zoom-checkbox").checkbox("uncheck");
+
+                        dataContainer.selectAll("custom.line").filter(function (d) {
+                            return d.clean_name != "margaretbeckett";
+                        }).transition().duration(1000).attr("x2", function (d) {
+                            return x(d.term_start);
+                        }).transition().duration(1000).attr("y1", function () {
+                            return y(0);
+                        }).attr("y2", function () {
+                            return y(0);
+                        });
+                    }
                     // Unhighlight 97 election
                     electionRects.filter(function (d, i) {
                         return i == 22;
@@ -2732,38 +2758,63 @@ function handleStepEnter(response) {
                     break;
 
                 case 0.3:
-                    // Draw lines for all women
-                    dataContainer.selectAll("custom.line").transition().delay(function (d, i) {
-                        return 500 + i * 2;
-                    }).duration(1000).attr("y1", function (d) {
-                        return y(d.stream);
-                    }).attr("y2", function (d) {
-                        return y(d.stream);
-                    }).transition().delay(function (d, i) {
-                        return 200 + i * 2;
-                    }).duration(1000).attr("x2", function (d) {
-                        return x(d.term_end) - lineThickness * 1.2;
-                    });
-                    // Animate node entrances
-                    t = d3.timer(function (elapsed) {
-                        draw(context, false);
-                        if (elapsed > 5000) {
-                            t.stop();
-                            draw(context);
-                            // Draw hidden canvas nodes to catch interactions
-                            draw(context_hidden, true);
-                        }
-                    });
-                    break;
-                case 0.4:
-                    // Reset zoom
-                    mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity);
-                    canvas.style("pointer-events", "all");
+                    if (response.direction == "down") {
+
+                        // Draw lines for all women
+                        dataContainer.selectAll("custom.line").transition().delay(function (d, i) {
+                            return 500 + i * 2;
+                        }).duration(1000).attr("y1", function (d) {
+                            return y(d.stream);
+                        }).attr("y2", function (d) {
+                            return y(d.stream);
+                        }).transition().delay(function (d, i) {
+                            return 200 + i * 2;
+                        }).duration(1000).attr("x2", function (d) {
+                            return x(d.term_end) - lineThickness * 1.2;
+                        });
+                        // Animate node entrances
+                        t = d3.timer(function (elapsed) {
+                            draw(context, false);
+                            if (elapsed > 5000) {
+                                t.stop();
+                                draw(context);
+                                // Draw hidden canvas nodes to catch interactions
+                                draw(context_hidden, true);
+                                reset_zoom();
+                            }
+                        });
+                    } else {
+                        // Reset zoom
+                        mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity).on("end", function () {
+                            reset_zoom();
+                        });
+                        canvas.style("pointer-events", "all");
+                    }
+
+                    d3.select("#zoom-checkbox").style("opacity", 1);
+                    $("#zoom-checkbox").checkbox({
+                        onChecked: function onChecked() {
+                            zoom.on("zoom", zoomed);
+                            canvas.call(zoom);
+                        },
+                        onUnchecked: function onUnchecked() {
+                            reset_zoom();
+                        } });
+
                     break;
 
                 case 1:
-                    // First step: zoom into first mp
-                    mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
+                    d3.select("#zoom-checkbox").style("opacity", 0);
+                    if ($("#zoom-checkbox").checkbox("is checked")) {
+                        $("#zoom-checkbox").checkbox("uncheck");
+                        // If we have to zoom out first, wait a bit before executing next bit
+                        d3.timeout(function () {
+                            mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
+                        }, 1000);
+                    } else {
+                        // First step: zoom into first mp
+                        mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
+                    }
                     canvas.style("pointer-events", "none");
                     break;
 
@@ -3012,9 +3063,8 @@ function draw_graph() {
         width = new_width;
         height = new_height;
 
-        // Chart dimensions - use parent div size
-        // $chart.style("height", height + margin.left + margin.right)
-        // $graphic.style("height", height + margin.left + margin.right)
+        // If width less than 500, we have a mobile (very abitrary)
+        isMobile = width < 500;
 
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
         lineThickness = 0.0018 * height * 2;

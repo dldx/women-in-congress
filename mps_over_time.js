@@ -26,7 +26,7 @@
 // These are the margins for the SVG
 var margin = {
     top: 30,
-    right: 30,
+    right: 20,
     bottom: 30,
     left: 70
 }
@@ -170,7 +170,8 @@ var ratio,
     slide5_xScale,
     slide5_yScale,
     quadtree,
-    mp_filter
+    mp_filter,
+    isMobile
 
 var mps_over_time_data,
     number_women_over_time_data,
@@ -266,9 +267,9 @@ function formatDate(date) {
 // ----------------------------------------------------------------------------
 function reset_zoom(callback, current_slide) {
     "use strict"
-    mouseover_svg.select("#zoomed-area")
-        .selectAll("*")
-        .remove()
+    // mouseover_svg.select("#zoomed-area")
+    //     .selectAll("*")
+    //     .remove()
     canvas.transition()
         .duration(500)
         .call(zoom.transform, d3.zoomIdentity)
@@ -289,7 +290,9 @@ function reset_zoom(callback, current_slide) {
             yAxis = d3.axisLeft(y)
             gY = d3.select(".y-axis")
                 .call(yAxis)
-            callback(current_slide)
+            if(typeof(callback) != "undefined") {
+                callback(current_slide)
+            }
         })
 }
 // ----------------------------------------------------------------------------
@@ -509,8 +512,14 @@ function initial_render() {
         .attr("id", "tooltip")
         .attr("class", "tooltip")
     tooltip = document.getElementById("tooltip")
-    tooltip.innerHTML = `<div style='padding: 2rem'>
-    You can hover on everything in this visualisation so go ahead and explore. Click the <em>Next</em> button when you're ready to continue.</div>`
+
+    // Add a checkbox for zooming in
+    d3.select("body")
+        .append("div")
+        .attr("id", "zoom-checkbox")
+        .attr("class", "ui toggle checkbox")
+        .style("transform", `translateX(${margin.left * (isMobile ? 1.2 : 2)}px)`)
+        .html("<input type=\"checkbox\" name=\"public\"><label>Make it zoomable</label>")
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
@@ -555,7 +564,7 @@ function initial_render() {
 
     // Add the x axis to the bottom of the graph
     xAxis = d3.axisBottom(x)
-    if (width < 500) xAxis.ticks(5)
+    if (isMobile) xAxis.ticks(5)
     gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
@@ -578,16 +587,16 @@ function initial_render() {
     // Add axes labels
     xLabel = svg.append("text")
         .attr("transform",
-            "translate(" + (width+margin.left+margin.right)/2 + " ," +
-                       (height + margin.top + margin.bottom) + ")")
+            "translate(" + (width + margin.left + margin.right) / 2 + " ," +
+            (height + margin.top + margin.bottom) + ")")
         .attr("class", "x-label")
         .style("text-anchor", "middle")
         .text("Time")
 
     yLabel = svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", margin.left/3)
-        .attr("x",0 - (height + margin.top + margin.bottom) / 2)
+        .attr("y", margin.left / 3)
+        .attr("x", 0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
         .text("Number of Women MPs")
 
@@ -639,10 +648,11 @@ function zoomed(new_transform) {
     // And the svg axes
     if (current_slide == 0 |
         current_slide == 1) {
-        gX.call(xAxis.scale(d3.event.transform.rescaleX(x)).ticks(width < 500 ? 4 : 8))
+        gX.call(xAxis.scale(d3.event.transform.rescaleX(x))
+            .ticks(isMobile ? 4 : 8))
     } else if (current_slide == 4) {
         gX.call(d3.axisBottom(d3.event.transform.rescaleX(slide5_xScale))
-            .ticks(20))
+            .ticks(isMobile ? 5 : 20))
         draw_custom_labels()
     } else {
         d3.event.transform.rescaleX(x)
@@ -885,13 +895,16 @@ function first_slide(no_transition = false) {
 function show_mp_tooltip(nodeData, mousePos) {
     if (typeof (mousePos) === "undefined") {
         mousePos = [width * 3 / 4, height * 3 / 4]
+        if (isMobile) {
+            mousePos = [width/2, 0]
+        }
     }
     // Display tooltip
     d3.select("#tooltip")
         .style("opacity", 1)
         .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
             width - tooltip.offsetWidth - margin.right),
-        0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+        0 + margin.left/2)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
             height + tooltip.offsetHeight - 20), margin.top)}px)`)
         .style("pointer-events", "none")
 
@@ -1569,6 +1582,7 @@ function to_third_slide(current_slide) {
                 .domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
             // Redraw axes
             xAxis = d3.axisBottom(x)
+            if (isMobile) xAxis.ticks(5)
 
             yAxis = d3.axisLeft(y)
                 .tickFormat(d => d)
@@ -2812,7 +2826,7 @@ function update_fifth_slide(no_transition) {
     }
     // Update axis ticks and draw custom labels for Men and Women on x-axis
     gX.call(d3.axisBottom(slide5_xScale)
-        .ticks(20))
+        .ticks(isMobile ? 5 : 20))
     draw_custom_labels()
 
     // mouseover function for getting MP info
@@ -3304,7 +3318,7 @@ function sixth_slide(no_transition = false) {
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", width - margin.right)
-                            .attr("y", height + margin.bottom * 2/3)
+                            .attr("y", height + margin.bottom * 2 / 3)
                             .text("FEMALE FRIENDLY")
                             .style("text-anchor", "middle")
                             .style("fill", colors["Hover"])
@@ -3313,7 +3327,7 @@ function sixth_slide(no_transition = false) {
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", margin.left)
-                            .attr("y", height + margin.bottom * 2/3)
+                            .attr("y", height + margin.bottom * 2 / 3)
                             .text("MALE FRIENDLY")
                             .style("text-anchor", "end")
                             .style("fill", colors["Lab"])
@@ -3597,7 +3611,7 @@ function handleContainerExit(response) {
     $graphic.classed("is-bottom", response.direction === "down")
 
     if (response.direction == "down" && lastTransitioned >= 4) {
-    // Go to sixth slide
+        // Go to sixth slide
         new_slide = 5
         update_state()
     }
@@ -3607,6 +3621,8 @@ function handleContainerExit(response) {
 // Function to zoom into a particular mp on slide 1
 // ----------------------------------------------------------------------------
 function mpZoom(clean_name, focus = "mid", scale_level = 3, vshift = 0, hshift = 0) {
+    // Add zoom capabilities
+    zoom.on("zoom", zoomed)
     // Find MP
     let mp = mps_over_time_data.filter(d => d.clean_name == clean_name)[0]
     // Transition zoom to MP
@@ -3686,6 +3702,20 @@ function handleStepEnter(response) {
                 .classed("hover", true)
             break
         case 0.2:
+            if(response.direction == "up") {
+                d3.select("#zoom-checkbox").style("opacity", 0)
+                $("#zoom-checkbox").checkbox("uncheck")
+
+                dataContainer.selectAll("custom.line")
+                    .filter(d => d.clean_name != "margaretbeckett")
+                    .transition()
+                    .duration(1000)
+                    .attr("x2", (d) => x(d.term_start))
+                    .transition()
+                    .duration(1000)
+                    .attr("y1", () => y(0))
+                    .attr("y2", () => y(0))
+            }
             // Unhighlight 97 election
             electionRects.filter((d, i) => i == 22)
                 .classed("hover", false)
@@ -3716,40 +3746,67 @@ function handleStepEnter(response) {
             break
 
         case 0.3:
-        // Draw lines for all women
-            dataContainer.selectAll("custom.line")
-                .transition()
-                .delay((d, i) => 500 + i * 2)
-                .duration(1000)
-                .attr("y1", (d) => y(d.stream))
-                .attr("y2", (d) => y(d.stream))
-                .transition()
-                .delay((d, i) => 200 + i * 2)
-                .duration(1000)
-                .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
-            // Animate node entrances
-            t = d3.timer((elapsed) => {
-                draw(context, false)
-                if (elapsed > 5000) {
-                    t.stop()
-                    draw(context)
-                    // Draw hidden canvas nodes to catch interactions
-                    draw(context_hidden, true)
-                }
-            })
-            break
-        case 0.4:
-            // Reset zoom
-            mouseover_svg.transition()
-                .duration(1000)
-                .call(zoom.transform, d3.zoomIdentity)
-            canvas.style("pointer-events", "all")
-            break
+            if (response.direction == "down") {
 
+                // Draw lines for all women
+                dataContainer.selectAll("custom.line")
+                    .transition()
+                    .delay((d, i) => 500 + i * 2)
+                    .duration(1000)
+                    .attr("y1", (d) => y(d.stream))
+                    .attr("y2", (d) => y(d.stream))
+                    .transition()
+                    .delay((d, i) => 200 + i * 2)
+                    .duration(1000)
+                    .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
+                // Animate node entrances
+                t = d3.timer((elapsed) => {
+                    draw(context, false)
+                    if (elapsed > 5000) {
+                        t.stop()
+                        draw(context)
+                        // Draw hidden canvas nodes to catch interactions
+                        draw(context_hidden, true)
+                        reset_zoom()
+                    }
+                })
+            } else {
+                // Reset zoom
+                mouseover_svg.transition()
+                    .duration(1000)
+                    .call(zoom.transform, d3.zoomIdentity)
+                    .on("end", () => {
+                        reset_zoom()
+                    })
+                canvas.style("pointer-events", "all")
+            }
+
+            d3.select("#zoom-checkbox").style("opacity", 1)
+            $("#zoom-checkbox").checkbox({
+                onChecked: function() {
+                    zoom.on("zoom", zoomed)
+                    canvas.call(zoom)
+                },
+                onUnchecked: function() {
+                    reset_zoom()
+                }})
+
+
+
+            break
 
         case 1:
-            // First step: zoom into first mp
-            mpZoom("constancemarkievicz", "mid", 10, 0, width / 4)
+            d3.select("#zoom-checkbox").style("opacity", 0)
+            if($("#zoom-checkbox").checkbox("is checked")) {
+                $("#zoom-checkbox").checkbox("uncheck")
+                // If we have to zoom out first, wait a bit before executing next bit
+                d3.timeout(() => {
+                    mpZoom("constancemarkievicz", "mid", 10, 0, width / 4)
+                }, 1000)
+            } else {
+                // First step: zoom into first mp
+                mpZoom("constancemarkievicz", "mid", 10, 0, width / 4)
+            }
             canvas.style("pointer-events", "none")
             break
 
@@ -3893,7 +3950,7 @@ function handleStepExit(response) {
     // Always hide tooltips at the end of each step
     d3.select("#tooltip")
         .style("opacity", 0)
-        // which step is exiting?
+    // which step is exiting?
     let current_step = +$step.nodes()[response.index].getAttribute("data-step")
 
     // get next step (based on direction)
@@ -3921,8 +3978,8 @@ function handleStepExit(response) {
                 // Unhighlight election term
                 electionRects.filter((d, i) => i == 22)
                     .classed("hover", false)
-                    // All women shortlists
-                    // Unfade all MPs
+                // All women shortlists
+                // Unfade all MPs
                 dataContainer.selectAll("custom.line")
                     .transition()
                     .attr("strokeStyle", d => colorParty(d.party))
@@ -4029,9 +4086,9 @@ function draw_graph() {
         width = new_width
         height = new_height
 
-        // Chart dimensions - use parent div size
-        // $chart.style("height", height + margin.left + margin.right)
-        // $graphic.style("height", height + margin.left + margin.right)
+
+        // If width less than 500, we have a mobile (very abitrary)
+        isMobile = width < 500
 
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
         lineThickness = 0.0018 * height * 2
@@ -4045,7 +4102,7 @@ function draw_graph() {
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom * 2)
 
-            // Scale the canvas correctly
+        // Scale the canvas correctly
         ratio = getRetinaRatio()
         context.scale(ratio, ratio)
         context.translate(margin.left, margin.top)
@@ -4053,20 +4110,20 @@ function draw_graph() {
         canvas
             .attr("width", ratio * (width + margin.left + margin.right))
             .attr("height", ratio * (height + margin.top + margin.bottom))
-        // .attr("width", (width + margin.left + margin.right))
-        // .attr("height", (height + margin.top + margin.bottom))
+            // .attr("width", (width + margin.left + margin.right))
+            // .attr("height", (height + margin.top + margin.bottom))
             .style("width", width + margin.left + margin.right + "px")
             .style("height", height + margin.top + margin.bottom + "px")
 
-            // And do the same for the hidden canvas
+        // And do the same for the hidden canvas
         context_hidden.scale(ratio, ratio)
         context_hidden.translate(margin.left, margin.top)
 
         canvas_hidden
             .attr("width", ratio * (width + margin.left + margin.right))
             .attr("height", ratio * (height + margin.top + margin.bottom))
-        // .attr("width", (width + margin.left + margin.right))
-        // .attr("height", (height + margin.top + margin.bottom))
+            // .attr("width", (width + margin.left + margin.right))
+            // .attr("height", (height + margin.top + margin.bottom))
             .style("width", width + margin.left + margin.right + "px")
             .style("height", height + margin.top + margin.bottom + "px")
 

@@ -23,7 +23,8 @@
 	"button",
 	"transition",
 	"icon",
-	"popup"
+	"popup",
+	"checkbox"
   ],
   "version": "2.2.13"
 }
