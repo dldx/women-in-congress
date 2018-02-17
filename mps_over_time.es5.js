@@ -684,7 +684,7 @@ function show_mp_tooltip(nodeData, mousePos) {
     d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left / 2) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1;
-    var tooltip_innerHTML = "\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body-container\">\n                <div class=\"mp-image-parent\">";
+    var tooltip_innerHTML = "\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body\">\n                <div class=\"mp-image-parent\">";
 
     if (typeof mp_base64_data == "undefined") {
         tooltip_innerHTML += "<img class=\"mp-image-blurred\" style=\"opacity: 0;\"/>\n                <img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" />\n                ";
@@ -694,7 +694,7 @@ function show_mp_tooltip(nodeData, mousePos) {
             tooltip_innerHTML += "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64, " + mp_base64_data[nodeData.id] + "\"/>\n                <img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: " + (typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded) + (nodeData.loaded = 1) + ";\" onload=\"this.style.opacity = 1;\" />\n                ";
         }
     }
-    tooltip_innerHTML += "</div>\n            <div class=\"body\">\n                    <div class=\"mp-term\">" + d3.timeFormat("%Y")(nodeData.term_start) + " &rarr;                     " + d3.timeFormat("%Y")(nodeData.term_end) + "</div>\n                    <div class=\"mp-constituency\">" + nodeData.constituency + "</div>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n                    ";
+    tooltip_innerHTML += "</div>\n            <div class=\"body-facts\">\n                    <div class=\"mp-term\">" + d3.timeFormat("%Y")(nodeData.term_start) + " &rarr;                     " + d3.timeFormat("%Y")(nodeData.term_end) + "</div>\n                    <div class=\"mp-constituency\">" + nodeData.constituency + "</div>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n                    ";
 
     tooltip.innerHTML = tooltip_innerHTML;
 

@@ -190,28 +190,16 @@ body {
   }
 
   .body {
-    padding: 0 !important;
-    display: grid;
-    grid-template-columns: 5.5rem auto;
-    grid-template-areas: "photo facts" "photo text";
+    grid-template-areas: "photo facts" "photo text" !important;
     @include phone {
-      grid-template-areas: "photo facts" "text text";
+      grid-template-areas: "photo facts" "text text" !important;
     }
-  }
-
-  .mp-image-parent {
-    grid-area: photo;
   }
 
   .body-container {
     @include phone {
       display: unset !important;
     }
-  }
-
-  .body-facts {
-    grid-area: facts;
-    align-self: center;
   }
 
   .body-text {
@@ -694,8 +682,14 @@ $tip-padding: .5;
       @include phone {
         content: "CONST.";
       }
+      @include tablet {
+        content: "CONST.";
+      }
     }
     @include phone {
+      width: 90%;
+    }
+    @include tablet {
       width: 90%;
     }
   }
@@ -730,15 +724,25 @@ $tip-padding: .5;
     position: absolute;
   }
 
-  .body-container {
-    display: flex;
-  }
+  // .body-container {
+  //   display: flex;
+  // }
 
   .body {
-    margin: 0;
-    width: 99%;
-    padding: .5 + rem;
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: 5.5rem auto;
+    grid-template-areas: "photo facts";
+  }
+
+  .mp-image-parent {
+    grid-area: photo;
+  }
+
+  .body-facts {
     z-index: 5;
+    grid-area: facts;
+    align-self: center;
   }
 
   .slide4-tooltip {

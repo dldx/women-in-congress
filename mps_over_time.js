@@ -911,7 +911,7 @@ function show_mp_tooltip(nodeData, mousePos) {
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
     var tooltip_innerHTML = `
                     <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
-                    <div class="body-container">
+                    <div class="body">
                 <div class="mp-image-parent">`
 
     if (typeof (mp_base64_data) == "undefined") {
@@ -928,7 +928,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         }
     }
     tooltip_innerHTML += `</div>
-            <div class="body">
+            <div class="body-facts">
                     <div class="mp-term">${d3.timeFormat("%Y")(nodeData.term_start)} &rarr; \
                     ${d3.timeFormat("%Y")(nodeData.term_end)}</div>
                     <div class="mp-constituency">${nodeData.constituency}</div>
