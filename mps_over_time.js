@@ -1819,8 +1819,10 @@ function third_slide(no_transition = false) {
 
     // Move tooltip to better location
     d3.select("#tooltip")
-        .style("transform", "translate(50vw, 20vh)")
-        .style("transform-origin", "50% 50%")
+        .style("transform", `translate(${Math.max(Math.min(width/2 - tooltip.offsetWidth / 2,
+            width - tooltip.offsetWidth - margin.right),
+        0 + margin.left/2)}px,${Math.max(Math.min(- tooltip.offsetHeight - 20,
+            height + tooltip.offsetHeight - 20), margin.top)}px)`)
 
     // Start drawing all the other countries, one by one, speeding up as we go along
     var country_on_screen = []
@@ -2467,6 +2469,8 @@ function fifth_slide(no_transition = false) {
             .style("display", null)
             .style("pointer-events", "all")
 
+        d3.select("#zoom-checkbox").style("opacity", 1)
+
         // Add a dropdown to select different topics
         if (lastTransitioned > 4) {
             d3.select("body")
@@ -2863,12 +2867,14 @@ function update_fifth_slide(no_transition) {
                 tooltip.innerHTML = `
                             <div class="slide5-tooltip">
                     <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
-                    <div class="body-container">
+                    <div class="body">
                     <div class="mp-image-parent">
                     ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
                     "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
-                    <p class="body">${(nodeData[selected_topic] * 100).toFixed(2)}% of ${nodeData.full_name}'s time spent on ${selected_topic}</p>
+                    <div class="body-facts">
+                    <p><em>${(nodeData[selected_topic] * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
+                    </div>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
                     ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
@@ -2976,6 +2982,8 @@ function to_sixth_slide(current_slide) {
             .transition()
             .delay(1000)
             .on("end", function () { this.remove() })
+
+        d3.select("#zoom-checkbox").style("opacity", 0)
         break
     }
 
@@ -3794,7 +3802,10 @@ function handleStepEnter(response) {
                 },
                 onUnchecked: function() {
                     reset_zoom()
-                    d3.select(".is-active").style("opacity", 1)
+                    d3.select(".is-active").filter(function() {
+                        // If it is an empty div, don't show
+                        return this.innerText != ""
+                    }).style("opacity", 1)
                 }})
 
 
@@ -3964,6 +3975,8 @@ function handleStepEnter(response) {
             break
         }
         break
+
+
 
     }
 
