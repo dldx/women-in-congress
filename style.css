@@ -119,21 +119,13 @@ body {
   .step.is-active {
     opacity: 1; }
   .step .body {
-    padding: 0 !important;
-    display: grid;
-    grid-template-columns: 5.5rem auto;
-    grid-template-areas: "photo facts" "photo text"; }
+    grid-template-areas: "photo facts" "photo text" !important; }
     @media (max-width: 767px) {
       .step .body {
-        grid-template-areas: "photo facts" "text text"; } }
-  .step .mp-image-parent {
-    grid-area: photo; }
+        grid-template-areas: "photo facts" "text text" !important; } }
   @media (max-width: 767px) {
     .step .body-container {
       display: unset !important; } }
-  .step .body-facts {
-    grid-area: facts;
-    align-self: center; }
   .step .body-text {
     grid-area: text; }
   @media (max-width: 767px) {
@@ -149,9 +141,21 @@ body {
         opacity: 0 !important; } }
 
 #zoom-checkbox {
-  top: 0;
+  top: 10%;
   position: fixed;
-  z-index: 99; }
+  z-index: 98;
+  opacity: 0;
+  transform: translateZ(0);
+  transition: opacity 1s ease-in-out; }
+  #zoom-checkbox label {
+    color: #b2b2b2 !important;
+    padding-left: 4rem !important; }
+  #zoom-checkbox label::before {
+    background: rgba(0, 0, 0, 0.3); }
+  #zoom-checkbox input:checked ~ label {
+    color: #e5e5e5 !important; }
+  #zoom-checkbox input:focus:checked ~ label {
+    color: white !important; }
 
 a {
   color: crimson;
@@ -416,6 +420,14 @@ a {
       font-weight: 500;
       font-size: 2rem;
       margin: 0; }
+      @media (max-width: 767px) {
+        #slide4 .slide2-tooltip p,
+        #slide4 .slide3-tooltip p,
+        #slide4 .slide4-tooltip p,
+        .tooltip .slide2-tooltip p,
+        .tooltip .slide3-tooltip p,
+        .tooltip .slide4-tooltip p {
+          font-size: 1.5rem; } }
     #slide4 .slide2-tooltip span,
     #slide4 .slide3-tooltip span,
     #slide4 .slide4-tooltip span,
@@ -444,6 +456,14 @@ a {
     .tooltip .slide3-tooltip .gender-ratio,
     .tooltip .slide4-tooltip .gender-ratio {
       font-size: 5rem; }
+      @media (max-width: 767px) {
+        #slide4 .slide2-tooltip .gender-ratio,
+        #slide4 .slide3-tooltip .gender-ratio,
+        #slide4 .slide4-tooltip .gender-ratio,
+        .tooltip .slide2-tooltip .gender-ratio,
+        .tooltip .slide3-tooltip .gender-ratio,
+        .tooltip .slide4-tooltip .gender-ratio {
+          font-size: 3rem; } }
     #slide4 .slide2-tooltip h1,
     #slide4 .slide3-tooltip h1,
     #slide4 .slide4-tooltip h1,
@@ -477,7 +497,8 @@ a {
     @media (max-width: 767px) {
       #slide4 h1,
       .tooltip h1 {
-        font-size: .8rem; } }
+        font-size: .8rem;
+        padding: 0.2rem; } }
   #slide4 hr,
   .tooltip hr {
     width: 50%;
@@ -533,7 +554,15 @@ a {
         #slide4 .mp-constituency::before,
         .tooltip .mp-constituency::before {
           content: "CONST."; } }
+      @media (min-width: 768px) and (max-width: 1023px) {
+        #slide4 .mp-constituency::before,
+        .tooltip .mp-constituency::before {
+          content: "CONST."; } }
     @media (max-width: 767px) {
+      #slide4 .mp-constituency,
+      .tooltip .mp-constituency {
+        width: 90%; } }
+    @media (min-width: 768px) and (max-width: 1023px) {
       #slide4 .mp-constituency,
       .tooltip .mp-constituency {
         width: 90%; } }
@@ -560,15 +589,20 @@ a {
     height: 100%;
     filter: blur(4px);
     position: absolute; }
-  #slide4 .body-container,
-  .tooltip .body-container {
-    display: flex; }
   #slide4 .body,
   .tooltip .body {
-    margin: 0;
-    width: 99%;
-    padding: 0.5rem;
-    z-index: 5; }
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: 5.5rem auto;
+    grid-template-areas: "photo facts"; }
+  #slide4 .mp-image-parent,
+  .tooltip .mp-image-parent {
+    grid-area: photo; }
+  #slide4 .body-facts,
+  .tooltip .body-facts {
+    z-index: 5;
+    grid-area: facts;
+    align-self: center; }
   #slide4 .slide4-tooltip,
   .tooltip .slide4-tooltip {
     height: 100%;

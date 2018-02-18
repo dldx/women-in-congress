@@ -2798,9 +2798,11 @@ function handleStepEnter(response) {
                         onChecked: function onChecked() {
                             zoom.on("zoom", zoomed);
                             canvas.call(zoom);
+                            d3.select(".is-active").style("opacity", 0);
                         },
                         onUnchecked: function onUnchecked() {
                             reset_zoom();
+                            d3.select(".is-active").style("opacity", 1);
                         } });
 
                     break;

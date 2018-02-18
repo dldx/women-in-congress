@@ -3790,9 +3790,11 @@ function handleStepEnter(response) {
                 onChecked: function() {
                     zoom.on("zoom", zoomed)
                     canvas.call(zoom)
+                    d3.select(".is-active").style("opacity", 0)
                 },
                 onUnchecked: function() {
                     reset_zoom()
+                    d3.select(".is-active").style("opacity", 1)
                 }})
 
 
