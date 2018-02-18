@@ -227,9 +227,9 @@ body {
 }
 
 #zoom-checkbox {
-  top: 10%;
+  top: 15%;
   position: fixed;
-  z-index: 98;
+  z-index: 6;
   opacity: 0;
   transform: translateZ(0);
   transition: opacity 1s ease-in-out;
@@ -886,6 +886,9 @@ $tip-padding: .5;
   font-weight: 200;
   text-shadow: 1px 1px 1px rgba(black, .5);
   pointer-events: none;
+  @include phone {
+    font-size: 0.7rem;
+  }
 }
 
 #tooltip {
@@ -926,6 +929,15 @@ $tip-padding: .5;
   position: fixed !important;
   z-index: 50;
   transition: opacity 1s ease-in-out;
+  top: 5%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50%;
+
+  @include phone {
+    width: 80%;
+  }
 
   & > .text:not(.default) {
     font-weight: 200 !important;

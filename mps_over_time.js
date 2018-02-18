@@ -619,7 +619,7 @@ function initial_render() {
 function zoomed(new_transform) {
     "use strict"
     transform = new_transform || d3.event.transform
-    if (current_slide == 0 || current_slide == 4) {
+    if (current_slide == 0 || current_slide == 4 || current_slide == 5) {
         zoomedArea.attr("transform", transform)
         mouseover_svg.select("#zoomed-area")
             .attr("transform", transform)
@@ -2416,7 +2416,7 @@ function fifth_slide(no_transition = false) {
             .transition()
             .delay(1000)
             .duration(1000)
-            .attr("width", width / 2)
+            .attr("width", width)
 
         // Set the label text because it doesn't get copied for some reason
         d3.select("#floating-topic > .rect-label")
@@ -2492,8 +2492,8 @@ function fifth_slide(no_transition = false) {
                 .parentNode
                 .className += " slide5-dropdown"
 
-            d3.select(".slide5-dropdown")
-                .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
+            // d3.select(".slide5-dropdown")
+            //     .style("transform", `translate(${width/2}px, ${margin.top}px)`)
 
         }
 
@@ -2501,7 +2501,7 @@ function fifth_slide(no_transition = false) {
         // Scales for this data
         slide5_xScale = d3.scaleLinear()
             .domain([-300, 150])
-            .range([0, width + margin.left + margin.right])
+            .range([0, width])
 
         slide5_yScale = d3.scaleLinear()
             .domain([0, 0.3])
@@ -2612,7 +2612,7 @@ function update_fifth_slide(no_transition) {
         .enter()
         .append("custom")
         .attr("class", "male-node")
-        .attr("r", 1.8)
+        .attr("r", circleRadius)
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
         .attr("opacity", 0.0)
@@ -2640,7 +2640,7 @@ function update_fifth_slide(no_transition) {
         .attr("class", "female-node")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
-        .attr("r", 1.8)
+        .attr("r", circleRadius)
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => d.y)
         .attr("opacity", 0.0)
@@ -2692,7 +2692,7 @@ function update_fifth_slide(no_transition) {
         .attr("class", "male-median")
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
-        .attr("r", 3)
+        .attr("r", circleRadius * 2)
         .attr("opacity", 0)
         .transition(t1)
         .attr("opacity", 1)
@@ -2717,7 +2717,7 @@ function update_fifth_slide(no_transition) {
         .attr("class", "female-median")
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
-        .attr("r", 3)
+        .attr("r", circleRadius * 2)
         .attr("opacity", 0)
         .transition(t1)
         .attr("opacity", 1)
@@ -2834,7 +2834,7 @@ function update_fifth_slide(no_transition) {
     }
     // Update axis ticks and draw custom labels for Men and Women on x-axis
     gX.call(d3.axisBottom(slide5_xScale)
-        .ticks(isMobile ? 5 : 20))
+        .ticks(20))
     draw_custom_labels()
 
     // mouseover function for getting MP info
@@ -2885,9 +2885,9 @@ function update_fifth_slide(no_transition) {
                     .datum(nodeData)
                     .attr("cx", (d) => d.x)
                     .attr("cy", (d) => d.y)
-                    .attr("r", 4.8)
+                    .attr("r", circleRadius*2.5)
                     .style("opacity", 1)
-                    .style("stroke-width", 2)
+                    .style("stroke-width", circleRadius)
             } else {
                 median_mouseover(nodeData, mousePos)
             }
@@ -2920,16 +2920,16 @@ function update_fifth_slide(no_transition) {
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
                     <h1 style="background-color: ${nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]};">${nodeData.gender.capitalize()}</h1>
-                    The average ${nodeData.gender.capitalize()} MP spends ${(nodeData.median*100).toFixed(1)}% of ${nodeData.gender == "male" ? "his" : "her"} time talking about ${selected_topic}.
+                    The average ${nodeData.gender.capitalize()} MP spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
             .select("circle")
             .datum(nodeData)
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", 6)
+            .attr("r", circleRadius*2.5)
             .style("opacity", 1)
-            .style("stroke-width", 2)
+            .style("stroke-width", circleRadius)
     }
 
 }
@@ -3288,6 +3288,7 @@ function sixth_slide(no_transition = false) {
             .on("click", d => {
                 selected_topic = d[0]
                 new_slide = 4
+                d3.select(".is-active").style("opacity", 0)
                 update_state()
 
             })
