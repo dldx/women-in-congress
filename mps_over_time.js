@@ -619,7 +619,7 @@ function initial_render() {
 function zoomed(new_transform) {
     "use strict"
     transform = new_transform || d3.event.transform
-    if (current_slide == 0) {
+    if (current_slide == 0 || current_slide == 4) {
         zoomedArea.attr("transform", transform)
         mouseover_svg.select("#zoomed-area")
             .attr("transform", transform)
