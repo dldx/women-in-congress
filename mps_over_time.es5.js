@@ -202,6 +202,8 @@ function reset_zoom(callback, current_slide) {
         zoom.on("zoom", null);
         canvas.on("wheel.zoom", null).on("wheel.zoom", null).on("mousedown.zoom", null).on("dblclick.zoom", null).on("touchstart.zoom", null).on("touchmove.zoom", null).on("touchend.zoom touchcancel.zoom", null);
 
+        canvas.style("pointer-events", "auto").style("touch-action", "auto");
+
         // Add the y axis to the left of the graph
         yAxis = d3.axisLeft(y);
         gY = d3.select(".y-axis").call(yAxis);
@@ -2788,8 +2790,8 @@ function handleStepEnter(response) {
                         mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity).on("end", function () {
                             reset_zoom();
                         });
-                        canvas.style("pointer-events", "all");
                     }
+                    canvas.style("pointer-events", "auto");
 
                     d3.select("#zoom-checkbox").style("opacity", 1);
                     $("#zoom-checkbox").checkbox({
@@ -2889,6 +2891,9 @@ function handleStepEnter(response) {
                     break;
 
                 case 6:
+                    if (response.direction == "up") {
+                        d3.select("#zoom-checkbox").style("opacity", 0);
+                    }
                     // Set filter to these MPs who were elected through AWS in 1997
                     mp_filter = ["annebegg", "judymallaber", "sandraosborne", "angelaesmith", "giselastuart", "annkeen", "janetdean", "chrismccafferty", "juliemorgan", "shonamcisaac", "kalimountford", "bettywilliams", "lauramoffatt", "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman", "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy", "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley", "melaniejohnson", "jennyjones"];
                     // Show only MPs which were elected through AWS
@@ -2912,7 +2917,22 @@ function handleStepEnter(response) {
                             context.restore();
                         }
                     });
+                    break;
 
+                case 7:
+                    d3.select("#zoom-checkbox").style("opacity", 1);
+                    // Draw canvas if coming from below
+                    if (response.direction == "up") {
+                        draw(context, false);
+                    }
+                    break;
+
+            }
+            break;
+
+        case 1:
+            if (response.direction == "down") {
+                d3.select("#zoom-checkbox").style("opacity", 0);
             }
             break;
 
