@@ -2530,6 +2530,9 @@ function update_fifth_slide(no_transition) {
         .select("circle")
         .style("opacity", 0)
 
+    // Zoom out
+    $("#zoom-checkbox").checkbox("uncheck")
+
     // Get value of topic dropdown
     try {
         selected_topic = d3.select("#topic-dropdown")
@@ -3248,7 +3251,7 @@ function sixth_slide(no_transition = false) {
             .attr("cx", d => x(d[1]["female"]))
 
         var t2 = t1.transition()
-            .delay(3400)
+            .delay(2500)
             .on("end", () => {
                 slide6Group
                     .selectAll(".topic-" + sorted_topics.map(d => d[0])
@@ -3330,19 +3333,19 @@ function sixth_slide(no_transition = false) {
 
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
-                            .attr("x", width - margin.right)
-                            .attr("y", height + margin.bottom * 2 / 3)
+                            .attr("x", width)
+                            .attr("y", height + margin.bottom)
                             .text("FEMALE FRIENDLY")
-                            .style("text-anchor", "middle")
+                            .style("text-anchor", "end")
                             .style("fill", colors["Hover"])
                             .style("alignment-baseline", "hanging")
 
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
-                            .attr("x", margin.left)
-                            .attr("y", height + margin.bottom * 2 / 3)
+                            .attr("x", 0)
+                            .attr("y", height + margin.bottom)
                             .text("MALE FRIENDLY")
-                            .style("text-anchor", "end")
+                            .style("text-anchor", "start")
                             .style("fill", colors["Lab"])
                             .style("alignment-baseline", "hanging")
 
@@ -3968,6 +3971,7 @@ function handleStepEnter(response) {
         break
 
     case 3:
+        d3.select("#zoom-checkbox").style("opacity", 0)
         switch (new_step) {
         case 2:
             d3.select("#slide4")

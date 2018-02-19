@@ -760,6 +760,7 @@ $tip-padding: .5;
     justify-content: space-between;
     animation: fadein 1s;
     pointer-events: auto;
+    text-align: unset;
     @keyframes fadein {
       from {
         opacity: 0;
@@ -774,6 +775,8 @@ $tip-padding: .5;
     p {
       font-size: 1rem;
       line-height: 1.5;
+      text-align: center;
+
       @include phone {
         font-size: .7rem;
         line-height: 1.3;
@@ -804,6 +807,7 @@ $tip-padding: .5;
       flex-grow: 1;
       margin-top: auto;
       margin-bottom: auto;
+      text-align: center;
     }
 
     .mp-name {

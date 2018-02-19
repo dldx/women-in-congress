@@ -1796,6 +1796,9 @@ function update_fifth_slide(no_transition) {
     // Hide mouseover circle
     mouseover_svg.select("circle").style("opacity", 0);
 
+    // Zoom out
+    $("#zoom-checkbox").checkbox("uncheck");
+
     // Get value of topic dropdown
     try {
         selected_topic = d3.select("#topic-dropdown").property("value");
@@ -2346,7 +2349,7 @@ function sixth_slide() {
             return x(d[1]["female"]);
         });
 
-        var t2 = t1.transition().delay(3400).on("end", function () {
+        var t2 = t1.transition().delay(2500).on("end", function () {
             slide6Group.selectAll(".topic-" + sorted_topics.map(function (d) {
                 return d[0];
             }).indexOf(selected_topic)).attr("opacity", 1);
@@ -2402,9 +2405,9 @@ function sixth_slide() {
 
                 xLabel.text("Median female - Median male");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom * 2 / 3).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + margin.bottom).text("FEMALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom * 2 / 3).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + margin.bottom).text("MALE FRIENDLY").style("text-anchor", "start").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
             });
         });
         var t4 = t3.transition();
@@ -2948,6 +2951,7 @@ function handleStepEnter(response) {
             break;
 
         case 3:
+            d3.select("#zoom-checkbox").style("opacity", 0);
             switch (new_step) {
                 case 2:
                     d3.select("#slide4").style("pointer-events", "all").style("opacity", 1);
