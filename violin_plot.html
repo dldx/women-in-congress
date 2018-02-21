@@ -4,6 +4,10 @@
     <head>
         <title>Violin plot</title>
         <style>
+            body {
+
+                background-color: #252525;
+            }
             svg {
                 font: 20px sans-serif;
             }
@@ -16,10 +20,14 @@
                 font: bold 12px sans-serif;
             }
 
-            .x.axis .domain {
+            .axis path,line {
                 fill: none;
-                stroke: #000;
+                stroke: #e5e5e5;
                 shape-rendering: crispEdges;
+            }
+
+            text {
+                fill: #e5e5e5;
             }
         </style>
     </head>
@@ -91,9 +99,9 @@
                 .html(function(d) {
                     return `<p><strong> ${d.key} </strong></p>
                 <div>${d.values[0].key}</div>
-                <div>${(median(d.values[0].values.map(function(i) { return i.value}))*100).toFixed(1)}</div>
+                <div>${(median(d.values[0].values.map(function(i) { return i.value}))*100).toFixed(1)}% of time</div>
                 <div>${d.values[1].key}</div>
-                <div>${(median(d.values[1].values.map(function(i) { return i.value}))*100).toFixed(1)}</div>
+                <div>${(median(d.values[1].values.map(function(i) { return i.value}))*100).toFixed(1)}% of time</div>
     </p>`;
                 });
 
@@ -172,6 +180,14 @@
                         return `translate(0, ${y_parties(g.key)})`
                     })
 
+                var party_labels = party_wrappers
+                    .append("text")
+                    .attr("x", width/2)
+                    .attr("y", 0)
+                    .attr("text-anchor", "middle")
+                    .attr("alignment-baseline", "hanging")
+                    .text(d => d.key + " MPs")
+
                 // One group per topic
                 var violin_wrappers = party_wrappers
                     .selectAll(".violin-wrapper")
@@ -192,7 +208,7 @@
                     .range([0, x_topics.bandwidth()]);
 
                 var y_violin = d3.scaleLinear()
-                    .domain([-0.02, 0.301])
+                    .domain([-0.02, 0.201])
                     .range([y_parties.bandwidth(), 0]);
 
                 var x_topic_axis = wrapper.append("g")
@@ -208,7 +224,7 @@
 
                 var y_violin_axis = party_wrappers.append("g")
                     .attr("class", "axis axis--y")
-                    .call(d3.axisLeft(y_violin).ticks(4))
+                    .call(d3.axisLeft(y_violin).ticks(4).tickFormat(d => (d*100).toFixed(0) + "%"))
 
                 var violin_area = d3.area()
                     .curve(d3.curveCardinal)
@@ -241,10 +257,10 @@
                         return "topic-curve topic-curve-" + d.key
                     })
                     .attr("fill", function(d) {
-                        return d.key == "Female" ? "orange" : "blue"
+                        return d.key == "Female" ? "#e5e5e5" : "#c61148"
                     })
-                    .attr("stroke", "black")
-                    .attr("stroke-width", 0.5)
+                    .attr("stroke", "#e5e5e5")
+                    .attr("stroke-width", 0.3)
                     .attr("d", function(d) {
                         kde = kernelDensityEstimator(kernelEpanechnikov(0.005), y_violin.ticks(50))
 
