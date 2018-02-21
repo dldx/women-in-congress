@@ -1163,7 +1163,7 @@ function second_slide(no_transition = false) {
         .y(function (d) {
             return y(d.total_mps / 2)
         })
-        .curve(d3.curveBasis)
+        .curve(d3.curveCardinal)
 
     // Add this in svg
     half_max_mps_path = slide2Group.append("path")
@@ -3443,14 +3443,19 @@ function download_data() {
             return {
                 year: parseDate(d.Year),
                 total_women_mps: +d.Total,
-                total_mps: +d.total_mps
+                conservative_women_mps: +d.Con,
+                labour_women_mps: +d.Lab,
+                lib_pc_snp_women_mps: +d.Lib + +d.PC_SNP
             }
         })
         .defer(d3.csv, "total_mps_over_time.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
                 year: parseDate(d.Year),
-                total_mps: +d.total_mps
+                total_mps: +d.total_mps,
+                conservative_mps: +d.Con,
+                labour_mps: +d.Lab,
+                lib_pc_snp_mps: +d.Lib + +d.PC_SNP
             }
         })
         .defer(d3.json, "info_bubbles.json")
@@ -3469,7 +3474,10 @@ function download_data() {
                 .left
             number_women_over_time_data.forEach(d => {
                 d.total_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].total_mps
-                d.women_pct = d.total_women_mps / d.total_mps * 100
+                d.women_pct = d.total_women_mps / d.total_mps * 100,
+                d.conservative_women_pct = d.conservative_women_mps / d.conservative_mps * 100,
+                d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100,
+                d.lib_pc_snp_women_pct = d.lib_pc_snp_women_mps / d.lib_pc_snp_mps * 100
             })
             window.info_bubbles_data = info_bubbles
             // INITIAL DRAW
@@ -3994,9 +4002,120 @@ function handleStepEnter(response) {
         break
 
     case 1:
-        if (response.direction == "down") {
-            d3.select("#zoom-checkbox").style("opacity", 0)
+        d3.select("#zoom-checkbox").style("opacity", 0)
+        switch (new_step) {
+        // Change graph to show breakdown by party
+        case 0:
+            if(response.direction == "up") {
+
+            // All MPs first
+                y.domain([0, 750])
+                gY.transition().call(yAxis)
+
+                max_mps_line.y(d => y(d.total_mps))
+                max_mps_path.transition().attr("d", max_mps_line)
+                max_mps_area.y1(d => y(d.total_mps))
+                max_mps_path_area.transition()
+                    .attr("d", max_mps_area)
+                    .style("fill", colors["Labour"])
+                mask.transition().attr("d", max_mps_area)
+
+                half_max_mps_line.y(d => y(d.total_mps/2))
+                half_max_mps_path.transition().attr("d", half_max_mps_line)
+
+                total_women_mps_line.y(d => y(d.total_women_mps))
+                total_women_mps_path.transition().attr("d", total_women_mps_line)
+                total_women_mps_area.y1(d => y(d.total_women_mps))
+                total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            }
+
+            break
+        case 1:
+            // Labour
+            y.domain([0, 550])
+            gY.transition().call(yAxis)
+
+            max_mps_line.y(d => y(d.labour_mps))
+            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_area.y1(d => y(d.labour_mps))
+            max_mps_path_area.transition()
+                .attr("d", max_mps_area)
+                .style("fill", colors["Labour"])
+            mask.transition().attr("d", max_mps_area)
+
+            half_max_mps_line.y(d => y(d.labour_mps/2))
+            half_max_mps_path.transition().attr("d", half_max_mps_line)
+
+            total_women_mps_line.y(d => y(d.labour_women_mps))
+            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_area.y1(d => y(d.labour_women_mps))
+            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            break
+        case 2:
+            // Conservative
+            y.domain([0, 550])
+            gY.transition().call(yAxis)
+
+            max_mps_line.y(d => y(d.conservative_mps))
+            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_area.y1(d => y(d.conservative_mps))
+            max_mps_path_area.transition()
+                .attr("d", max_mps_area)
+                .style("fill", colors["Conservative"])
+            mask.transition().attr("d", max_mps_area)
+
+            half_max_mps_line.y(d => y(d.conservative_mps/2))
+            half_max_mps_path.transition().attr("d", half_max_mps_line)
+
+            total_women_mps_line.y(d => y(d.conservative_women_mps))
+            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_area.y1(d => y(d.conservative_women_mps))
+            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            break
+        case 3:
+            // Lib PC SNP
+            y.domain([0, 550])
+            gY.transition().call(yAxis)
+
+            max_mps_line.y(d => y(d.lib_pc_snp_mps))
+            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_area.y1(d => y(d.lib_pc_snp_mps))
+            max_mps_path_area.transition()
+                .attr("d", max_mps_area)
+                .style("fill", colors["SNP"])
+            mask.transition().attr("d", max_mps_area)
+
+            half_max_mps_line.y(d => y(d.lib_pc_snp_mps/2))
+            half_max_mps_path.transition().attr("d", half_max_mps_line)
+
+            total_women_mps_line.y(d => y(d.lib_pc_snp_women_mps))
+            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_area.y1(d => y(d.lib_pc_snp_women_mps))
+            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            break
+        case 4:
+            // All MPs again
+            y.domain([0, 750])
+            gY.transition().call(yAxis)
+
+            max_mps_line.y(d => y(d.total_mps))
+            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_area.y1(d => y(d.total_mps))
+            max_mps_path_area.transition()
+                .attr("d", max_mps_area)
+                .style("fill", colors["Labour"])
+            mask.transition().attr("d", max_mps_area)
+
+            half_max_mps_line.y(d => y(d.total_mps/2))
+            half_max_mps_path.transition().attr("d", half_max_mps_line)
+
+            total_women_mps_line.y(d => y(d.total_women_mps))
+            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_area.y1(d => y(d.total_women_mps))
+            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            break
         }
+
         break
 
     case 3:
