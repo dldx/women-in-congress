@@ -2906,7 +2906,7 @@ function handleStepEnter(response) {
                             d3.selectAll(".y-axis .tick").style("opacity", function (d) {
                                 return d >= 0 ? 1 : 0;
                             });
-                        }).transition().delay(500).call(zoom.transform, transform);
+                        }).transition().call(zoom.transform, transform);
                     }
 
                     // Highlight Labour MPs that were elected in 1997
@@ -2929,7 +2929,7 @@ function handleStepEnter(response) {
                             draw(context);
                             if (response.direction == "up") context.restore();
                         }
-                    }, response.direction == "down" ? 1000 : 0);
+                    });
 
                     break;
 
@@ -2944,7 +2944,6 @@ function handleStepEnter(response) {
                         return !(mp.term_start >= new Date(1997, 4, 1) & mp.term_start <= new Date(1997, 6, 1) & mp.party == "Lab" & mp_filter.indexOf(mp.clean_name) != -1) ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party);
                     });
                     if (response.direction == "down") {
-
                         // Scale the canvas
                         context.save();
                         context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top);
@@ -2964,8 +2963,9 @@ function handleStepEnter(response) {
 
                 case 8:
                     d3.select("#zoom-checkbox").style("opacity", 1);
-                    // Draw canvas if coming from below
+
                     if (response.direction == "up") {
+                        // Draw canvas if coming from below
                         draw(context, false);
                     }
                     break;

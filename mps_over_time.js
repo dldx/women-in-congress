@@ -3911,7 +3911,6 @@ function handleStepEnter(response) {
 
                     })
                     .transition()
-                    .delay(500)
                     .call(zoom.transform, transform)
 
             }
@@ -3940,7 +3939,7 @@ function handleStepEnter(response) {
                     draw(context)
                     if (response.direction == "up") context.restore()
                 }
-            }, response.direction == "down" ? 1000 : 0)
+            })
 
             break
 
@@ -3954,8 +3953,7 @@ function handleStepEnter(response) {
                 "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman",
                 "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy",
                 "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley",
-                "melaniejohnson", "jennyjones"
-            ]
+                "melaniejohnson", "jennyjones"]
             // Show only MPs which were elected through AWS
             dataContainer.selectAll("custom.line")
                 .transition()
@@ -3964,7 +3962,6 @@ function handleStepEnter(response) {
                     mp.term_start <= new Date(1997, 6, 1) &
                     mp.party == "Lab" & mp_filter.indexOf(mp.clean_name) != -1) ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party))
             if (response.direction == "down") {
-
                 // Scale the canvas
                 context.save()
                 context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
@@ -3985,8 +3982,9 @@ function handleStepEnter(response) {
 
         case 8:
             d3.select("#zoom-checkbox").style("opacity", 1)
-            // Draw canvas if coming from below
+
             if (response.direction == "up") {
+                // Draw canvas if coming from below
                 draw(context, false)
             }
             break
