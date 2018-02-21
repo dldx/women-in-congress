@@ -2707,10 +2707,13 @@ function handleStepEnter(response) {
         case 0:
             switch (new_step) {
                 case 0:
-                    // Unhighlight 97 election
-                    electionRects.filter(function (d, i) {
-                        return i == 22;
-                    }).classed("hover", false);
+                    if (response.direction == "up") {
+
+                        // Unhighlight 97 election
+                        electionRects.filter(function (d, i) {
+                            return i == 22;
+                        }).classed("hover", false).style("opacity", 0.15);
+                    }
                     // Show election rects
                     electionRects.transition().delay(function (d, i) {
                         return i * 50;
@@ -2720,7 +2723,7 @@ function handleStepEnter(response) {
                     // Highlight '97 election
                     electionRects.filter(function (d, i) {
                         return i == 22;
-                    }).classed("hover", true);
+                    }).classed("hover", true).style("opacity", null);
                     break;
                 case 0.2:
                     if (response.direction == "up") {
@@ -2740,7 +2743,7 @@ function handleStepEnter(response) {
                     // Unhighlight 97 election
                     electionRects.filter(function (d, i) {
                         return i == 22;
-                    }).classed("hover", false);
+                    }).classed("hover", false).style("opacity", 0.15);
                     // Draw lines for longest serving woman
                     dataContainer.selectAll("custom.line").filter(function (d) {
                         return d.clean_name == "margaretbeckett";
