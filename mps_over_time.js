@@ -3843,12 +3843,6 @@ function handleStepEnter(response) {
             canvas.style("pointer-events", "none")
             break
 
-        case 3:
-            // Third step: first mp to take seat
-            mpZoom("nancyastor", "end", 5, height / 4, width / 4)
-            canvas.style("pointer-events", "none")
-            break
-
         case 4:
             // Fourth step: first prime minister
             mpZoom("margaretthatcher")
@@ -3856,6 +3850,37 @@ function handleStepEnter(response) {
             break
 
         case 5:
+            canvas.style("pointer-events", "all")
+            d3.select("#zoom-checkbox").style("opacity", 1)
+
+            mouseover_svg.transition()
+                .duration(1000)
+                .call(zoom.transform, d3.zoomIdentity)
+                .on("end", () => {
+                    d3.selectAll(".y-axis .tick")
+                        .style("opacity", d => d >= 0 ? 1 : 0)
+
+                    // Unhighlight election term
+                    electionRects.filter((d, i) => i == 22)
+                        .classed("hover", false)
+                        // Set default mp_filter
+                    mp_filter = mps_over_time_data.map(mp => mp.clean_name)
+                    // Unfade all MPs
+                    dataContainer.selectAll("custom.line")
+                        .transition()
+                        .attr("strokeStyle", d => colorParty(d.party))
+
+                    var t = d3.timer((elapsed) => {
+                        draw(context, false)
+                        if (elapsed > 500) {
+                            t.stop()
+                            draw(context)
+                        }
+                    })
+                })
+            break
+
+        case 6:
             canvas.style("pointer-events", "all")
             // Highlight '97 term
             electionRects.filter((d, i) => i == 22)
@@ -3919,7 +3944,7 @@ function handleStepEnter(response) {
 
             break
 
-        case 6:
+        case 7:
             if (response.direction == "up") {
                 d3.select("#zoom-checkbox").style("opacity", 0)
             }
@@ -3958,7 +3983,7 @@ function handleStepEnter(response) {
             })
             break
 
-        case 7:
+        case 8:
             d3.select("#zoom-checkbox").style("opacity", 1)
             // Draw canvas if coming from below
             if (response.direction == "up") {
@@ -4021,37 +4046,7 @@ function handleStepExit(response) {
             d3.select("#tooltip")
                 .style("opacity", 0)
             break
-        case 5:
-            if (response.direction == "up") {
-
-                // Unhighlight election term
-                electionRects.filter((d, i) => i == 22)
-                    .classed("hover", false)
-                // All women shortlists
-                // Unfade all MPs
-                dataContainer.selectAll("custom.line")
-                    .transition()
-                    .attr("strokeStyle", d => colorParty(d.party))
-
-                transform = d3.zoomIdentity
-
-                // Scale the canvas
-                context.save()
-                context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
-                context.translate(transform.x, transform.y)
-                context.scale(transform.k, transform.k)
-
-                var t = d3.timer((elapsed) => {
-                    draw(context, false)
-                    if (elapsed > 500) {
-                        t.stop()
-                        draw(context)
-                        context.restore()
-                    }
-                })
-            }
-            break
-        case 6:
+        case 7:
             if (response.direction == "down") {
                 // Unhighlight election term
                 electionRects.filter((d, i) => i == 22)
