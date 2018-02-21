@@ -2502,7 +2502,10 @@ function download_data() {
         }).left;
         number_women_over_time_data.forEach(function (d) {
             d.total_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].total_mps;
-            d.women_pct = d.total_women_mps / d.total_mps * 100, d.conservative_women_pct = d.conservative_women_mps / d.conservative_mps * 100, d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100, d.lib_pc_snp_women_pct = d.lib_pc_snp_women_mps / d.lib_pc_snp_mps * 100;
+            d.women_pct = d.total_women_mps / d.total_mps * 100, d.conservative_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].conservative_mps;
+            d.conservative_women_pct = d.conservative_women_mps / d.conservative_mps * 100, d.labour_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].labour_mps;
+            d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100, d.lib_pc_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_pc_snp_mps;
+            d.lib_pc_snp_women_pct = d.lib_pc_snp_women_mps / d.lib_pc_snp_mps * 100;
         });
         window.info_bubbles_data = info_bubbles;
         // INITIAL DRAW
@@ -2984,6 +2987,7 @@ function handleStepEnter(response) {
                 // Change graph to show breakdown by party
                 case 0:
                     if (response.direction == "up") {
+                        yLabel.transition().text("Number of MPs");
 
                         // All MPs first
                         y.domain([0, 750]);
@@ -3016,120 +3020,137 @@ function handleStepEnter(response) {
 
                     break;
                 case 1:
+                    yLabel.transition().text("% of MPs");
                     // Labour
-                    y.domain([0, 550]);
+                    y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
                     max_mps_line.y(function (d) {
-                        return y(d.labour_mps);
+                        return y(100);
                     });
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(function (d) {
-                        return y(d.labour_mps);
+                        return y(100);
                     });
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(function (d) {
-                        return y(d.labour_mps / 2);
+                        return y(50);
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
+                    text_path_50_50.transition().attr("d", half_max_mps_line);
+
                     total_women_mps_line.y(function (d) {
-                        return y(d.labour_women_mps);
+                        return y(d.labour_women_pct);
                     });
                     total_women_mps_path.transition().attr("d", total_women_mps_line);
                     total_women_mps_area.y1(function (d) {
-                        return y(d.labour_women_mps);
+                        return y(d.labour_women_pct);
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
+
+                    d3.select(".women-label").style("fill", colors["Labour"]);
                     break;
                 case 2:
                     // Conservative
-                    y.domain([0, 550]);
+                    y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
                     max_mps_line.y(function (d) {
-                        return y(d.conservative_mps);
+                        return y(100);
                     });
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(function (d) {
-                        return y(d.conservative_mps);
+                        return y(100);
                     });
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Conservative"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(function (d) {
-                        return y(d.conservative_mps / 2);
+                        return y(50);
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
+                    text_path_50_50.transition().attr("d", half_max_mps_line);
+
                     total_women_mps_line.y(function (d) {
-                        return y(d.conservative_women_mps);
+                        return y(d.conservative_women_pct);
                     });
                     total_women_mps_path.transition().attr("d", total_women_mps_line);
                     total_women_mps_area.y1(function (d) {
-                        return y(d.conservative_women_mps);
+                        return y(d.conservative_women_pct);
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
+
+                    d3.select(".women-label").style("fill", colors["Conservative"]);
                     break;
                 case 3:
                     // Lib PC SNP
-                    y.domain([0, 550]);
+                    y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
                     max_mps_line.y(function (d) {
-                        return y(d.lib_pc_snp_mps);
+                        return y(100);
                     });
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(function (d) {
-                        return y(d.lib_pc_snp_mps);
+                        return y(100);
                     });
-                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["SNP"]);
+                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["LD"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(function (d) {
-                        return y(d.lib_pc_snp_mps / 2);
+                        return y(50);
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
+                    text_path_50_50.transition().attr("d", half_max_mps_line);
+
                     total_women_mps_line.y(function (d) {
-                        return y(d.lib_pc_snp_women_mps);
+                        return y(d.lib_pc_snp_women_pct);
                     });
                     total_women_mps_path.transition().attr("d", total_women_mps_line);
                     total_women_mps_area.y1(function (d) {
-                        return y(d.lib_pc_snp_women_mps);
+                        return y(d.lib_pc_snp_women_pct);
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
+
+                    d3.select(".women-label").style("fill", colors["LD"]);
                     break;
                 case 4:
                     // All MPs again
-                    y.domain([0, 750]);
+                    y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
                     max_mps_line.y(function (d) {
-                        return y(d.total_mps);
+                        return y(100);
                     });
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(function (d) {
-                        return y(d.total_mps);
+                        return y(100);
                     });
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(function (d) {
-                        return y(d.total_mps / 2);
+                        return y(50);
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
+                    text_path_50_50.transition().attr("d", half_max_mps_line);
+
                     total_women_mps_line.y(function (d) {
-                        return y(d.total_women_mps);
+                        return y(d.women_pct);
                     });
                     total_women_mps_path.transition().attr("d", total_women_mps_line);
                     total_women_mps_area.y1(function (d) {
-                        return y(d.total_women_mps);
+                        return y(d.women_pct);
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
+
+                    d3.select(".women-label").style("fill", colors["Labour"]);
                     break;
             }
 
