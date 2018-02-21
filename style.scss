@@ -42,6 +42,7 @@ $desktop-width: 1024px;
 }
 
 body {
+  -webkit-font-smoothing: antialiased;
   background-color: $body-background;
   color: invert($body-background);
   font-family: 'Quicksand', sans-serif;
@@ -61,7 +62,7 @@ body {
   h1 {
     margin: .5rem auto;
     text-align: center;
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: bold;
     line-height: 1.5;
     @include phone {
@@ -84,6 +85,27 @@ body {
     text-align: center;
     font-size: 1rem;
     font-weight: lighter;
+  }
+
+  .outer {
+    vertical-align: middle;
+    display: inline-block;
+    border-top: .3rem #593989 solid;
+    border-bottom: .3rem #593989 solid;
+    line-height: 1;
+    font-weight: bold;
+    font-family: Lato, sans-serif;
+    color: #3A3A39;
+    background-color: white;
+  }
+
+  .inner {
+    padding: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-top: .3rem #22784a solid;
+    border-bottom: .3rem #22784a solid;
+    text-align: center;
   }
 
   p {
@@ -496,7 +518,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
   }
 
   &.hover {
-    opacity: .2;
+    opacity: .35;
     fill: map-get($colors, Hover);
   }
 }
