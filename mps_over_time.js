@@ -2377,88 +2377,24 @@ function fifth_slide(no_transition = false) {
         .select("#zoomed-area")
         .append("circle")
 
-    // Switching from 4th slide
-    try {
-        // Get the position of the first label in the topic selection
-        var label_pos = d3.select("#slide4-speech-topic-bar > .rect-fg")
-            .node()
-            .getBoundingClientRect()
 
+    if (lastTransitioned < 5) {
         // Append a new svg to the document containing a copy of this label
         d3.select("body")
             .append("svg")
             .attr("id", "floating-topic")
             .style("top", 0)
             .style("left", 0)
-            .style("position", "fixed")
-            .style("transform", `translate(${label_pos.x}px, ${label_pos.y}px) translateZ(0)`)
-            .style("transition", "transform 1s ease-in-out 1s, opacity 1s ease-in-out")
-            .style("opacity", no_transition ? 0 : 1)
-            .node()
-            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-fg")
-                .node()
-                .cloneNode())
-            .parentNode
-            .appendChild(d3.select("#slide4-speech-topic-bar > .rect-label")
-                .node()
-                .cloneNode())
-
-        // Fade out slide4
-        d3.select("#slide4")
-            .style("opacity", 0)
-            .transition()
-            .duration(1000)
-            .on("end", function () { this.remove() })
-
-        // Resize the label rect
-        d3.select("#floating-topic")
-            .attr("width", label_pos.width)
-            .transition()
-            .delay(1000)
-            .duration(1000)
-            .attr("width", width)
-
-        // Set the label text because it doesn't get copied for some reason
-        d3.select("#floating-topic > .rect-label")
-            .html(function () {
-                selected_topic = this.parentElement.getElementsByClassName("rect-fg")[0].getAttribute("title")
-                    .split(":")[0]
-                return selected_topic
-            })
-
-        // Finally, move the label to a better location
-        d3.timeout(() => {
-            d3.select("#floating-topic")
-                .style("transform", `translate(${width/4}px, ${margin.top*2}px)`)
-                .transition()
-                .delay(1000)
-                .style("fill", "white")
-                .select(".rect-fg")
-                .style("opacity", 0)
-        }, 1000)
-
-    } catch (e) {
-        // Not coming from slide 4 so we can just put text in the right location without animation
-
-        if (lastTransitioned < 5) {
-            // Append a new svg to the document containing a copy of this label
-            d3.select("body")
-                .append("svg")
-                .attr("id", "floating-topic")
-                .style("top", 0)
-                .style("left", 0)
-                .style("position", "absolute")
-                .style("transform", `translate(${width/4 + 20}px, ${margin.top*2 + 10}px) translateZ(0)`)
-                .style("transition", " opacity 1s ease-in-out")
-                .append("text")
-                .attr("class", "rect-label")
-                .attr("alignment-baseline", "middle")
-                .attr("x", 5)
-                .attr("y", 15)
-                .style("fill", "white")
-                .html(selected_topic)
-        }
-
+            .style("position", "absolute")
+            .style("transform", `translate(${width/4 + 20}px, ${margin.top*2 + 10}px) translateZ(0)`)
+            .style("transition", " opacity 1s ease-in-out")
+            .append("text")
+            .attr("class", "rect-label")
+            .attr("alignment-baseline", "middle")
+            .attr("x", 5)
+            .attr("y", 15)
+            .style("fill", "white")
+            .html(selected_topic)
     }
 
     // Wait for 3 secs before doing this next bit
@@ -3445,7 +3381,7 @@ function download_data() {
                 total_women_mps: +d.Total,
                 conservative_women_mps: +d.Con,
                 labour_women_mps: +d.Lab,
-                lib_pc_snp_women_mps: +d.Lib + +d.PC_SNP
+                lib_snp_women_mps: +d.Lib_SNP
             }
         })
         .defer(d3.csv, "total_mps_over_time.csv", function (d) {
@@ -3455,7 +3391,7 @@ function download_data() {
                 total_mps: +d.total_mps,
                 conservative_mps: +d.Con,
                 labour_mps: +d.Lab,
-                lib_pc_snp_mps: +d.Lib + +d.PC_SNP
+                lib_snp_mps: +d.Lib_SNP
             }
         })
         .defer(d3.json, "info_bubbles.json")
@@ -3479,8 +3415,8 @@ function download_data() {
                 d.conservative_women_pct = d.conservative_women_mps / d.conservative_mps * 100,
                 d.labour_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].labour_mps
                 d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100,
-                d.lib_pc_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_pc_snp_mps
-                d.lib_pc_snp_women_pct = d.lib_pc_snp_women_mps / d.lib_pc_snp_mps * 100
+                d.lib_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_snp_mps
+                d.lib_snp_women_pct = d.lib_snp_women_mps / d.lib_snp_mps * 100
             })
             window.info_bubbles_data = info_bubbles
             // INITIAL DRAW
@@ -4094,7 +4030,7 @@ function handleStepEnter(response) {
             d3.select(".women-label").style("fill", colors["Conservative"])
             break
         case 3:
-            // Lib PC SNP
+            // Lib SNP
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
@@ -4113,9 +4049,9 @@ function handleStepEnter(response) {
                 .transition()
                 .attr("d", half_max_mps_line)
 
-            total_women_mps_line.y(d => y(d.lib_pc_snp_women_pct))
+            total_women_mps_line.y(d => y(d.lib_snp_women_pct))
             total_women_mps_path.transition().attr("d", total_women_mps_line)
-            total_women_mps_area.y1(d => y(d.lib_pc_snp_women_pct))
+            total_women_mps_area.y1(d => y(d.lib_snp_women_pct))
             total_women_mps_path_area.transition().attr("d", total_women_mps_area)
 
             d3.select(".women-label").style("fill", colors["LD"])
@@ -4153,17 +4089,24 @@ function handleStepEnter(response) {
 
     case 3:
         d3.select("#zoom-checkbox").style("opacity", 0)
-        switch (new_step) {
+        break
+
+    case 4:
+        switch(new_step) {
+        case 0:
+            selected_topic = "economy"
+            update_fifth_slide()
+            break
+        case 1:
+            selected_topic = "welfare reforms"
+            update_fifth_slide()
+            break
         case 2:
-            d3.select("#slide4")
-                .style("pointer-events", "all")
-                .style("opacity", 1)
+            selected_topic = "parliamentary terms"
+            update_fifth_slide(false)
             break
         }
         break
-
-
-
     }
 
 }

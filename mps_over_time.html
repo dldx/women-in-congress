@@ -168,10 +168,10 @@ While the merits and pitfalls of AWS are still being debated, there is no doubt 
                 <div class="step" data-slide="1" data-step="0" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="1" data-step="0">
-                    While in 2018, <b>208</b> female MPs is significant, we still haven't hit gender parity yet. In fact, for every woman in the House of Commons in 2018, there are two men. Hover/tap on the graph to see each parliament's ratio of men to women.
+                    While in 2018, <b>208</b> female MPs is significant, we still haven't hit gender parity yet. In fact, for every woman in the House of Commons, there are two men. Hover/tap on the graph to see each parliament's ratio of men to women.
                 </div>
                 <div class="step" data-slide="1" data-step="1">
-                     The situation for women is also very party dependent. In 2018, 45% of Labour's MPs are women, thanks in part to all women shortlists, there are currently more women Labour MPs than all the other parties combined (and at a time when the Labour Party is in opposition).
+                     The situation for women is also very party dependent. In 2018, 45% of Labour's MPs are women. Thanks in part to all women shortlists, there are currently more women Labour MPs than all the other parties combined (and at a time when the Labour Party is in opposition).
                 </div>
                 <div class="step" data-slide="1" data-step="2">
                     But only 21% of Conservative MPs are currently women. This presents a problem, because a Conservative landslide election could cause a significant step backwards in our journey towards a 50:50 Parliament.
@@ -185,87 +185,104 @@ While the merits and pitfalls of AWS are still being debated, there is no doubt 
                 <div class="step" data-slide="2" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="2">
-                    Right! On this graph, we see the % of women elected to the equivalent of the House of Commons in other developed countries. For Norway, this is the <em>Stortinget</em>, for Mexico, <em>Cámara de Diputados</em>, for the United States,
-                    it is the <em>House of Representatives</em>. As usual, the Nordic countries lead the pack. Mexico has also made great strides and is progressing much quicker than the UK despite the fact that both countries started at the same point
-                    in 2002. In fact, the UK is a rather middle of the road performer. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet this threshold
-                    are Bolivia and Rwanda.
+                    <p>
+                    Right! On this graph, we see the % of women elected to the equivalent of the House of Commons in other developed countries. For Norway, this is the <em>Stortinget</em>, for Mexico, <em>Cámara de Diputados</em>, for the United States, it is the <em>House of Representatives</em>.
+                </p>
+                    <p>
+                    As usual, the Nordic countries lead the pack. Mexico has also made great strides and is progressing much quicker than the UK despite the fact that both countries started at the same point in 2002.
+                </p>
+                <p>
+                    In fact, the UK is a rather middle of the road performer. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet this threshold are Bolivia and Rwanda.
+                </p>
                 </div>
                 <div class="step" data-slide="3" data-step="0">
+                    <p>
                     At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few women. And I know how much further we have to go. But why? What does equal gender representation give us that we don't have already?</em>
-                    <p/> That's a fair question. There are three main reasons why I believe in equal representation:
-                    <ol>
-                        <li>
-                            The UK is a representative democracy. This means that our representatives should share our values, as well as our diversity. The experiences of women can be vastly different to those of men. It is only fair that we value all experiences equally.
-                        </li>
-                        <li>
-                            By improving the diversity of parliament, we are also drawing on a much bigger talent pool which can be hugely beneficial in solving some of the complex issues that government has to deal with.
-                        </li>
-                        <li>
-                            The data shows that female and male MPs prioritise different topics in parliament. They may champion different causes, and as a result, empower different groups of people.
-                        </li>
-                    </ol>
+                </p>
+                <p>
+                    Let’s look at how much time MPs spend in Parliament speaking about different issues. We collected and analysed the data using machine learning.
+                </p>
 
-                    On that last point, I'd like to present to you some of my own data analysis! Scroll on!
-
-                </div>
-                <div class="step" data-slide="3" data-step="1">
-                    I kept reading articles about how passionate an MP was about something but as a data nerd, I wanted something quantifiable. So I set about finding a way.
-                    <p/> I downloaded all speeches made by every MP elected since 1970. This equates to 1,213,728 individual speeches, from brief comments or questions to long filibusters, made by 1783 male and 335 female MPs. I then used a few machine learning
-                    techniques to identify all the topics present in the whole corpus. For the data scientists - I used Latent Dirichlet Allocation, a popular method for identifying topics in data without any prior labelling. It was important to use LDA
-                    because I had no idea what topics were even talked about in parliament, especially in the past, so I didn't want to spend too much time categorising the speeches myself. For more information on my method, check out the GitHub repo
-                    for this project.
-                    <p/> It's important to recognise that using machine learning in this way is very beneficial but it can also be imperfect and inaccurate. The longer the speech, the easier it is for the model to identify the topics within it due to the
-                    statistical process underlying the model. In some instances, the model correctly identifies the most important topic but in other instances, it gets completely thrown off by similar words used in a different context. For example, a
-                    speech about the law firm Mossack Fonseca being raided was miscategorised as "counter-terrorism" because of the word "raided". However, longer speeches do not suffer from these problems.
-                    <p/> Let's take a look at some examples.
-                </div>
-                <div class="step" data-slide="3" data-step="2" style="opacity: 0;">
-                </div>
-                <div class="step" data-slide="3" data-step="3" style="z-index: 100; background-color: rgba(255, 255, 255, 0.93); color: #1a1a1a;">
-                    Once I identified the topics within each speech given by an MP, I then added together all the fractions, weighted by the length of each speech so that the longer speeches have precedence. This tells us how long an MP spends on each topic. Let's see the
-                    results.
                 </div>
                 <div class="step" data-slide="4" data-step="0">
-                    This is just one topic identified by the model. In total, the model identified 100 different topics of which a large number were either nonsensical or irrelevant to our discussion. We focussed on the rest.
-                    <p/> Each dot in this visual represents one MP. Hover/tap on each dot to identify them! The higher the dot, the more time has been spent talking about this topic. The line in between the dots represents the difference between the median
-                    fractions of time spent by each gender.
+                    <p>
+
+                    Here’s the chart for the topic “Economy”. Each dot in this chart represents one MP (from 1970 to today). The higher the dot, the more of their time in parliament was spent talking about the Economy.  Hover/tap on each dot to see who they are and their percentage.
+                </p>
+                <p>
+                    The horizontal position of a dot is meaningless.
+                </p>
+                <p>
+    Men and women appear to give the economy roughly equal weighting. Next let’s take a look at another topic, one which women tend to devote more parliamentary time to.
+</p>
+
                 </div>
                 <div class="step" data-slide="4" data-step="1">
-                    Let's take this median line and plot it with the median lines of all the other topics and see if we can discern any interesting trends.
+                    <p>
+                        Women MPs clearly spend more of their time discussing “Welfare Reforms” than men.
+                    </p>
+                <p>
+                    What about a topic favoured by men?
+</p>
+
+                </div>
+                <div class="step" data-slide="4" data-step="2">
+                    <p>
+                        This time, we see that men spend XX more time than women talking about Parliamentary Terms.
+                    </p>
+                <p>
+                    We can represent the difference between the median % of time spent by each gender with a line.
+</p>
+                </div>
+                <div class="step" data-slide="4" data-step="3">
+                    Let's take this median line and plot it with the median lines of all the other topics.
                 </div>
                 <div class="step" data-slide="5" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="5">
-                    Here you see how each gender favours particular topics. Female MPs talk more often about WELFARE REFORMS, CHILD CARE, the NHS, and EDUCATION. Male MPs, on average, spend more time talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES.
-                    Ultimately, there is a lot of variation between MPs regardless of gender but there is still an overall gender bias towards these topics.
-                    <p/> Tap on a line to look closer at a topic.
+                    <p>
+
+                    We can see that women MPs spend more of their parliamentary than men time talking about WELFARE REFORMS, CHILD CARE, the NHS and EDUCATION.
+                </p>
+<p>
+
+And we can see that male MPs spend more of their parliamentary time than women talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES .
+</p>
+
+<p>
+This disparity exists even after accounting for political parties (which may influence the results due to women MPs belonging mostly to the Labour party).
+</p>
+<p>Tap on a line to take a closer look at a topic</p>
+
                 </div>
                 <div class="step" data-slide="5" style="opacity: 0;">
                 </div>
             </div>
         </section>
         <section id="footer">
-            <p/> So let's wrap this up! My topic modelling analysis shows that certain topics are more attractive to certain genders. This disparity between genders exists even after accounting for party lines (which may influence the results due to female
-            MPs belonging mostly to the Labour Party). It is important to keep in mind that these figures don't measure any kind of political views an MP might have. Two MPs might both talk about the NHS a lot, but one may be in favour of keeping it public
-            while the other might be in favour of privatising it. This model can't differentiate between them.
-            <p/> And while we could look at these topics and label "child care" a feminine subject and "economy" a masculine one, in reality, child care and economic policies affect both genders. Similarly, many of the topics identified are simply two sides
-            of the same coin. Climate Change is biased towards women but energy is mentioned by men more often, despite the fact that they should be addressed collectively. Perhaps our most polarised topics are simply gendered manifestations of the same
-            ones, where men and women might use different words but in reality, care about the same overarching subject.
+            <p>So let’s wrap this up!</p>
 
-            <p/> There is a lot more that can be derived from this and other datasets and future articles may address these. I would particularly like to answer questions such as:
-            <ul>
-                <li>
-                    Do women selected in All Women Shortlists behave differently to those who weren't?
-                </li>
-                <li>
-                    How do the speech styles of men and women differ? Do men use filibusters more often? Are women easier to understand?
-                </li>
-                <li>
-                    How are male and female MPs characterised differently in newspapers, on TV or on social media?
-                </li>
-            </ul>
+            <p>
 
-            Until then, thanks for reading!
+We’ve seen how far we’ve come towards a 50:50 Parliament and we’ve seen how much further we have to go. We’ve also seen which political parties have made the most progress, and how Britain compares internationally. And finally we’ve seen that more women in parliament does change the content of the debate.
+</p>
+
+<p>
+Here are the X main reasons why <a href="https://5050parliament.co.uk">50:50 Parliament</a> is campaigning for a gender balanced Parliament:
+</p>
+
+<ol>
+<li>
+    …
+</li>
+<li>
+    …
+</li>
+<li>
+    …
+</li>
+</ol>
+
 
             <p/> You may find all the code for this project at <a href="https://github.com/dldx/women-in-parliament">this github page</a>. Data about MPs is from <a href="https://www.theyworkforyou.com/">TheyWorkForYou.com</a>. [Need to credit other sources
             here!]
