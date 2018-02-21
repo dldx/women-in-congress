@@ -1683,6 +1683,7 @@ function to_fifth_slide(current_slide) {
     } else {
         fifth_slide(true);
     }
+    d3.select("#slide4").style("display", "none");
 }
 // ----------------------------------------------------------------------------
 // ███████╗██╗███████╗████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
@@ -1709,11 +1710,6 @@ function fifth_slide() {
     // Add a circle in the mouseover svg to handle hovers
     mouseover_svg.select("#zoomed-area").selectAll("*").remove();
     mouseover_svg.select("#zoomed-area").append("circle");
-
-    if (lastTransitioned < 5) {
-        // Append a new svg to the document containing a copy of this label
-        d3.select("body").append("svg").attr("id", "floating-topic").style("top", 0).style("left", 0).style("position", "absolute").style("transform", "translate(" + (width / 4 + 20) + "px, " + (margin.top * 2 + 10) + "px) translateZ(0)").style("transition", " opacity 1s ease-in-out").append("text").attr("class", "rect-label").attr("alignment-baseline", "middle").attr("x", 5).attr("y", 15).style("fill", "white").html(selected_topic);
-    }
 
     // Wait for 3 secs before doing this next bit
     d3.timeout(function () {
@@ -1758,28 +1754,33 @@ function fifth_slide() {
         // .attr("transform", "scale(" + width/1900 + ")")
 
         // Call function initially
-        update_fifth_slide(no_transition);
+        update_fifth_slide(no_transition, "economy");
     }, no_transition ? 500 : 3000);
 }
 
-function update_fifth_slide(no_transition) {
+function update_fifth_slide(no_transition, default_selected_topic) {
     // Hide mouseover circle
     mouseover_svg.select("circle").style("opacity", 0);
 
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck");
 
-    // Get value of topic dropdown
-    try {
-        selected_topic = d3.select("#topic-dropdown").property("value");
-    } catch (err) {
-        var topics = Object.keys(topic_medians_data);
-        // If there is no selected topic or no dropdown, select a random one
-        selected_topic = selected_topic || topics[Math.floor(Math.random() * topics.length)];
-    }
+    if (typeof default_selected_topic != "undefined") {
+        selected_topic = default_selected_topic;
 
-    // Change the floating label
-    d3.select("#floating-topic > .rect-label").html(selected_topic);
+        // Append a new label
+        wrapper.select("#topic-label").remove();
+        wrapper.append("text").attr("id", "topic-label").attr("class", "rect-label").attr("x", width / 4).attr("y", margin.top * 2).attr("fill", colors["Hover"]).html(selected_topic.capitalize());
+    } else {
+        // Get value of topic dropdown
+        try {
+            selected_topic = d3.select("#topic-dropdown").property("value");
+        } catch (err) {
+            var topics = Object.keys(topic_medians_data);
+            // If there is no selected topic or no dropdown, select a random one
+            selected_topic = selected_topic || topics[Math.floor(Math.random() * topics.length)];
+        }
+    }
 
     var baked_data = baked_positions_data.filter(function (d) {
         return d.key == selected_topic;
@@ -2114,7 +2115,7 @@ function to_sixth_slide(current_slide) {
             break;
 
         case 4:
-            d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis").style("opacity", 0).transition().delay(1000).on("end", function () {
+            d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis").style("opacity", 0).transition().delay(1000).on("end", function () {
                 this.remove();
             });
 
@@ -3127,22 +3128,22 @@ function handleStepEnter(response) {
             break;
 
         case 3:
+            d3.select("#slide4").style("display", "none");
             d3.select("#zoom-checkbox").style("opacity", 0);
             break;
 
         case 4:
+            d3.select("#slide4").style("display", "none");
+            d3.select("#topic-dropdown").style("display", "none");
             switch (new_step) {
                 case 0:
-                    selected_topic = "economy";
-                    update_fifth_slide();
+                    update_fifth_slide(false, "economy");
                     break;
                 case 1:
-                    selected_topic = "welfare reforms";
-                    update_fifth_slide();
+                    update_fifth_slide(false, "welfare reforms");
                     break;
                 case 2:
-                    selected_topic = "parliamentary terms";
-                    update_fifth_slide(false);
+                    update_fifth_slide(false, "parliamentary terms");
                     break;
             }
             break;
