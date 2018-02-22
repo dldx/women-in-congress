@@ -2381,67 +2381,64 @@ function fifth_slide(no_transition = false) {
         .append("circle")
 
 
-    // Wait for 3 secs before doing this next bit
-    d3.timeout(() => {
         // Enable canvas
-        d3.select("#visible-canvas")
-            .style("opacity", 1)
-            .style("display", null)
-            .style("pointer-events", "all")
+    d3.select("#visible-canvas")
+        .style("opacity", 1)
+        .style("display", null)
+        .style("pointer-events", "all")
 
-        d3.select("#zoom-checkbox").style("opacity", 1)
+    d3.select("#zoom-checkbox").style("opacity", 1)
 
-        // Add a dropdown to select different topics
-        if (lastTransitioned > 4) {
-            d3.select("body")
-                .insert("select", ":first-child")
-                .attr("id", "topic-dropdown")
-                .on("change", update_fifth_slide)
-                .selectAll(".topic")
-                .data(baked_positions_data.map(topic => topic.key))
-                .enter()
-                .append("option")
-                .attr("selected", d => d == selected_topic ? "selected" : null)
-                .attr("value", d => d)
-                .text(d => d.toUpperCase())
+    // Add a dropdown to select different topics
+    if (lastTransitioned > 4) {
+        d3.select("body")
+            .insert("select", ":first-child")
+            .attr("id", "topic-dropdown")
+            .on("change", update_fifth_slide)
+            .selectAll(".topic")
+            .data(baked_positions_data.map(topic => topic.key))
+            .enter()
+            .append("option")
+            .attr("selected", d => d == selected_topic ? "selected" : null)
+            .attr("value", d => d)
+            .text(d => d.toUpperCase())
 
-            $("#topic-dropdown")
-                .dropdown()
-            d3.select("#topic-dropdown")
-                .node()
-                .parentNode
-                .className += " slide5-dropdown"
+        $("#topic-dropdown")
+            .dropdown()
+        d3.select("#topic-dropdown")
+            .node()
+            .parentNode
+            .className += " slide5-dropdown"
 
-        }
+    }
 
 
-        // Scales for this data
-        slide5_xScale = d3.scaleLinear()
-            .domain([-300, 150])
-            .range([0, width])
+    // Scales for this data
+    slide5_xScale = d3.scaleLinear()
+        .domain([-300, 150])
+        .range([0, width])
 
-        slide5_yScale = d3.scaleLinear()
-            .domain([0, 0.3])
-            .range([height, 0])
+    slide5_yScale = d3.scaleLinear()
+        .domain([0, 0.3])
+        .range([height, 0])
 
-        y = slide5_yScale
+    y = slide5_yScale
 
-        d3.select("#slide5-group")
-            .remove()
-
-        // Create group for this slide
-        // slide5Group = zoomedArea
-        //     .append("g")
-        //     .attr("id", "slide5-group")
-        // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
-        // .attr("transform", "scale(" + width/1900 + ")")
+    d3.select("#slide5-group")
+        .remove()
 
         // Call function initially
-        update_fifth_slide(no_transition, "economy")
-    }, no_transition ? 500 : 1000)
+    update_fifth_slide(no_transition, typeof(selected_topic) != "undefined" ? selected_topic : "economy")
+
 }
 
-function update_fifth_slide(no_transition, default_selected_topic) {
+function update_fifth_slide(no_transition, default_selected_topic, from_scroll) {
+
+    // If from_scroll is undefined, then this function was not triggered through scrollytelling
+    if (typeof(from_scroll) == "undefined") {
+        from_scroll = false
+    }
+
     // Hide mouseover circle
     mouseover_svg
         .select("circle")
@@ -2450,7 +2447,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck")
 
-    if (typeof(default_selected_topic) != "undefined" && typeof(default_selected_topic) != "number") {
+    if (typeof(default_selected_topic) != "undefined" && typeof(default_selected_topic) != "number" && from_scroll) {
         selected_topic = default_selected_topic
 
         // Append a new label
@@ -2539,6 +2536,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     // UPDATE
     circle_male
         .transition(t0)
+        .attr("opacity", 0.7)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
 
@@ -2565,6 +2563,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     // UPDATE
     circle_female
         .transition(t0)
+        .attr("opacity", 0.7)
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
 
@@ -4088,13 +4087,13 @@ function handleStepEnter(response) {
         d3.select("#slide4").style("display", "none")
         switch(new_step) {
         case 0:
-            update_fifth_slide(false, "economy")
+            update_fifth_slide(false, "economy", true)
             break
         case 1:
-            update_fifth_slide(false, "welfare reforms")
+            update_fifth_slide(false, "welfare reforms", true)
             break
         case 2:
-            update_fifth_slide(false, "parliamentary terms")
+            update_fifth_slide(false, "parliamentary terms", true)
             break
         }
         d3.select(".slide5-dropdown").style("display", "none")

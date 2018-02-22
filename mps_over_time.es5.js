@@ -1714,58 +1714,54 @@ function fifth_slide() {
     mouseover_svg.select("#zoomed-area").selectAll("*").remove();
     mouseover_svg.select("#zoomed-area").append("circle");
 
-    // Wait for 3 secs before doing this next bit
-    d3.timeout(function () {
-        // Enable canvas
-        d3.select("#visible-canvas").style("opacity", 1).style("display", null).style("pointer-events", "all");
+    // Enable canvas
+    d3.select("#visible-canvas").style("opacity", 1).style("display", null).style("pointer-events", "all");
 
-        d3.select("#zoom-checkbox").style("opacity", 1);
+    d3.select("#zoom-checkbox").style("opacity", 1);
 
-        // Add a dropdown to select different topics
-        if (lastTransitioned > 4) {
-            d3.select("body").insert("select", ":first-child").attr("id", "topic-dropdown").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
-                return topic.key;
-            })).enter().append("option").attr("selected", function (d) {
-                return d == selected_topic ? "selected" : null;
-            }).attr("value", function (d) {
-                return d;
-            }).text(function (d) {
-                return d.toUpperCase();
-            });
+    // Add a dropdown to select different topics
+    if (lastTransitioned > 4) {
+        d3.select("body").insert("select", ":first-child").attr("id", "topic-dropdown").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
+            return topic.key;
+        })).enter().append("option").attr("selected", function (d) {
+            return d == selected_topic ? "selected" : null;
+        }).attr("value", function (d) {
+            return d;
+        }).text(function (d) {
+            return d.toUpperCase();
+        });
 
-            $("#topic-dropdown").dropdown();
-            d3.select("#topic-dropdown").node().parentNode.className += " slide5-dropdown";
-        }
+        $("#topic-dropdown").dropdown();
+        d3.select("#topic-dropdown").node().parentNode.className += " slide5-dropdown";
+    }
 
-        // Scales for this data
-        slide5_xScale = d3.scaleLinear().domain([-300, 150]).range([0, width]);
+    // Scales for this data
+    slide5_xScale = d3.scaleLinear().domain([-300, 150]).range([0, width]);
 
-        slide5_yScale = d3.scaleLinear().domain([0, 0.3]).range([height, 0]);
+    slide5_yScale = d3.scaleLinear().domain([0, 0.3]).range([height, 0]);
 
-        y = slide5_yScale;
+    y = slide5_yScale;
 
-        d3.select("#slide5-group").remove();
+    d3.select("#slide5-group").remove();
 
-        // Create group for this slide
-        // slide5Group = zoomedArea
-        //     .append("g")
-        //     .attr("id", "slide5-group")
-        // .attr("transform", "translate(" + margin.right + "," + margin.top + ")")
-        // .attr("transform", "scale(" + width/1900 + ")")
-
-        // Call function initially
-        update_fifth_slide(no_transition, "economy");
-    }, no_transition ? 500 : 1000);
+    // Call function initially
+    update_fifth_slide(no_transition, typeof selected_topic != "undefined" ? selected_topic : "economy");
 }
 
-function update_fifth_slide(no_transition, default_selected_topic) {
+function update_fifth_slide(no_transition, default_selected_topic, from_scroll) {
+
+    // If from_scroll is undefined, then this function was not triggered through scrollytelling
+    if (typeof from_scroll == "undefined") {
+        from_scroll = false;
+    }
+
     // Hide mouseover circle
     mouseover_svg.select("circle").style("opacity", 0);
 
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck");
 
-    if (typeof default_selected_topic != "undefined" && typeof default_selected_topic != "number") {
+    if (typeof default_selected_topic != "undefined" && typeof default_selected_topic != "number" && from_scroll) {
         selected_topic = default_selected_topic;
 
         // Append a new label
@@ -1838,7 +1834,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     circle_male = dataContainer.selectAll(".male-node").data(nodes_male);
 
     // UPDATE
-    circle_male.transition(t0).attr("cx", function (d) {
+    circle_male.transition(t0).attr("opacity", 0.7).attr("cx", function (d) {
         return d.x;
     }).attr("cy", function (d) {
         return d.y;
@@ -1862,7 +1858,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     circle_female = dataContainer.selectAll(".female-node").data(nodes_female);
 
     // UPDATE
-    circle_female.transition(t0).attr("cx", function (d) {
+    circle_female.transition(t0).attr("opacity", 0.7).attr("cx", function (d) {
         return d.x;
     }).attr("cy", function (d) {
         return d.y;
@@ -3134,13 +3130,13 @@ function handleStepEnter(response) {
             d3.select("#slide4").style("display", "none");
             switch (new_step) {
                 case 0:
-                    update_fifth_slide(false, "economy");
+                    update_fifth_slide(false, "economy", true);
                     break;
                 case 1:
-                    update_fifth_slide(false, "welfare reforms");
+                    update_fifth_slide(false, "welfare reforms", true);
                     break;
                 case 2:
-                    update_fifth_slide(false, "parliamentary terms");
+                    update_fifth_slide(false, "parliamentary terms", true);
                     break;
             }
             d3.select(".slide5-dropdown").style("display", "none");
