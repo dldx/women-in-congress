@@ -1489,9 +1489,9 @@ function second_slide(no_transition = false) {
                     return x(d.year)
                 })
                 .y(function (d) {
-                    return y(d.total_mps / 2)
+                    return y(d.total_mps / 2 + 2)
                 })
-                .curve(d3.curveBundle.beta(0.5))
+                .curve(d3.curveBundle.beta(0.2))
 
             // Add path for text to follow
             text_path_50_50 = slide2Group
@@ -1710,11 +1710,12 @@ function third_slide(no_transition = false) {
         .attr("d", half_max_mps_line)
 
     half_max_mps_line_smooth
-        .y(() => y(50))
+        .y(() => y(52))
 
     text_path_50_50
         .transition(t0)
-        .attr("d", half_max_mps_line)
+        .attr("d", half_max_mps_line_smooth)
+
     mask
         .transition(t0)
         .attr("d", max_mps_area)
@@ -3982,9 +3983,10 @@ function handleStepEnter(response) {
             half_max_mps_line.y(d => y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
+            half_max_mps_line_smooth.y(d => y(52))
             text_path_50_50
                 .transition()
-                .attr("d", half_max_mps_line)
+                .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.labour_women_pct))
             total_women_mps_path.transition().attr("d", total_women_mps_line)
@@ -4009,9 +4011,10 @@ function handleStepEnter(response) {
             half_max_mps_line.y(d => y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
+            half_max_mps_line_smooth.y(d => y(52))
             text_path_50_50
                 .transition()
-                .attr("d", half_max_mps_line)
+                .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.conservative_women_pct))
             total_women_mps_path.transition().attr("d", total_women_mps_line)
@@ -4036,9 +4039,10 @@ function handleStepEnter(response) {
             half_max_mps_line.y(d => y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
+            half_max_mps_line_smooth.y(d => y(52))
             text_path_50_50
                 .transition()
-                .attr("d", half_max_mps_line)
+                .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.lib_snp_women_pct))
             total_women_mps_path.transition().attr("d", total_women_mps_line)
@@ -4063,9 +4067,10 @@ function handleStepEnter(response) {
             half_max_mps_line.y(d => y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
+            half_max_mps_line_smooth.y(d => y(52))
             text_path_50_50
                 .transition()
-                .attr("d", half_max_mps_line)
+                .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.women_pct))
             total_women_mps_path.transition().attr("d", total_women_mps_line)

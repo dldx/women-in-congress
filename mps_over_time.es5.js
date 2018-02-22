@@ -1070,8 +1070,8 @@ function second_slide() {
         half_max_mps_line_smooth = d3.line().x(function (d) {
             return x(d.year);
         }).y(function (d) {
-            return y(d.total_mps / 2);
-        }).curve(d3.curveBundle.beta(0.5));
+            return y(d.total_mps / 2 + 2);
+        }).curve(d3.curveBundle.beta(0.2));
 
         // Add path for text to follow
         text_path_50_50 = slide2Group.append("defs").append("path").attr("id", "half-max-textpath").datum(total_mps_over_time_data).attr("d", half_max_mps_line_smooth);
@@ -1232,10 +1232,11 @@ function third_slide() {
     half_max_mps_path.transition(t0).attr("d", half_max_mps_line);
 
     half_max_mps_line_smooth.y(function () {
-        return y(50);
+        return y(52);
     });
 
-    text_path_50_50.transition(t0).attr("d", half_max_mps_line);
+    text_path_50_50.transition(t0).attr("d", half_max_mps_line_smooth);
+
     mask.transition(t0).attr("d", max_mps_area);
 
     yLabel.transition(t0).text("% of Women MPs");
@@ -3005,7 +3006,10 @@ function handleStepEnter(response) {
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    text_path_50_50.transition().attr("d", half_max_mps_line);
+                    half_max_mps_line_smooth.y(function (d) {
+                        return y(52);
+                    });
+                    text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
                         return y(d.labour_women_pct);
@@ -3038,7 +3042,10 @@ function handleStepEnter(response) {
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    text_path_50_50.transition().attr("d", half_max_mps_line);
+                    half_max_mps_line_smooth.y(function (d) {
+                        return y(52);
+                    });
+                    text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
                         return y(d.conservative_women_pct);
@@ -3071,7 +3078,10 @@ function handleStepEnter(response) {
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    text_path_50_50.transition().attr("d", half_max_mps_line);
+                    half_max_mps_line_smooth.y(function (d) {
+                        return y(52);
+                    });
+                    text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
                         return y(d.lib_snp_women_pct);
@@ -3104,7 +3114,10 @@ function handleStepEnter(response) {
                     });
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    text_path_50_50.transition().attr("d", half_max_mps_line);
+                    half_max_mps_line_smooth.y(function (d) {
+                        return y(52);
+                    });
+                    text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
                         return y(d.women_pct);
