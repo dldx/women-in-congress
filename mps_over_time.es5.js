@@ -29,7 +29,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 // These are the margins for the SVG
 var margin = {
-    top: 30,
+    top: 50,
     right: 20,
     bottom: 30,
     left: 70
@@ -111,7 +111,7 @@ var width = 0,
 
 var ratio, clippedArea, electionRects, zoom, wrapper, transform, zoomedArea, pointsGroup, slide2Group, slide3Group,
 // slide5Group,
-slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, quadtree, mp_filter, isMobile;
+slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, mp_filter, isMobile;
 
 var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data,
 // info_bubbles_data,
@@ -406,13 +406,8 @@ function initial_render() {
     yAxis = d3.axisLeft(y);
     gY = wrapper.append("g").attr("class", "y-axis").call(yAxis);
 
-    // // Add chart title
-    // wrapper.append("text")
-    //     .attr("x", (width / 2))
-    //     .attr("y", 0 - (margin.top / 2))
-    //     .attr("text-anchor", "middle")
-    //     .attr("class", "chart-title")
-    //     .text("Women MPs in the House of Commons")
+    // Add chart title
+    chartTitle = svg.append("text").attr("x", width / 2 + margin.left).attr("y", margin.top / 2).style("text-anchor", "middle").attr("class", "chart-title").text("Women MPs in the House of Commons");
 
     // Add axes labels
     xLabel = svg.append("text").attr("transform", "translate(" + (width + margin.left + margin.right) / 2 + " ," + (height + margin.top + margin.bottom) + ")").attr("class", "x-label").style("text-anchor", "middle").text("Time");
@@ -2991,24 +2986,16 @@ function handleStepEnter(response) {
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
-                    max_mps_line.y(function (d) {
-                        return y(100);
-                    });
+                    max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
-                    max_mps_area.y1(function (d) {
-                        return y(100);
-                    });
+                    max_mps_area.y1(y(100));
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
                     mask.transition().attr("d", max_mps_area);
 
-                    half_max_mps_line.y(function (d) {
-                        return y(50);
-                    });
+                    half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(function (d) {
-                        return y(52);
-                    });
+                    half_max_mps_line_smooth.y(y(52));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3027,24 +3014,16 @@ function handleStepEnter(response) {
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
-                    max_mps_line.y(function (d) {
-                        return y(100);
-                    });
+                    max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
-                    max_mps_area.y1(function (d) {
-                        return y(100);
-                    });
+                    max_mps_area.y1(y(100));
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Conservative"]);
                     mask.transition().attr("d", max_mps_area);
 
-                    half_max_mps_line.y(function (d) {
-                        return y(50);
-                    });
+                    half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(function (d) {
-                        return y(52);
-                    });
+                    half_max_mps_line_smooth.y(y(52));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3063,24 +3042,16 @@ function handleStepEnter(response) {
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
-                    max_mps_line.y(function (d) {
-                        return y(100);
-                    });
+                    max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
-                    max_mps_area.y1(function (d) {
-                        return y(100);
-                    });
+                    max_mps_area.y1(y(100));
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["LD"]);
                     mask.transition().attr("d", max_mps_area);
 
-                    half_max_mps_line.y(function (d) {
-                        return y(50);
-                    });
+                    half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(function (d) {
-                        return y(52);
-                    });
+                    half_max_mps_line_smooth.y(y(52));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3099,24 +3070,16 @@ function handleStepEnter(response) {
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
-                    max_mps_line.y(function (d) {
-                        return y(100);
-                    });
+                    max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
-                    max_mps_area.y1(function (d) {
-                        return y(100);
-                    });
+                    max_mps_area.y1(y(100));
                     max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
                     mask.transition().attr("d", max_mps_area);
 
-                    half_max_mps_line.y(function (d) {
-                        return y(50);
-                    });
+                    half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(function (d) {
-                        return y(52);
-                    });
+                    half_max_mps_line_smooth.y(y(52));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {

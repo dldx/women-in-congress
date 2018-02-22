@@ -25,7 +25,7 @@
 
 // These are the margins for the SVG
 var margin = {
-    top: 30,
+    top: 50,
     right: 20,
     bottom: 30,
     left: 70
@@ -154,6 +154,7 @@ var ratio,
     mask,
     instance,
     x, y,
+    chartTitle,
     xAxis, gX, xLabel,
     yAxis, gY, yLabel,
     tooltip,
@@ -169,7 +170,6 @@ var ratio,
     circle_female,
     slide5_xScale,
     slide5_yScale,
-    quadtree,
     mp_filter,
     isMobile
 
@@ -585,13 +585,13 @@ function initial_render() {
         .attr("class", "y-axis")
         .call(yAxis)
 
-    // // Add chart title
-    // wrapper.append("text")
-    //     .attr("x", (width / 2))
-    //     .attr("y", 0 - (margin.top / 2))
-    //     .attr("text-anchor", "middle")
-    //     .attr("class", "chart-title")
-    //     .text("Women MPs in the House of Commons")
+    // Add chart title
+    chartTitle = svg.append("text")
+        .attr("x", (width / 2)+margin.left)
+        .attr("y", margin.top/2)
+        .style("text-anchor", "middle")
+        .attr("class", "chart-title")
+        .text("Women MPs in the House of Commons")
 
     // Add axes labels
     xLabel = svg.append("text")
@@ -3972,18 +3972,18 @@ function handleStepEnter(response) {
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
-            max_mps_line.y(d => y(100))
+            max_mps_line.y(y(100))
             max_mps_path.transition().attr("d", max_mps_line)
-            max_mps_area.y1(d => y(100))
+            max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Labour"])
             mask.transition().attr("d", max_mps_area)
 
-            half_max_mps_line.y(d => y(50))
+            half_max_mps_line.y(y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(d => y(52))
+            half_max_mps_line_smooth.y(y(52))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4000,18 +4000,18 @@ function handleStepEnter(response) {
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
-            max_mps_line.y(d => y(100))
+            max_mps_line.y(y(100))
             max_mps_path.transition().attr("d", max_mps_line)
-            max_mps_area.y1(d => y(100))
+            max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Conservative"])
             mask.transition().attr("d", max_mps_area)
 
-            half_max_mps_line.y(d => y(50))
+            half_max_mps_line.y(y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(d => y(52))
+            half_max_mps_line_smooth.y(y(52))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4028,18 +4028,18 @@ function handleStepEnter(response) {
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
-            max_mps_line.y(d => y(100))
+            max_mps_line.y(y(100))
             max_mps_path.transition().attr("d", max_mps_line)
-            max_mps_area.y1(d => y(100))
+            max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["LD"])
             mask.transition().attr("d", max_mps_area)
 
-            half_max_mps_line.y(d => y(50))
+            half_max_mps_line.y(y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(d => y(52))
+            half_max_mps_line_smooth.y(y(52))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4056,18 +4056,18 @@ function handleStepEnter(response) {
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
-            max_mps_line.y(d => y(100))
+            max_mps_line.y(y(100))
             max_mps_path.transition().attr("d", max_mps_line)
-            max_mps_area.y1(d => y(100))
+            max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Labour"])
             mask.transition().attr("d", max_mps_area)
 
-            half_max_mps_line.y(d => y(50))
+            half_max_mps_line.y(y(50))
             half_max_mps_path.transition().attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(d => y(52))
+            half_max_mps_line_smooth.y(y(52))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
