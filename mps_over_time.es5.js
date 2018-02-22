@@ -140,6 +140,10 @@ function colorParty(party) {
     return colors.Other;
 }
 
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 // ----------------------------------------------------------------------------
 // GENERATES A UNIQUE COLOUR EVERY TIME THIS FUNCTION IS CALLED
 // USED FOR MAPPING CANVAS INTERACTIONS TO NODES
@@ -1425,7 +1429,7 @@ function to_fourth_slide(current_slide) {
             // Hide mouseover circle
             mouseover_svg.select("circle").style("opacity", 0);
 
-            d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis").style("opacity", 0).transition().delay(500).on("end", function () {
+            d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, #zoom-checkbox").style("opacity", 0).transition().delay(500).on("end", function () {
                 this.remove();
             });
 
@@ -1676,6 +1680,9 @@ function to_fifth_slide(current_slide) {
     xLabel.style("opacity", 0);
     yLabel.style("opacity", 0);
 
+    d3.select("#topic-label").remove();
+    d3.select(".slide5-dropdown").remove();
+
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 4) {
         lastTransitioned = 4;
@@ -1698,11 +1705,7 @@ function fifth_slide() {
     var no_transition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 
-    d3.select("#topic-dropdown").remove();
-
     d3.selectAll(".slide5-dropdown").remove();
-
-    d3.select("#floating-topic").remove();
 
     wrapper.select(".x-custom-axis").remove();
     wrapper.append("g").attr("class", "x-custom-axis").attr("transform", "translate(0," + height + ")");
@@ -1732,9 +1735,6 @@ function fifth_slide() {
 
             $("#topic-dropdown").dropdown();
             d3.select("#topic-dropdown").node().parentNode.className += " slide5-dropdown";
-
-            // d3.select(".slide5-dropdown")
-            //     .style("transform", `translate(${width/2}px, ${margin.top}px)`)
         }
 
         // Scales for this data
@@ -1755,7 +1755,7 @@ function fifth_slide() {
 
         // Call function initially
         update_fifth_slide(no_transition, "economy");
-    }, no_transition ? 500 : 3000);
+    }, no_transition ? 500 : 1000);
 }
 
 function update_fifth_slide(no_transition, default_selected_topic) {
@@ -1765,13 +1765,15 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck");
 
-    if (typeof default_selected_topic != "undefined") {
+    if (typeof default_selected_topic != "undefined" && typeof default_selected_topic != "number") {
         selected_topic = default_selected_topic;
 
         // Append a new label
         wrapper.select("#topic-label").remove();
-        wrapper.append("text").attr("id", "topic-label").attr("class", "rect-label").attr("x", width / 4).attr("y", margin.top * 2).attr("fill", colors["Hover"]).html(selected_topic.capitalize());
+        wrapper.append("text").attr("id", "topic-label").attr("class", "rect-label").attr("x", width / 2).attr("y", margin.top * 2).attr("text-anchor", "middle").attr("fill", colors["Hover"]).style("font-weight", "bold").text(selected_topic.toUpperCase());
     } else {
+        // Remove label because we have dropdown instead
+        wrapper.select("#topic-label").remove();
         // Get value of topic dropdown
         try {
             selected_topic = d3.select("#topic-dropdown").property("value");
@@ -2061,16 +2063,12 @@ function update_fifth_slide(no_transition, default_selected_topic) {
 
     canvas.on("mousemove", mpMouseover).on("drag", mpMouseover).on("touchend", mpMouseover);
 
-    String.prototype.capitalize = function () {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    };
-
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
         d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
         // Show relevant tooltip info
-        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]) + ";\">" + nodeData.gender.capitalize() + "</h1>\n                    The average " + nodeData.gender.capitalize() + " MP spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
+        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " MP spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
         mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
             return d.x;
         }).attr("cy", function (d) {
@@ -2193,7 +2191,7 @@ function sixth_slide() {
     mouseover_svg.select("circle").style("opacity", 0);
 
     // remove dropdown
-    d3.select("#topic-dropdown").style("opacity", 0).remove();
+    d3.select(".slide5-dropdown").style("opacity", 0).remove();
 
     // Set the topics that will appear on the y axis
     var sorted_topics = Object.entries(topic_medians_data).sort(function (a, b) {
@@ -3134,7 +3132,6 @@ function handleStepEnter(response) {
 
         case 4:
             d3.select("#slide4").style("display", "none");
-            d3.select("#topic-dropdown").style("display", "none");
             switch (new_step) {
                 case 0:
                     update_fifth_slide(false, "economy");
@@ -3146,6 +3143,7 @@ function handleStepEnter(response) {
                     update_fifth_slide(false, "parliamentary terms");
                     break;
             }
+            d3.select(".slide5-dropdown").style("display", "none");
             break;
     }
 }

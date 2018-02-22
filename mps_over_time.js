@@ -208,6 +208,11 @@ function colorParty(party) {
     return colors.Other
 }
 
+String.prototype.capitalize = function () {
+    return this.charAt(0)
+        .toUpperCase() + this.slice(1)
+}
+
 
 // ----------------------------------------------------------------------------
 // GENERATES A UNIQUE COLOUR EVERY TIME THIS FUNCTION IS CALLED
@@ -1978,7 +1983,7 @@ function to_fourth_slide(current_slide) {
             .select("circle")
             .style("opacity", 0)
 
-        d3.selectAll("#floating-topic, .slide5-dropdown, .x-custom-axis")
+        d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, #zoom-checkbox")
             .style("opacity", 0)
             .transition()
             .delay(500)
@@ -2333,6 +2338,9 @@ function to_fifth_slide(current_slide) {
     yLabel
         .style("opacity", 0)
 
+    d3.select("#topic-label").remove()
+    d3.select(".slide5-dropdown").remove()
+
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 4) {
         lastTransitioned = 4
@@ -2354,13 +2362,7 @@ function to_fifth_slide(current_slide) {
 // ----------------------------------------------------------------------------
 function fifth_slide(no_transition = false) {
 
-    d3.select("#topic-dropdown")
-        .remove()
-
     d3.selectAll(".slide5-dropdown")
-        .remove()
-
-    d3.select("#floating-topic")
         .remove()
 
     wrapper.select(".x-custom-axis")
@@ -2410,9 +2412,6 @@ function fifth_slide(no_transition = false) {
                 .parentNode
                 .className += " slide5-dropdown"
 
-            // d3.select(".slide5-dropdown")
-            //     .style("transform", `translate(${width/2}px, ${margin.top}px)`)
-
         }
 
 
@@ -2439,7 +2438,7 @@ function fifth_slide(no_transition = false) {
 
         // Call function initially
         update_fifth_slide(no_transition, "economy")
-    }, no_transition ? 500 : 3000)
+    }, no_transition ? 500 : 1000)
 }
 
 function update_fifth_slide(no_transition, default_selected_topic) {
@@ -2451,7 +2450,7 @@ function update_fifth_slide(no_transition, default_selected_topic) {
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck")
 
-    if (typeof(default_selected_topic) != "undefined") {
+    if (typeof(default_selected_topic) != "undefined" && typeof(default_selected_topic) != "number") {
         selected_topic = default_selected_topic
 
         // Append a new label
@@ -2460,12 +2459,16 @@ function update_fifth_slide(no_transition, default_selected_topic) {
             .append("text")
             .attr("id", "topic-label")
             .attr("class", "rect-label")
-            .attr("x", width/4)
+            .attr("x", width/2)
             .attr("y", margin.top*2)
+            .attr("text-anchor", "middle")
             .attr("fill", colors["Hover"])
-            .html(selected_topic.capitalize())
+            .style("font-weight", "bold")
+            .text(selected_topic.toUpperCase())
     } else {
-    // Get value of topic dropdown
+        // Remove label because we have dropdown instead
+        wrapper.select("#topic-label").remove()
+        // Get value of topic dropdown
         try {
             selected_topic = d3.select("#topic-dropdown")
                 .property("value")
@@ -2833,10 +2836,6 @@ function update_fifth_slide(no_transition, default_selected_topic) {
         .on("touchend", mpMouseover)
 
 
-    String.prototype.capitalize = function () {
-        return this.charAt(0)
-            .toUpperCase() + this.slice(1)
-    }
 
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
@@ -2851,8 +2850,8 @@ function update_fifth_slide(no_transition, default_selected_topic) {
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]};">${nodeData.gender.capitalize()}</h1>
-                    The average ${nodeData.gender.capitalize()} MP spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
+                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]};">${nodeData.gender.toUpperCase()}</h1>
+                    The average ${nodeData.gender.toUpperCase()} MP spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
             .select("circle")
@@ -3008,7 +3007,7 @@ function sixth_slide(no_transition = false) {
         .style("opacity", 0)
 
     // remove dropdown
-    d3.select("#topic-dropdown")
+    d3.select(".slide5-dropdown")
         .style("opacity", 0)
         .remove()
 
@@ -4087,7 +4086,6 @@ function handleStepEnter(response) {
 
     case 4:
         d3.select("#slide4").style("display", "none")
-        d3.select("#topic-dropdown").style("display", "none")
         switch(new_step) {
         case 0:
             update_fifth_slide(false, "economy")
@@ -4099,6 +4097,7 @@ function handleStepEnter(response) {
             update_fifth_slide(false, "parliamentary terms")
             break
         }
+        d3.select(".slide5-dropdown").style("display", "none")
         break
     }
 
