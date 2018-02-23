@@ -46,6 +46,8 @@ var colors = {
     "Green": "#A1C181",
     "SF": "#008e4b",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
+    "Male": "#593989",
+    "Female": "#e5e5e5",
     "Hover": "#e5e5e5", // Used when hovering over an item
     "Active": "#A1C181" // Used for the active slide on the tracker
 }
@@ -591,7 +593,7 @@ function initial_render() {
         .attr("y", margin.top/2)
         .style("text-anchor", "middle")
         .attr("class", "chart-title")
-        .text("Women MPs in the House of Commons")
+        .text("")
 
     // Add axes labels
     xLabel = svg.append("text")
@@ -745,6 +747,11 @@ function first_slide(no_transition = false) {
     d3.select("#election-rects")
         .remove()
 
+        // Change chart title
+    chartTitle
+        .transition()
+        .text("Women MPs in the House of Commons")
+
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition)
 
@@ -778,8 +785,8 @@ function first_slide(no_transition = false) {
             .attr("class", "line")
             .attr("x1", (d) => x(d.term_start))
             .attr("x2", (d) => x(d.term_start))
-            .attr("y1", () => y(0))
-            .attr("y2", () => y(0))
+            .attr("y1", y(0))
+            .attr("y2", y(0))
             .attr("strokeStyle", (d) => colorParty(d.party))
             .attr("hiddenStrokeStyle", function (d) {
                 if (!d.hiddenCol) {
@@ -1389,6 +1396,12 @@ function second_slide(no_transition = false) {
         .duration(no_transition ? 0 : 750)
         .text("Number of MPs")
 
+    chartTitle
+        .transition()
+        .delay(no_transition ? 0 : 4000)
+        .duration(no_transition ? 0 : 750)
+        .text("MPs in the House of Commons")
+
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
         .attr("y", y(0) - 10 * lineThickness)
@@ -1649,14 +1662,9 @@ function third_slide(no_transition = false) {
         .append("g")
         .attr("id", "slide3-group")
 
-    // Add a smooth but quick transition if no fancy transition is requested
-    // if (no_transition) {
-    //     slide3Group
-    //         .style("opacity", 0)
-    //         .transition()
-    //         .duration(200)
-    //         .style("opacity", 1)
-    // }
+    chartTitle
+        .transition()
+        .text("Parliaments in developed countries")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗     ██╗
@@ -2017,7 +2025,7 @@ function to_fourth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () {
-            fourth_slide(false)
+            // fourth_slide(false)
         })
 
 }
@@ -2429,7 +2437,14 @@ function fifth_slide(no_transition = false) {
         .remove()
 
         // Call function initially
-    update_fifth_slide(no_transition, typeof(selected_topic) != "undefined" ? selected_topic : "economy")
+    if(typeof(selected_topic) != "undefined") {
+        update_fifth_slide(no_transition, selected_topic)
+    } else {
+        update_fifth_slide(no_transition, "economy")
+        chartTitle
+            .transition()
+            .text("Time spent on the economy")
+    }
 
 }
 
@@ -2476,6 +2491,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
             selected_topic = selected_topic || topics[Math.floor(Math.random() * topics.length)]
         }
     }
+    chartTitle
+        .transition()
+        .text("Time spent on " + selected_topic)
 
     var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
 
@@ -2667,7 +2685,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         dataContainer.selectAll("custom.male-node")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2676,7 +2694,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         dataContainer.selectAll("custom.female-node")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2696,7 +2714,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         dataContainer.select("custom.male-median")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2705,7 +2723,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         dataContainer.select("custom.female-median")
             .each(function () {
                 let node = d3.select(this)
-                context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"))
+                context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"))
                 context.beginPath()
                 context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
                 context.fill()
@@ -2751,7 +2769,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
                 .attr("transform", male_label.parentNode.getAttribute("transform"))
                 .attr("dy", 10)
                 .style("text-anchor", "end")
-                .style("fill", colors["Lab"])
+                .style("fill", colors["Male"])
                 .html("Men")
         }
 
@@ -2762,7 +2780,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
                 .attr("transform", female_label.parentNode.getAttribute("transform"))
                 .attr("dy", 10)
                 .style("text-anchor", "start")
-                .style("fill", colors["Hover"])
+                .style("fill", colors["Female"])
                 .html("Women")
         }
 
@@ -2850,7 +2868,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]};">${nodeData.gender.toUpperCase()}</h1>
+                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender.toUpperCase()}</h1>
                     The average ${nodeData.gender.toUpperCase()} MP spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
@@ -3093,6 +3111,10 @@ function sixth_slide(no_transition = false) {
             .attr("cy", y(selected_topic))
             .on("end", () => {
 
+                chartTitle
+                    .transition()
+                    .text("Gender bias of topics")
+
                 gX.style("opacity", 1)
                 gY.style("opacity", 1)
                 xLabel
@@ -3115,6 +3137,10 @@ function sixth_slide(no_transition = false) {
         var female_median_circle_svg = slide6Group
             .selectAll(".female-median")
             .data(sorted_topics)
+
+        chartTitle
+            .transition()
+            .text("Gender bias of topic")
 
         xLabel
             .text("Average % of time spent on topic")
@@ -3265,7 +3291,7 @@ function sixth_slide(no_transition = false) {
                             .attr("y", height + margin.bottom)
                             .text("FEMALE FRIENDLY")
                             .style("text-anchor", "end")
-                            .style("fill", colors["Hover"])
+                            .style("fill", colors["Female"])
                             .style("alignment-baseline", "hanging")
 
                         wrapper.append("text")
@@ -3274,7 +3300,7 @@ function sixth_slide(no_transition = false) {
                             .attr("y", height + margin.bottom)
                             .text("MALE FRIENDLY")
                             .style("text-anchor", "start")
-                            .style("fill", colors["Lab"])
+                            .style("fill", colors["Male"])
                             .style("alignment-baseline", "hanging")
 
                     })
@@ -3305,7 +3331,7 @@ function sixth_slide(no_transition = false) {
             .attr("y", height + margin.bottom / 2)
             .text("FEMALE FRIENDLY")
             .style("text-anchor", "middle")
-            .style("fill", colors["Hover"])
+            .style("fill", colors["Female"])
             .style("alignment-baseline", "hanging")
 
         wrapper.append("text")
@@ -3314,7 +3340,7 @@ function sixth_slide(no_transition = false) {
             .attr("y", height + margin.bottom / 2)
             .text("MALE FRIENDLY")
             .style("text-anchor", "end")
-            .style("fill", colors["Lab"])
+            .style("fill", colors["Male"])
             .style("alignment-baseline", "hanging")
     }
 
@@ -3941,7 +3967,9 @@ function handleStepEnter(response) {
                 yLabel
                     .transition()
                     .text("Number of MPs")
-
+                chartTitle
+                    .transition()
+                    .text("MPs in the House of Commons")
                 // All MPs first
                 y.domain([0, 750])
                 gY.transition().call(yAxis)
@@ -3951,7 +3979,7 @@ function handleStepEnter(response) {
                 max_mps_area.y1(d => y(d.total_mps))
                 max_mps_path_area.transition()
                     .attr("d", max_mps_area)
-                    .style("fill", colors["Labour"])
+                    .style("fill", colors["Male"])
                 mask.transition().attr("d", max_mps_area)
 
                 half_max_mps_line.y(d => y(d.total_mps/2))
@@ -3961,14 +3989,21 @@ function handleStepEnter(response) {
                 total_women_mps_path.transition().attr("d", total_women_mps_line)
                 total_women_mps_area.y1(d => y(d.total_women_mps))
                 total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+
+                d3.select(".women-label").style("fill", colors["Male"])
             }
 
             break
         case 1:
+        // Labour
             yLabel
                 .transition()
                 .text("% of MPs")
-            // Labour
+
+            chartTitle
+                .transition()
+                .text("MPs in the Labour Party")
+
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
@@ -3996,7 +4031,15 @@ function handleStepEnter(response) {
             d3.select(".women-label").style("fill", colors["Labour"])
             break
         case 2:
-            // Conservative
+            // Conservatives
+            yLabel
+                .transition()
+                .text("% of MPs")
+
+            chartTitle
+                .transition()
+                .text("MPs in the Conservative Party")
+
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
@@ -4024,7 +4067,15 @@ function handleStepEnter(response) {
             d3.select(".women-label").style("fill", colors["Conservative"])
             break
         case 3:
-            // Lib SNP
+            // Lib Dems & SNP
+            yLabel
+                .transition()
+                .text("% of MPs")
+
+            chartTitle
+                .transition()
+                .text("MPs in the Liberal Democrats and Scottish National Party")
+
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
@@ -4053,6 +4104,14 @@ function handleStepEnter(response) {
             break
         case 4:
             // All MPs again
+            yLabel
+                .transition()
+                .text("% of MPs")
+
+            chartTitle
+                .transition()
+                .text("MPs in the House of Commons")
+
             y.domain([0, 100])
             gY.transition().call(yAxis)
 
@@ -4061,7 +4120,7 @@ function handleStepEnter(response) {
             max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
-                .style("fill", colors["Labour"])
+                .style("fill", colors["Male"])
             mask.transition().attr("d", max_mps_area)
 
             half_max_mps_line.y(y(50))
@@ -4077,7 +4136,7 @@ function handleStepEnter(response) {
             total_women_mps_area.y1(d => y(d.women_pct))
             total_women_mps_path_area.transition().attr("d", total_women_mps_area)
 
-            d3.select(".women-label").style("fill", colors["Labour"])
+            d3.select(".women-label").style("fill", colors["Male"])
             break
         }
 
@@ -4086,6 +4145,9 @@ function handleStepEnter(response) {
     case 3:
         d3.select("#slide4").style("display", "none")
         d3.select("#zoom-checkbox").style("opacity", 0)
+        chartTitle
+            .transition()
+            .text("")
         break
 
     case 4:
@@ -4093,12 +4155,22 @@ function handleStepEnter(response) {
         switch(new_step) {
         case 0:
             update_fifth_slide(false, "economy", true)
+
+            chartTitle
+                .transition()
+                .text("Time spent on the economy")
             break
         case 1:
             update_fifth_slide(false, "welfare reforms", true)
+            chartTitle
+                .transition()
+                .text("Time spent on welfare reforms")
             break
         case 2:
             update_fifth_slide(false, "parliamentary terms", true)
+            chartTitle
+                .transition()
+                .text("Time spent on parliamentary terminology")
             break
         }
         d3.select(".slide5-dropdown").style("display", "none")

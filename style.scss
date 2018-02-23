@@ -7,6 +7,8 @@ $colors: (
   Green: #a1c181,
   SF: #008e4b,
   Other: #50514f, // Used as fallback when no party colour has been defined
+  Male: #593989,
+  Female: #e5e5e5,
   Hover: #e5e5e5, // Used when hovering over an item
   Active: #a1c181 // Used for the active slide on the tracker
 );
@@ -14,8 +16,8 @@ $tracker-colors: #5c5c5c, #424242;
 $body-background: #131313;
 $graph-background: #252525;
 $tip-background: $body-background;
-$female: map-get($colors, Hover);
-$male: map-get($colors, Lab);
+$female: map-get($colors, Female);
+$male: map-get($colors, Male);
 $slide2-header-color: map-get($colors, Green);
 $info-bubble-header-color: map-get($colors, Con);
 $tablet-width: 768px;
@@ -93,9 +95,6 @@ body {
     border-top: .3rem #593989 solid;
     border-bottom: .3rem #593989 solid;
     line-height: 1;
-    font-weight: bold;
-    font-family: Lato, sans-serif;
-    color: #3A3A39;
     background-color: white;
   }
 
@@ -105,7 +104,24 @@ body {
     padding-right: 1rem;
     border-top: .3rem #22784a solid;
     border-bottom: .3rem #22784a solid;
+    color: #3A3A39;
+    font-weight: bold;
+    font-family: Lato, sans-serif;
     text-align: center;
+
+    .top {
+      font-size: 2rem;
+    @include phone {
+      font-size: 3rem;
+    }
+    }
+
+    .bottom {
+      font-size: 1rem;
+    @include phone {
+      font-size: 1.5rem;
+    }
+    }
   }
 
   p {

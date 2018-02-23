@@ -49,6 +49,8 @@ var margin = {
     "Green": "#A1C181",
     "SF": "#008e4b",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
+    "Male": "#593989",
+    "Female": "#e5e5e5",
     "Hover": "#e5e5e5", // Used when hovering over an item
     "Active": "#A1C181" // Used for the active slide on the tracker
 
@@ -407,7 +409,7 @@ function initial_render() {
     gY = wrapper.append("g").attr("class", "y-axis").call(yAxis);
 
     // Add chart title
-    chartTitle = svg.append("text").attr("x", width / 2 + margin.left).attr("y", margin.top / 2).style("text-anchor", "middle").attr("class", "chart-title").text("Women MPs in the House of Commons");
+    chartTitle = svg.append("text").attr("x", width / 2 + margin.left).attr("y", margin.top / 2).style("text-anchor", "middle").attr("class", "chart-title").text("");
 
     // Add axes labels
     xLabel = svg.append("text").attr("transform", "translate(" + (width + margin.left + margin.right) / 2 + " ," + (height + margin.top + margin.bottom) + ")").attr("class", "x-label").style("text-anchor", "middle").text("Time");
@@ -531,6 +533,9 @@ function first_slide() {
     d3.select("#slide1-group").remove();
     d3.select("#election-rects").remove();
 
+    // Change chart title
+    chartTitle.transition().text("Women MPs in the House of Commons");
+
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition);
 
@@ -554,11 +559,7 @@ function first_slide() {
             return x(d.term_start);
         }).attr("x2", function (d) {
             return x(d.term_start);
-        }).attr("y1", function () {
-            return y(0);
-        }).attr("y2", function () {
-            return y(0);
-        }).attr("strokeStyle", function (d) {
+        }).attr("y1", y(0)).attr("y2", y(0)).attr("strokeStyle", function (d) {
             return colorParty(d.party);
         }).attr("hiddenStrokeStyle", function (d) {
             if (!d.hiddenCol) {
@@ -1023,6 +1024,8 @@ function second_slide() {
     // Change y axis label
     yLabel.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("Number of MPs");
 
+    chartTitle.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("MPs in the House of Commons");
+
     slide2Group.append("text").attr("x", x(new Date(2010, 1, 1))).attr("y", y(0) - 10 * lineThickness).attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4, (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4)).attr("class", "women-label").text("Women").style("opacity", 0).transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 500).style("opacity", 1);
 
     // Do the actual axis rescale now
@@ -1174,14 +1177,7 @@ function third_slide() {
     // Add group to hold third slide lines
     slide3Group = zoomedArea.append("g").attr("id", "slide3-group");
 
-    // Add a smooth but quick transition if no fancy transition is requested
-    // if (no_transition) {
-    //     slide3Group
-    //         .style("opacity", 0)
-    //         .transition()
-    //         .duration(200)
-    //         .style("opacity", 1)
-    // }
+    chartTitle.transition().text("Parliaments in developed countries");
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗     ██╗
@@ -1442,7 +1438,7 @@ function to_fourth_slide(current_slide) {
     yLabel.transition(t0).style("opacity", 0);
 
     d3.select("#tooltip").transition(t0).style("opacity", 0).on("end", function () {
-        fourth_slide(false);
+        // fourth_slide(false)
     });
 }
 
@@ -1741,7 +1737,12 @@ function fifth_slide() {
     d3.select("#slide5-group").remove();
 
     // Call function initially
-    update_fifth_slide(no_transition, typeof selected_topic != "undefined" ? selected_topic : "economy");
+    if (typeof selected_topic != "undefined") {
+        update_fifth_slide(no_transition, selected_topic);
+    } else {
+        update_fifth_slide(no_transition, "economy");
+        chartTitle.transition().text("Time spent on the economy");
+    }
 }
 
 function update_fifth_slide(no_transition, default_selected_topic, from_scroll) {
@@ -1775,6 +1776,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
             selected_topic = selected_topic || topics[Math.floor(Math.random() * topics.length)];
         }
     }
+    chartTitle.transition().text("Time spent on " + selected_topic);
 
     var baked_data = baked_positions_data.filter(function (d) {
         return d.key == selected_topic;
@@ -1931,7 +1933,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         dataContainer.selectAll("custom.male-node").each(function () {
             var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"));
+            context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"));
             context.beginPath();
             context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
             context.fill();
@@ -1939,7 +1941,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         dataContainer.selectAll("custom.female-node").each(function () {
             var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"));
+            context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"));
             context.beginPath();
             context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
             context.fill();
@@ -1957,7 +1959,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         dataContainer.select("custom.male-median").each(function () {
             var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Lab"], node.attr("opacity"));
+            context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"));
             context.beginPath();
             context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
             context.fill();
@@ -1965,7 +1967,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         dataContainer.select("custom.female-median").each(function () {
             var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Hover"], node.attr("opacity"));
+            context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"));
             context.beginPath();
             context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
             context.fill();
@@ -2008,11 +2010,11 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         // Draw axis labels for men and women if within range
         if (typeof male_label != "undefined") {
-            wrapper.select(".x-custom-axis").append("text").attr("class", "x-label x-custom-label").attr("transform", male_label.parentNode.getAttribute("transform")).attr("dy", 10).style("text-anchor", "end").style("fill", colors["Lab"]).html("Men");
+            wrapper.select(".x-custom-axis").append("text").attr("class", "x-label x-custom-label").attr("transform", male_label.parentNode.getAttribute("transform")).attr("dy", 10).style("text-anchor", "end").style("fill", colors["Male"]).html("Men");
         }
 
         if (typeof female_label != "undefined") {
-            wrapper.select(".x-custom-axis").append("text").attr("class", "x-label x-custom-label").attr("transform", female_label.parentNode.getAttribute("transform")).attr("dy", 10).style("text-anchor", "start").style("fill", colors["Hover"]).html("Women");
+            wrapper.select(".x-custom-axis").append("text").attr("class", "x-label x-custom-label").attr("transform", female_label.parentNode.getAttribute("transform")).attr("dy", 10).style("text-anchor", "start").style("fill", colors["Female"]).html("Women");
         }
     };
     // Update axis ticks and draw custom labels for Men and Women on x-axis
@@ -2060,7 +2062,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
         d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
         // Show relevant tooltip info
-        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Hover"] : colors["Lab"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " MP spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
+        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Female"] : colors["Male"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " MP spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
         mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
             return d.x;
         }).attr("cy", function (d) {
@@ -2244,6 +2246,8 @@ function sixth_slide() {
             return x(d);
         }).attr("cy", y(selected_topic)).on("end", function () {
 
+            chartTitle.transition().text("Gender bias of topics");
+
             gX.style("opacity", 1);
             gY.style("opacity", 1);
             xLabel.text("Average % of time spent on topic").style("opacity", 1);
@@ -2257,6 +2261,8 @@ function sixth_slide() {
 
         // Add hidden svg circle
         var female_median_circle_svg = slide6Group.selectAll(".female-median").data(sorted_topics);
+
+        chartTitle.transition().text("Gender bias of topic");
 
         xLabel.text("Average % of time spent on topic").style("opacity", 1);
 
@@ -2366,9 +2372,9 @@ function sixth_slide() {
 
                 xLabel.text("Median female - Median male");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + margin.bottom).text("FEMALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + margin.bottom).text("FEMALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
 
-                wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + margin.bottom).text("MALE FRIENDLY").style("text-anchor", "start").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
+                wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + margin.bottom).text("MALE FRIENDLY").style("text-anchor", "start").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
             });
         });
         var t4 = t3.transition();
@@ -2391,9 +2397,9 @@ function sixth_slide() {
             slide6Group.style("opacity", 1);
         });
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom / 2).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Hover"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom / 2).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom / 2).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Lab"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom / 2).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
     }
 
     var label_pos = sorted_topics.map(function (d) {
@@ -2949,7 +2955,7 @@ function handleStepEnter(response) {
                 case 0:
                     if (response.direction == "up") {
                         yLabel.transition().text("Number of MPs");
-
+                        chartTitle.transition().text("MPs in the House of Commons");
                         // All MPs first
                         y.domain([0, 750]);
                         gY.transition().call(yAxis);
@@ -2961,7 +2967,7 @@ function handleStepEnter(response) {
                         max_mps_area.y1(function (d) {
                             return y(d.total_mps);
                         });
-                        max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
+                        max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Male"]);
                         mask.transition().attr("d", max_mps_area);
 
                         half_max_mps_line.y(function (d) {
@@ -2977,12 +2983,17 @@ function handleStepEnter(response) {
                             return y(d.total_women_mps);
                         });
                         total_women_mps_path_area.transition().attr("d", total_women_mps_area);
+
+                        d3.select(".women-label").style("fill", colors["Male"]);
                     }
 
                     break;
                 case 1:
-                    yLabel.transition().text("% of MPs");
                     // Labour
+                    yLabel.transition().text("% of MPs");
+
+                    chartTitle.transition().text("MPs in the Labour Party");
+
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
@@ -3010,7 +3021,11 @@ function handleStepEnter(response) {
                     d3.select(".women-label").style("fill", colors["Labour"]);
                     break;
                 case 2:
-                    // Conservative
+                    // Conservatives
+                    yLabel.transition().text("% of MPs");
+
+                    chartTitle.transition().text("MPs in the Conservative Party");
+
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
@@ -3038,7 +3053,11 @@ function handleStepEnter(response) {
                     d3.select(".women-label").style("fill", colors["Conservative"]);
                     break;
                 case 3:
-                    // Lib SNP
+                    // Lib Dems & SNP
+                    yLabel.transition().text("% of MPs");
+
+                    chartTitle.transition().text("MPs in the Liberal Democrats and Scottish National Party");
+
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
@@ -3067,13 +3086,17 @@ function handleStepEnter(response) {
                     break;
                 case 4:
                     // All MPs again
+                    yLabel.transition().text("% of MPs");
+
+                    chartTitle.transition().text("MPs in the House of Commons");
+
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
 
                     max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(y(100));
-                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
+                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Male"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(y(50));
@@ -3091,7 +3114,7 @@ function handleStepEnter(response) {
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
 
-                    d3.select(".women-label").style("fill", colors["Labour"]);
+                    d3.select(".women-label").style("fill", colors["Male"]);
                     break;
             }
 
@@ -3100,6 +3123,7 @@ function handleStepEnter(response) {
         case 3:
             d3.select("#slide4").style("display", "none");
             d3.select("#zoom-checkbox").style("opacity", 0);
+            chartTitle.transition().text("");
             break;
 
         case 4:
@@ -3107,12 +3131,16 @@ function handleStepEnter(response) {
             switch (new_step) {
                 case 0:
                     update_fifth_slide(false, "economy", true);
+
+                    chartTitle.transition().text("Time spent on the economy");
                     break;
                 case 1:
                     update_fifth_slide(false, "welfare reforms", true);
+                    chartTitle.transition().text("Time spent on welfare reforms");
                     break;
                 case 2:
                     update_fifth_slide(false, "parliamentary terms", true);
+                    chartTitle.transition().text("Time spent on parliamentary terminology");
                     break;
             }
             d3.select(".slide5-dropdown").style("display", "none");
