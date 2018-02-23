@@ -46,7 +46,7 @@ var colors = {
     "Green": "#A1C181",
     "SF": "#008e4b",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
-    "Male": "#593989",
+    "Male": "#7A47C6",
     "Female": "#e5e5e5",
     "Hover": "#e5e5e5", // Used when hovering over an item
     "Active": "#A1C181" // Used for the active slide on the tracker
@@ -2025,6 +2025,7 @@ function to_fourth_slide(current_slide) {
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () {
+            chartTitle.transition().text("")
             // fourth_slide(false)
         })
 
@@ -2468,16 +2469,16 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
 
         // Append a new label
         wrapper.select("#topic-label").remove()
-        wrapper
-            .append("text")
-            .attr("id", "topic-label")
-            .attr("class", "rect-label")
-            .attr("x", width/2)
-            .attr("y", margin.top*2)
-            .attr("text-anchor", "middle")
-            .attr("fill", colors["Hover"])
-            .style("font-weight", "bold")
-            .text(selected_topic.toUpperCase())
+        // wrapper
+        //     .append("text")
+        //     .attr("id", "topic-label")
+        //     .attr("class", "rect-label")
+        //     .attr("x", width/2)
+        //     .attr("y", margin.top*2)
+        //     .attr("text-anchor", "middle")
+        //     .attr("fill", colors["Hover"])
+        //     .style("font-weight", "bold")
+        //     .text(selected_topic.toUpperCase())
     } else {
         // Remove label because we have dropdown instead
         wrapper.select("#topic-label").remove()
