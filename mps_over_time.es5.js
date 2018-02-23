@@ -1090,8 +1090,19 @@ function second_slide() {
             // Reconfigure tooltip to show different information
             var first_election = d.year;
             var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year;
-            var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps;
-            var gender_ratio = d.total_mps / num_women - 1;
+            if (chartTitle.text().includes("Labour")) {
+                var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].labour_women_mps;
+                var gender_ratio = d.labour_mps / num_women - 1;
+            } else if (chartTitle.text().includes("Conservative")) {
+                num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].conservative_women_mps;
+                gender_ratio = d.conservative_mps / num_women - 1;
+            } else if (chartTitle.text().includes("Liberal")) {
+                num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].lib_snp_women_mps;
+                gender_ratio = d.lib_snp_mps / num_women - 1;
+            } else {
+                num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps;
+                gender_ratio = d.total_mps / num_women - 1;
+            }
             tooltip.innerHTML = "<div class=\"slide2-tooltip\"><h1>" + formatDate(first_election) + " &rarr; " + formatDate(second_election) + "</h1>\n        " + (num_women > 0 ? "<p>" + num_women + " Wom" + (num_women == 1 ? "a" : "e") + "n</p><hr/>\n            For every <span class=\"female\">female</span> MP, there " + (new Date() > second_election ? "were" : "are") + "\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> MPs." : "There were no women in the House of Commons yet :(") + "\n                                </div>\n            ";
         }).on("mouseout", function () {
             d3.select(this).classed("hover", false);
@@ -1741,16 +1752,21 @@ function fifth_slide() {
     if (typeof selected_topic != "undefined") {
         update_fifth_slide(no_transition, selected_topic);
     } else {
-        update_fifth_slide(no_transition, "economy");
+        update_fifth_slide(no_transition, "economy", true, false);
         chartTitle.transition().text("Time spent on the economy");
     }
 }
 
-function update_fifth_slide(no_transition, default_selected_topic, from_scroll) {
+function update_fifth_slide(no_transition, default_selected_topic, from_scroll, drawMedian) {
 
     // If from_scroll is undefined, then this function was not triggered through scrollytelling
     if (typeof from_scroll == "undefined") {
         from_scroll = false;
+    }
+
+    // If drawMedian is undefined, then we must show the median line by default
+    if (typeof drawMedian == "undefined") {
+        drawMedian = true;
     }
 
     // Hide mouseover circle
@@ -1957,37 +1973,40 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll) 
             context.fill();
         });
 
-        dataContainer.select("custom.median-connector").each(function () {
-            var node = d3.select(this);
-            context.beginPath();
-            context.lineWidth = 1;
-            context.strokeStyle = "white";
-            context.moveTo(node.attr("x1"), node.attr("y1"));
-            context.lineTo(+node.attr("x2"), node.attr("y2"));
-            context.stroke();
-        });
+        if (drawMedian) {
 
-        dataContainer.select("custom.male-median").each(function () {
-            var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"));
-            context.beginPath();
-            context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
-            context.fill();
-        });
+            dataContainer.select("custom.median-connector").each(function () {
+                var node = d3.select(this);
+                context.beginPath();
+                context.lineWidth = 1;
+                context.strokeStyle = "white";
+                context.moveTo(node.attr("x1"), node.attr("y1"));
+                context.lineTo(+node.attr("x2"), node.attr("y2"));
+                context.stroke();
+            });
 
-        dataContainer.select("custom.female-median").each(function () {
-            var node = d3.select(this);
-            context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"));
-            context.beginPath();
-            context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
-            context.fill();
-        });
+            dataContainer.select("custom.male-median").each(function () {
+                var node = d3.select(this);
+                context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"));
+                context.beginPath();
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
+                context.fill();
+            });
+
+            dataContainer.select("custom.female-median").each(function () {
+                var node = d3.select(this);
+                context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"));
+                context.beginPath();
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI);
+                context.fill();
+            });
+        }
     };
 
     // Animate node entrances
     var t = d3.timer(function (elapsed) {
         draw(context, false);
-        if (initial_slide5 & elapsed > 5000 | initial_slide5 != true & elapsed > 1000) {
+        if (initial_slide5 & elapsed > 5000 | initial_slide5 != true & elapsed > 3000) {
             t.stop();
             draw(context);
             // First time we run this, we record the fact it was run
@@ -2407,9 +2426,9 @@ function sixth_slide() {
             slide6Group.style("opacity", 1);
         });
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", width - margin.right).attr("y", height + margin.bottom / 2).text("FEMALE FRIENDLY").style("text-anchor", "middle").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + margin.bottom).text("FEMALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", margin.left).attr("y", height + margin.bottom / 2).text("MALE FRIENDLY").style("text-anchor", "end").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + margin.bottom).text("MALE FRIENDLY").style("text-anchor", "start").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
     }
 
     var label_pos = sorted_topics.map(function (d) {
@@ -3140,16 +3159,20 @@ function handleStepEnter(response) {
             d3.select("#slide4").style("display", "none");
             switch (new_step) {
                 case 0:
-                    update_fifth_slide(false, "economy", true);
+                    update_fifth_slide(false, "economy", true, false);
 
                     chartTitle.transition().text("Time spent on the economy");
                     break;
                 case 1:
-                    update_fifth_slide(false, "welfare reforms", true);
+                    update_fifth_slide(false, "welfare reforms", true, false);
                     chartTitle.transition().text("Time spent on welfare reforms");
                     break;
                 case 2:
-                    update_fifth_slide(false, "parliamentary terms", true);
+                    update_fifth_slide(false, "parliamentary terms", true, false);
+                    chartTitle.transition().text("Time spent on parliamentary terminology");
+                    break;
+                case 3:
+                    update_fifth_slide(false, "parliamentary terms", true, true);
                     chartTitle.transition().text("Time spent on parliamentary terminology");
                     break;
             }
