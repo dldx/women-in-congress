@@ -173,7 +173,8 @@ var ratio,
     slide5_xScale,
     slide5_yScale,
     mp_filter,
-    isMobile
+    isMobile,
+    all_mps_draw_timer
 
 var mps_over_time_data,
     number_women_over_time_data,
@@ -3767,16 +3768,17 @@ function handleStepEnter(response) {
                     .duration(1000)
                     .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
                 // Animate node entrances
-                t = d3.timer((elapsed) => {
+                all_mps_draw_timer = d3.timer((elapsed) => {
                     draw(context, false)
                     if (elapsed > 5000) {
-                        t.stop()
+                        all_mps_draw_timer.stop()
                         draw(context)
                         // Draw hidden canvas nodes to catch interactions
                         draw(context_hidden, true)
                         reset_zoom()
                     }
                 })
+
             } else {
                 // Reset zoom
                 mouseover_svg.transition()
@@ -3813,10 +3815,12 @@ function handleStepEnter(response) {
                 $("#zoom-checkbox").checkbox("uncheck")
                 // If we have to zoom out first, wait a bit before executing next bit
                 d3.timeout(() => {
+                    all_mps_draw_timer.stop()
                     mpZoom("constancemarkievicz", "mid", 10, 0, width / 4)
                 }, 1000)
             } else {
                 // First step: zoom into first mp
+                all_mps_draw_timer.stop()
                 mpZoom("constancemarkievicz", "mid", 10, 0, width / 4)
             }
             canvas.style("pointer-events", "none")

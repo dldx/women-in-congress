@@ -113,7 +113,7 @@ var width = 0,
 
 var ratio, clippedArea, electionRects, zoom, wrapper, transform, zoomedArea, pointsGroup, slide2Group, slide3Group,
 // slide5Group,
-slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, mp_filter, isMobile;
+slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, mp_filter, isMobile, all_mps_draw_timer;
 
 var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data,
 // info_bubbles_data,
@@ -2791,10 +2791,10 @@ function handleStepEnter(response) {
                             return x(d.term_end) - lineThickness * 1.2;
                         });
                         // Animate node entrances
-                        t = d3.timer(function (elapsed) {
+                        all_mps_draw_timer = d3.timer(function (elapsed) {
                             draw(context, false);
                             if (elapsed > 5000) {
-                                t.stop();
+                                all_mps_draw_timer.stop();
                                 draw(context);
                                 // Draw hidden canvas nodes to catch interactions
                                 draw(context_hidden, true);
@@ -2832,10 +2832,12 @@ function handleStepEnter(response) {
                         $("#zoom-checkbox").checkbox("uncheck");
                         // If we have to zoom out first, wait a bit before executing next bit
                         d3.timeout(function () {
+                            all_mps_draw_timer.stop();
                             mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
                         }, 1000);
                     } else {
                         // First step: zoom into first mp
+                        all_mps_draw_timer.stop();
                         mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
                     }
                     canvas.style("pointer-events", "none");
