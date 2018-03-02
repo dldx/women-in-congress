@@ -3161,7 +3161,7 @@ function sixth_slide(no_transition = false) {
 
         chartTitle
             .transition()
-            .text("Gender bias of topic")
+            .text("Gender bias of topics")
 
         xLabel
             .text("Average % of time spent on topic")
