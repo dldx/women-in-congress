@@ -16,7 +16,7 @@ topic_names_100 = {
     26: "airport and rail expansion",
     27: "scotland",
     29: "parliamentary terms+",
-    30: "single market (?)",
+    30: "wales",
     32: "drugs and alcohol",
     33: "middle east",
     35: "care quality commission",

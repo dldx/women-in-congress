@@ -107,7 +107,7 @@
 
             svg.call(tip);
 
-            d3.csv("data.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+            d3.csv("mp_topic_fraction.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
                 // Convert wide data to long
                 nodes = [];
                 data.forEach(function(row) {
@@ -130,7 +130,7 @@
                 });
 
                 if (error) throw error;
-
+				var sorter = d3.nest().key(d => d.party).entries(nodes).sort((a,b) => b.values.length - a.values.length).filter(d => d.values.length > 220).map(d => d.key)
                 // Group MPs by topic and gender
                 nodes = d3.nest()
                     .key(function(d) {
@@ -142,7 +142,9 @@
                     .key(function(d) {
                         return d.gender;
                     })
-                    .entries(nodes)
+					.entries(nodes.filter(d => sorter.indexOf(d.party) != -1))
+					.sort((a,b) => sorter.indexOf(a.key) - sorter.indexOf(b.key))
+
 
                 // Number of topics
                 n_topics = nodes[0].values.length

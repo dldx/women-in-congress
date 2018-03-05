@@ -3545,6 +3545,9 @@ function handleStepEnter(response) {
 
             d3.select(".switch")
                 .style("opacity", 1)
+                .on("mouseover", () => {
+                    d3.select("#tooltip").style("opacity", 0)
+                })
                 .select("#zoom-checkbox")
                 .on("change", function () {
                     if (this.checked) {
@@ -4018,13 +4021,13 @@ function handleStepEnter(response) {
                 .text("Time spent on welfare reforms")
             break
         case 2:
-            update_fifth_slide(false, "parliamentary terms", true, false)
+            update_fifth_slide(false, "parliamentary terminology", true, false)
             chartTitle
                 .transition()
                 .text("Time spent on parliamentary terminology")
             break
         case 3:
-            update_fifth_slide(false, "parliamentary terms", true, true)
+            update_fifth_slide(false, "parliamentary terminology", true, true)
             chartTitle
                 .transition()
                 .text("Time spent on parliamentary terminology")

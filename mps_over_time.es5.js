@@ -2603,7 +2603,9 @@ function handleStepEnter(response) {
                     }
                     canvas.style("pointer-events", "auto");
 
-                    d3.select(".switch").style("opacity", 1).select("#zoom-checkbox").on("change", function () {
+                    d3.select(".switch").style("opacity", 1).on("mouseover", function () {
+                        d3.select("#tooltip").style("opacity", 0);
+                    }).select("#zoom-checkbox").on("change", function () {
                         if (this.checked) {
                             zoom.on("zoom", zoomed);
                             canvas.call(zoom);
@@ -2976,11 +2978,11 @@ function handleStepEnter(response) {
                     chartTitle.transition().text("Time spent on welfare reforms");
                     break;
                 case 2:
-                    update_fifth_slide(false, "parliamentary terms", true, false);
+                    update_fifth_slide(false, "parliamentary terminology", true, false);
                     chartTitle.transition().text("Time spent on parliamentary terminology");
                     break;
                 case 3:
-                    update_fifth_slide(false, "parliamentary terms", true, true);
+                    update_fifth_slide(false, "parliamentary terminology", true, true);
                     chartTitle.transition().text("Time spent on parliamentary terminology");
                     break;
             }

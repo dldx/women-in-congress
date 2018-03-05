@@ -1,53 +1,34 @@
 topic,male,female
 business,-2.20,-2.05
 immigration,-2.22,-2.06
-counter terrorism,-2.67,-2.46
-syria,-3.36,-3.36
+counter-terrorism,-2.67,-2.46
 private housing,-1.80,-1.69
 banking,-2.13,-2.32
-tribunal,-2.17,-2.25
-bbc,-2.45,-2.47
 police force,-2.15,-2.04
-parliamentary terms,-1.64,-1.90
-secretary of state terms,-1.69,-1.84
 local authority,-1.91,-1.96
 domestic violence,-2.10,-1.97
-airport and rail expansion,-2.45,-2.54
+airport & rail expansion,-2.45,-2.54
 scotland,-2.50,-2.60
-parliamentary terms+,-1.80,-2.10
-single market (?),-2.30,-2.59
 drugs and alcohol,-2.28,-2.06
 middle east,-2.01,-1.98
-care quality commission,-2.22,-1.77
-speaker of the house,-1.77,-2.12
-nhs,-2.04,-1.69
+nhs & social care,-1.78,-1.42
 farming,-2.41,-2.53
-law,-2.84,-2.77
 development & climate change,-2.82,-2.25
 fishing industry,-2.09,-2.24
-inquiries & reports,-1.93,-2.02
-northern ireland,-2.04,-2.35
-construction,-1.56,-1.58
+armed forces,-2.05,-2.37
+wales,-2.30,-2.59
 animal welfare,-2.10,-2.14
-fraud terminology,-2.02,-2.06
-legislation,-1.40,-1.61
-bill terminology,-1.55,-1.66
-regional stuff,-1.99,-1.94
-elections,-2.12,-2.12
-local services,-1.80,-1.58
 energy,-1.83,-2.05
-welfare reforms,-1.93,-1.36
 european union,-1.72,-1.88
+welfare reforms,-1.93,-1.36
 education,-1.94,-1.66
-money-related terms,-1.65,-1.78
 pensioner income,-1.68,-1.69
 child poverty,-2.89,-2.14
-sports & culture,-1.97,-1.78
-investment,-1.77,-1.84
-armed forces,-2.05,-2.37
 economy,-2.13,-2.17
-house of lords,-1.98,-2.25
-employee's rights,-1.74,-1.84
-nuclear weapons,-2.82,-3.12
-parliamentary terms++,-1.34,-1.58
+northern ireland,-2.04,-2.35
 child care,-2.14,-1.57
+nuclear weapons,-2.82,-3.12
+local services,-1.80,-1.58
+workers rights,-1.74,-1.84
+elections,-2.12,-2.12
+parliamentary terminology,-1.03,-1.26
