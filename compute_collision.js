@@ -1,5 +1,6 @@
 const D3Node = require('d3-node');
 const d3 = require('d3')
+const d3beeswarm = require('d3-beeswarm')
 const request = require("d3-request")
 const fs = require("fs")
 
@@ -13,21 +14,19 @@ var margin = {
     height = 800 - margin.top - margin.bottom
 
 var node_radius = 2.5;
-var d3n = new D3Node();
 
 // Get topic name from command line argument
 topic_name = process.argv[2]
 
-var topics = [topic_name]
-var x = d3.scalePoint()
-    .domain(topics)
+var x = d3.scaleLinear()
+    .domain([-300, 300])
     .range([0 + width / 4, width * 3 / 4]);
 
 var y = d3.scaleLinear()
     .domain([0, 0.3])
     .range([height, 0]);
 
-fs.readFile("data.csv", "utf-8", function (error, data) {
+fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
     if (error) throw error;
     data = d3.csvParse(data)
     // Convert wide data to long
@@ -47,73 +46,97 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         return node
     })
 
-    var nodes_male = nodes.filter(d => d.gender == "Male");
-    var nodes_female = nodes.filter(d => d.gender != "Male");
+    var nodes_male = nodes.filter(d => d.gender == "Male").sort((a,b) => a[topic_name] - b[topic_name]);
+    var nodes_female = nodes.filter(d => d.gender != "Male").sort((a,b) => a[topic_name] - b[topic_name]);
 
     simulation_male = d3.forceSimulation(nodes_male)
         .force("x", d3.forceX(function (d) {
-                return x(topic_name);
+                return x(0);
             })
-            .strength(0.1))
+            .strength(0.004))
         .force("y", d3.forceY(function (d) {
                 return y(d[topic_name]);
             })
             .strength(1))
         .force("collide",
-            d3.forceCollide(10.0)
-            .radius(2)
-            .iterations(20))
-        .alphaMin(0.000000001)
-        .velocityDecay(0.1)
+            d3.forceCollide()
+            .radius(node_radius)
+            .strength(2)
+            .iterations(5))
+        // .alphaMin(0.000000001)
+        // .velocityDecay(0.1)
 
     simulation_female = d3.forceSimulation(nodes_female)
         .force("x", d3.forceX(function (d) {
-                return x(topic_name);
+                return x(0);
             })
-            .strength(0.1))
+            .strength(0.01))
         .force("y", d3.forceY(function (d) {
                 return y(d[topic_name]);
             })
             .strength(1))
         .force("collide",
-            d3.forceCollide(10.0)
-            .radius(2)
-            .iterations(20))
-        .alphaMin(0.000000001)
-        .velocityDecay(0.1)
+            d3.forceCollide()
+            .strength(2)
+            .radius(node_radius)
+            .iterations(5))
+        // .alphaMin(0.000000001)
+        // .velocityDecay(0.1)
 
-    // Set default positions for nodes
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-    }
-    nodes_male.map(function (d) {
-        d.x = x(topic_name) + getRandomInt(0, -20)
-        node_y = y(d[topic_name])
-        d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
-    })
-    nodes_female.map(function (d) {
-        d.x = x(topic_name) + getRandomInt(0, 20)
-        node_y = y(d[topic_name])
-        d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
-    })
+            // compute beeswarm arrangement
+            var swarm = d3beeswarm.beeswarm()
+                .data(nodes_male)
+                .radius(node_radius*1.)
+                .orientation("vertical")
+                .side("positive")
+                .distributeOn(function(d) {
+
+                    // return y(d[topic_name])
+                    return y(Math.round(d[topic_name]/(node_radius/(y(0)-y(1))))*(node_radius/(y(0)-y(1))));
+                })
+
+            var beeswarmArrangement = swarm.arrange();
+
+            nodes_male = beeswarmArrangement.map(d => {
+                d.datum.x = x(0) - d.x - node_radius
+                d.datum.y = d.y
+
+                return d.datum
+            })
+
+            var swarm = d3beeswarm.beeswarm()
+                .data(nodes_female)
+                .radius(node_radius)
+                .orientation("vertical")
+                .side("negative")
+                .distributeOn(function(d) {
+                    return y(d[topic_name]);
+                })
+
+            var beeswarmArrangement = swarm.arrange();
+
+            nodes_female = beeswarmArrangement.map(d => {
+                d.datum.x = x(0) - d.x - node_radius
+                d.datum.y = d.y
+
+                return d.datum
+            })
 
     simulation_male.on("tick", function () {
         nodes_male.map(function (d) {
-            d.x = Math.min(d.x, x(topic_name) - node_radius)
-            node_y = y(d[topic_name])
-            d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
-            d.y = Math.min(y(0), d.y)
+                    node_y = y(Math.round(d[topic_name]/(node_radius/(y(0)-y(1))))*(node_radius/(y(0)-y(1))))
+                    d.x = Math.min(d.x, x(0) - node_radius)
+                    d.y = Math.min(node_y + node_radius * 6, Math.max(node_y - node_radius * 6, d.y))
+                    d.y = Math.min(y(0), d.y)
         })
     })
 
     simulation_female.on("tick", function () {
         nodes_female.map(function (d) {
-            d.x = Math.max(x(topic_name) + node_radius, d.x)
-            node_y = y(d[topic_name])
-            d.y = Math.min(node_y + node_radius * 2, Math.max(node_y - node_radius * 2, d.y))
-            d.y = Math.min(y(0), d.y)
+                    d.x = Math.max(x(0) + node_radius, d.x)
+                    node_y = y(d[topic_name])
+                    d.y = Math.min(node_y + node_radius * 3, Math.max(node_y - node_radius * 3, d.y))
+                    d.y = Math.min(y(0), d.y)
         })
     })
 
@@ -121,8 +144,8 @@ fs.readFile("data.csv", "utf-8", function (error, data) {
         nodes = nodes_male.concat(nodes_female)
         process.stdout.write(
                 `id,${topic_name}_x,${topic_name}_y\n` + nodes.map(node => [node.id,
-                    ((node.x - x(topic_name)) / node_radius),
-                    y.invert(node.y)
+                    ((node.x - x(0)) / node_radius),
+                    y.invert(node.y)*100
                 ])
                 .join("\n"),
             );

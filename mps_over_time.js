@@ -2441,7 +2441,7 @@ function fifth_slide(no_transition = false) {
         .range([0, width])
 
     slide5_yScale = d3.scaleLinear()
-        .domain([0, 0.3])
+        .domain([-0.005, 0.3])
         .range([height, 0])
 
     y = slide5_yScale
@@ -3537,7 +3537,7 @@ function download_data() {
 
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
-                                "y": +row[topic + "_y"],
+                                "y": +row[topic + "_y"]/100,
                             })
                         }
                     )

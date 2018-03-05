@@ -1742,7 +1742,7 @@ function fifth_slide() {
     // Scales for this data
     slide5_xScale = d3.scaleLinear().domain([-300, 150]).range([0, width]);
 
-    slide5_yScale = d3.scaleLinear().domain([0, 0.3]).range([height, 0]);
+    slide5_yScale = d3.scaleLinear().domain([-0.005, 0.3]).range([height, 0]);
 
     y = slide5_yScale;
 
@@ -2291,7 +2291,7 @@ function sixth_slide() {
         // Add hidden svg circle
         var female_median_circle_svg = slide6Group.selectAll(".female-median").data(sorted_topics);
 
-        chartTitle.transition().text("Gender bias of topic");
+        chartTitle.transition().text("Gender bias of topics");
 
         xLabel.text("Average % of time spent on topic").style("opacity", 1);
 
@@ -2568,7 +2568,7 @@ function download_data() {
 
                     "topic": topic,
                     "x": +row[topic + "_x"],
-                    "y": +row[topic + "_y"]
+                    "y": +row[topic + "_y"] / 100
                 });
             });
         });

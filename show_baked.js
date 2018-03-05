@@ -154,7 +154,7 @@ d3.queue()
 
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
-                                "y": +row[topic + "_y"],
+                                "y": +row[topic + "_y"]/100,
                             })
                         }
                     )

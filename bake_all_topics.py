@@ -14,7 +14,7 @@ def bake_collision(topic):
     return  pd.read_csv(os.popen('node compute_collision.js "{0}"'.format(topic)))
 
 # Make a pool with 8 processes
-pool = Pool(16)
+pool = Pool(8)
 
 # Map pool to topics to generate one dataframe per topic
 dfs = pool.map(bake_collision, topics)
@@ -23,4 +23,4 @@ dfs = pool.map(bake_collision, topics)
 df = reduce(lambda left, right: pd.merge(left, right, on="id"), dfs)
 
 # Write to csv
-df.to_csv("baked_positions.csv", index=False, float_format='%.5f')
+df.to_csv("baked_positions.csv", index=False, float_format='%.3f')
