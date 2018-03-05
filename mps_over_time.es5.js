@@ -1865,7 +1865,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     });
 
     // ENTER
-    circle_male.enter().append("custom").attr("class", "male-node").attr("r", circleRadius).attr("cx", function (d) {
+    circle_male.enter().append("custom").attr("class", "male-node").attr("r", circleRadius * 1.2).attr("cx", function (d) {
         return no_transition ? d.x : slide5_xScale(0);
     }).attr("cy", function (d) {
         return d.y;
@@ -1893,7 +1893,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         return d.x;
     }).attr("cy", function (d) {
         return d.y;
-    }).attr("r", circleRadius).attr("cx", function (d) {
+    }).attr("r", circleRadius * 1.2).attr("cx", function (d) {
         return no_transition ? d.x : slide5_xScale(0);
     }).attr("cy", function (d) {
         return d.y;

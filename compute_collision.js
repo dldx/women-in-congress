@@ -55,7 +55,8 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
             })
             .strength(0.004))
         .force("y", d3.forceY(function (d) {
-                return y(d[topic_name]);
+                // return y(d[topic_name]);
+                    return y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))));
             })
             .strength(1))
         .force("collide",
@@ -72,7 +73,8 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
             })
             .strength(0.01))
         .force("y", d3.forceY(function (d) {
-                return y(d[topic_name]);
+                // return y(d[topic_name]);
+                    return y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))));
             })
             .strength(1))
         .force("collide",
@@ -92,7 +94,7 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
                 .distributeOn(function(d) {
 
                     // return y(d[topic_name])
-                    return y(Math.round(d[topic_name]/(node_radius/(y(0)-y(1))))*(node_radius/(y(0)-y(1))));
+                    return y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))));
                 })
 
             var beeswarmArrangement = swarm.arrange();
@@ -110,7 +112,8 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
                 .orientation("vertical")
                 .side("negative")
                 .distributeOn(function(d) {
-                    return y(d[topic_name]);
+                    // return y(d[topic_name]);
+                    return y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))));
                 })
 
             var beeswarmArrangement = swarm.arrange();
@@ -124,7 +127,7 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
 
     simulation_male.on("tick", function () {
         nodes_male.map(function (d) {
-                    node_y = y(Math.round(d[topic_name]/(node_radius/(y(0)-y(1))))*(node_radius/(y(0)-y(1))))
+                    node_y = y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))))
                     d.x = Math.min(d.x, x(0) - node_radius)
                     d.y = Math.min(node_y + node_radius * 6, Math.max(node_y - node_radius * 6, d.y))
                     d.y = Math.min(y(0), d.y)
@@ -134,8 +137,8 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
     simulation_female.on("tick", function () {
         nodes_female.map(function (d) {
                     d.x = Math.max(x(0) + node_radius, d.x)
-                    node_y = y(d[topic_name])
-                    d.y = Math.min(node_y + node_radius * 3, Math.max(node_y - node_radius * 3, d.y))
+                    node_y = y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))))
+                    d.y = Math.min(node_y + node_radius * 6, Math.max(node_y - node_radius * 6, d.y))
                     d.y = Math.min(y(0), d.y)
         })
     })

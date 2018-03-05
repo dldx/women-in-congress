@@ -169,11 +169,12 @@
                 .force("x", d3.forceX(function(d) {
                         return x(0);
                     })
-                    .strength(0.004))
+                    .strength(0.005))
                 .force("y", d3.forceY(function(d) {
-                        return y(d[topic_name]);
+                    // return y(d[topic_name])
+                    return y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))));
                     })
-                    .strength(1))
+                    .strength(.8))
                 .force("collide",
                     d3.forceCollide()
                     .radius(node_radius)
@@ -259,9 +260,9 @@
 
             simulation_male.on("tick", function() {
                 nodes_male.map(function(d) {
-                    node_y = y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))))
                     d.x = Math.min(d.x, x(0) - node_radius)
                     // d.x = Math.max(x(0) - node_radius, d.x)
+                    node_y = y(Math.round(d[topic_name]/(2*node_radius/(y(0)-y(1))))*(2*node_radius/(y(0)-y(1))))
                     d.y = Math.min(node_y + node_radius * 6, Math.max(node_y - node_radius * 6, d.y))
                     d.y = Math.min(y(0), d.y)
                 })
