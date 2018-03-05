@@ -7,7 +7,7 @@
         <title>Women MPs in the House of Commons</title>
         <meta name="description" content="Exploring the last 100 years of women in politics through data">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500|Lato:400,700|Open+Sans:300,300i" rel="stylesheet" type='text/css'>
+        <link href="//fonts.googleapis.com/css?family=Quicksand:300,400,500|Lato:400,700|Open+Sans:300,300i" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="style.min.css">
 
     </head>
@@ -32,19 +32,28 @@
 </div></a></div>
 </h3>
 
-<h3 style="border: #e5e5e5 2px solid;
+            <h3 style="border: #e5e5e5 2px solid;
     padding: 10px;
     padding-left: 50px;
     padding-right: 50px;
     background-color: #C61148;
 "><b>This article is still work in progress. Please do not share it! Thanks for your cooperation! :)</b></h3>
         </section>
-        <section id="scroll">
+        <section id="scroll" style="background-color: #252525;">
             <div class="scroll__graphic sticky">
-                <div class="chart" id="timeline"></div>
+                <div class="chart" id="timeline">
+                    <div id="loading" style="
+    position: relative;
+    top: 50%;
+    text-align: center;
+">Loading data...Please do not scroll yet!</div>
+                </div>
             </div>
             <!--  step/text container  -->
-            <div class="scroll__text">
+            <div class="scroll__text" style="opacity: 0;">
+                <div class="step" data-slide="0" data-step="-1">
+                    Scroll to begin!
+                </div>
                 <div class="step" data-slide="0" data-step="0">
                     Let's start by introducing the visualisation. Each grey bar represents one parliamentary term.
                 </div>
@@ -129,7 +138,8 @@
                             <hr />
                             <p>In 1961, Baroness Margaret Thatcher was elected as the MP of Finchley in North London, and led the Conservative Party to landslide victory in 1979 in one of the most important political upheavals in British history.</p>
                             <p>
-                                By breaking through the ultimate glass ceiling in British politics, Thatcher was an important role model and inspired many women to enter politics. Her overall contribution to women’s participation in politics is less certain. In her 11 years as Prime Minister, she promoted only one woman to her cabinet and did not champion any feminist causes. It took another 26 years (and four male PMs) until another woman - Theresa May - lead the UK government.
+                                By breaking through the ultimate glass ceiling in British politics, Thatcher was an important role model and inspired many women to enter politics. Her overall contribution to women’s participation in politics is less certain. In her 11 years as Prime
+                                Minister, she promoted only one woman to her cabinet and did not champion any feminist causes. It took another 26 years (and four male PMs) until another woman - Theresa May - lead the UK government.
                             </p>
                         </div>
                         <img class="mp-party-logo" alt="Conservatives logo" style="opacity: 1" src="./party_logos/Con.svg">
@@ -152,16 +162,16 @@
                     <h1 style="background-color: #C61148;">All Women Shortlists</h1>
                     <div class="body-container">
                         <p>
-                        Half of these <em>new</em> Labour women MPs had been selected through All Women Shortlists (AWS, for short).
-                    </p>
+                            Half of these <em>new</em> Labour women MPs had been selected through All Women Shortlists (AWS, for short).
+                        </p>
 
                         <p>
-The controversial decision to use AWS (a process in which only women are allowed to stand for candidate selection in certain seats) faced opposition on the grounds it was discriminatory. Legal challenges were later nullified by legislation passed in Parliament.
-</p>
+                            The controversial decision to use AWS (a process in which only women are allowed to stand for candidate selection in certain seats) faced opposition on the grounds it was discriminatory. Legal challenges were later nullified by legislation passed in Parliament.
+                        </p>
 
-<p>
-While the merits and pitfalls of AWS are still being debated, there is no doubt that they have helped improve the representation of women in Parliament.
-</p>
+                        <p>
+                            While the merits and pitfalls of AWS are still being debated, there is no doubt that they have helped improve the representation of women in Parliament.
+                        </p>
 
                     </div>
                 </div>
@@ -174,7 +184,8 @@ While the merits and pitfalls of AWS are still being debated, there is no doubt 
                     <b>208</b> women MPs is significant, but we still haven't hit 50:50 yet. In fact, for every woman in the House of Commons, there are 2.1 men. Hover/tap on the graph to see each parliament's ratio of men to women.
                 </div>
                 <div class="step" data-slide="1" data-step="1">
-                     The situation for women is also very party dependent. In 2018, 45% of Labour's MPs are women. Thanks in part to all women shortlists, there are currently more women Labour MPs than all the other parties combined (and at a time when the Labour Party is in opposition).
+                    The situation for women is also very party dependent. In 2018, 45% of Labour's MPs are women. Thanks in part to all women shortlists, there are currently more women Labour MPs than all the other parties combined (and at a time when the Labour Party is
+                    in opposition).
                 </div>
                 <div class="step" data-slide="1" data-step="2">
                     But only 21% of Conservative MPs are currently women. This presents a problem, because a Conservative landslide election could cause a significant step backwards in our progress towards a 50:50 Parliament.
@@ -189,44 +200,46 @@ While the merits and pitfalls of AWS are still being debated, there is no doubt 
                 </div>
                 <div class="step" data-slide="2">
                     <p>
-                    Right! On this graph, we see the % of women elected to the equivalent of the House of Commons in other developed countries. For Norway, this is the <em>Stortinget</em>, for Mexico, <em>Cámara de Diputados</em>, for the United States, it is the <em>House of Representatives</em>.
-                </p>
+                        Right! On this graph, we see the % of women elected to the equivalent of the House of Commons in other developed countries. For Norway, this is the <em>Stortinget</em>, for Mexico, <em>Cámara de Diputados</em>, for the United States,
+                        it is the <em>House of Representatives</em>.
+                    </p>
                     <p>
-                    As usual, the Nordic countries lead the pack. Mexico has also made great strides and is progressing much quicker than the UK despite the fact that both countries started at the same point in 2002.
-                </p>
-                <p>
-                    In fact, the UK is a rather middle of the road performer. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet this threshold are Bolivia and Rwanda.
-                </p>
+                        As usual, the Nordic countries lead the pack. Mexico has also made great strides and is progressing much quicker than the UK despite the fact that both countries started at the same point in 2002.
+                    </p>
+                    <p>
+                        In fact, the UK is a rather middle of the road performer. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet this threshold are Bolivia and Rwanda.
+                    </p>
                 </div>
                 <div class="step" data-slide="3" data-step="0">
                     <p>
-                    At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few women. And I know how much further we have to go. But why? What does a 50:50 parliament give us that we don't have already?</em>
-                </p>
-                <p>
-                    Let’s look at how much time MPs spend in Parliament speaking about different issues. We collected and analysed the data using machine learning.
-                </p>
+                        At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few women. And I know how much further we have to go. But why? What does a 50:50 parliament give us that we don't have already?</em>
+                    </p>
+                    <p>
+                        Let’s look at how much time MPs spend in Parliament speaking about different issues. We collected and analysed the data using machine learning.
+                    </p>
 
                 </div>
                 <div class="step" data-slide="4" data-step="0">
                     <p>
 
-                    Here’s the chart for the topic “Economy”. Each dot in this chart represents one MP (from 1970 to today). The higher the dot, the greater the proportion of their time in parliament was spent talking about the economy.  Hover/tap on each dot to see who they are and their percentage.
-                </p>
-                <p>
-                    The horizontal position of a dot is meaningless.
-                </p>
-                <p>
-    Men and women appear to give the economy roughly equal weighting. Next let’s take a look at another topic, one which women tend to devote more parliamentary time to.
-</p>
+                        Here’s the chart for the topic “Economy”. Each dot in this chart represents one MP (from 1970 to today). The higher the dot, the greater the proportion of their time in parliament was spent talking about the economy. Hover/tap on each dot to see who they
+                        are and their percentage.
+                    </p>
+                    <p>
+                        The horizontal position of a dot is meaningless.
+                    </p>
+                    <p>
+                        Men and women appear to give the economy roughly equal weighting. Next let’s take a look at another topic, one which women tend to devote more parliamentary time to.
+                    </p>
 
                 </div>
                 <div class="step" data-slide="4" data-step="1">
                     <p>
                         Women MPs clearly spend more of their time discussing welfare reforms than men.
                     </p>
-                <p>
-                    What about a topic favoured by men?
-</p>
+                    <p>
+                        What about a topic favoured by men?
+                    </p>
 
                 </div>
                 <div class="step" data-slide="4" data-step="2">
@@ -244,17 +257,17 @@ While the merits and pitfalls of AWS are still being debated, there is no doubt 
                 </div>
                 <div class="step" data-slide="5">
                     <p>
-                    We see that women MPs spend more of their parliamentary time than men time talking about WELFARE REFORMS, CHILD CARE, the NHS and EDUCATION.
-                </p>
-<p>
+                        We see that women MPs spend more of their parliamentary time than men time talking about WELFARE REFORMS, CHILD CARE, the NHS and EDUCATION.
+                    </p>
+                    <p>
 
-And we can see that male MPs spend more of their parliamentary time than women talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES.
-</p>
+                        And we can see that male MPs spend more of their parliamentary time than women talking about LEGISLATION, ENERGY, the EUROPEAN UNION and the ARMED FORCES.
+                    </p>
 
-<p>
-These disparitities exist even after accounting for political parties.
-</p>
-<p>Tap on a line to take a closer look at a topic</p>
+                    <p>
+                        These disparitities exist even after accounting for political parties.
+                    </p>
+                    <p>Tap on a line to take a closer look at a topic</p>
 
                 </div>
                 <div class="step" data-slide="5" style="opacity: 0;">
@@ -266,45 +279,37 @@ These disparitities exist even after accounting for political parties.
 
             <p>
 
-We’ve seen how far we’ve progressed towards a 50:50 Parliament and we’ve seen how much further we have to go. We’ve also seen which political parties have made the most progress, and how Britain compares internationally. And finally we’ve seen that more women in parliament does change the content of the debate.
-</p>
+                We’ve seen how far we’ve progressed towards a 50:50 Parliament and we’ve seen how much further we have to go. We’ve also seen which political parties have made the most progress, and how Britain compares internationally. And finally we’ve seen that more
+                women in parliament does change the content of the debate.
+            </p>
 
-<p>
-Here are the X main reasons why <a href="https://5050parliament.co.uk">50:50 Parliament</a> is campaigning for a gender balanced Parliament:
-</p>
+            <p>
+                Here are the X main reasons why <a href="https://5050parliament.co.uk/?utm_source=data-viz&utm_campaign=data-viz&utm_content=viz-footer">50:50 Parliament</a> is campaigning for a gender balanced Parliament:
+            </p>
 
-<ol>
-<li>
-    …
-</li>
-<li>
-    …
-</li>
-<li>
-    …
-</li>
-</ol>
+            <ol>
+                <li>
+                    …
+                </li>
+                <li>
+                    …
+                </li>
+                <li>
+                    …
+                </li>
+            </ol>
 
 
-            <p/> You may find all the code for this project at <a href="https://github.com/dldx/women-in-parliament">this github page</a>. Data about MPs is from <a href="https://www.theyworkforyou.com/">TheyWorkForYou.com</a>. [Need to credit other sources
+            <p/>Special thanks to Brian Spurling and <a href="https://twitter.com/gisellecory">Giselle Cory</a>! You may find all the code for this project on <a href="https://github.com/dldx/women-in-parliament">Github</a>. Data on MPs is from <a href="https://www.theyworkforyou.com/">TheyWorkForYou.com</a>. [Need to credit other sources
             here!]
             </p>
-            <h3>
-            <div style="display: block; margin: 1rem; text-align: center;">
-                <a href="https://5050parliament.co.uk/?utm_source=data-viz&utm_campaign=data-viz&utm_content=viz-footer" >
-                <div class="outer">
-  <div class="inner">
-    <div class="top">50:50</div>
-    <div class="bottom">Parliament</div>
-  </div>
-</div></a></div></h3>
         </section>
         <div class='debug'></div>
         <script src="d3.min.js"></script>
         <script src="external/stickyfill.min.js"></script>
         <script src="external/scrollama.min.js"></script>
         <script src="external/babel-polyfill.min.js"></script>
-        <script src="mps_over_time.es5.js"></script>
+        <script src="mps_over_time.min.js"></script>
         <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
         <script src="semantic/dist/semantic.min.js"></script>
@@ -329,7 +334,8 @@ Here are the X main reasons why <a href="https://5050parliament.co.uk">50:50 Par
                 // 1. update height of step elements
                 var stepHeight = Math.floor(window.innerHeight * 1.0);
                 step.style('margin-bottom', stepHeight + 'px');
-                // Remove margin from last step
+                // Remove margin from first and last step
+                d3.select(step.nodes()[0]).style("margin-top", "-50vh")
                 d3.select(step.nodes()[step.nodes().length - 1]).style("margin-bottom", "50px")
 
                 // update height of graphic element

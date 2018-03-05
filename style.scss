@@ -172,6 +172,7 @@ body {
   position: relative;
   padding-left: 120px;
   max-width: 30rem;
+  transition: 1s opacity ease-in-out;
   @include phone {
     padding-left: 30px;
   }
@@ -458,7 +459,7 @@ $nav-button-fg: lighten(map-get($colors, Hover), 50);
 }
 
 #timeline {
-  border-radius: 1px;
+  // border-radius: 1px;
   // bottom: 0;
   left: 0;
   // margin: 10px;

@@ -619,6 +619,10 @@ function initial_render() {
     // svg.call(zoom)
     // canvas.call(zoom)
 
+
+    // Now show the scroll text
+    d3.select(".scroll__text").style("opacity", 1)
+
 }
 
 // ----------------------------------------------------------------------------
@@ -2437,7 +2441,7 @@ function fifth_slide(no_transition = false) {
 
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
-        .domain([-300, 150])
+        .domain([-350, 150])
         .range([0, width])
 
     slide5_yScale = d3.scaleLinear()
@@ -3458,6 +3462,8 @@ function download_data() {
                 d.lib_snp_women_pct = d.lib_snp_women_mps / d.lib_snp_mps * 100
             })
             window.info_bubbles_data = info_bubbles
+            // Hide loading text
+            d3.select("#loading").remove()
             // INITIAL DRAW
             draw_graph()
         })
