@@ -2418,8 +2418,11 @@ function fifth_slide(no_transition = false) {
     // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
         d3.select("body")
-            .insert("select", ":first-child")
+            .append("span")
+            .attr("class", "slide5-dropdown")
+            .append("select")
             .attr("id", "topic-dropdown")
+            .attr("class", "slide5-dropdown__select")
             .on("change", update_fifth_slide)
             .selectAll(".topic")
             .data(baked_positions_data.map(topic => topic.key))
@@ -2428,14 +2431,6 @@ function fifth_slide(no_transition = false) {
             .attr("selected", d => d == selected_topic ? "selected" : null)
             .attr("value", d => d)
             .text(d => d.toUpperCase())
-
-        $("#topic-dropdown")
-            .dropdown()
-        d3.select("#topic-dropdown")
-            .node()
-            .parentNode
-            .className += " slide5-dropdown"
-
     }
 
 

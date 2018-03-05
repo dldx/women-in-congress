@@ -1729,7 +1729,7 @@ function fifth_slide() {
 
     // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
-        d3.select("body").insert("select", ":first-child").attr("id", "topic-dropdown").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
+        d3.select("body").append("span").attr("class", "slide5-dropdown").append("select").attr("id", "topic-dropdown").attr("class", "slide5-dropdown__select").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
             return topic.key;
         })).enter().append("option").attr("selected", function (d) {
             return d == selected_topic ? "selected" : null;
@@ -1739,8 +1739,12 @@ function fifth_slide() {
             return d.toUpperCase();
         });
 
-        $("#topic-dropdown").dropdown();
-        d3.select("#topic-dropdown").node().parentNode.className += " slide5-dropdown";
+        // $("#topic-dropdown")
+        //     .dropdown()
+        // d3.select("#topic-dropdown")
+        //     .node()
+        //     .parentNode
+        //     .className += " slide5-dropdown"
     }
 
     // Scales for this data

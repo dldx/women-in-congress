@@ -956,15 +956,14 @@ $tip-padding: .5;
 }
 
 .slide5-dropdown {
-  background-color: rgba(0, 0, 0, 0) !important;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
   transform: translateZ(0);
   font-size: 1rem;
   font-weight: 200;
   text-transform: uppercase;
-  color: white !important;
-  border-color: white !important;
-  min-height: 0 !important;
-  position: fixed !important;
+  position: fixed;
   z-index: 50;
   transition: opacity 1s ease-in-out;
   top: 5%;
@@ -973,13 +972,38 @@ $tip-padding: .5;
   margin: 0 auto;
   width: 50%;
   @include phone {
+    font-size: 1.2rem;
     width: 80%;
   }
+}
 
-  & > .text:not(.default) {
-    font-weight: 200 !important;
-    color: white !important;
-  }
+.slide5-dropdown__select {
+  font-family: 'Quicksand', sans-serif;
+  font-size: inherit;
+  padding: .5em;
+  margin: 0;
+  background-color: $graph-background;
+  color: invert($graph-background);
+  padding-right: 2.5em;
+  // border: 0;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.slide5-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  transform: translateX(-200%);
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  top: 50%;
+  margin-top: -.5em;
+  color: invert($graph-background);
 }
 
 #slide6-group {
