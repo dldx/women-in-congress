@@ -20,11 +20,8 @@
   "rtl": false,
   "components": [
     "dropdown",
-	"button",
-	"transition",
-	"icon",
-	"popup",
-	"checkbox"
+	"checkbox",
+	"transition"
   ],
   "version": "2.2.13"
 }

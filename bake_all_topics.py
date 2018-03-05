@@ -6,7 +6,8 @@ from functools import reduce
 from multiprocessing import Pool
 
 # Get all topics from data.csv
-topics = pd.read_csv("data.csv").columns[4:]
+topic_fractions = pd.read_csv("mp_topic_fraction.csv")
+topics = topic_fractions.columns[4:]
 
 def bake_collision(topic):
     """Run nodejs script to calculate position of all MP points for a particular topic"""
@@ -22,5 +23,7 @@ dfs = pool.map(bake_collision, topics)
 # Merge all dataframes in list into one, using mp id as key
 df = reduce(lambda left, right: pd.merge(left, right, on="id"), dfs)
 
-# Write to csv
-df.to_csv("baked_positions.csv", index=False, float_format='%.3f')
+# Join MP data with baked positions and write to csv
+topic_fractions[["id", "full_name", "Party", "is_female"]]\
+    .join(df.set_index("id"), on="id")\
+    .to_csv("baked_positions.csv", index=False, float_format='%.3f')

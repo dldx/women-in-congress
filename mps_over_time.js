@@ -2482,6 +2482,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .select("circle")
         .style("opacity", 0)
 
+    // Hide tooltip
+    d3.select("#tooltip").style("opacity", 0)
+
     // Zoom out
     $("#zoom-checkbox").checkbox("uncheck")
 
@@ -2490,16 +2493,6 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
         // Append a new label
         wrapper.select("#topic-label").remove()
-        // wrapper
-        //     .append("text")
-        //     .attr("id", "topic-label")
-        //     .attr("class", "rect-label")
-        //     .attr("x", width/2)
-        //     .attr("y", margin.top*2)
-        //     .attr("text-anchor", "middle")
-        //     .attr("fill", colors["Hover"])
-        //     .style("font-weight", "bold")
-        //     .text(selected_topic.toUpperCase())
     } else {
         // Remove label because we have dropdown instead
         wrapper.select("#topic-label").remove()
@@ -2519,34 +2512,42 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     var baked_data = baked_positions_data.filter(d => d.key == selected_topic)[0].values
 
-    nodes_male.map(function (d) {
-        var n = baked_data.filter(n => n.id == d.id)[0]
-        d.x = slide5_xScale(n.x) - 10
-        d.y = slide5_yScale(n.y)
-    })
-
-    nodes_female.map(function (d) {
-        var n = baked_data.filter(n => n.id == d.id)[0]
-        d.x = slide5_xScale(n.x) + 10
-        d.y = slide5_yScale(n.y)
-    })
+    nodes_male = baked_data.filter(d => d.gender == "Male")
+    nodes_female = baked_data.filter(d => d.gender != "Male")
 
     // Make alternate data store for medians
-    var temp_medians = []
+    var temp_nodes = []
 
-    temp_medians.push({
+    temp_nodes.push({
         "x": slide5_xScale(0),
         "y": slide5_yScale(topic_medians_data[selected_topic]["female"]),
         "median": topic_medians_data[selected_topic]["female"],
         "gender": "female"
     })
 
-    temp_medians.push({
+    temp_nodes.push({
         "x": slide5_xScale(0),
         "y": slide5_yScale(topic_medians_data[selected_topic]["male"]),
         "median": topic_medians_data[selected_topic]["male"],
         "gender": "male"
     })
+
+    nodes_male.forEach(d => {
+        // Copy properties
+        let node = Object.assign({}, d)
+        node.x = slide5_xScale(d.x) - 10
+        node.y = slide5_yScale(d.y)
+        temp_nodes.push(node)
+    })
+
+    nodes_female.forEach(d => {
+        // Copy properties
+        let node = Object.assign({}, d)
+        node.x = slide5_xScale(d.x) + 10
+        node.y = slide5_yScale(d.y)
+        temp_nodes.push(node)
+    })
+
 
     // Quadtree to look up points
     var quadtree = d3.quadtree()
@@ -2554,20 +2555,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             [-1, -1],
             [width + 1, height + 1]
         ])
-        .x((d) => d.x)
+        .x(d => d.x)
         .y(d => d.y)
-        .addAll(nodes_male)
-        .addAll(nodes_female)
-        .addAll(temp_medians)
-
-    // transition
-    var t0 = d3.transition()
-        .duration(no_transition ? 3000 : 3000)
-
-    // transition
-    var t1 = t0.transition()
-        .delay(no_transition ? 1000 : 2000)
-        .duration(1000)
+        .addAll(temp_nodes)
 
     // JOIN
     circle_male = dataContainer
@@ -2576,25 +2566,27 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // UPDATE
     circle_male
-        .transition(t0)
+        .transition()
+        .duration(2000)
         .attr("opacity", 0.7)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => slide5_xScale(d.x) - 10)
+        .attr("cy", d => slide5_yScale(d.y))
 
     // ENTER
     circle_male
         .enter()
         .append("custom")
         .attr("class", "male-node")
-        .attr("r", circleRadius*1.2)
+        .attr("r", circleRadius*(isMobile ? 0.9 : 1.2))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
-        .attr("cy", d => d.y)
+        .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
-        .transition(t0)
+        .transition()
+        .duration(2000)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
         .attr("opacity", 0.7)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => slide5_xScale(d.x) - 10)
+        .attr("cy", d => slide5_yScale(d.y))
 
     // Female nodes
     // JOIN
@@ -2603,27 +2595,27 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // UPDATE
     circle_female
-        .transition(t0)
+        .transition()
+        .duration(2000)
         .attr("opacity", 0.7)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => slide5_xScale(d.x) + 10)
+        .attr("cy", d => slide5_yScale(d.y))
 
     // ENTER
     circle_female
         .enter()
         .append("custom")
         .attr("class", "female-node")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", circleRadius*1.2)
+        .attr("r", circleRadius*(isMobile ? 0.9 : 1.2))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
-        .attr("cy", d => d.y)
+        .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
-        .transition(t0)
+        .transition()
+        .duration(2000)
         .delay((d, i) => no_transition ? 0 : (100 * Math.sqrt(i)))
         .attr("opacity", 0.7)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => slide5_xScale(d.x) + 10)
+        .attr("cy", d => slide5_yScale(d.y))
 
     // Median connector line
     // Join
@@ -2633,9 +2625,11 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Update
     median_connector_line
-        .transition(t0)
-        .attr("y1", d => slide5_yScale(d["female"]))
-        .attr("y2", d => slide5_yScale(d["male"]))
+        .transition()
+        .duration(1000)
+        .attr("y1", d => slide5_yScale(drawMedian ? d["female"] : 0.5))
+        .attr("y2", d => slide5_yScale(drawMedian ? d["male"] : 0.5))
+        .attr("opacity", drawMedian ? 1 : 0)
 
     // Enter
     median_connector_line
@@ -2644,9 +2638,12 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .attr("class", "median-connector")
         .attr("x1", slide5_xScale(0))
         .attr("x2", slide5_xScale(0))
-        .transition(t1)
-        .attr("y1", d => slide5_yScale(d["female"]))
-        .attr("y2", d => slide5_yScale(d["male"]))
+        .transition()
+        .delay(2000)
+        .duration(1000)
+        .attr("y1", d => slide5_yScale(drawMedian ? d["female"] : 0.5))
+        .attr("y2", d => slide5_yScale(drawMedian ? d["male"] : 0.5))
+        .attr("opacity", drawMedian ? 1 : 0)
 
 
     // Male median fraction
@@ -2657,8 +2654,10 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Update
     male_median_circle
-        .transition(t0)
-        .attr("cy", d => slide5_yScale(d))
+        .transition()
+        .duration(1000)
+        .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
+        .attr("opacity", drawMedian ? 1 : 0)
 
     // Enter
     male_median_circle
@@ -2668,10 +2667,11 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", circleRadius * 2)
-        .attr("opacity", 0)
-        .transition(t1)
-        .attr("opacity", 1)
-        .attr("cy", d => slide5_yScale(d))
+        .attr("opacity", drawMedian ? 1 : 0)
+        .transition()
+        .delay(2000)
+        .duration(1000)
+        .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
 
 
     // Female median fraction
@@ -2682,8 +2682,10 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Update
     female_median_circle
-        .transition(t0)
-        .attr("cy", d => slide5_yScale(d))
+        .transition()
+        .duration(1000)
+        .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
+        .attr("opacity", drawMedian ? 1 : 0)
 
     // Enter
     female_median_circle
@@ -2693,10 +2695,11 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
         .attr("r", circleRadius * 2)
-        .attr("opacity", 0)
-        .transition(t1)
-        .attr("opacity", 1)
-        .attr("cy", d => slide5_yScale(d))
+        .attr("opacity", drawMedian ? 1 : 0)
+        .transition()
+        .delay(2000)
+        .duration(1000)
+        .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
 
     // Clear the hidden canvas so that we don't catch the wrong hover info
     context_hidden.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
@@ -2722,43 +2725,40 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                 context.fill()
             })
 
-        if (drawMedian) {
+        dataContainer.select("custom.median-connector")
+            .each(function () {
+                let node = d3.select(this)
+                context.beginPath()
+                context.lineWidth = 1
+                context.strokeStyle = hexToRGBA("#ffffff", node.attr("opacity"))
+                context.moveTo(node.attr("x1"), node.attr("y1"))
+                context.lineTo(+node.attr("x2"), node.attr("y2"))
+                context.stroke()
+            })
 
-            dataContainer.select("custom.median-connector")
-                .each(function () {
-                    let node = d3.select(this)
-                    context.beginPath()
-                    context.lineWidth = 1
-                    context.strokeStyle = "white"
-                    context.moveTo(node.attr("x1"), node.attr("y1"))
-                    context.lineTo(+node.attr("x2"), node.attr("y2"))
-                    context.stroke()
-                })
+        dataContainer.select("custom.male-median")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
 
-            dataContainer.select("custom.male-median")
-                .each(function () {
-                    let node = d3.select(this)
-                    context.fillStyle = hexToRGBA(colors["Male"], node.attr("opacity"))
-                    context.beginPath()
-                    context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
-                    context.fill()
-                })
-
-            dataContainer.select("custom.female-median")
-                .each(function () {
-                    let node = d3.select(this)
-                    context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"))
-                    context.beginPath()
-                    context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
-                    context.fill()
-                })
-        }
+        dataContainer.select("custom.female-median")
+            .each(function () {
+                let node = d3.select(this)
+                context.fillStyle = hexToRGBA(colors["Female"], node.attr("opacity"))
+                context.beginPath()
+                context.arc(node.attr("cx"), node.attr("cy"), node.attr("r"), 0, 2 * Math.PI)
+                context.fill()
+            })
     }
 
     // Animate node entrances
     var t = d3.timer((elapsed) => {
         draw(context, false)
-        if ((initial_slide5 & (elapsed > 5000)) | (initial_slide5 != true & (elapsed > 3000))) {
+        if ((initial_slide5 & (elapsed > 6000)) | (initial_slide5 != true & (elapsed > 3000))) {
             t.stop()
             draw(context)
             // First time we run this, we record the fact it was run
@@ -2851,7 +2851,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="body-facts">
-                    <p><em>${(nodeData[selected_topic] * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
+                    <p><em>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
                     </div>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
@@ -3498,9 +3498,6 @@ function download_data() {
         .defer(d3.csv,
             "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
         )
-        .defer(d3.csv,
-            "mp_topic_fraction.csv" + "?" + Math.floor(Math.random() * 1000)
-        )
         .defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100),
             function (d) {
                 return {
@@ -3509,7 +3506,7 @@ function download_data() {
                     female: Math.pow(10, +d.female)
                 }
             })
-        .await(function (error, women_in_govt, speech_samples, baked_mp_positions, mp_topics, topic_medians) {
+        .await(function (error, women_in_govt, speech_samples, baked_mp_positions, topic_medians) {
             // Group stats by country
             women_in_govt_data = d3.nest()
                 .key(d => d.country)
@@ -3522,7 +3519,7 @@ function download_data() {
 
             topic_medians_data = {}
             baked_positions_data = []
-            var nodes = []
+            // var nodes = []
 
             topic_medians.forEach(a => {
                 topic_medians_data[a.topic] = {
@@ -3534,44 +3531,25 @@ function download_data() {
             baked_mp_positions.forEach(function (row) {
 
                 Object.keys(row)
-                    .forEach(
-                        function (colname) {
-                            if (colname == "id" || colname.slice(-1) == "y") return
+                    .forEach(function (colname) {
+                        if (colname != "id" & colname != "full_name" & colname != "Party" & colname != "is_female" & colname.slice(-1) != "y") {
                             var topic = colname.slice(0, -2)
                             baked_positions_data.push({
                                 "id": +row["id"],
-
+                                "full_name": row["full_name"],
+                                "party": row["Party"],
+                                "gender": row["is_female"] == 1 ? "Female" : "Male",
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
                                 "y": +row[topic + "_y"]/100,
                             })
                         }
-                    )
+                    })
             })
 
             baked_positions_data = d3.nest()
                 .key(d => d.topic)
                 .entries(baked_positions_data)
-
-            // Convert wide data to long
-            nodes = mp_topics.map(function (d) {
-                var node = {
-                    "id": +d.id,
-                    "full_name": d.full_name,
-                    "party": d.Party,
-                    "gender": d.is_female == 1 ? "Female" : "Male",
-                }
-                Object.keys(d)
-                    .forEach(function (key) {
-                        if (key != "id" & key != "full_name" & key != "Party" & key != "is_female") {
-                            node[key] = d[key] == "-inf" ? 0 : Math.pow(10, +d[key])
-                        }
-                    })
-                return node
-            })
-
-            nodes_male = nodes.filter(d => d.gender == "Male")
-            nodes_female = nodes.filter(d => d.gender != "Male")
 
         })
 
@@ -4104,7 +4082,7 @@ function handleStepEnter(response) {
 
             chartTitle
                 .transition()
-                .text("MPs in the Liberal Democrats and Scottish National Party")
+                .text(isMobile ? "MPs in the Lib Dems and SNP" : "MPs in the Liberal Democrats and Scottish National Party")
 
             y.domain([0, 100])
             gY.transition().call(yAxis)
