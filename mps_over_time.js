@@ -2750,7 +2750,7 @@ function to_sixth_slide(current_slide) {
         // Change scales
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, 0.05])
+            .domain([0, 0.10])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)

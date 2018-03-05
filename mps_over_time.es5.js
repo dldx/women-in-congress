@@ -1970,7 +1970,7 @@ function to_sixth_slide(current_slide) {
 
     if (lastTransitioned < 5) {
         // Change scales
-        x = d3.scaleLinear().range([0, width]).domain([0, 0.05]);
+        x = d3.scaleLinear().range([0, width]).domain([0, 0.10]);
         // Redraw axes
         xAxis = d3.axisBottom(x).tickFormat(function (d) {
             return (d * 100).toFixed(1) + "%";
