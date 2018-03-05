@@ -1,7 +1,5 @@
 "use strict";
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 // ----------------------------------------------------------------------------
 // ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗    ██████╗  █████╗ ██████╗ ██╗     ██╗ █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗
 // ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔══██╗██╔══██╗██╔══██╗██║     ██║██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
@@ -378,7 +376,7 @@ function initial_render() {
     tooltip = document.getElementById("tooltip");
 
     // Add a checkbox for zooming in
-    d3.select("body").append("div").attr("id", "zoom-checkbox").attr("class", "ui toggle checkbox").style("transform", "translateX(" + margin.left * (isMobile ? 1.2 : 2) + "px)").html("<input type=\"checkbox\" name=\"public\"><label>Make it zoomable</label>");
+    d3.select("body").append("label").attr("class", "switch").style("transform", "translateX(" + margin.left * (isMobile ? 1.2 : 2) + "px)").html("<input type=\"checkbox\" id=\"zoom-checkbox\"><span class=\"slider\"></span><div><label for='zoom-checkbox'>Make it zoomable</label></div>");
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
@@ -1427,7 +1425,9 @@ function to_fourth_slide(current_slide) {
             // Fade all objects belonging to third slide
             d3.select("#slide2-group").style("opacity", 0);
 
-            t0.select("#slide3-group").style("opacity", 0).remove();
+            t0.select("#slide3-group").style("opacity", 0).on("end", function () {
+                this.remove();
+            });
             break;
         case 4:
             // Fade canvas
@@ -1436,7 +1436,7 @@ function to_fourth_slide(current_slide) {
             // Hide mouseover circle
             mouseover_svg.select("circle").style("opacity", 0);
 
-            d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, #zoom-checkbox").style("opacity", 0).transition().delay(500).on("end", function () {
+            d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, .switch").style("opacity", 0).transition().delay(500).on("end", function () {
                 this.remove();
             });
 
@@ -1446,193 +1446,16 @@ function to_fourth_slide(current_slide) {
     // Remove Election rectangles
     electionRects.transition(t0).style("opacity", 0).remove();
 
-    gX.transition(t0).style("opacity", 0);
-    gY.transition(t0).style("opacity", 0);
+    gX.style("opacity", 0);
+    gY.style("opacity", 0);
 
-    xLabel.transition(t0).style("opacity", 0);
-    yLabel.transition(t0).style("opacity", 0);
+    xLabel.style("opacity", 0);
+    yLabel.style("opacity", 0);
 
     d3.select("#tooltip").transition(t0).style("opacity", 0).on("end", function () {
         chartTitle.transition().text("");
         // fourth_slide(false)
-    });
-}
-
-// ----------------------------------------------------------------------------
-// ███████╗ ██████╗ ██╗   ██╗██████╗ ████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
-// ██╔════╝██╔═══██╗██║   ██║██╔══██╗╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
-// █████╗  ██║   ██║██║   ██║██████╔╝   ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
-// ██╔══╝  ██║   ██║██║   ██║██╔══██╗   ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
-// ██║     ╚██████╔╝╚██████╔╝██║  ██║   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
-// ╚═╝      ╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
-// Go to the fourth slide
-// ----------------------------------------------------------------------------
-function fourth_slide() {
-
-    // First remove old div
-    d3.select("#slide4").remove();
-    // Add a new div that goes over everything to store contents of this slide
-    d3.select("body").append("div").attr("id", "slide4").html("<div class=\"slide4-tooltip\"><h1 style='background-color: " + colors["Green"] + ";'>Topics mentioned in parliament by\n    <div id=\"slide4-mp-dropdown\" class=\"ui inline dropdown search\">\n    <div class=\"text\"></div> <i class=\"dropdown icon\"></i>\n  </div>\n</h1>\n    <div class=\"speech-flex-row\">\n    <div class=\"mp-image-parent\" id=\"slide4-mp-image\">\n    </div>\n    <div class=\"mp-name-debate\">\n    <div class=\"mp-name\" id=\"slide4-mp-name\"></div>\n    <div class=\"speech-debate\" id=\"slide4-speech-debate\"></div>\n    </div>\n    <button class=\"ui icon button\" onclick=\"update_speech_tooltip()\"><i class=\"random big icon\"></i></button>\n    </div>\n    <p>\n    Below is the speech that <span id=\"slide4-name\">Caroline Lucas</span> gave. You can see the topics the machine learning model identified at the bottom.\n    Click on the shuffle button on the right to try another speech, and on <span id=\"slide4-firstname\">Caroline</span>'s name in the header bar to choose another MP.\n    </p>\n    <p class=\"blockquote\" id=\"slide4-speech\"></p>\n    <svg id=\"slide4-speech-topic-bar\"></svg></div>");
-
-    d3.select("#slide4").style("pointer-events", "none").style("opacity", 0);
-
-    // Set width based on header width
-    topic_bar_width = document.querySelector("#slide4 > div > h1").offsetWidth;
-    topic_bar_height = 30;
-    d3.select("#slide4-speech-topic-bar").attr("width", topic_bar_width).attr("height", topic_bar_height);
-
-    // Load mp dropdown with the list of mps
-    $("#slide4-mp-dropdown").dropdown({
-        values: speech_samples_data.map(function (d, i) {
-            return {
-                name: "<i class=\"" + (d.values[0].is_female ? "female" : "male") + " fitted inverted grey icon\" style=\"margin-right: 0.3rem !important\"></i>" + d.key,
-                value: i,
-                selected: i == 0
-            };
-        }),
-        fullTextSearch: true
-    });
-    // Default to the first MP (Caroline Lucas)
-    $("#slide4-mp-dropdown").dropdown("set selected", "0");
-
-    update_speech_tooltip();
-    $("#slide4-mp-dropdown").dropdown("setting", "onChange", function (value) {
-        if (selected_mp != value) {
-            selected_mp = value;
-            update_speech_tooltip();
-        }
-    });
-}
-
-// Define scales for topics if not yet defined
-function define_topic_scales() {
-    "use strict";
-
-    if (topicColorScale == null) {
-        // Find all unique topics and use that for domain
-        topicColorScale = d3.scaleOrdinal(d3.schemeCategory20).domain([].concat(_toConsumableArray(new Set(speech_samples_data.map(function (d) {
-            return d.values.map(function (s) {
-                return Object.keys(s.topics);
-            }).reduce(function (a, b) {
-                return a.concat(b);
-            });
-        }).reduce(function (a, b) {
-            return a.concat(b);
-        })))));
-    }
-
-    if (topicBarScale == null) {
-        topicBarScale = d3.scaleLinear().domain([0, 1]);
-    }
-    topicBarScale.range([0, topic_bar_width]);
-}
-
-// Function to update the tooltip with randomnly chosen speeches
-function update_speech_tooltip() {
-    "use strict";
-    // Define color scale
-
-    define_topic_scales();
-
-    // Randomly choose a new speech from the selected MP
-    var chosen_mp = speech_samples_data[selected_mp || 0].values;
-
-    var chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)];
-    var old_speech = chosen_speech;
-    while (old_speech == chosen_speech) {
-        chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)];
-    }
-
-    // Fill in all the blanks
-    d3.select("#slide4-mp-image").html((typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" + "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />") + "\n                ");
-
-    d3.select("#slide4-mp-name").html(chosen_speech.mp_name);
-    d3.select("#slide4-speech-debate").html("on " + chosen_speech.debate_title + " (" + (new Date(chosen_speech.date).toLocaleDateString("en-GB", { year: "numeric", month: "short" }) + ")"));
-    d3.select("#slide4-speech").html(chosen_speech.body);
-    d3.select("#slide4-name").html(chosen_speech.mp_name);
-    d3.select("#slide4-firstname").html(chosen_speech.mp_name.split(" ")[0]);
-
-    // Sum up remaining fraction
-    chosen_speech.topics.others = 1 - Object.entries(chosen_speech.topics).filter(function (d) {
-        return d[0] != "others";
-    }).map(function (d) {
-        return d[1];
-    }).reduce(function (a, b) {
-        return a + b;
-    });
-
-    // Stack topics in speech to make a stacked horizontal bar graph
-    var stack = d3.stack().keys(Object.keys(chosen_speech.topics));
-
-    var stacked = stack([chosen_speech.topics]);
-
-    // JOIN new data with old elements
-    var topic_bar = d3.select("#slide4-speech-topic-bar").selectAll(".rect-fg").data(stacked);
-
-    // EXIT old elements not present in new data.
-    topic_bar.exit().transition().duration(1000).attr("x", topicBarScale(1)).attr("height", topic_bar_height).style("opacity", 0).remove();
-
-    // UPDATE old elements present in new data.
-    topic_bar.attr("height", topic_bar_height).transition().style("opacity", 1).attr("fill", function (d) {
-        return d.key == "others" ? colors["Hover"] : topicColorScale(d.key);
-    }).attr("x", function (d) {
-        return topicBarScale(d[0][0]);
-    }).attr("width", function (d) {
-        return topicBarScale(d[0][1]) - topicBarScale(d[0][0]);
-    }).attr("title", function (d) {
-        return d.key + ": " + Math.round(Number(d[0].data[d.key] * 100)) + "%";
-    });
-
-    // ENTER new elements present in new data.
-    topic_bar.enter().append("rect").attr("class", "rect-fg").attr("fill", function (d) {
-        return d.key == "others" ? colors["Hover"] : topicColorScale(d.key);
-    }).attr("x", topicBarScale(1)).attr("height", topic_bar_height).transition().style("opacity", 1).attr("x", function (d) {
-        return topicBarScale(d[0][0]);
-    }).attr("width", function (d) {
-        return topicBarScale(d[0][1]) - topicBarScale(d[0][0]);
-    }).attr("y", 0).attr("title", function (d) {
-        return d.key + ": " + Math.round(Number(d[0].data[d.key] * 100)) + "%";
-    });
-
-    // JOIN new data with old elements
-    var topic_bar_label = d3.select("#slide4-speech-topic-bar").selectAll(".rect-label").data(stacked);
-
-    // EXIT old elements not present in new data.
-    topic_bar_label.exit().transition().duration(1000).attr("x", topicBarScale(1)).style("opacity", 0).remove();
-
-    function adjust_text_width(d) {
-        var text = d3.select(this).text(d.key);
-        var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0]);
-        var needs_elipsis = false;
-        while (text.node().getComputedTextLength() > bar_width) {
-            if (bar_width <= 0) break;
-            text.text(text.text().slice(0, -1));
-            needs_elipsis = true;
-        }
-        if (needs_elipsis) text.text(text.text().trim().slice(0, -2) + "...");
-    }
-
-    // UPDATE old elements present in new data.
-    topic_bar_label.transition().attr("x", function (d) {
-        return 5 + topicBarScale(d[0][0]);
-    }).each(adjust_text_width);
-
-    // ENTER new elements present in new data.
-    topic_bar_label.enter().append("text").attr("class", "rect-label").attr("x", topicBarScale(1)).attr("alignment-baseline", "middle").transition().attr("x", function (d) {
-        return 5 + topicBarScale(d[0][0]);
-    }).attr("y", topic_bar_height / 2).each(adjust_text_width);
-
-    // // Put a title on the "other" segment
-    // d3.select(".rect-bg")
-    //     .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
-
-    // Add tooltips for all the topic segments
-    $(".rect-fg") //,.rect-bg")
-    .popup({
-        duration: 100,
-        position: "top right",
-        transition: "fade",
-        variation: "inverted"
+        // Deleted from visualization
     });
 }
 
@@ -1725,7 +1548,7 @@ function fifth_slide() {
     // Enable canvas
     d3.select("#visible-canvas").style("opacity", 1).style("display", null).style("pointer-events", "all");
 
-    d3.select("#zoom-checkbox").style("opacity", 1);
+    d3.select(".switch").style("opacity", 1);
 
     // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
@@ -1738,13 +1561,6 @@ function fifth_slide() {
         }).text(function (d) {
             return d.toUpperCase();
         });
-
-        // $("#topic-dropdown")
-        //     .dropdown()
-        // d3.select("#topic-dropdown")
-        //     .node()
-        //     .parentNode
-        //     .className += " slide5-dropdown"
     }
 
     // Scales for this data
@@ -1784,7 +1600,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     d3.select("#tooltip").style("opacity", 0);
 
     // Zoom out
-    $("#zoom-checkbox").checkbox("uncheck");
+    if (document.getElementById("zoom-checkbox").checked != false) {
+        document.getElementById("zoom-checkbox").click();
+    }
 
     if (typeof default_selected_topic != "undefined" && typeof default_selected_topic != "number" && from_scroll) {
         selected_topic = default_selected_topic;
@@ -2135,7 +1953,10 @@ function to_sixth_slide(current_slide) {
                 this.remove();
             });
 
-            d3.select("#zoom-checkbox").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0);
+            if (document.getElementById("zoom-checkbox").checked != false) {
+                document.getElementById("zoom-checkbox").click();
+            }
             break;
     }
 
@@ -2483,7 +2304,7 @@ function download_data() {
             labour_mps: +d.Lab,
             lib_snp_mps: +d.Lib_SNP
         };
-    }).defer(d3.json, "info_bubbles.json").await(function (error, mps_over_time, number_women_over_time, total_mps_over_time, info_bubbles) {
+    }).await(function (error, mps_over_time, number_women_over_time, total_mps_over_time) {
         // Make global
         window.mps_over_time_data = mps_over_time;
         window.number_women_over_time_data = number_women_over_time;
@@ -2498,7 +2319,6 @@ function download_data() {
             d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100, d.lib_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_snp_mps;
             d.lib_snp_women_pct = d.lib_snp_women_mps / d.lib_snp_mps * 100;
         });
-        window.info_bubbles_data = info_bubbles;
         // Hide loading text
         d3.select("#loading").remove();
         // INITIAL DRAW
@@ -2527,22 +2347,17 @@ function download_data() {
             women_pct: +d.women_parliament,
             country: d.country
         };
-    }).defer(d3.json, "speech_samples.json").defer(d3.csv, "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)).defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100), function (d) {
+    }).defer(d3.csv, "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)).defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100), function (d) {
         return {
             topic: d.topic,
             male: Math.pow(10, +d.male),
             female: Math.pow(10, +d.female)
         };
-    }).await(function (error, women_in_govt, speech_samples, baked_mp_positions, topic_medians) {
+    }).await(function (error, women_in_govt, baked_mp_positions, topic_medians) {
         // Group stats by country
         women_in_govt_data = d3.nest().key(function (d) {
             return d.country;
         }).entries(women_in_govt);
-
-        // Group MP speeches by MP
-        speech_samples_data = d3.nest().key(function (d) {
-            return d.mp_name;
-        }).entries(speech_samples);
 
         topic_medians_data = {};
         baked_positions_data = [];
@@ -2708,8 +2523,10 @@ function handleStepEnter(response) {
                     break;
                 case 0.2:
                     if (response.direction == "up") {
-                        d3.select("#zoom-checkbox").style("opacity", 0);
-                        $("#zoom-checkbox").checkbox("uncheck");
+                        d3.select(".switch").style("opacity", 0);
+                        if (document.getElementById("zoom-checkbox").checked != false) {
+                            document.getElementById("zoom-checkbox").click();
+                        }
 
                         dataContainer.selectAll("custom.line").filter(function (d) {
                             return d.clean_name != "margaretbeckett";
@@ -2786,27 +2603,26 @@ function handleStepEnter(response) {
                     }
                     canvas.style("pointer-events", "auto");
 
-                    d3.select("#zoom-checkbox").style("opacity", 1);
-                    $("#zoom-checkbox").checkbox({
-                        onChecked: function onChecked() {
+                    d3.select(".switch").style("opacity", 1).select("#zoom-checkbox").on("change", function () {
+                        if (this.checked) {
                             zoom.on("zoom", zoomed);
                             canvas.call(zoom);
                             d3.select(".is-active").style("opacity", 0);
-                        },
-                        onUnchecked: function onUnchecked() {
+                        } else {
                             reset_zoom();
                             d3.select(".is-active").filter(function () {
                                 // If it is an empty div, don't show
                                 return this.innerText != "";
                             }).style("opacity", 1);
-                        } });
+                        }
+                    });
 
                     break;
 
                 case 1:
-                    d3.select("#zoom-checkbox").style("opacity", 0);
-                    if ($("#zoom-checkbox").checkbox("is checked")) {
-                        $("#zoom-checkbox").checkbox("uncheck");
+                    d3.select(".switch").style("opacity", 0);
+                    if (document.getElementById("zoom-checkbox").checked != false) {
+                        document.getElementById("zoom-checkbox").click();
                         // If we have to zoom out first, wait a bit before executing next bit
                         d3.timeout(function () {
                             all_mps_draw_timer.stop();
@@ -2834,7 +2650,7 @@ function handleStepEnter(response) {
 
                 case 5:
                     canvas.style("pointer-events", "all");
-                    d3.select("#zoom-checkbox").style("opacity", 1);
+                    d3.select(".switch").style("opacity", 1);
 
                     mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity).on("end", function () {
                         d3.selectAll(".y-axis .tick").style("opacity", function (d) {
@@ -2865,6 +2681,10 @@ function handleStepEnter(response) {
                     break;
 
                 case 6:
+                    d3.select(".switch").style("opacity", 0);
+                    if (document.getElementById("zoom-checkbox").checked != false) {
+                        document.getElementById("zoom-checkbox").click();
+                    }
                     canvas.style("pointer-events", "all");
                     // Highlight '97 term
                     electionRects.filter(function (d, i) {
@@ -2918,7 +2738,10 @@ function handleStepEnter(response) {
 
                 case 7:
                     if (response.direction == "up") {
-                        d3.select("#zoom-checkbox").style("opacity", 0);
+                        d3.select(".switch").style("opacity", 0);
+                        if (document.getElementById("zoom-checkbox").checked != false) {
+                            document.getElementById("zoom-checkbox").click();
+                        }
                     }
                     // Set filter to these MPs who were elected through AWS in 1997
                     mp_filter = ["annebegg", "judymallaber", "sandraosborne", "angelaesmith", "giselastuart", "annkeen", "janetdean", "chrismccafferty", "juliemorgan", "shonamcisaac", "kalimountford", "bettywilliams", "lauramoffatt", "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman", "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy", "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley", "melaniejohnson", "jennyjones"];
@@ -2945,7 +2768,7 @@ function handleStepEnter(response) {
                     break;
 
                 case 8:
-                    d3.select("#zoom-checkbox").style("opacity", 1);
+                    d3.select(".switch").style("opacity", 1);
 
                     if (response.direction == "up") {
                         // Draw canvas if coming from below
@@ -2957,7 +2780,10 @@ function handleStepEnter(response) {
             break;
 
         case 1:
-            d3.select("#zoom-checkbox").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0);
+            if (document.getElementById("zoom-checkbox").checked != false) {
+                document.getElementById("zoom-checkbox").click();
+            }
             switch (new_step) {
                 // Change graph to show breakdown by party
                 case 0:
@@ -3130,7 +2956,10 @@ function handleStepEnter(response) {
 
         case 3:
             d3.select("#slide4").style("display", "none");
-            d3.select("#zoom-checkbox").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0);
+            if (document.getElementById("zoom-checkbox").checked != false) {
+                document.getElementById("zoom-checkbox").click();
+            }
             chartTitle.transition().text("");
             break;
 

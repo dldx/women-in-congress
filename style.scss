@@ -1006,6 +1006,69 @@ $tip-padding: .5;
   color: invert($graph-background);
 }
 
+.switch {
+  display: inline-block;
+  width: 52px;
+  height: 25px;
+  top: 15%;
+  position: fixed;
+  z-index: 6;
+  opacity: 0;
+  transform: translateZ(0);
+  transition: opacity 1s ease-in-out;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch div {
+  width: 30vw;
+  transform: translate(57px, -2px);
+}
+.switch div label {
+    cursor: pointer;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+
+  &:before {
+    border-radius: 50%;
+  }
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: map-get($colors, Green);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px map-get($colors, Green);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
 #slide6-group {
   transition: opacity 1s ease-in-out;
 }

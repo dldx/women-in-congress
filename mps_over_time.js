@@ -302,7 +302,7 @@ function reset_zoom(callback, current_slide) {
             yAxis = d3.axisLeft(y)
             gY = d3.select(".y-axis")
                 .call(yAxis)
-            if(typeof(callback) != "undefined") {
+            if (typeof (callback) != "undefined") {
                 callback(current_slide)
             }
         })
@@ -527,11 +527,10 @@ function initial_render() {
 
     // Add a checkbox for zooming in
     d3.select("body")
-        .append("div")
-        .attr("id", "zoom-checkbox")
-        .attr("class", "ui toggle checkbox")
+        .append("label")
+        .attr("class", "switch")
         .style("transform", `translateX(${margin.left * (isMobile ? 1.2 : 2)}px)`)
-        .html("<input type=\"checkbox\" name=\"public\"><label>Make it zoomable</label>")
+        .html("<input type=\"checkbox\" id=\"zoom-checkbox\"><span class=\"slider\"></span><div><label for='zoom-checkbox'>Make it zoomable</label></div>")
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
@@ -590,8 +589,8 @@ function initial_render() {
 
     // Add chart title
     chartTitle = svg.append("text")
-        .attr("x", (width / 2)+margin.left)
-        .attr("y", margin.top/2)
+        .attr("x", (width / 2) + margin.left)
+        .attr("y", margin.top / 2)
         .style("text-anchor", "middle")
         .attr("class", "chart-title")
         .text("")
@@ -621,7 +620,8 @@ function initial_render() {
 
 
     // Now show the scroll text
-    d3.select(".scroll__text").style("opacity", 1)
+    d3.select(".scroll__text")
+        .style("opacity", 1)
 
 }
 
@@ -752,7 +752,7 @@ function first_slide(no_transition = false) {
     d3.select("#election-rects")
         .remove()
 
-        // Change chart title
+    // Change chart title
     chartTitle
         .transition()
         .text("Women MPs in the House of Commons")
@@ -917,7 +917,7 @@ function show_mp_tooltip(nodeData, mousePos) {
     if (typeof (mousePos) === "undefined") {
         mousePos = [width * 3 / 4, height * 3 / 4]
         if (isMobile) {
-            mousePos = [width/2, 0]
+            mousePos = [width / 2, 0]
         }
     }
     // Display tooltip
@@ -1554,13 +1554,16 @@ function second_slide(no_transition = false) {
                     // Reconfigure tooltip to show different information
                     var first_election = d.year
                     var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
-                    if (chartTitle.text().includes("Labour")) {
+                    if (chartTitle.text()
+                        .includes("Labour")) {
                         var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].labour_women_mps
                         var gender_ratio = d.labour_mps / num_women - 1
-                    } else if (chartTitle.text().includes("Conservative")) {
+                    } else if (chartTitle.text()
+                        .includes("Conservative")) {
                         num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].conservative_women_mps
                         gender_ratio = d.conservative_mps / num_women - 1
-                    } else if (chartTitle.text().includes("Liberal")) {
+                    } else if (chartTitle.text()
+                        .includes("Liberal")) {
                         num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].lib_snp_women_mps
                         gender_ratio = d.lib_snp_mps / num_women - 1
                     } else {
@@ -1995,7 +1998,9 @@ function to_fourth_slide(current_slide) {
 
         t0.select("#slide3-group")
             .style("opacity", 0)
-            .remove()
+            .on("end", function() {
+                this.remove()
+            })
         break
     case 4:
         // Fade canvas
@@ -2008,7 +2013,7 @@ function to_fourth_slide(current_slide) {
             .select("circle")
             .style("opacity", 0)
 
-        d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, #zoom-checkbox")
+        d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, .switch")
             .style("opacity", 0)
             .transition()
             .delay(500)
@@ -2024,271 +2029,25 @@ function to_fourth_slide(current_slide) {
         .remove()
 
     gX
-        .transition(t0)
         .style("opacity", 0)
     gY
-        .transition(t0)
         .style("opacity", 0)
 
     xLabel
-        .transition(t0)
         .style("opacity", 0)
     yLabel
-        .transition(t0)
         .style("opacity", 0)
 
     d3.select("#tooltip")
         .transition(t0)
         .style("opacity", 0)
         .on("end", function () {
-            chartTitle.transition().text("")
+            chartTitle.transition()
+                .text("")
             // fourth_slide(false)
+            // Deleted from visualization
         })
 
-}
-
-// ----------------------------------------------------------------------------
-// ███████╗ ██████╗ ██╗   ██╗██████╗ ████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
-// ██╔════╝██╔═══██╗██║   ██║██╔══██╗╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
-// █████╗  ██║   ██║██║   ██║██████╔╝   ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
-// ██╔══╝  ██║   ██║██║   ██║██╔══██╗   ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
-// ██║     ╚██████╔╝╚██████╔╝██║  ██║   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
-// ╚═╝      ╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
-// Go to the fourth slide
-// ----------------------------------------------------------------------------
-function fourth_slide() {
-
-    // First remove old div
-    d3.select("#slide4")
-        .remove()
-    // Add a new div that goes over everything to store contents of this slide
-    d3.select("body")
-        .append("div")
-        .attr("id", "slide4")
-        .html(`<div class="slide4-tooltip"><h1 style='background-color: ${colors["Green"]};'>Topics mentioned in parliament by
-    <div id="slide4-mp-dropdown" class="ui inline dropdown search">
-    <div class="text"></div> <i class="dropdown icon"></i>
-  </div>
-</h1>
-    <div class="speech-flex-row">
-    <div class="mp-image-parent" id="slide4-mp-image">
-    </div>
-    <div class="mp-name-debate">
-    <div class="mp-name" id="slide4-mp-name"></div>
-    <div class="speech-debate" id="slide4-speech-debate"></div>
-    </div>
-    <button class="ui icon button" onclick="update_speech_tooltip()"><i class="random big icon"></i></button>
-    </div>
-    <p>
-    Below is the speech that <span id="slide4-name">Caroline Lucas</span> gave. You can see the topics the machine learning model identified at the bottom.
-    Click on the shuffle button on the right to try another speech, and on <span id="slide4-firstname">Caroline</span>'s name in the header bar to choose another MP.
-    </p>
-    <p class="blockquote" id="slide4-speech"></p>
-    <svg id="slide4-speech-topic-bar"></svg></div>`)
-
-
-    d3.select("#slide4")
-        .style("pointer-events", "none")
-        .style("opacity", 0)
-
-    // Set width based on header width
-    topic_bar_width = document.querySelector("#slide4 > div > h1")
-        .offsetWidth
-    topic_bar_height = 30
-    d3.select("#slide4-speech-topic-bar")
-        .attr("width", topic_bar_width)
-        .attr("height", topic_bar_height)
-
-    // Load mp dropdown with the list of mps
-    $("#slide4-mp-dropdown")
-        .dropdown({
-            values: speech_samples_data.map((d, i) => ({
-                name: `<i class="${d.values[0].is_female ? "female" : "male"} fitted inverted grey icon" style="margin-right: 0.3rem !important"></i>` + d.key,
-                value: i,
-                selected: i == 0,
-            })),
-            fullTextSearch: true
-        })
-    // Default to the first MP (Caroline Lucas)
-    $("#slide4-mp-dropdown")
-        .dropdown("set selected", "0")
-
-    update_speech_tooltip()
-    $("#slide4-mp-dropdown")
-        .dropdown("setting", "onChange", function (value) {
-            if (selected_mp != value) {
-                selected_mp = value
-                update_speech_tooltip()
-            }
-        })
-}
-
-// Define scales for topics if not yet defined
-function define_topic_scales() {
-    "use strict"
-    if (topicColorScale == null) {
-        // Find all unique topics and use that for domain
-        topicColorScale = d3.scaleOrdinal(d3.schemeCategory20)
-            .domain([...new Set(speech_samples_data
-                .map(d => d.values
-                    .map(s => Object.keys(s.topics))
-                    .reduce((a, b) => a.concat(b)))
-                .reduce((a, b) => a.concat(b)))])
-    }
-
-    if (topicBarScale == null) {
-        topicBarScale = d3.scaleLinear()
-            .domain([0, 1])
-    }
-    topicBarScale.range([0, topic_bar_width])
-}
-
-// Function to update the tooltip with randomnly chosen speeches
-function update_speech_tooltip() {
-    "use strict"
-    // Define color scale
-    define_topic_scales()
-
-    // Randomly choose a new speech from the selected MP
-    var chosen_mp = speech_samples_data[selected_mp || 0].values
-
-    var chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
-    var old_speech = chosen_speech
-    while (old_speech == chosen_speech) {
-        chosen_speech = chosen_mp[Math.floor(Math.random() * chosen_mp.length)]
-    }
-
-    // Fill in all the blanks
-    d3.select("#slide4-mp-image")
-        .html(`${typeof mp_base64_data[chosen_speech.mp_id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[chosen_speech.mp_id] + "\" />" +
-    "<img class=\"mp-image\" src=\"./mp-images/mp-" + chosen_speech.mp_id + ".jpg\" style=\"opacity: ${typeof d.loaded == 'undefined' ? 0 : d.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
-                `)
-
-    d3.select("#slide4-mp-name")
-        .html(chosen_speech.mp_name)
-    d3.select("#slide4-speech-debate")
-        .html("on " + chosen_speech.debate_title + " (" + ((new Date(chosen_speech.date))
-            .toLocaleDateString("en-GB", { year: "numeric", month: "short" }) + ")"))
-    d3.select("#slide4-speech")
-        .html(chosen_speech.body)
-    d3.select("#slide4-name")
-        .html(chosen_speech.mp_name)
-    d3.select("#slide4-firstname")
-        .html(chosen_speech.mp_name.split(" ")[0])
-
-    // Sum up remaining fraction
-    chosen_speech.topics.others = 1 - Object.entries(chosen_speech.topics)
-        .filter(d => d[0] != "others")
-        .map(d => d[1])
-        .reduce((a, b) => a + b)
-
-    // Stack topics in speech to make a stacked horizontal bar graph
-    var stack = d3.stack()
-        .keys(Object.keys(chosen_speech.topics))
-
-    var stacked = stack([chosen_speech.topics])
-
-    // JOIN new data with old elements
-    var topic_bar = d3.select("#slide4-speech-topic-bar")
-        .selectAll(".rect-fg")
-        .data(stacked)
-
-    // EXIT old elements not present in new data.
-    topic_bar
-        .exit()
-        .transition()
-        .duration(1000)
-        .attr("x", topicBarScale(1))
-        .attr("height", topic_bar_height)
-        .style("opacity", 0)
-        .remove()
-
-    // UPDATE old elements present in new data.
-    topic_bar
-        .attr("height", topic_bar_height)
-        .transition()
-        .style("opacity", 1)
-        .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
-        .attr("x", d => topicBarScale(d[0][0]))
-        .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
-        .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
-
-    // ENTER new elements present in new data.
-    topic_bar
-        .enter()
-        .append("rect")
-        .attr("class", "rect-fg")
-        .attr("fill", d => d.key == "others" ? colors["Hover"] : topicColorScale(d.key))
-        .attr("x", topicBarScale(1))
-        .attr("height", topic_bar_height)
-        .transition()
-        .style("opacity", 1)
-        .attr("x", d => topicBarScale(d[0][0]))
-        .attr("width", d => (topicBarScale(d[0][1]) - topicBarScale(d[0][0])))
-        .attr("y", 0)
-        .attr("title", d => `${d.key}: ${ Math.round(Number(d[0].data[d.key] * 100))}%`)
-
-    // JOIN new data with old elements
-    var topic_bar_label = d3.select("#slide4-speech-topic-bar")
-        .selectAll(".rect-label")
-        .data(stacked)
-
-    // EXIT old elements not present in new data.
-    topic_bar_label
-        .exit()
-        .transition()
-        .duration(1000)
-        .attr("x", topicBarScale(1))
-        .style("opacity", 0)
-        .remove()
-
-    function adjust_text_width(d) {
-        var text = d3.select(this)
-            .text(d.key)
-        var bar_width = topicBarScale(d[0][1]) - topicBarScale(d[0][0])
-        var needs_elipsis = false
-        while (text.node()
-            .getComputedTextLength() > bar_width) {
-            if (bar_width <= 0) break
-            text.text(text.text()
-                .slice(0, -1))
-            needs_elipsis = true
-        }
-        if (needs_elipsis) text.text(text.text()
-            .trim()
-            .slice(0, -2) + "...")
-    }
-
-    // UPDATE old elements present in new data.
-    topic_bar_label
-        .transition()
-        .attr("x", d => 5 + topicBarScale(d[0][0]))
-        .each(adjust_text_width)
-
-    // ENTER new elements present in new data.
-    topic_bar_label
-        .enter()
-        .append("text")
-        .attr("class", "rect-label")
-        .attr("x", topicBarScale(1))
-        .attr("alignment-baseline", "middle")
-        .transition()
-        .attr("x", d => 5 + topicBarScale(d[0][0]))
-        .attr("y", topic_bar_height / 2)
-        .each(adjust_text_width)
-
-    // // Put a title on the "other" segment
-    // d3.select(".rect-bg")
-    //     .attr("title", `other: ${ Math.round(Number((1-stacked.slice(-1)[0][0][1]) * 100))}%`)
-
-    // Add tooltips for all the topic segments
-    $(".rect-fg") //,.rect-bg")
-        .popup({
-            duration: 100,
-            position: "top right",
-            transition: "fade",
-            variation: "inverted"
-        })
 }
 
 // ----------------------------------------------------------------------------
@@ -2364,8 +2123,10 @@ function to_fifth_slide(current_slide) {
     yLabel
         .style("opacity", 0)
 
-    d3.select("#topic-label").remove()
-    d3.select(".slide5-dropdown").remove()
+    d3.select("#topic-label")
+        .remove()
+    d3.select(".slide5-dropdown")
+        .remove()
 
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 4) {
@@ -2374,7 +2135,8 @@ function to_fifth_slide(current_slide) {
     } else {
         fifth_slide(true)
     }
-    d3.select("#slide4").style("display", "none")
+    d3.select("#slide4")
+        .style("display", "none")
 
 }
 // ----------------------------------------------------------------------------
@@ -2407,13 +2169,14 @@ function fifth_slide(no_transition = false) {
         .append("circle")
 
 
-        // Enable canvas
+    // Enable canvas
     d3.select("#visible-canvas")
         .style("opacity", 1)
         .style("display", null)
         .style("pointer-events", "all")
 
-    d3.select("#zoom-checkbox").style("opacity", 1)
+    d3.select(".switch")
+        .style("opacity", 1)
 
     // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
@@ -2448,8 +2211,8 @@ function fifth_slide(no_transition = false) {
     d3.select("#slide5-group")
         .remove()
 
-        // Call function initially
-    if(typeof(selected_topic) != "undefined") {
+    // Call function initially
+    if (typeof (selected_topic) != "undefined") {
         update_fifth_slide(no_transition, selected_topic)
     } else {
         update_fifth_slide(no_transition, "economy", true, false)
@@ -2463,12 +2226,12 @@ function fifth_slide(no_transition = false) {
 function update_fifth_slide(no_transition, default_selected_topic, from_scroll, drawMedian) {
 
     // If from_scroll is undefined, then this function was not triggered through scrollytelling
-    if (typeof(from_scroll) == "undefined") {
+    if (typeof (from_scroll) == "undefined") {
         from_scroll = false
     }
 
     // If drawMedian is undefined, then we must show the median line by default
-    if (typeof(drawMedian) == "undefined") {
+    if (typeof (drawMedian) == "undefined") {
         drawMedian = true
     }
 
@@ -2478,19 +2241,26 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .style("opacity", 0)
 
     // Hide tooltip
-    d3.select("#tooltip").style("opacity", 0)
+    d3.select("#tooltip")
+        .style("opacity", 0)
 
     // Zoom out
-    $("#zoom-checkbox").checkbox("uncheck")
+    if (document.getElementById("zoom-checkbox")
+        .checked != false) {
+        document.getElementById("zoom-checkbox")
+            .click()
+    }
 
-    if (typeof(default_selected_topic) != "undefined" && typeof(default_selected_topic) != "number" && from_scroll) {
+    if (typeof (default_selected_topic) != "undefined" && typeof (default_selected_topic) != "number" && from_scroll) {
         selected_topic = default_selected_topic
 
         // Append a new label
-        wrapper.select("#topic-label").remove()
+        wrapper.select("#topic-label")
+            .remove()
     } else {
         // Remove label because we have dropdown instead
-        wrapper.select("#topic-label").remove()
+        wrapper.select("#topic-label")
+            .remove()
         // Get value of topic dropdown
         try {
             selected_topic = d3.select("#topic-dropdown")
@@ -2572,7 +2342,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .enter()
         .append("custom")
         .attr("class", "male-node")
-        .attr("r", circleRadius*(isMobile ? 0.9 : 1.2))
+        .attr("r", circleRadius * (isMobile ? 0.9 : 1.2))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
@@ -2601,7 +2371,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .enter()
         .append("custom")
         .attr("class", "female-node")
-        .attr("r", circleRadius*(isMobile ? 0.9 : 1.2))
+        .attr("r", circleRadius * (isMobile ? 0.9 : 1.2))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
@@ -2858,7 +2628,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     .datum(nodeData)
                     .attr("cx", (d) => d.x)
                     .attr("cy", (d) => d.y)
-                    .attr("r", circleRadius*2.5)
+                    .attr("r", circleRadius * 2.5)
                     .style("opacity", 1)
                     .style("stroke-width", circleRadius)
             } else {
@@ -2896,7 +2666,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .datum(nodeData)
             .attr("cx", (d) => d.x)
             .attr("cy", (d) => d.y)
-            .attr("r", circleRadius*2.5)
+            .attr("r", circleRadius * 2.5)
             .style("opacity", 1)
             .style("stroke-width", circleRadius)
     }
@@ -2952,7 +2722,13 @@ function to_sixth_slide(current_slide) {
             .delay(1000)
             .on("end", function () { this.remove() })
 
-        d3.select("#zoom-checkbox").style("opacity", 0)
+        d3.select(".switch")
+            .style("opacity", 0)
+        if (document.getElementById("zoom-checkbox")
+            .checked != false) {
+            document.getElementById("zoom-checkbox")
+                .click()
+        }
         break
     }
 
@@ -3265,7 +3041,8 @@ function sixth_slide(no_transition = false) {
             .on("click", d => {
                 selected_topic = d[0]
                 new_slide = 4
-                d3.select(".is-active").style("opacity", 0)
+                d3.select(".is-active")
+                    .style("opacity", 0)
                 update_state()
 
             })
@@ -3432,12 +3209,10 @@ function download_data() {
                 lib_snp_mps: +d.Lib_SNP
             }
         })
-        .defer(d3.json, "info_bubbles.json")
         .await(function (error,
             mps_over_time,
             number_women_over_time,
-            total_mps_over_time,
-            info_bubbles) {
+            total_mps_over_time) {
             // Make global
             window.mps_over_time_data = mps_over_time
             window.number_women_over_time_data = number_women_over_time
@@ -3456,9 +3231,9 @@ function download_data() {
                 d.lib_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_snp_mps
                 d.lib_snp_women_pct = d.lib_snp_women_mps / d.lib_snp_mps * 100
             })
-            window.info_bubbles_data = info_bubbles
             // Hide loading text
-            d3.select("#loading").remove()
+            d3.select("#loading")
+                .remove()
             // INITIAL DRAW
             draw_graph()
         })
@@ -3489,7 +3264,6 @@ function download_data() {
                 country: d.country
             }
         })
-        .defer(d3.json, "speech_samples.json")
         .defer(d3.csv,
             "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
         )
@@ -3501,16 +3275,11 @@ function download_data() {
                     female: Math.pow(10, +d.female)
                 }
             })
-        .await(function (error, women_in_govt, speech_samples, baked_mp_positions, topic_medians) {
+        .await(function (error, women_in_govt, baked_mp_positions, topic_medians) {
             // Group stats by country
             women_in_govt_data = d3.nest()
                 .key(d => d.country)
                 .entries(women_in_govt)
-
-            // Group MP speeches by MP
-            speech_samples_data = d3.nest()
-                .key(d => d.mp_name)
-                .entries(speech_samples)
 
             topic_medians_data = {}
             baked_positions_data = []
@@ -3536,7 +3305,7 @@ function download_data() {
                                 "gender": row["is_female"] == 1 ? "Female" : "Male",
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
-                                "y": +row[topic + "_y"]/100,
+                                "y": +row[topic + "_y"] / 100,
                             })
                         }
                     })
@@ -3670,7 +3439,7 @@ function handleStepEnter(response) {
         case 0:
             if (response.direction == "up") {
 
-            // Unhighlight 97 election
+                // Unhighlight 97 election
                 electionRects.filter((d, i) => i == 22)
                     .classed("hover", false)
                     .style("opacity", 0.15)
@@ -3688,9 +3457,14 @@ function handleStepEnter(response) {
                 .style("opacity", null)
             break
         case 0.2:
-            if(response.direction == "up") {
-                d3.select("#zoom-checkbox").style("opacity", 0)
-                $("#zoom-checkbox").checkbox("uncheck")
+            if (response.direction == "up") {
+                d3.select(".switch")
+                    .style("opacity", 0)
+                if (document.getElementById("zoom-checkbox")
+                    .checked != false) {
+                    document.getElementById("zoom-checkbox")
+                        .click()
+                }
 
                 dataContainer.selectAll("custom.line")
                     .filter(d => d.clean_name != "margaretbeckett")
@@ -3769,29 +3543,38 @@ function handleStepEnter(response) {
             }
             canvas.style("pointer-events", "auto")
 
-            d3.select("#zoom-checkbox").style("opacity", 1)
-            $("#zoom-checkbox").checkbox({
-                onChecked: function() {
-                    zoom.on("zoom", zoomed)
-                    canvas.call(zoom)
-                    d3.select(".is-active").style("opacity", 0)
-                },
-                onUnchecked: function() {
-                    reset_zoom()
-                    d3.select(".is-active").filter(function() {
-                        // If it is an empty div, don't show
-                        return this.innerText != ""
-                    }).style("opacity", 1)
-                }})
+            d3.select(".switch")
+                .style("opacity", 1)
+                .select("#zoom-checkbox")
+                .on("change", function () {
+                    if (this.checked) {
+                        zoom.on("zoom", zoomed)
+                        canvas.call(zoom)
+                        d3.select(".is-active")
+                            .style("opacity", 0)
+                    } else {
+                        reset_zoom()
+                        d3.select(".is-active")
+                            .filter(function () {
+                                // If it is an empty div, don't show
+                                return this.innerText != ""
+                            })
+                            .style("opacity", 1)
+                    }
+
+                })
 
 
 
             break
 
         case 1:
-            d3.select("#zoom-checkbox").style("opacity", 0)
-            if($("#zoom-checkbox").checkbox("is checked")) {
-                $("#zoom-checkbox").checkbox("uncheck")
+            d3.select(".switch")
+                .style("opacity", 0)
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
                 // If we have to zoom out first, wait a bit before executing next bit
                 d3.timeout(() => {
                     all_mps_draw_timer.stop()
@@ -3819,7 +3602,8 @@ function handleStepEnter(response) {
 
         case 5:
             canvas.style("pointer-events", "all")
-            d3.select("#zoom-checkbox").style("opacity", 1)
+            d3.select(".switch")
+                .style("opacity", 1)
 
             mouseover_svg.transition()
                 .duration(1000)
@@ -3831,7 +3615,7 @@ function handleStepEnter(response) {
                     // Unhighlight election term
                     electionRects.filter((d, i) => i == 22)
                         .classed("hover", false)
-                        // Set default mp_filter
+                    // Set default mp_filter
                     mp_filter = mps_over_time_data.map(mp => mp.clean_name)
                     // Unfade all MPs
                     dataContainer.selectAll("custom.line")
@@ -3849,6 +3633,13 @@ function handleStepEnter(response) {
             break
 
         case 6:
+            d3.select(".switch")
+                .style("opacity", 0)
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
+            }
             canvas.style("pointer-events", "all")
             // Highlight '97 term
             electionRects.filter((d, i) => i == 22)
@@ -3913,7 +3704,13 @@ function handleStepEnter(response) {
 
         case 7:
             if (response.direction == "up") {
-                d3.select("#zoom-checkbox").style("opacity", 0)
+                d3.select(".switch")
+                    .style("opacity", 0)
+                if (document.getElementById("zoom-checkbox")
+                    .checked != false) {
+                    document.getElementById("zoom-checkbox")
+                        .click()
+                }
             }
             // Set filter to these MPs who were elected through AWS in 1997
             mp_filter = ["annebegg", "judymallaber", "sandraosborne", "angelaesmith", "giselastuart", "annkeen", "janetdean",
@@ -3921,7 +3718,8 @@ function handleStepEnter(response) {
                 "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman",
                 "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy",
                 "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley",
-                "melaniejohnson", "jennyjones"]
+                "melaniejohnson", "jennyjones"
+            ]
             // Show only MPs which were elected through AWS
             dataContainer.selectAll("custom.line")
                 .transition()
@@ -3949,7 +3747,8 @@ function handleStepEnter(response) {
             break
 
         case 8:
-            d3.select("#zoom-checkbox").style("opacity", 1)
+            d3.select(".switch")
+                .style("opacity", 1)
 
             if (response.direction == "up") {
                 // Draw canvas if coming from below
@@ -3962,11 +3761,17 @@ function handleStepEnter(response) {
         break
 
     case 1:
-        d3.select("#zoom-checkbox").style("opacity", 0)
+        d3.select(".switch")
+            .style("opacity", 0)
+        if (document.getElementById("zoom-checkbox")
+            .checked != false) {
+            document.getElementById("zoom-checkbox")
+                .click()
+        }
         switch (new_step) {
         // Change graph to show breakdown by party
         case 0:
-            if(response.direction == "up") {
+            if (response.direction == "up") {
                 yLabel
                     .transition()
                     .text("Number of MPs")
@@ -3975,30 +3780,37 @@ function handleStepEnter(response) {
                     .text("MPs in the House of Commons")
                 // All MPs first
                 y.domain([0, 750])
-                gY.transition().call(yAxis)
+                gY.transition()
+                    .call(yAxis)
 
                 max_mps_line.y(d => y(d.total_mps))
-                max_mps_path.transition().attr("d", max_mps_line)
+                max_mps_path.transition()
+                    .attr("d", max_mps_line)
                 max_mps_area.y1(d => y(d.total_mps))
                 max_mps_path_area.transition()
                     .attr("d", max_mps_area)
                     .style("fill", colors["Male"])
-                mask.transition().attr("d", max_mps_area)
+                mask.transition()
+                    .attr("d", max_mps_area)
 
-                half_max_mps_line.y(d => y(d.total_mps/2))
-                half_max_mps_path.transition().attr("d", half_max_mps_line)
+                half_max_mps_line.y(d => y(d.total_mps / 2))
+                half_max_mps_path.transition()
+                    .attr("d", half_max_mps_line)
 
                 total_women_mps_line.y(d => y(d.total_women_mps))
-                total_women_mps_path.transition().attr("d", total_women_mps_line)
+                total_women_mps_path.transition()
+                    .attr("d", total_women_mps_line)
                 total_women_mps_area.y1(d => y(d.total_women_mps))
-                total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+                total_women_mps_path_area.transition()
+                    .attr("d", total_women_mps_area)
 
-                d3.select(".women-label").style("fill", colors["Male"])
+                d3.select(".women-label")
+                    .style("fill", colors["Male"])
             }
 
             break
         case 1:
-        // Labour
+            // Labour
             yLabel
                 .transition()
                 .text("% of MPs")
@@ -4008,18 +3820,22 @@ function handleStepEnter(response) {
                 .text("MPs in the Labour Party")
 
             y.domain([0, 100])
-            gY.transition().call(yAxis)
+            gY.transition()
+                .call(yAxis)
 
             max_mps_line.y(y(100))
-            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_path.transition()
+                .attr("d", max_mps_line)
             max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Labour"])
-            mask.transition().attr("d", max_mps_area)
+            mask.transition()
+                .attr("d", max_mps_area)
 
             half_max_mps_line.y(y(50))
-            half_max_mps_path.transition().attr("d", half_max_mps_line)
+            half_max_mps_path.transition()
+                .attr("d", half_max_mps_line)
 
             half_max_mps_line_smooth.y(y(52))
             text_path_50_50
@@ -4027,11 +3843,14 @@ function handleStepEnter(response) {
                 .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.labour_women_pct))
-            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_path.transition()
+                .attr("d", total_women_mps_line)
             total_women_mps_area.y1(d => y(d.labour_women_pct))
-            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            total_women_mps_path_area.transition()
+                .attr("d", total_women_mps_area)
 
-            d3.select(".women-label").style("fill", colors["Labour"])
+            d3.select(".women-label")
+                .style("fill", colors["Labour"])
             break
         case 2:
             // Conservatives
@@ -4044,18 +3863,22 @@ function handleStepEnter(response) {
                 .text("MPs in the Conservative Party")
 
             y.domain([0, 100])
-            gY.transition().call(yAxis)
+            gY.transition()
+                .call(yAxis)
 
             max_mps_line.y(y(100))
-            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_path.transition()
+                .attr("d", max_mps_line)
             max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Conservative"])
-            mask.transition().attr("d", max_mps_area)
+            mask.transition()
+                .attr("d", max_mps_area)
 
             half_max_mps_line.y(y(50))
-            half_max_mps_path.transition().attr("d", half_max_mps_line)
+            half_max_mps_path.transition()
+                .attr("d", half_max_mps_line)
 
             half_max_mps_line_smooth.y(y(52))
             text_path_50_50
@@ -4063,11 +3886,14 @@ function handleStepEnter(response) {
                 .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.conservative_women_pct))
-            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_path.transition()
+                .attr("d", total_women_mps_line)
             total_women_mps_area.y1(d => y(d.conservative_women_pct))
-            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            total_women_mps_path_area.transition()
+                .attr("d", total_women_mps_area)
 
-            d3.select(".women-label").style("fill", colors["Conservative"])
+            d3.select(".women-label")
+                .style("fill", colors["Conservative"])
             break
         case 3:
             // Lib Dems & SNP
@@ -4080,18 +3906,22 @@ function handleStepEnter(response) {
                 .text(isMobile ? "MPs in the Lib Dems and SNP" : "MPs in the Liberal Democrats and Scottish National Party")
 
             y.domain([0, 100])
-            gY.transition().call(yAxis)
+            gY.transition()
+                .call(yAxis)
 
             max_mps_line.y(y(100))
-            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_path.transition()
+                .attr("d", max_mps_line)
             max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["LD"])
-            mask.transition().attr("d", max_mps_area)
+            mask.transition()
+                .attr("d", max_mps_area)
 
             half_max_mps_line.y(y(50))
-            half_max_mps_path.transition().attr("d", half_max_mps_line)
+            half_max_mps_path.transition()
+                .attr("d", half_max_mps_line)
 
             half_max_mps_line_smooth.y(y(52))
             text_path_50_50
@@ -4099,11 +3929,14 @@ function handleStepEnter(response) {
                 .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.lib_snp_women_pct))
-            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_path.transition()
+                .attr("d", total_women_mps_line)
             total_women_mps_area.y1(d => y(d.lib_snp_women_pct))
-            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            total_women_mps_path_area.transition()
+                .attr("d", total_women_mps_area)
 
-            d3.select(".women-label").style("fill", colors["LD"])
+            d3.select(".women-label")
+                .style("fill", colors["LD"])
             break
         case 4:
             // All MPs again
@@ -4116,18 +3949,22 @@ function handleStepEnter(response) {
                 .text("MPs in the House of Commons")
 
             y.domain([0, 100])
-            gY.transition().call(yAxis)
+            gY.transition()
+                .call(yAxis)
 
             max_mps_line.y(y(100))
-            max_mps_path.transition().attr("d", max_mps_line)
+            max_mps_path.transition()
+                .attr("d", max_mps_line)
             max_mps_area.y1(y(100))
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Male"])
-            mask.transition().attr("d", max_mps_area)
+            mask.transition()
+                .attr("d", max_mps_area)
 
             half_max_mps_line.y(y(50))
-            half_max_mps_path.transition().attr("d", half_max_mps_line)
+            half_max_mps_path.transition()
+                .attr("d", half_max_mps_line)
 
             half_max_mps_line_smooth.y(y(52))
             text_path_50_50
@@ -4135,27 +3972,38 @@ function handleStepEnter(response) {
                 .attr("d", half_max_mps_line_smooth)
 
             total_women_mps_line.y(d => y(d.women_pct))
-            total_women_mps_path.transition().attr("d", total_women_mps_line)
+            total_women_mps_path.transition()
+                .attr("d", total_women_mps_line)
             total_women_mps_area.y1(d => y(d.women_pct))
-            total_women_mps_path_area.transition().attr("d", total_women_mps_area)
+            total_women_mps_path_area.transition()
+                .attr("d", total_women_mps_area)
 
-            d3.select(".women-label").style("fill", colors["Male"])
+            d3.select(".women-label")
+                .style("fill", colors["Male"])
             break
         }
 
         break
 
     case 3:
-        d3.select("#slide4").style("display", "none")
-        d3.select("#zoom-checkbox").style("opacity", 0)
+        d3.select("#slide4")
+            .style("display", "none")
+        d3.select(".switch")
+            .style("opacity", 0)
+        if (document.getElementById("zoom-checkbox")
+            .checked != false) {
+            document.getElementById("zoom-checkbox")
+                .click()
+        }
         chartTitle
             .transition()
             .text("")
         break
 
     case 4:
-        d3.select("#slide4").style("display", "none")
-        switch(new_step) {
+        d3.select("#slide4")
+            .style("display", "none")
+        switch (new_step) {
         case 0:
             update_fifth_slide(false, "economy", true, false)
 
@@ -4182,7 +4030,8 @@ function handleStepEnter(response) {
                 .text("Time spent on parliamentary terminology")
             break
         }
-        d3.select(".slide5-dropdown").style("display", "none")
+        d3.select(".slide5-dropdown")
+            .style("display", "none")
         break
     }
 
