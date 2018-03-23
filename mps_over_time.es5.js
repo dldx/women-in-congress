@@ -75,9 +75,6 @@ window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 };
 
-// These are the labels for each slide
-var tracker_data = [{ section: "1" }, { section: "2" }, { section: "3" }, { section: "4" }, { section: "5" }, { section: "6" }];
-
 // ----------------------------------------------------------------------------
 // FIND TIMELINE DIV AND ADD SVG
 // ----------------------------------------------------------------------------
@@ -111,11 +108,9 @@ var width = 0,
 
 var ratio, clippedArea, electionRects, zoom, wrapper, transform, zoomedArea, pointsGroup, slide2Group, slide3Group,
 // slide5Group,
-slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_mp, topic_bar_width, topic_bar_height, topicBarScale, topicColorScale, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, mp_filter, isMobile, all_mps_draw_timer;
+slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, mp_filter, isMobile, all_mps_draw_timer;
 
-var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data,
-// info_bubbles_data,
-speech_samples_data, topic_medians_data, baked_positions_data, nodes_male, nodes_female;
+var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data, topic_medians_data, baked_positions_data, nodes_male, nodes_female;
 
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
@@ -252,95 +247,6 @@ function update_state() {
         }
         current_slide = new_slide;
     }
-    // Lastly update the hexagon tracker colours
-    // d3.selectAll(".arc")
-    //     .classed("c-1", function (a) {
-    //         return a.index % 2 == 0
-    //     })
-    //     .classed("c-2", function (a) {
-    //         return a.index % 2 == 1
-    //     })
-    //     .classed("active", function (a) {
-    //         return a.index == current_slide
-    //     })
-}
-
-// ----------------------------------------------------------------------------
-// ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗    ██╗  ██╗███████╗██╗  ██╗ █████╗  ██████╗  ██████╗ ███╗   ██╗
-// ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║██╔════╝██╔════╝    ██║  ██║██╔════╝╚██╗██╔╝██╔══██╗██╔════╝ ██╔═══██╗████╗  ██║
-// ██║██╔██╗ ██║██║   ██║   ██║███████║██║     ██║███████╗█████╗      ███████║█████╗   ╚███╔╝ ███████║██║  ███╗██║   ██║██╔██╗ ██║
-// ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ██╔══██║██╔══╝   ██╔██╗ ██╔══██║██║   ██║██║   ██║██║╚██╗██║
-// ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗    ██║  ██║███████╗██╔╝ ██╗██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║
-// ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝    ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝
-// TRACKER TO IDENTIFY AND SWITCH BETWEEN SLIDES
-// ----------------------------------------------------------------------------
-function initialise_tracker() {
-    "use strict";
-
-    var tracker_outer_radius = 30;
-    var tracker_inner_radius = 0;
-    d3.select(".tracker").remove();
-    var tracker_div = d3.select("body").append("div").attr("class", "tracker");
-
-    // Prev button
-    tracker_div.append("button").attr("type", "button").attr("class", "nav-prev").text("Prev").on("click", function () {
-        new_slide = Math.max(0, current_slide - 1);
-        update_state();
-    });
-    // Tracker hexagon wrapper
-    var tracker_wrapper = tracker_div.append("svg").append("g").attr("class", "tracker-wrapper").attr("transform", "translate(" + tracker_outer_radius + "," + tracker_outer_radius + ")");
-
-    // Next button
-    tracker_div.append("button").attr("type", "button").attr("class", "nav-next").text("Next").on("click", function () {
-        new_slide = Math.min(tracker_data.length - 1, current_slide + 1);
-        update_state();
-    });
-
-    var pie = d3.pie().value(1); // Same fraction for every slice
-
-    var path = d3.arc().outerRadius(tracker_outer_radius).innerRadius(tracker_inner_radius);
-
-    var labels = d3.arc().outerRadius(tracker_outer_radius).innerRadius(tracker_inner_radius);
-
-    var arcGroup = tracker_wrapper.selectAll(".arc").data(pie(tracker_data)).enter().append("g").attr("class", "arc");
-
-    arcGroup.append("path").attr("d", path);
-
-    arcGroup.append("text").attr("transform", function (d) {
-        return "translate(" + labels.centroid(d) + ")";
-    }).text(function (d) {
-        return d.data.section;
-    });
-
-    arcGroup.on("mouseover", function () {
-        d3.select(this).classed("hover", true);
-    }).on("mouseout", function () {
-        d3.select(this).classed("hover", false);
-        update_state();
-    }).on("click", function (d) {
-        new_slide = d.index;
-        update_state();
-    });
-    update_state();
-
-    ///////////////////////////////////////////////////////////////////////////
-    /////////////////////// Hexagon ///////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
-    // Thanks Nadieh Bremer!
-    var SQRT3 = Math.sqrt(3),
-        hexRadius = tracker_outer_radius,
-        hexagonPoly = [[0, -1], [SQRT3 / 2, 0.5], [0, 1], [-SQRT3 / 2, 0.5], [-SQRT3 / 2, -0.5], [0, -1], [SQRT3 / 2, -0.5]];
-    var hexagonPath = "m" + hexagonPoly.map(function (p) {
-        return [p[0] * hexRadius, p[1] * hexRadius].join(",");
-    }).join("l") + "z";
-
-    //Place a hexagon on the scene
-    tracker_wrapper.append("path").attr("class", "tracker-hexagon").attr("d", hexagonPath);
-
-    tracker_wrapper.append("clipPath").attr("id", "hex-mask").append("path").attr("fill", "none").attr("d", hexagonPath);
-
-    // Attach hexagon clip mask to tracker wrapper
-    d3.select(".tracker-wrapper").attr("clip-path", "url(#hex-mask)");
 }
 
 // ----------------------------------------------------------------------------
@@ -350,7 +256,7 @@ function initialise_tracker() {
 // ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║╚════██║██╔══╝      ╚██╗ ██╔╝██║╚════██║██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
 // ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████║███████╗     ╚████╔╝ ██║███████║╚██████╔╝██║  ██║███████╗██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
 // ╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚══════╝      ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
-// CREATE AXES, SCALES, ZOOM REGION, TRACKER, TOOLTIP
+// CREATE AXES, SCALES, ZOOM REGION, TOOLTIP
 // ----------------------------------------------------------------------------
 function initial_render() {
     "use strict";
@@ -366,9 +272,6 @@ function initial_render() {
     wrapper = svg.append("g").attr("class", "timeline-wrapper").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     // Do the same for the mouseover svg
     mouseover_svg.append("g").attr("class", "timeline-wrapper").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // Initialise the hexagon tracker that tracks the state of the graph
-    // initialise_tracker()
 
     // Initialise info bubble
     d3.select("#tooltip").remove();
@@ -1871,7 +1774,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         if (typeof transform !== "undefined") {
             var nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"], (mousePos[1] - margin.top - transform["y"]) / transform["k"], 50);
         } else {
-            var nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50);
+            nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50);
         }
 
         // Only show mouseover if hovering near a point
@@ -2099,13 +2002,13 @@ function sixth_slide() {
             // yLabel.style("opacity", 1)
         });
     } else {
-        var median_connector_line_svg = slide6Group.selectAll(".median-connector").data(sorted_topics);
+        median_connector_line_svg = slide6Group.selectAll(".median-connector").data(sorted_topics);
 
         // Add hidden svg circle
-        var male_median_circle_svg = slide6Group.selectAll(".male-median").data(sorted_topics);
+        male_median_circle_svg = slide6Group.selectAll(".male-median").data(sorted_topics);
 
         // Add hidden svg circle
-        var female_median_circle_svg = slide6Group.selectAll(".female-median").data(sorted_topics);
+        female_median_circle_svg = slide6Group.selectAll(".female-median").data(sorted_topics);
 
         chartTitle.transition().text("Gender bias of topics");
 
@@ -2727,7 +2630,7 @@ function handleStepEnter(response) {
                         context.scale(transform.k, transform.k);
                     }
 
-                    var t = d3.timer(function (elapsed) {
+                    t = d3.timer(function (elapsed) {
                         draw(context, false);
                         if (elapsed > 500) {
                             t.stop();
@@ -2759,7 +2662,7 @@ function handleStepEnter(response) {
                         context.scale(transform.k, transform.k);
                     }
 
-                    var t = d3.timer(function (elapsed) {
+                    t = d3.timer(function (elapsed) {
                         draw(context, false);
                         if (elapsed > 500) {
                             t.stop();
