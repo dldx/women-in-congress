@@ -35,17 +35,8 @@ var margin = {
     // These are the colours used to identify each political party as well as
     // a few additional functions
 };var colors = {
-    "Lab": "#C61148",
-    "Labour": "#C61148",
-    "Con": "#0096DB",
-    "Conservative": "#0096DB",
-    "SNP": "#FCCA46",
-    "Scottish National Party": "#FCCA46",
-    "Lib Dem": "#F37A48",
-    "Liberal Democrat": "#F37A48",
-    "LD": "#F37A48",
-    "Green": "#A1C181",
-    "SF": "#008e4b",
+    "Republican": "#C61148",
+    "Democratic": "#0096DB",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
     "Male": "#7A47C6",
     "Female": "#e5e5e5",
@@ -264,7 +255,7 @@ function initial_render() {
 
     x = d3.scaleUtc().domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]).range([0, width]);
 
-    y = d3.scaleLinear().domain([0, 210]) // Almost 210 MPs by 2020
+    y = d3.scaleLinear().domain([0, 90]) // Almost 210 MPs by 2020
     .range([height, 0]);
 
     svg.append("defs");
@@ -601,7 +592,7 @@ function show_mp_tooltip(nodeData, mousePos) {
             tooltip_innerHTML += "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64, " + mp_base64_data[nodeData.id] + "\"/>\n                <img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: " + (typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded) + (nodeData.loaded = 1) + ";\" onload=\"this.style.opacity = 1;\" />\n                ";
         }
     }
-    tooltip_innerHTML += "</div>\n            <div class=\"body-facts\">\n                    <div class=\"mp-term\">" + d3.timeFormat("%Y")(nodeData.term_start) + " &rarr;                     " + d3.timeFormat("%Y")(nodeData.term_end) + "</div>\n                    <div class=\"mp-constituency\">" + nodeData.constituency + "</div>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n                    ";
+    tooltip_innerHTML += "</div>\n            <div class=\"body-facts\">\n                    <div class=\"mp-term\">" + d3.timeFormat("%Y")(nodeData.term_start) + " &rarr;                     " + d3.timeFormat("%Y")(nodeData.term_end) + "</div>\n                    <div class=\"mp-constituency\">" + nodeData.district + "</div>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n                    ";
 
     tooltip.innerHTML = tooltip_innerHTML;
 
@@ -646,7 +637,7 @@ function to_first_slide(current_slide) {
     // Show canvas
     d3.select("#visible-canvas").style("opacity", 1).style("display", null);
     // Scale axes to fit all data
-    y.domain([0, 210]);
+    y.domain([0, 90]);
     gY.transition().duration(1000).call(yAxis);
     xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]));
     gX.transition().duration(1000).call(xAxis);
@@ -861,7 +852,7 @@ function second_slide() {
     // DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
     // ----------------------------------------------------------------------------
 
-    var y_canvas = d3.scaleLinear().domain([0, 210]) // Almost 210 MPs by 2020
+    var y_canvas = d3.scaleLinear().domain([0, 90]) // Almost 210 MPs by 2020
     .range([height, 0]);
 
     var total_women_mps_line_canvas = d3.line().x(function (d) {
@@ -924,7 +915,7 @@ function second_slide() {
     total_women_mps_path_area.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).attr("d", total_women_mps_area).style("opacity", 1);
 
     // Rescale y axis to include all MPs
-    y.domain([0, 750]);
+    y.domain([0, 500]);
 
     // Change y axis label
     yLabel.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("Number of MPs");
@@ -967,7 +958,7 @@ function second_slide() {
 
     svg.transition().delay(no_transition ? 0 : 7000).on("end", function () {
         // Add text labels for areas
-        slide2Group.append("text").attr("x", x(new Date(2010, 1, 1))).attr("y", y(500)).attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4, (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4)).attr("class", "men-label").text("Men").style("opacity", 0).transition().duration(no_transition ? 0 : 500).style("opacity", 1);
+        slide2Group.append("text").attr("x", x(new Date(2010, 1, 1))).attr("y", y(300)).attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4, (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4)).attr("class", "men-label").text("Men").style("opacity", 0).transition().duration(no_transition ? 0 : 500).style("opacity", 1);
 
         // Add a smoothed 50% line to show halfway mark for gender and place text label on it
         half_max_mps_line_smooth = d3.line().x(function (d) {
@@ -2175,37 +2166,33 @@ function sixth_slide() {
 // DOWNLOAD ALL THE MP DATA WE NEED TO DRAW THE GRAPHS
 // ----------------------------------------------------------------------------
 function download_data() {
-    d3.queue().defer(d3.csv, "women_mps.csv", function (d) {
+    d3.queue().defer(d3.csv, "women_reps.csv", function (d) {
         var parseDate = d3.timeParse("%Y-%m-%d");
         return {
             id: d.id,
             name: d.name,
-            constituency: d.constituency,
+            district: d.district,
             term_start: parseDate(d.term_start),
             term_end: parseDate(d.term_end),
             party: d.party,
-            byelection: d.byelection == "TRUE",
-            notes: d.notes,
             clean_name: d.clean_name,
             stream: +d.stream
         };
     }).defer(d3.csv, "number_women_over_time.csv", function (d) {
         var parseDate = d3.timeParse("%Y-%m-%d");
         return {
-            year: parseDate(d.Year),
-            total_women_mps: +d.Total,
-            conservative_women_mps: +d.Con,
-            labour_women_mps: +d.Lab,
-            lib_snp_women_mps: +d.Lib_SNP
+            year: parseDate(d.date),
+            total_women_mps: +d.total_women_reps,
+            conservative_women_mps: +d.rep_reps,
+            labour_women_mps: +d.dem_reps
         };
     }).defer(d3.csv, "total_mps_over_time.csv", function (d) {
         var parseDate = d3.timeParse("%Y-%m-%d");
         return {
-            year: parseDate(d.Year),
-            total_mps: +d.total_mps,
-            conservative_mps: +d.Con,
-            labour_mps: +d.Lab,
-            lib_snp_mps: +d.Lib_SNP
+            year: parseDate(d.date),
+            total_mps: +d.total_reps,
+            conservative_mps: +d.rep_reps,
+            labour_mps: +d.dem_reps
         };
     }).await(function (error, mps_over_time, number_women_over_time, total_mps_over_time) {
         // Make global
@@ -2408,9 +2395,9 @@ function handleStepEnter(response) {
                 case 0:
                     if (response.direction == "up") {
 
-                        // Unhighlight 97 election
+                        // Unhighlight Roosevelt's term
                         electionRects.filter(function (d, i) {
-                            return i == 22;
+                            return i == 4;
                         }).classed("hover", false).style("opacity", 0.15);
                     }
                     // Show election rects
@@ -2419,9 +2406,9 @@ function handleStepEnter(response) {
                     }).style("opacity", 0.15);
                     break;
                 case 0.1:
-                    // Highlight '97 election
+                    // Highlight Roosevelt's term
                     electionRects.filter(function (d, i) {
-                        return i == 22;
+                        return i == 4;
                     }).classed("hover", true).style("opacity", null);
                     break;
                 case 0.2:
@@ -2432,7 +2419,7 @@ function handleStepEnter(response) {
                         }
 
                         dataContainer.selectAll("custom.line").filter(function (d) {
-                            return d.clean_name != "margaretbeckett";
+                            return d.clean_name != "marcykaptur";
                         }).transition().duration(1000).attr("x2", function (d) {
                             return x(d.term_start);
                         }).transition().duration(1000).attr("y1", function () {
@@ -2441,13 +2428,13 @@ function handleStepEnter(response) {
                             return y(0);
                         });
                     }
-                    // Unhighlight 97 election
+                    // Unhighlight Roosevelt's term
                     electionRects.filter(function (d, i) {
-                        return i == 22;
+                        return i == 4;
                     }).classed("hover", false).style("opacity", 0.15);
                     // Draw lines for longest serving woman
                     dataContainer.selectAll("custom.line").filter(function (d) {
-                        return d.clean_name == "margaretbeckett";
+                        return d.clean_name == "marcykaptur";
                     }).transition().duration(1000).attr("y1", function (d) {
                         return y(d.stream);
                     }).attr("y2", function (d) {
@@ -2457,7 +2444,7 @@ function handleStepEnter(response) {
                     }).on("end", function () {
                         // Display tooltip
                         show_mp_tooltip(mps_over_time_data.filter(function (d) {
-                            return d.clean_name == "margaretbeckett";
+                            return d.clean_name == "marcykaptur";
                         })[1]);
                     });
                     // Animate node entrances
@@ -2531,25 +2518,19 @@ function handleStepEnter(response) {
                         // If we have to zoom out first, wait a bit before executing next bit
                         d3.timeout(function () {
                             all_mps_draw_timer.stop();
-                            mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
+                            mpZoom("jeannetterankin", "mid", 10, 0, width / 4);
                         }, 1000);
                     } else {
                         // First step: zoom into first mp
                         all_mps_draw_timer.stop();
-                        mpZoom("constancemarkievicz", "mid", 10, 0, width / 4);
+                        mpZoom("jeannetterankin", "mid", 10, 0, width / 4);
                     }
                     canvas.style("pointer-events", "none");
                     break;
 
                 case 2:
                     // Second step: first mp to take seat
-                    mpZoom("nancyastor");
-                    canvas.style("pointer-events", "none");
-                    break;
-
-                case 4:
-                    // Fourth step: first prime minister
-                    mpZoom("margaretthatcher");
+                    mpZoom("patsymink");
                     canvas.style("pointer-events", "none");
                     break;
 
@@ -2585,93 +2566,6 @@ function handleStepEnter(response) {
                     });
                     break;
 
-                case 6:
-                    d3.select(".switch").style("opacity", 0);
-                    if (document.getElementById("zoom-checkbox").checked != false) {
-                        document.getElementById("zoom-checkbox").click();
-                    }
-                    canvas.style("pointer-events", "all");
-                    // Highlight '97 term
-                    electionRects.filter(function (d, i) {
-                        return i == 22;
-                    }).classed("hover", true);
-                    // Filter tooltip to Labour MPs elected in 1997
-                    mp_filter = mps_over_time_data.filter(function (mp) {
-                        return mp.term_start >= new Date(1997, 4, 1) & mp.term_start <= new Date(1997, 6, 1) & mp.party == "Lab";
-                    }).map(function (mp) {
-                        return mp.clean_name;
-                    });
-                    // Now talk about all women shortlists
-                    // First reset zoom
-                    if (response.direction == "down") {
-                        mouseover_svg.select("line").style("opacity", 0);
-
-                        var mp = mps_over_time_data.filter(function (d) {
-                            return d.clean_name == "louiseellman";
-                        })[0];
-                        transform = d3.zoomIdentity.translate(width * 3 / 4, height * 3 / 5).scale(1.5).translate(-(x(mp.term_start) + x(mp.term_end)) / 2, -y(mp.stream));
-                        mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity).on("end", function () {
-                            d3.selectAll(".y-axis .tick").style("opacity", function (d) {
-                                return d >= 0 ? 1 : 0;
-                            });
-                        }).transition().call(zoom.transform, transform);
-                    }
-
-                    // Highlight Labour MPs that were elected in 1997
-                    dataContainer.selectAll("custom.line").transition().delay(response.direction == "down" ? 1000 : 0).duration(500).attr("strokeStyle", function (mp) {
-                        return !(mp.term_start >= new Date(1997, 4, 1) & mp.term_start <= new Date(1997, 6, 1) & mp.party == "Lab") ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party);
-                    });
-
-                    if (response.direction == "up") {
-                        // Scale the canvas
-                        context.save();
-                        context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top);
-                        context.translate(transform.x, transform.y);
-                        context.scale(transform.k, transform.k);
-                    }
-
-                    t = d3.timer(function (elapsed) {
-                        draw(context, false);
-                        if (elapsed > 500) {
-                            t.stop();
-                            draw(context);
-                            if (response.direction == "up") context.restore();
-                        }
-                    });
-
-                    break;
-
-                case 7:
-                    if (response.direction == "up") {
-                        d3.select(".switch").style("opacity", 0);
-                        if (document.getElementById("zoom-checkbox").checked != false) {
-                            document.getElementById("zoom-checkbox").click();
-                        }
-                    }
-                    // Set filter to these MPs who were elected through AWS in 1997
-                    mp_filter = ["annebegg", "judymallaber", "sandraosborne", "angelaesmith", "giselastuart", "annkeen", "janetdean", "chrismccafferty", "juliemorgan", "shonamcisaac", "kalimountford", "bettywilliams", "lauramoffatt", "lizblackman", "mscandyatherton", "dianaorgan", "anncryer", "gillianmerron", "mariaeagle", "louiseellman", "margaretmoran", "phyllisstarkey", "geraldinesmith", "sallykeeble", "helenbrinton", "lindagilroy", "jackielawrence", "jacquismith", "karenbuck", "fionamactaggart", "annemcguire", "daritaylor", "debrashipley", "melaniejohnson", "jennyjones"];
-                    // Show only MPs which were elected through AWS
-                    dataContainer.selectAll("custom.line").transition().duration(500).attr("strokeStyle", function (mp) {
-                        return !(mp.term_start >= new Date(1997, 4, 1) & mp.term_start <= new Date(1997, 6, 1) & mp.party == "Lab" & mp_filter.indexOf(mp.clean_name) != -1) ? hexToRGBA(colorParty(mp.party), 0.2) : colorParty(mp.party);
-                    });
-                    if (response.direction == "down") {
-                        // Scale the canvas
-                        context.save();
-                        context.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top);
-                        context.translate(transform.x, transform.y);
-                        context.scale(transform.k, transform.k);
-                    }
-
-                    t = d3.timer(function (elapsed) {
-                        draw(context, false);
-                        if (elapsed > 500) {
-                            t.stop();
-                            draw(context);
-                            context.restore();
-                        }
-                    });
-                    break;
-
                 case 8:
                     d3.select(".switch").style("opacity", 1);
 
@@ -2693,10 +2587,10 @@ function handleStepEnter(response) {
                 // Change graph to show breakdown by party
                 case 0:
                     if (response.direction == "up") {
-                        yLabel.transition().text("Number of MPs");
-                        chartTitle.transition().text("MPs in the House of Commons");
+                        yLabel.transition().text("Number of Representatives");
+                        chartTitle.transition().text("Representatives in Congress");
                         // All MPs first
-                        y.domain([0, 750]);
+                        y.domain([0, 500]);
                         gY.transition().call(yAxis);
 
                         max_mps_line.y(function (d) {
@@ -2728,10 +2622,10 @@ function handleStepEnter(response) {
 
                     break;
                 case 1:
-                    // Labour
-                    yLabel.transition().text("% of MPs");
+                    // Democrats
+                    yLabel.transition().text("% of Representatives");
 
-                    chartTitle.transition().text("MPs in the Labour Party");
+                    chartTitle.transition().text("Representatives in the Democratic Party");
 
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
@@ -2739,7 +2633,7 @@ function handleStepEnter(response) {
                     max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(y(100));
-                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Labour"]);
+                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Democratic"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(y(50));
@@ -2757,13 +2651,13 @@ function handleStepEnter(response) {
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
 
-                    d3.select(".women-label").style("fill", colors["Labour"]);
+                    d3.select(".women-label").style("fill", colors["Demcratic"]);
                     break;
                 case 2:
-                    // Conservatives
-                    yLabel.transition().text("% of MPs");
+                    // Republicans
+                    yLabel.transition().text("% of Representatives");
 
-                    chartTitle.transition().text("MPs in the Conservative Party");
+                    chartTitle.transition().text("Representatives in the Republican Party");
 
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);
@@ -2771,7 +2665,7 @@ function handleStepEnter(response) {
                     max_mps_line.y(y(100));
                     max_mps_path.transition().attr("d", max_mps_line);
                     max_mps_area.y1(y(100));
-                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Conservative"]);
+                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["Republican"]);
                     mask.transition().attr("d", max_mps_area);
 
                     half_max_mps_line.y(y(50));
@@ -2789,45 +2683,13 @@ function handleStepEnter(response) {
                     });
                     total_women_mps_path_area.transition().attr("d", total_women_mps_area);
 
-                    d3.select(".women-label").style("fill", colors["Conservative"]);
-                    break;
-                case 3:
-                    // Lib Dems & SNP
-                    yLabel.transition().text("% of MPs");
-
-                    chartTitle.transition().text(isMobile ? "MPs in the Lib Dems and SNP" : "MPs in the Liberal Democrats and Scottish National Party");
-
-                    y.domain([0, 100]);
-                    gY.transition().call(yAxis);
-
-                    max_mps_line.y(y(100));
-                    max_mps_path.transition().attr("d", max_mps_line);
-                    max_mps_area.y1(y(100));
-                    max_mps_path_area.transition().attr("d", max_mps_area).style("fill", colors["LD"]);
-                    mask.transition().attr("d", max_mps_area);
-
-                    half_max_mps_line.y(y(50));
-                    half_max_mps_path.transition().attr("d", half_max_mps_line);
-
-                    half_max_mps_line_smooth.y(y(52));
-                    text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
-
-                    total_women_mps_line.y(function (d) {
-                        return y(d.lib_snp_women_pct);
-                    });
-                    total_women_mps_path.transition().attr("d", total_women_mps_line);
-                    total_women_mps_area.y1(function (d) {
-                        return y(d.lib_snp_women_pct);
-                    });
-                    total_women_mps_path_area.transition().attr("d", total_women_mps_area);
-
-                    d3.select(".women-label").style("fill", colors["LD"]);
+                    d3.select(".women-label").style("fill", colors["Republican"]);
                     break;
                 case 4:
-                    // All MPs again
-                    yLabel.transition().text("% of MPs");
+                    // All Representatives
+                    yLabel.transition().text("% of Representatives");
 
-                    chartTitle.transition().text("MPs in the House of Commons");
+                    chartTitle.transition().text("Representatives in Congress");
 
                     y.domain([0, 100]);
                     gY.transition().call(yAxis);

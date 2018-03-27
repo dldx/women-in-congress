@@ -1,0 +1,53 @@
+id,name,state,term_start,term_end,party,clean_name,stream
+0,Rebecca Felton,Georgia,1922-11-21,1922-11-22,Democratic,rebeccalatimerfelton,1
+1,Hattie Caraway,Arkansas,1931-12-09,1945-01-03,Democratic,hattiecaraway,1
+2,Rose Long,Louisiana,1936-01-31,1937-01-03,Democratic,rosemcconnelllong,2
+3,Dixie Graves,Alabama,1937-08-20,1938-01-10,Democratic,dixiebibbgraves,2
+4,Gladys Pyle,South Dakota,1938-11-09,1939-01-03,Republican,gladyspyle,2
+5,Vera C. Bushfield,South Dakota,1948-10-06,1948-12-26,Republican,veracbushfield,1
+6,Margaret C. Smith,Maine,1949-01-03,1973-01-03,Republican,margaretchasesmith,1
+7,Eva Bowring,Nebraska,1954-04-16,1954-11-07,Republican,evabowring,2
+8,Hazel Abel,Nebraska,1954-11-08,1954-12-31,Republican,hazelabel,2
+9,Maurine Neuberger,Oregon,1960-11-09,1967-01-03,Democratic,maurineneuberger,2
+10,Elaine Edwards,Louisiana,1972-08-01,1972-11-13,Democratic,elainesedwards,2
+11,Muriel Humphrey,Minnesota,1978-01-25,1978-11-07,Democratic,murielhumphreybrown,1
+12,Maryon Allen,Alabama,1978-06-08,1978-11-07,Democratic,maryonpittmanallen,2
+13,Nancy Kassebaum,Kansas,1978-12-23,1997-01-03,Republican,nancykassebaum,1
+14,Paula Hawkins,Florida,1981-01-01,1987-01-03,Republican,paulahawkins,2
+15,Barbara Mikulski,Maryland,1987-01-03,2017-01-03,Democratic,barbaramikulski,2
+16,Jocelyn Burdick,North Dakota,1992-09-16,1992-12-14,Democratic,jocelynburdick,3
+17,Dianne Feinstein,California,1992-11-10,2020-01-01,Democratic,diannefeinstein,4
+18,Barbara Boxer,California,1993-01-03,2017-01-03,Democratic,barbaraboxer,3
+19,Carol Moseley-Braun,Illinois,1993-01-03,1999-01-03,Democratic,carolmoseleybraun,5
+20,Patty Murray,Washington,1993-01-03,2020-01-01,Democratic,pattymurray,6
+21,Kay Hutchison,Texas,1993-06-14,2013-01-03,Republican,kaybaileyhutchison,7
+22,Olympia Snowe,Maine,1995-01-03,2013-01-03,Republican,olympiasnowe,8
+23,Sheila Frahm,Kansas,1996-06-11,1996-11-06,Republican,sheilafrahm,9
+25,Mary Landrieu,Louisiana,1997-01-03,2015-01-03,Democratic,marylandrieu,1
+24,Susan Collins,Maine,1997-01-03,2020-01-01,Republican,susancollins,9
+26,Blanche Lincoln,Arkansas,1999-01-03,2011-01-03,Democratic,blanchelincoln,5
+27,Maria Cantwell,Washington,2001-01-03,2020-01-01,Democratic,mariacantwell,10
+28,Jean Carnahan,Missouri,2001-01-03,2002-11-25,Democratic,jeancarnahan,11
+29,Hillary Clinton,New York,2001-01-03,2009-01-21,Democratic,hillaryclinton,12
+30,Debbie Stabenow,Michigan,2001-01-03,2020-01-01,Democratic,debbiestabenow,13
+31,Lisa Murkowski,Alaska,2002-12-20,2020-01-01,Republican,lisamurkowski,11
+32,Elizabeth Dole,North Carolina,2003-01-03,2009-01-03,Republican,elizabethdole,14
+33,Amy Klobuchar,Minnesota,2007-01-03,2020-01-01,Democratic,amyklobuchar,15
+34,Claire McCaskill,Missouri,2007-01-03,2020-01-01,Democratic,clairemccaskill,16
+35,Jeanne Shaheen,New Hampshire,2009-01-03,2020-01-01,Democratic,jeanneshaheen,14
+36,Kay Hagan,North Carolina,2009-01-03,2015-01-03,Democratic,kayhagan,17
+37,Kirsten Gillibrand,New York,2009-01-26,2020-01-01,Democratic,kirstengillibrand,12
+38,Kelly Ayotte,New Hampshire,2011-01-03,2017-01-03,Republican,kellyayotte,5
+39,Tammy Baldwin,Wisconsin,2013-01-03,2020-01-01,Democratic,tammybaldwin,7
+40,Deb Fischer,Nebraska,2013-01-03,2020-01-01,Republican,debfischer,8
+41,Heidi Heitkamp,North Dakota,2013-01-03,2020-01-01,Democratic,heidiheitkamp,18
+42,Mazie Hirono,Hawaii,2013-01-03,2020-01-01,Democratic,maziehirono,19
+43,Elizabeth Warren,Massachusetts,2013-01-03,2020-01-01,Democratic,elizabethwarren,20
+44,Joni Ernst,Iowa,2015-01-03,2020-01-01,Republican,joniernst,1
+45,Shelley Moore Capito,West Virginia,2015-01-03,2020-01-01,Republican,shelleymoorecapito,17
+46,Catherine Cortez Masto,Nevada,2017-01-03,2020-01-01,Democratic,catherinecortezmasto,2
+47,Tammy Duckworth,Illinois,2017-01-03,2020-01-01,Democratic,tammyduckworth,3
+48,Kamala Harris,California,2017-01-03,2020-01-01,Democratic,kamalaharris,5
+49,Maggie Hassan,New Hampshire,2017-01-03,2020-01-01,Democratic,maggiehassan,21
+50,Tina Smith,Minnesota,2018-01-03,2020-01-01,Democratic,tinasmith,22
+51,Cindy Hyde-Smith,Mississippi,2018-04-09,2020-01-01,Republican,cindyhydesmith,23

@@ -251,7 +251,7 @@ body {
 
   .mp-constituency::before {
     @include phone {
-      content: "CONST." !important;
+      content: "DIST." !important;
     }
   }
 
@@ -717,7 +717,7 @@ $tip-padding: .5;
     text-overflow: ellipsis;
 
     &::before {
-      content: 'CONSTITUENCY';
+      content: 'DISTRICT';
       font-weight: bolder;
       font-size: .8rem;
       margin-right: .5rem;
@@ -725,10 +725,10 @@ $tip-padding: .5;
       background-color: invert($tip-background);
       color: $tip-background;
       @include phone {
-        content: "CONST.";
+        content: "DIST.";
       }
       @include tablet {
-        content: "CONST.";
+        content: "DIST.";
       }
     }
     @include phone {

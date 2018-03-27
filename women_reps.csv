@@ -1,0 +1,355 @@
+id,name,district,term_start,term_end,party,clean_name,stream
+0,Jeannette Rankin,Montana at-large,1917-03-04,1919-03-04,Republican,jeannetterankin,1
+2,Alice Robertson,Oklahoma's 2nd,1921-03-04,1923-03-04,Republican,alicemaryrobertson,1
+3,Winnifred Huck,Illinois at-large,1922-11-07,1923-03-04,Republican,winnifredspraguemasonhuck,2
+4,Mae Nolan,California's 5th,1923-01-23,1925-03-04,Republican,maenolan,3
+5,Florence Kahn,California's 4th,1925-03-04,1937-01-03,Republican,florencepragkahn,1
+6,Mary Norton,New Jersey's 12th,1925-03-04,1933-03-04,Democratic,maryteresanorton,2
+8,Edith Rogers,Massachusetts's 5th,1925-06-30,1960-09-10,Republican,edithnourserogers,3
+9,Katherine G. Langley,Kentucky's 7th,1927-03-04,1931-03-04,Republican,katherineglangley,4
+10,Pearl Oldfield,Arkansas's 2nd,1929-01-09,1931-03-04,Democratic,pearlpedenoldfield,5
+11,Ruth McCormick,Illinois at-large,1929-03-04,1931-03-04,Republican,ruthhannamccormick,6
+12,Ruth Owen,Florida's 4th,1929-03-04,1933-03-04,Democratic,ruthbryanowen,7
+13,Ruth Pratt,New York's 17th,1929-03-04,1933-03-04,Republican,ruthbakerpratt,8
+14,Effiegene Wingo,Arkansas's 4th,1930-11-04,1933-03-04,Democratic,effiegenelockewingo,9
+15,Willa Eslick,Tennessee's 7th,1932-08-14,1933-03-04,Democratic,willamccordblakeeslick,4
+17,Kathryn O'Loughlin-McCarthy,Kansas's 6th,1933-03-04,1935-01-03,Democratic,kathryno27loughlinmccarthy,2
+16,Virginia E. Jenckes,Indiana's 6th,1933-03-04,1939-01-03,Democratic,virginiaejenckes,4
+7,Mary Norton,New Jersey's 13th,1933-03-04,1951-01-03,Democratic,maryteresanorton,5
+18,Isabella Greenway,Arizona at-large,1933-10-02,1937-01-03,Democratic,isabellagreenway,6
+19,Marian W. Clarke,New York's 34th,1933-12-28,1935-01-03,Republican,marianwclarke,7
+20,Caroline O'Day,New York at-large,1935-01-03,1943-01-03,Democratic,carolinelovegoodwino27day,2
+21,Nan Honeyman,Oregon's 3rd,1937-01-03,1939-01-03,Democratic,nanwoodhoneyman,1
+22,Elizabeth Gasque,South Carolina's 6th,1938-09-13,1939-01-03,Democratic,elizabethhawleygasque,6
+23,Jessie Sumner,Illinois's 18th,1939-01-03,1947-01-03,Republican,jessiesumner,1
+24,Clara G. McMillan,South Carolina's 1st,1939-11-07,1941-01-03,Democratic,claragmcmillan,4
+25,Frances P. Bolton,Ohio's 22nd,1940-02-27,1969-01-03,Republican,francespbolton,6
+26,Margaret C. Smith,Maine's 2nd,1940-06-03,1949-01-03,Republican,margaretchasesmith,7
+27,Florence Gibbs,Georgia's 8th,1940-10-01,1941-01-03,Democratic,florencerevillegibbs,8
+1,Jeannette Rankin,Montana's 1st,1941-01-03,1943-01-03,Republican,jeannetterankin,4
+28,Katharine Byron,Maryland's 6th,1941-05-27,1943-01-03,Democratic,katharinebyron,8
+29,Veronica Boland,Pennsylvania's 11th,1942-11-03,1943-01-03,Democratic,veronicagraceboland,9
+30,Clare Luce,Connecticut's 4th,1943-01-03,1947-01-03,Republican,clarebootheluce,2
+31,Winifred C. Stanley,New York at-large,1943-01-03,1945-01-03,Republican,winifredcstanley,4
+32,Willa L. Fulmer,South Carolina's 2nd,1944-11-07,1945-01-03,Democratic,willalfulmer,8
+34,Helen Gahagan-Douglas,California's 14th,1945-01-03,1951-01-03,Democratic,helengahagandouglas,4
+35,Chase G. Woodhouse,Connecticut's 2nd,1945-01-03,1947-01-03,Democratic,chasegwoodhouse,8
+33,Emily Douglas,Illinois at-large,1945-01-03,1947-01-03,Democratic,emilytaftdouglas,9
+37,Helen Mankin,Georgia's 5th,1946-02-12,1947-01-03,Democratic,helendouglasmankin,10
+38,Eliza Pratt,North Carolina's 8th,1946-05-25,1947-01-03,Democratic,elizajanepratt,11
+39,Georgia Lusk,New Mexico at-large,1947-01-03,1949-01-03,Democratic,georgialeelusk,1
+40,Katharine St. George,New York's 29th,1947-01-03,1953-01-03,Republican,katharinestgeorge,2
+36,Chase G. Woodhouse,Connecticut's 2nd,1949-01-03,1951-01-03,Democratic,chasegwoodhouse,1
+43,Reva Bosone,Utah's 2nd,1949-01-03,1953-01-03,Democratic,revabeckbosone,7
+44,Cecil M. Harden,Indiana's 6th,1949-01-03,1959-01-03,Republican,cecilmharden,8
+45,Edna F. Kelly,New York's 10th,1949-11-08,1963-01-03,Democratic,ednafkelly,9
+47,Marguerite S. Church,Illinois's 13th,1951-01-03,1963-01-03,Republican,margueriteschurch,1
+48,Ruth Thompson,Michigan's 9th,1951-01-03,1957-01-03,Republican,ruththompson,4
+49,Elizabeth Kee,West Virginia's 5th,1951-07-17,1965-01-03,Democratic,elizabethkee,5
+50,Vera Buchanan,Pennsylvania's 33rd,1951-07-24,1953-01-03,Democratic,verabuchanan,10
+53,Leonor Sullivan,Missouri's 3rd,1953-01-03,1977-01-03,Democratic,leonorsullivan,2
+52,Gracie Pfost,Idaho's 1st,1953-01-03,1963-01-03,Democratic,graciepfost,7
+51,Vera Buchanan,Pennsylvania's 30th,1953-01-03,1955-11-26,Democratic,verabuchanan,10
+41,Katharine St. George,New York's 28th,1953-01-03,1963-01-03,Republican,katharinestgeorge,11
+54,Elizabeth P. Farrington,Hawaii's at-large,1954-07-31,1957-01-03,Republican,maryelizabethpruettfarrington,12
+55,Iris Blitch,Georgia's 8th,1955-01-03,1963-01-03,Democratic,irisfairclothblitch,13
+56,Edith Green,Oregon's 3rd,1955-01-03,1974-12-31,Democratic,edithgreen,14
+57,Martha Griffiths,Michigan's 17th,1955-01-03,1974-12-31,Democratic,marthagriffiths,15
+58,Coya Knutson,Minnesota's 9th,1955-01-03,1959-01-03,Democratic,coyaknutson,16
+59,Kathryn E. Granahan,Pennsylvania's 2nd,1956-11-06,1963-01-03,Democratic,kathrynegranahan,10
+60,Florence P. Dwyer,New Jersey's 6th,1957-01-03,1967-01-03,Republican,florencepdwyer,4
+64,Jessica M. Weis,New York's 38th,1959-01-03,1963-01-03,Republican,jessicamweis,8
+62,Catherine May,Washington's 4th,1959-01-03,1971-01-03,Republican,catherinedeanmay,12
+63,Edna O. Simpson,Illinois's 20th,1959-01-03,1961-01-03,Republican,ednaosimpson,16
+65,Julia Hansen,Washington's 3rd,1960-11-08,1974-12-31,Democratic,juliabutlerhansen,3
+66,Catherine Norrell,Arkansas's 6th,1961-04-19,1963-01-03,Democratic,catherinedorrisnorrell,16
+67,Louise Reece,Tennessee's 1st,1961-05-16,1963-01-03,Republican,louisegoffreece,17
+68,Corinne Riley,South Carolina's 2nd,1962-04-10,1963-01-03,Democratic,corinneboydriley,18
+46,Edna F. Kelly,New York's 12th,1963-01-03,1969-01-03,Democratic,ednafkelly,1
+42,Katharine St. George,New York's 27th,1963-01-03,1965-01-03,Republican,katharinestgeorge,7
+69,Charlotte Reid,Illinois's 15th,1963-01-03,1971-10-07,Republican,charlottethompsonreid,8
+70,Irene Baker,Tennessee's 2nd,1964-01-07,1965-01-03,Republican,irenebaker,9
+71,Patsy Mink,Hawaii's at-large,1965-01-03,1971-01-03,Democratic,patsymink,5
+74,Lera Thomas,Texas's 8th,1966-03-26,1967-01-03,Democratic,leramillardthomas,7
+75,Margaret Heckler,Massachusetts's 10th,1967-01-03,1983-01-03,Republican,margaretheckler,4
+61,Florence P. Dwyer,New Jersey's 12th,1967-01-03,1973-01-03,Republican,florencepdwyer,7
+76,Shirley Chisholm,New York's 12th,1969-01-03,1983-01-03,Democratic,shirleychisholm,1
+72,Patsy Mink,Hawaii's 2nd,1971-01-03,1977-01-03,Democratic,patsymink,5
+77,Bella Abzug,New York's 19th,1971-01-03,1973-01-03,Democratic,bellaabzug,6
+79,Ella T. Grasso,Connecticut's 6th,1971-01-03,1975-01-03,Democratic,ellatgrasso,9
+80,Louise Hicks,Massachusetts's 9th,1971-01-03,1973-01-03,Democratic,louisedayhicks,10
+81,Elizabeth B. Andrews,Alabama's 3rd,1972-04-04,1973-01-03,Democratic,elizabethbandrews,8
+87,Patricia Schroeder,Colorado's 1st,1973-01-03,1997-01-03,Democratic,patriciaschroeder,6
+86,Barbara Jordan,Texas's 18th,1973-01-03,1979-01-03,Democratic,barbarajordan,7
+84,Marjorie Holt,Maryland's 4th,1973-01-03,1987-01-03,Republican,marjorieholt,8
+85,Elizabeth Holtzman,New York's 16th,1973-01-03,1981-01-03,Democratic,elizabethholtzman,10
+82,Yvonne Burke,California's 37th,1973-01-03,1975-01-03,Democratic,yvonnebrathwaiteburke,11
+78,Bella Abzug,New York's 20th,1973-01-03,1977-01-03,Democratic,bellaabzug,12
+88,Lindy Boggs,Louisiana's 2nd,1973-03-20,1991-01-03,Democratic,lindyboggs,13
+89,Cardiss Collins,Illinois's 7th,1973-06-05,1997-01-03,Democratic,cardisscollins,16
+90,Millicent Fenwick,New Jersey's 5th,1975-01-03,1983-01-03,Republican,millicentfenwick,3
+91,Martha Keys,Kansas's 2nd,1975-01-03,1979-01-03,Democratic,marthakeys,9
+92,Marilyn Lloyd,Tennessee's 3rd,1975-01-03,1995-01-03,Democratic,marilynlloyd,11
+93,Virginia D. Smith,Nebraska's 3rd,1975-01-03,1991-01-03,Republican,virginiadsmith,14
+94,Gladys Spellman,Marylands's 5th,1975-01-03,1981-01-03,Democratic,gladysspellman,15
+95,Helen Stevenson-Meyner,New Jersey's 13th,1975-01-03,1979-01-03,Democratic,helenstevensonmeyner,17
+83,Yvonne Burke,California's 28th,1975-01-03,1979-01-03,Democratic,yvonnebrathwaiteburke,18
+96,Shirley Pettis,California's 37th,1975-04-29,1979-01-03,Republican,shirleyneilpettis,19
+97,Barbara Mikulski,Maryland's 3rd,1977-01-03,1987-01-03,Democratic,barbaramikulski,2
+98,Mary Oakar,Ohio's 20th,1977-01-03,1993-01-03,Democratic,maryroseoakar,5
+100,Geraldine Ferraro,New York's 9th,1979-01-03,1985-01-03,Democratic,geraldineferraro,7
+99,Beverly Byron,Maryland's 6th,1979-01-03,1993-01-03,Democratic,beverlybyron,9
+101,Olympia Snowe,Maine's 2nd,1979-01-03,1995-01-03,Republican,olympiasnowe,12
+104,Marge Roukema,New Jersey's 7th,1981-01-03,1983-01-03,Republican,margeroukema,10
+103,Lynn Morley-Martin,Illinois's 16th,1981-01-03,1991-01-03,Republican,lynnmorleymartin,15
+106,Claudine Schneider,Rhode Island's 2nd,1981-01-03,1991-01-03,Republican,claudineschneider,17
+102,Bobbi Fiedler,California's 21st,1981-01-03,1987-01-03,Republican,bobbifiedler,18
+107,Barbara B. Kennelly,Connecticut's 1st,1982-01-12,1999-01-03,Democratic,barbarabkennelly,19
+108,Jean Spencer-Ashbrook,Ohio's 17th,1982-06-29,1983-01-03,Republican,jeanspencerashbrook,20
+109,Katie Hall,Indiana's 1st,1982-11-02,1985-01-03,Democratic,katiehallpolitician,21
+105,Marge Roukema,New Jersey's 5th,1983-01-03,2003-01-03,Republican,margeroukema,1
+110,Barbara Boxer,California's 6th,1983-01-03,1993-01-03,Democratic,barbaraboxer,3
+111,Nancy Johnson,Connecticut's 6th,1983-01-03,2003-01-03,Republican,nancyjohnson,4
+113,Marcy Kaptur,Ohio's 9th,1983-01-03,2020-01-01,Democratic,marcykaptur,10
+114,Barbara Vucanovich,Nevada's 2nd,1983-01-03,1997-01-03,Republican,barbaravucanovich,20
+115,Sala Burton,California's 5th,1983-06-21,1987-02-01,Democratic,salaburton,22
+117,Jan Meyers,Kansas's 3rd,1985-01-03,1997-01-03,Republican,janmeyers,7
+116,Helen Delich-Bentley,Maryland's 2nd,1985-01-03,1995-01-03,Republican,helendelichbentley,21
+118,Catherine Small-Long,Louisiana's 8th,1985-03-30,1987-01-03,Democratic,catherinesmalllong,23
+121,Pat Saiki,Hawaii's 1st,1987-01-03,1991-01-03,Republican,patsaiki,2
+122,Louise Slaughter,New York's 30th,1987-01-03,1993-01-03,Democratic,louiseslaughter,8
+119,Connie Morella,Maryland's 8th,1987-01-03,2003-01-03,Republican,conniemorella,18
+120,Liz J. Patterson,South Carolina's 4th,1987-01-03,1993-01-03,Democratic,lizjpatterson,23
+125,Nancy Pelosi,California's 5th,1987-06-02,1993-01-03,Democratic,nancypelosi,22
+131,Jolene Unsoeld,Washington's 3rd,1989-01-03,1995-01-03,Democratic,joleneunsoeld,24
+128,Nita Lowey,New York's 20th,1989-01-03,1993-01-03,Democratic,nitalowey,25
+132,Jill Long-Thompson,Indiana's 4th,1989-03-20,1995-01-03,Democratic,jilllongthompson,26
+133,Ileana Ros-Lehtinen,Florida's 18th,1989-08-29,2013-01-03,Republican,ileanaroslehtinen,27
+135,Susan Molinari,New York's 14th,1990-03-20,1993-01-03,Republican,susanmolinari,28
+73,Patsy Mink,Hawaii's 2nd,1990-09-22,2002-09-28,Democratic,patsymink,29
+140,Eleanor Holmes-Norton,DC at-large,1991-01-03,2020-01-01,Democratic,eleanorholmesnorton,2
+142,Maxine Waters,California's 29th,1991-01-03,1993-01-03,Democratic,maxinewaters,13
+141,Joan Horn,Missouri's 2nd,1991-01-03,1993-01-03,Democratic,joankellyhorn,14
+137,Barbara-Rose Collins,Michigan's 13th,1991-01-03,1993-01-03,Democratic,barbararosecollins,15
+139,Rosa DeLauro,Connecticut's 3rd,1991-01-03,2020-01-01,Democratic,rosadelauro,17
+145,Eva M. Clayton,North Carolina's 1st,1992-11-03,2003-01-03,Democratic,evamclayton,30
+159,Eddie Johnson,Texas's 30th,1993-01-03,2020-01-01,Democratic,eddiebernicejohnson,3
+160,Blanche Lincoln,Arkansas's 1st,1993-01-03,1997-01-03,Democratic,blanchelincoln,5
+161,Carolyn Maloney,New York's 14th,1993-01-03,2013-01-03,Democratic,carolynmaloney,8
+157,Jane Harman,California's 36th,1993-01-03,1999-01-03,Democratic,janeharman,9
+156,Elizabeth Furse,Oregon's 1st,1993-01-03,1999-01-03,Democratic,elizabethfurse,13
+155,Tillie K. Fowler,Florida's 4th,1993-01-03,2001-01-03,Republican,tilliekfowler,14
+177,Lynn Woolsey,California's 6th,1993-01-03,2013-01-03,Democratic,lynnwoolsey,15
+164,Cynthia McKinney,Georgia's 11th,1993-01-03,1997-01-03,Democratic,cynthiamckinney,22
+167,Carrie P. Meek,Florida's 17th,1993-01-03,2003-01-03,Democratic,carriepmeek,23
+168,Deborah Pryce,Ohio's 15th,1993-01-03,2009-01-03,Republican,deborahpryce,25
+169,Lucille Roybal-Allard,California's 33rd,1993-01-03,2003-01-03,Democratic,lucilleroybalallard,28
+172,Lynn Schenk,California's 49th,1993-01-03,1995-01-03,Democratic,lynnschenk,31
+173,Karen Shepherd,Utah's 2nd,1993-01-03,1995-01-03,Democratic,karenshepherd,32
+174,Karen Thurman,Florida's 5th,1993-01-03,2003-01-03,Democratic,karenthurman,33
+175,Nydia Velázquez,New York's 12th,1993-01-03,2013-01-03,Democratic,nydiavelc3a1zquez,34
+153,Anna Eshoo,California's 14th,1993-01-03,2013-01-03,Democratic,annaeshoo,35
+163,Marjorie Margolies,Pennsylvania's 13th,1993-01-03,1995-01-03,Democratic,marjoriemargolies,36
+152,Karan English,Arizona's 6th,1993-01-03,1995-01-03,Democratic,karanenglish,37
+149,Maria Cantwell,Washington's 1st,1993-01-03,1995-01-03,Democratic,mariacantwell,38
+150,Pat Danner,Missouri's 6th,1993-01-03,2001-01-03,Democratic,patdanner,39
+129,Nita Lowey,New York's 18th,1993-01-03,2013-01-03,Democratic,nitalowey,40
+136,Susan Molinari,New York's 13th,1993-01-03,1997-08-02,Republican,susanmolinari,41
+138,Barbara-Rose Collins,Michigan's 15th,1993-01-03,1997-01-03,Democratic,barbararosecollins,42
+123,Louise Slaughter,New York's 28th,1993-01-03,2013-01-03,Democratic,louiseslaughter,43
+143,Maxine Waters,California's 35th,1993-01-03,2013-01-03,Democratic,maxinewaters,44
+151,Jennifer Dunn,Washington's 8th,1993-01-03,2005-01-03,Republican,jenniferdunnpolitician,45
+148,Leslie L. Byrne,Virginia's 11th,1993-01-03,1995-01-03,Democratic,leslielbyrne,46
+146,Corrine Brown,Florida's 3rd,1993-01-03,2013-01-03,Democratic,corrinebrown,47
+126,Nancy Pelosi,California's 8th,1993-01-03,2013-01-03,Democratic,nancypelosi,48
+185,Karen McCarthy,Missouri's 5th,1995-01-03,2005-01-03,Democratic,karenmccarthy,11
+186,Sue Myrick,North Carolina's 9th,1995-01-03,2013-01-03,Republican,suemyrick,12
+187,Lynn N. Rivers,Michigan's 13th,1995-01-03,2003-01-03,Democratic,lynnnrivers,21
+188,Andrea Seastrand,California's 22nd,1995-01-03,1997-01-03,Republican,andreaseastrand,24
+183,Zoe Lofgren,California's 16th,1995-01-03,2013-01-03,Democratic,zoelofgren,26
+182,Sue Kelly,New York's 19th,1995-01-03,2007-01-03,Republican,suewkelly,31
+181,Sheila Jackson-Lee,Texas's 18th,1995-01-03,2020-01-01,Democratic,sheilajacksonlee,32
+180,Enid Greene,Utah's 2nd,1995-01-03,1997-01-03,Republican,enidgreenemickelsen,36
+189,Linda Smith,Washington's 3rd,1995-01-03,1999-01-03,Republican,lindasmithamericanpolitician,37
+179,Barbara Cubin,Wyoming's at-large,1995-01-03,2009-01-03,Republican,barbaracubin,38
+178,Helen Chenoweth-Hage,Idaho's 1st,1995-01-03,2001-01-03,Republican,helenchenowethhage,46
+190,Juanita Millender-McDonald,California's 37th,1996-03-26,2007-04-22,Democratic,juanitamillendermcdonald,49
+191,Jo Ann Emerson,Missouri's 8th,1996-11-05,1997-01-03,Republican,joannemerson,50
+204,Loretta Sánchez,California's 46th,1997-01-03,2003-01-03,Democratic,lorettasanchez,5
+194,Julia Carson,Indiana's 10th,1997-01-03,2003-01-03,Democratic,juliacarson,6
+208,Ellen Tauscher,California's 10th,1997-01-03,2009-06-26,Democratic,ellentauscher,7
+196,Carolyn Cheeks-Kilpatrick,Michigan's 15th,1997-01-03,2003-01-03,Democratic,carolyncheekskilpatrick,16
+207,Debbie Stabenow,Michigan's 8th,1997-01-03,2001-01-03,Democratic,debbiestabenow,20
+198,Donna Christian-Christensen,U.S. Virgin Island's at-large,1997-01-03,2015-01-03,Democratic,donnachristianchristensen,22
+165,Cynthia McKinney,Georgia's 4th,1997-01-03,2003-01-03,Democratic,cynthiamckinney,24
+200,Kay Granger,Texas's 12th,1997-01-03,2020-01-01,Republican,kaygranger,36
+201,Darlene Hooley,Oregon's 5th,1997-01-03,2009-01-03,Democratic,darlenehooley,42
+203,Anne Northup,Kentucky's 3rd,1997-01-03,2007-01-03,Republican,annenorthup,50
+202,Carolyn McCarthy,New York's 4th,1997-01-03,2015-01-03,Democratic,carolynmccarthy,51
+199,Diana DeGette,Colorado's 1st,1997-01-03,2020-01-01,Democratic,dianadegette,52
+192,Jo Ann Emerson,Independent,1997-01-03,1997-01-08,Republican,joannemerson,53
+193,Jo Ann Emerson,Republican,1997-01-08,2013-01-22,Republican,joannemerson,53
+209,Lois Capps,California's 22nd,1998-03-10,2003-01-03,Democratic,loiscapps,41
+212,Mary Bono,California's 44th,1998-04-07,2003-01-03,Republican,marybono,54
+214,Barbara Lee,California's 9th,1998-04-07,2013-01-03,Democratic,barbaralee,55
+216,Heather Wilson,New Mexico's 1st,1998-06-25,2009-01-03,Republican,heatherwilson,56
+224,Stephanie Tubbs-Jones,Ohio's 11th,1999-01-03,2008-08-20,Democratic,stephanietubbsjones,9
+223,Jan Schakowsky,Illinois's 9th,1999-01-03,2020-01-01,Democratic,janschakowsky,13
+220,Grace Napolitano,California's 34th,1999-01-03,2003-01-03,Democratic,gracenapolitano,19
+219,Judy Biggert,Illinois's 13th,1999-01-03,2013-01-03,Republican,judybiggert,37
+218,Shelley Berkley,Nevada's 1st,1999-01-03,2013-01-03,Democratic,shelleyberkley,57
+217,Tammy Baldwin,Wisconsin's 2nd,1999-01-03,2013-01-03,Democratic,tammybaldwin,58
+230,Shelley Moore-Capito,West Virginia's 2nd,2001-01-03,2015-01-03,Republican,shelleymoorecapito,14
+229,Betty McCollum,Minnesota's 4th,2001-01-03,2020-01-01,Democratic,bettymccollum,20
+228,Melissa Hart,Pennsylvania's 4th,2001-01-03,2007-01-03,Republican,melissahartpolitician,39
+226,Susan Davis,California's 49th,2001-01-03,2003-01-03,Democratic,susandavispolitician,46
+231,Hilda Solis,California's 31st,2001-01-03,2003-01-03,Democratic,hildasolis,59
+225,Jo Ann Davis,Virginia's 1st,2001-01-03,2007-10-06,Republican,joanndavis,60
+158,Jane Harman,California's 36th,2001-01-03,2011-02-28,Democratic,janeharman,61
+233,Diane Watson,California's 32nd,2001-06-05,2003-01-03,Democratic,dianewatson,62
+242,Linda Sánchez,California's 39th,2003-01-03,2013-01-03,Democratic,lindasc3a1nchez,1
+234,Diane Watson,California's 33rd,2003-01-03,2011-01-03,Democratic,dianewatson,4
+232,Hilda Solis,California's 32nd,2003-01-03,2009-02-24,Democratic,hildasolis,5
+237,Ginny Brown-Waite,Florida's 5th,2003-01-03,2011-01-03,Republican,ginnybrownwaite,6
+238,Katherine Harris,Florida's 13th,2003-01-03,2007-01-03,Republican,katherineharris,16
+227,Susan Davis,California's 53rd,2003-01-03,2020-01-01,Democratic,susandavispolitician,18
+239,Denise Majette,Georgia's 4th,2003-01-03,2005-01-03,Democratic,denisemajette,19
+240,Candice Miller,Michigan's 10th,2003-01-03,2017-01-01,Republican,candicemiller,21
+241,Marilyn Musgrave,Colorado's 4th,2003-01-03,2009-01-03,Republican,marilynmusgrave,23
+235,Marsha Blackburn,Tennessee's 7th,2003-01-03,2020-01-01,Republican,marshablackburn,24
+170,Lucille Roybal-Allard,California's 34th,2003-01-03,2013-01-03,Democratic,lucilleroybalallard,28
+221,Grace Napolitano,California's 38th,2003-01-03,2013-01-03,Democratic,gracenapolitano,29
+112,Nancy Johnson,Connecticut's 5th,2003-01-03,2007-01-03,Republican,nancyjohnson,30
+197,Carolyn Cheeks-Kilpatrick,Michigan's 13th,2003-01-03,2011-01-03,Democratic,carolyncheekskilpatrick,33
+195,Julia Carson,Indiana's 7th,2003-01-03,2007-12-15,Democratic,juliacarson,41
+205,Loretta Sánchez,California's 47th,2003-01-03,2013-01-03,Democratic,lorettasanchez,46
+210,Lois Capps,California's 23rd,2003-01-03,2013-01-03,Democratic,loiscapps,54
+213,Mary Bono,California's 45th,2003-01-03,2013-01-03,Republican,marybono,59
+236,Madeleine Bordallo,Guam's at-large,2003-01-03,2020-01-01,Democratic,madeleinebordallo,62
+244,Stephanie Herseth-Sandlin,South Dakota's at-large,2004-06-01,2011-01-03,Democratic,stephaniehersethsandlin,63
+249,Gwen Moore,Wisconsin's 4th,2005-01-03,2020-01-01,Democratic,gwenmoore,11
+246,Thelma Drake,Virginia's 2nd,2005-01-03,2009-01-03,Republican,thelmadrake,19
+251,Debbie Wasserman-Schultz,Florida's 20th,2005-01-03,2013-01-03,Democratic,debbiewassermanschultz,45
+166,Cynthia McKinney,Georgia's 4th,2005-01-03,2007-01-03,Democratic,cynthiamckinney,64
+248,Cathy McMorris-Rodgers,Washington's 5th,2005-01-03,2020-01-01,Republican,cathymcmorrisrodgers,65
+247,Virginia Foxx,North Carolina's 5th,2005-01-03,2020-01-01,Republican,virginiafoxx,66
+250,Allyson Schwartz,Pennsylvania's 13th,2005-01-03,2015-01-03,Democratic,allysonschwartz,67
+245,Melissa Bean,Illinois's 8th,2005-01-03,2011-01-03,Democratic,melissabean,68
+253,Doris Matsui,California's 5th,2005-03-03,2013-01-03,Democratic,dorismatsui,69
+255,Jean Schmidt,Ohio's 2nd,2005-09-06,2013-01-03,Republican,jeanschmidt,70
+256,Shelley Sekula-Gibbs,Texas's 22nd,2006-11-13,2007-01-03,Republican,shelleysekulagibbs,71
+261,Yvette Clarke,New York's 11th,2007-01-03,2013-01-03,Democratic,yvetteclarke,16
+271,Betty Sutton,Ohio's 13th,2007-01-03,2013-01-03,Democratic,bettysutton,30
+258,Nancy Boyda,Kansas's 2nd,2007-01-03,2009-01-03,Democratic,nancyboyda,31
+267,Laura Richardson,California's 37th,2007-01-03,2013-01-03,Democratic,laurarichardson,39
+266,Mazie Hirono,Hawaii's 2nd,2007-01-03,2013-01-03,Democratic,maziehirono,50
+268,Carol Shea-Porter,New Hampshire's 1st,2007-01-03,2011-01-03,Democratic,carolsheaporter,64
+265,Kirsten Gillibrand,New York's 20th,2007-01-03,2009-01-25,Democratic,kirstengillibrand,71
+264,Gabrielle Giffords,Arizona's 8th,2007-01-03,2012-01-25,Democratic,gabriellegiffords,72
+263,Mary Fallin,Oklahoma 5th,2007-01-03,2011-01-03,Republican,maryfallin,73
+257,Michele Bachmann,Minnesota 6th,2007-01-03,2015-01-03,Republican,michelebachmann,74
+259,Kathy Castor,Florida's 11th,2007-01-03,2013-01-03,Democratic,kathycastor,75
+272,Niki Tsongas,Massachusetts's 5th,2007-10-16,2013-01-03,Democratic,nikitsongas,49
+274,Jackie Speier,California's 12th,2008-04-08,2013-01-03,Democratic,jackiespeier,41
+276,Donna Edwards,Maryland's 4th,2008-06-17,2017-01-03,Democratic,donnaedwards,60
+277,Marcia Fudge,Ohio's 11th,2008-11-18,2020-01-01,Democratic,marciafudge,9
+280,Lynn Jenkins,Kansas's 2nd,2009-01-03,2020-01-01,Republican,lynnjenkins,19
+279,Debbie Halvorson,Illinois's 11th,2009-01-03,2011-01-03,Democratic,debbiehalvorson,23
+282,Ann Kirkpatrick,Arizona's 1st,2009-01-03,2011-01-03,Democratic,annkirkpatrick,25
+278,Kathy Dahlkemper,Pennsylvania's 3rd,2009-01-03,2011-01-03,Democratic,kathydahlkemper,31
+284,Suzanne Kosmas,Florida's 24th,2009-01-03,2011-01-03,Democratic,suzannekosmas,38
+285,Cynthia Lummis,Wyoming's at-large,2009-01-03,2017-01-03,Republican,cynthialummis,42
+286,Betsy Markey,Colorado's 4th,2009-01-03,2011-01-03,Democratic,betsymarkey,56
+287,Chellie Pingree,Maine's 1st,2009-01-03,2020-01-01,Democratic,chelliepingree,76
+288,Dina Titus,Nevada's 3rd,2009-01-03,2011-01-03,Democratic,dinatitus,77
+281,Mary Jo Kilroy,Ohio's 15th,2009-01-03,2011-01-03,Democratic,maryjokilroy,78
+290,Judy Chu,California's 32nd,2009-06-19,2013-01-03,Democratic,judychu,5
+296,Ann Marie Buerkle,New York's 25th,2011-01-03,2013-01-03,Republican,annmariebuerkle,4
+295,Diane Black,Tennessee's 6th,2011-01-03,2020-01-01,Republican,dianeblack,6
+304,Martha Roby,Alabama's 2nd,2011-01-03,2020-01-01,Republican,martharoby,7
+300,Vicky Hartzler,Missouri's 4th,2011-01-03,2020-01-01,Republican,vickyhartzler,23
+305,Terri Sewell,Alabama's 7th,2011-01-03,2020-01-01,Democratic,terrisewell,25
+293,Karen Bass,California's 33rd,2011-01-03,2013-01-03,Democratic,karenbass,31
+302,Jaime Herrera-Beutler,Washington's 3rd,2011-01-03,2020-01-01,Republican,jaimeherrerabeutler,33
+306,Frederica Wilson,Florida's 17th,2011-01-03,2013-01-03,Democratic,fredericawilson,38
+301,Nan Hayworth,New York's 19th,2011-01-03,2013-01-03,Republican,nanhayworth,56
+297,Renee Ellmers,North Carolina's 2nd,2011-01-03,2017-01-03,Republican,reneeellmers,63
+303,Kristi Noem,South Dakota's at-large,2011-01-03,2020-01-01,Republican,kristinoem,64
+292,Sandy Adams,Florida's 24th,2011-01-03,2013-01-03,Republican,sandyadams,68
+298,Colleen Hanabusa,Hawaii's 1st,2011-01-03,2015-01-03,Democratic,colleenhanabusa,71
+308,Kathy Hochul,New York's 26th,2011-06-01,2013-01-03,Democratic,kathyhochul,61
+309,Janice Hahn,California's 36th,2011-07-12,2013-01-03,Democratic,janicehahn,73
+311,Suzanne Bonamici,Oregon's 1st,2012-01-21,2020-01-01,Democratic,suzannebonamici,77
+312,Suzan DelBene,Washington's 1st,2012-11-06,2020-01-01,Democratic,suzandelbene,72
+310,Janice Hahn,California's 44th,2013-01-03,2016-12-04,Democratic,janicehahn,1
+317,Tammy Duckworth,Illinois's 8th,2013-01-03,2017-01-03,Democratic,tammyduckworth,4
+315,Julia Brownley,California's 26th,2013-01-03,2020-01-01,Democratic,juliabrownley,5
+318,Elizabeth Esty,Connecticut's 5th,2013-01-03,2020-01-01,Democratic,elizabethesty,8
+314,Susan Brooks,Indiana's 5th,2013-01-03,2020-01-01,Republican,susanbrooks,12
+327,Jackie Walorski,Indiana's 2nd,2013-01-03,2020-01-01,Republican,jackiewalorski,15
+326,Ann Wagner,Missouri's 2nd,2013-01-03,2020-01-01,Republican,annwagner,16
+319,Lois Frankel,Florida's 22nd,2013-01-03,2020-01-01,Democratic,loisfrankel,26
+325,Kyrsten Sinema,Arizona's 9th,2013-01-03,2020-01-01,Democratic,kyrstensinema,27
+313,Joyce Beatty,Ohio's 3rd,2013-01-03,2020-01-01,Democratic,joycebeatty,28
+324,Gloria Negrete-McLeod,California's 35th,2013-01-03,2015-01-03,Democratic,glorianegretemcleod,29
+320,Tulsi Gabbard,Hawaii's 2nd,2013-01-03,2020-01-01,Democratic,tulsigabbard,30
+323,Grace Meng,New York's 6th,2013-01-03,2020-01-01,Democratic,gracemeng,31
+322,Ann McLane-Kuster,New Hampshire's 2nd,2013-01-03,2020-01-01,Democratic,annmclanekuster,34
+321,Michelle Lujan-Grisham,New Mexico's 1st,2013-01-03,2020-01-01,Democratic,michellelujangrisham,35
+307,Frederica Wilson,Florida's 24th,2013-01-03,2020-01-01,Democratic,fredericawilson,37
+316,Cheri Bustos,Illinois's 17th,2013-01-03,2020-01-01,Democratic,cheribustos,38
+176,Nydia Velázquez,New York's 7th,2013-01-03,2020-01-01,Democratic,nydiavelc3a1zquez,39
+294,Karen Bass,California's 37th,2013-01-03,2020-01-01,Democratic,karenbass,40
+124,Louise Slaughter,New York's 25th,2013-01-03,2018-03-16,Democratic,louiseslaughter,41
+130,Nita Lowey,New York's 17th,2013-01-03,2020-01-01,Democratic,nitalowey,43
+134,Ileana Ros-Lehtinen,Florida's 27th,2013-01-03,2020-01-01,Republican,ileanaroslehtinen,44
+144,Maxine Waters,California's 43rd,2013-01-03,2020-01-01,Democratic,maxinewaters,45
+147,Corrine Brown,Florida's 5th,2013-01-03,2017-01-03,Democratic,corrinebrown,46
+154,Anna Eshoo,California's 18th,2013-01-03,2020-01-01,Democratic,annaeshoo,47
+162,Carolyn Maloney,New York's 12th,2013-01-03,2020-01-01,Democratic,carolynmaloney,48
+171,Lucille Roybal-Allard,California's 40th,2013-01-03,2020-01-01,Democratic,lucilleroybalallard,49
+184,Zoe Lofgren,California's 19th,2013-01-03,2020-01-01,Democratic,zoelofgren,50
+206,Loretta Sánchez,California's 46th,2013-01-03,2017-01-03,Democratic,lorettasanchez,54
+211,Lois Capps,California's 24th,2013-01-03,2017-01-03,Democratic,loiscapps,55
+215,Barbara Lee,California's 13th,2013-01-03,2020-01-01,Democratic,barbaralee,56
+127,Nancy Pelosi,California's 12th,2013-01-03,2020-01-01,Democratic,nancypelosi,57
+243,Linda Sánchez,California's 38th,2013-01-03,2020-01-01,Democratic,lindasc3a1nchez,58
+222,Grace Napolitano,California's 32nd,2013-01-03,2020-01-01,Democratic,gracenapolitano,59
+291,Judy Chu,California's 27th,2013-01-03,2020-01-01,Democratic,judychu,61
+289,Dina Titus,Nevada's 1st,2013-01-03,2020-01-01,Democratic,dinatitus,68
+275,Jackie Speier,California's 14th,2013-01-03,2020-01-01,Democratic,jackiespeier,69
+273,Niki Tsongas,Massachusetts's 3rd,2013-01-03,2020-01-01,Democratic,nikitsongas,70
+283,Ann Kirkpatrick,Arizona's 1st,2013-01-03,2017-01-03,Democratic,annkirkpatrick,73
+262,Yvette Clarke,New York's 9th,2013-01-03,2020-01-01,Democratic,yvetteclarke,75
+260,Kathy Castor,Florida's 14th,2013-01-03,2020-01-01,Democratic,kathycastor,78
+254,Doris Matsui,California's 6th,2013-01-03,2020-01-01,Democratic,dorismatsui,79
+252,Debbie Wasserman-Schultz,Florida's 23rd,2013-01-03,2020-01-01,Democratic,debbiewassermanschultz,80
+269,Carol Shea-Porter,New Hampshire's 1st,2013-01-03,2015-01-03,Democratic,carolsheaporter,81
+328,Robin Kelly,Illinois's 2nd,2013-04-11,2020-01-01,Democratic,robinkelly,53
+329,Katherine Clark,Massachusetts's 5th,2013-12-10,2020-01-01,Democratic,katherineclark,82
+330,Alma Adams,North Carolina's 12th,2014-11-12,2020-01-01,Democratic,almaadams,83
+342,Mimi Walters,California's 45th,2015-01-03,2020-01-01,Republican,mimiwalters,14
+343,Bonnie Watson-Coleman,New Jersey's 12th,2015-01-03,2020-01-01,Democratic,bonniewatsoncoleman,22
+338,Amata Radewagen,American Samoa's at-large,2015-01-03,2020-01-01,Republican,amatacolemanradewagen,29
+341,Norma Torres,California's 35th,2015-01-03,2020-01-01,Democratic,normatorres,51
+340,Elise Stefanik,New York's 21st,2015-01-03,2020-01-01,Republican,elisestefanik,67
+339,Kathleen Rice,New York's 4th,2015-01-03,2020-01-01,Democratic,kathleenrice,71
+337,Stacey Plaskett,U.S. Virgin Island's at-large,2015-01-03,2020-01-01,Democratic,staceyplaskett,74
+333,Gwen Graham,Florida's 2nd,2015-01-03,2017-01-03,Democratic,gwengraham,81
+335,Mia Love,Utah's 4th,2015-01-03,2020-01-01,Republican,mialove,84
+334,Brenda Lawrence,Michigan's 14th,2015-01-03,2020-01-01,Democratic,brendalawrence,85
+332,Debbie Dingell,Michigan's 12th,2015-01-03,2020-01-01,Democratic,debbiedingell,86
+331,Barbara Comstock,Virginia's 10th,2015-01-03,2020-01-01,Republican,barbaracomstock,87
+336,Martha McSally,Arizona's 2nd,2015-01-03,2020-01-01,Republican,marthamcsally,88
+299,Colleen Hanabusa,Hawaii's 1st,2016-11-14,2020-01-01,Democratic,colleenhanabusa,89
+351,Jacky Rosen,Nevada's 3rd,2017-01-03,2020-01-01,Democratic,jackyrosen,1
+350,Stephanie Murphy,Florida's 7th,2017-01-03,2020-01-01,Democratic,stephaniemurphy,4
+349,Pramila Jayapal,Washington's 7th,2017-01-03,2020-01-01,Democratic,pramilajayapal,21
+348,Jenniffer González,Puerto Rico's at-large,2017-01-03,2020-01-01,Republican,jenniffergonzc3a1lez,42
+345,Lisa Blunt-Rochester,Delaware at-large,2017-01-03,2020-01-01,Democratic,lisabluntrochester,46
+346,Liz Cheney,Wyoming's at-large,2017-01-03,2020-01-01,Republican,lizcheney,54
+344,Nanette Barragán,California's 44th,2017-01-03,2020-01-01,Democratic,nanettebarragc3a1n,55
+352,Claudia Tenney,New York's 22nd,2017-01-03,2020-01-01,Republican,claudiatenney,60
+270,Carol Shea-Porter,New Hampshire's 1st,2017-01-03,2020-01-01,Democratic,carolsheaporter,63
+347,Val Demings,Florida's 10th,2017-01-03,2020-01-01,Democratic,valdemings,73
+353,Karen Handel,Georgia's 6th,2017-06-26,2020-01-01,Republican,karenhandel,81
