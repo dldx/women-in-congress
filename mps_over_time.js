@@ -34,8 +34,8 @@ var margin = {
 // These are the colours used to identify each political party as well as
 // a few additional functions
 var colors = {
-    "Republican": "#C61148",
-    "Democratic": "#0096DB",
+    "Republican": "#E31331",
+    "Democratic": "#2A9FD7",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
     "Male": "#7A47C6",
     "Female": "#e5e5e5",
@@ -441,7 +441,7 @@ function initial_render() {
         .attr("y", margin.left / 3)
         .attr("x", 0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
-        .text("Number of Women MPs")
+        .text("Number of Women Representatives")
 
     // Add zoom capabilities for the points
     zoom = d3.zoom()
@@ -587,7 +587,7 @@ function first_slide(no_transition = false) {
     // Change chart title
     chartTitle
         .transition()
-        .text("Women MPs in the House of Commons")
+        .text("Women in Congress")
 
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition)
@@ -634,15 +634,6 @@ function first_slide(no_transition = false) {
                 // and(2) map the colour to the node in the colourToNode-map.
                 return d.hiddenCol
             })
-        // .transition()
-        // .delay((d, i) => 500 + i * 2)
-        // .duration(1000)
-        // .attr("y1", (d) => y(d.stream))
-        // .attr("y2", (d) => y(d.stream))
-        // .transition()
-        // .delay((d, i) => 200 + i * 2)
-        // .duration(1000)
-        // .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
     } else {
         dataContainer.selectAll("custom.line")
             .attr("x1", (d) => x(d.term_start))
@@ -814,7 +805,7 @@ function to_first_slide(current_slide) {
         .duration(1000)
 
     yLabel.transition(t0)
-        .text("Number of Women MPs")
+        .text("Number of Women Representatives")
 
     // Different actions depending on which slide we're coming from
     switch (current_slide) {
@@ -889,7 +880,7 @@ function to_second_slide(current_slide) {
             .duration(1000)
 
         yLabel.transition(t0)
-            .text("Number of MPs")
+            .text("Number of Representatives")
 
         // Different actions depending on which slide we're coming from
         switch (current_slide) {
@@ -971,7 +962,7 @@ function second_slide(no_transition = false) {
     max_mps_path = slide2Group.append("path")
         .attr("class", "max-mps-path slide2")
         .datum(total_mps_over_time_data)
-        .attr("stroke-width", 1.5 * lineThickness)
+        .attr("stroke-width", lineThickness)
         .attr("d", max_mps_line)
 
     // Also add an area curve to shade the whole region below the max mp line
@@ -1018,7 +1009,7 @@ function second_slide(no_transition = false) {
     half_max_mps_path = slide2Group.append("path")
         .attr("class", "half-max-mps-path slide2")
         .datum(total_mps_over_time_data)
-        .attr("stroke-width", 1.5 * lineThickness)
+        .attr("stroke-width", lineThickness)
         .attr("d", half_max_mps_line)
 
     // Curve to show total number of women MPs over time
@@ -1035,7 +1026,7 @@ function second_slide(no_transition = false) {
     total_women_mps_path = slide2Group.append("path")
         .attr("class", "total-women-mps-path slide2")
         .datum(number_women_over_time_data)
-        .attr("stroke-width", 1.5 * lineThickness)
+        .attr("stroke-width", lineThickness)
         .attr("d", total_women_mps_line)
 
     let path_node = total_women_mps_path.node()
@@ -1224,14 +1215,14 @@ function second_slide(no_transition = false) {
         .style("opacity", 1)
 
     // Rescale y axis to include all MPs
-    y.domain([0, 500])
+    y.domain([0, 450])
 
     // Change y axis label
     yLabel
         .transition()
         .delay(no_transition ? 0 : 4000)
         .duration(no_transition ? 0 : 750)
-        .text("Number of MPs")
+        .text("Number of Representatives")
 
     chartTitle
         .transition()
@@ -1241,7 +1232,7 @@ function second_slide(no_transition = false) {
 
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
-        .attr("y", y(0) - 10 * lineThickness)
+        .attr("y", y(0) - 3 * lineThickness)
         .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
             (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
         .attr("class", "women-label")
@@ -1581,7 +1572,7 @@ function third_slide(no_transition = false) {
 
     yLabel
         .transition(t0)
-        .text("% of Women MPs")
+        .text("% of Women Representatives")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1651,12 +1642,12 @@ function third_slide(no_transition = false) {
 
     // Replace data about UK with more precise data
     women_in_govt_data
-        .filter((d) => d.key == "United Kingdom")[0].values = number_women_over_time_data
+        .filter((d) => d.key == "United States")[0].values = number_women_over_time_data
             .map(d => {
                 return {
                     year: d.year,
                     women_pct: d.women_pct,
-                    country: "United Kingdom"
+                    country: "United States"
                 }
             })
 
@@ -1668,8 +1659,8 @@ function third_slide(no_transition = false) {
         .attr("d", function (d) { return women_in_govt_line(d.values) })
         .attr("class", "women-in-govt-path")
         .attr("id", d => d.key.replace(/[^a-zA-Z0-9s]/g, ""))
-        .attr("stroke-width", lineThickness * 2)
-        .style("stroke", d => d.key == "United Kingdom" ? colors["Hover"] : countryColors(d.key))
+        .attr("stroke-width", lineThickness)
+        .style("stroke", d => d.key == "United States" ? colors["Hover"] : countryColors(d.key))
         .style("fill", "none")
         .style("opacity", 1)
         .attr("stroke-dasharray", function () {
@@ -1696,8 +1687,8 @@ function third_slide(no_transition = false) {
         .delay((d, i) => no_transition ? 0 : (1200 + i * 1000 - Math.pow(i, 1.5) * 100))
         .ease(d3.easeCubic)
         .attr("stroke-dashoffset", 0)
-        .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
-        .attr("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
+        .style("opacity", d => d.key == "United States" ? 1.0 : 0.5)
+        .attr("stroke-width", d => d.key == "United States" ? 0.75 * lineThickness : lineThickness / 4)
         .on("start", d => {
             if (current_slide == 2) {
                 d3.select("#tooltip")
@@ -1707,7 +1698,7 @@ function third_slide(no_transition = false) {
                 var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
                 tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${d.values.slice(-1)[0].country == "United Kingdom" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
+                                <h1 style="background-color: ${d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
                                 For every <span class="female">female</span> MP, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.values.slice(-1)[0].year.getFullYear()}.
                             </div>`
@@ -1716,8 +1707,8 @@ function third_slide(no_transition = false) {
         .on("end", (d) => {
             // Record that the country is now visible on screen so that we can toggle its hover methods
             country_on_screen.push(d.key)
-            // If country is the UK, then we can get rid of the total women mps line
-            if (d.key == "United Kingdom") total_women_mps_path.remove()
+            // If country is the US, then we can get rid of the total women mps line
+            if (d.key == "United States") total_women_mps_path.remove()
         })
     var focus = slide3Group.append("g")
         .attr("transform", "translate(-100,-100)")
@@ -1768,13 +1759,13 @@ function third_slide(no_transition = false) {
             var gender_ratio = 100 / d.data.women_pct - 1
             tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${d.data.country == "United Kingdom" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
+                                <h1 style="background-color: ${d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
                                 For every <span class="female">female</span> MP, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.data.year.getFullYear()}.
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
-                .attr("stroke-width", d => d.key == "United Kingdom" ? 2 * lineThickness : lineThickness)
+                .attr("stroke-width", d => d.key == "United States" ? lineThickness : lineThickness/2)
                 .style("opacity", 1)
 
             // d.line.parentNode.appendChild(d.line);
@@ -1787,8 +1778,8 @@ function third_slide(no_transition = false) {
     function mouseout(d) {
         if (country_on_screen.indexOf(d.data.country) > -1) {
             d.line
-                .attr("stroke-width", d => d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2)
-                .style("opacity", d => d.key == "United Kingdom" ? 1.0 : 0.5)
+                .attr("stroke-width", d => d.key == "United States" ? 0.75 * lineThickness : lineThickness / 4)
+                .style("opacity", d => d.key == "United States" ? 1.0 : 0.5)
             // focus.attr("transform", "translate(-100,-100)")
         }
     }
@@ -3320,7 +3311,7 @@ function handleStepEnter(response) {
                 .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
                 .on("end", () => {
                     // Display tooltip
-                    show_mp_tooltip(mps_over_time_data.filter(d => d.clean_name == "marcykaptur")[1])
+                    show_mp_tooltip(mps_over_time_data.filter(d => d.clean_name == "marcykaptur")[0])
                 })
             // Animate node entrances
             var t = d3.timer((elapsed) => {
@@ -3490,7 +3481,7 @@ function handleStepEnter(response) {
                     .transition()
                     .text("Representatives in Congress")
                 // All MPs first
-                y.domain([0, 500])
+                y.domain([0, 450])
                 gY.transition()
                     .call(yAxis)
 
@@ -3822,7 +3813,7 @@ function draw_graph() {
         isMobile = width < 500
 
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
-        lineThickness = 0.0018 * height * 2
+        lineThickness = 0.003 * height * 2
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
         circleRadius = lineThickness / 2
         svg
