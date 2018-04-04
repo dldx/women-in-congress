@@ -1,6 +1,6 @@
 $colors: (
-  Lab: #c61148,
-  Con: #0096db,
+  Lab: #E31331,
+  Con: #2A9FD7,
   SNP: #fcca46,
   LibDem: #f37a48,
   LD: #f37a48,
@@ -292,110 +292,6 @@ body {
 a {
   color: crimson;
   text-decoration: none;
-}
-
-.tracker {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  position: fixed;
-  top: 20px;
-  z-index: 2;
-  height: 60px;
-  width: 150px;
-  display: none;
-  // display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-size: .5em;
-
-  svg {
-    width: 60px;
-    margin: auto;
-  }
-
-  .nav-prev {
-    margin: auto;
-  }
-
-  .nav-next {
-    margin: auto;
-  }
-
-  .tracker-hexagon {
-    stroke: map-get($colors, Active);
-    stroke-width: 8px;
-    fill: none;
-  }
-
-  .arc {
-    @each $item in $tracker-colors {
-      &.c-#{index($tracker-colors, $item)} {
-        fill: $item;
-      }
-    }
-
-    &.active {
-      fill: map-get($colors, Active);
-
-      text {
-        fill: nth($tracker-colors, 1);
-      }
-    }
-
-    &.hover {
-      fill: map-get($colors, Hover);
-
-      text {
-        fill: nth($tracker-colors, 1);
-      }
-    }
-  }
-
-  text {
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    fill: map-get($colors, Green);
-    text-anchor: middle;
-    alignment-baseline: middle;
-    font-weight: bold;
-    font-size: 1.5em;
-  }
-}
-$nav-button-bg: map-get($colors, Lab);
-$nav-button-fg: lighten(map-get($colors, Hover), 50);
-
-.nav-next,
-.nav-prev {
-  -webkit-box-shadow: inset 0 34px 0 -15px $nav-button-bg;
-  box-shadow: inset 0 34px 0 -15px $nav-button-bg;
-  background-color: lighten($nav-button-bg, 3);
-  border: 1px solid darken($nav-button-bg, 30);
-  display: inline-block;
-  cursor: pointer;
-  color: $nav-button-fg;
-  font-size: .8rem;
-  font-weight: bold;
-  padding: 5px;
-  text-decoration: none;
-  text-shadow: 1px 1px 1px darken($nav-button-fg, 50);
-}
-
-.nav-next:hover,
-.nav-prev:hover {
-  background-color: lighten($nav-button-bg, 20);
-}
-
-.nav-next:active,
-.nav-prev:active {
-  position: relative;
-  top: 1px;
 }
 
 .x-axis line,

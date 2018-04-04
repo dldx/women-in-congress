@@ -1228,7 +1228,7 @@ function second_slide(no_transition = false) {
         .transition()
         .delay(no_transition ? 0 : 4000)
         .duration(no_transition ? 0 : 750)
-        .text("MPs in the House of Commons")
+        .text("Representatives in Congress")
 
     slide2Group.append("text")
         .attr("x", x(new Date(2010, 1, 1)))
@@ -1392,9 +1392,9 @@ function second_slide(no_transition = false) {
                     console.log(number_women_over_time_data)
                     tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
-            For every <span class="female">female</span> MP, there ${new Date() > second_election ? "were" : "are"}
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs.` :
-        "There were no women in the House of Commons yet :("}
+            For every <span class="female">female</span> representative, there ${new Date() > second_election ? "were" : "are"}
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives.` :
+        "There were no women in the House of Representatives yet :("}
                                 </div>
             `
                 })
@@ -1696,8 +1696,8 @@ function third_slide(no_transition = false) {
                 tooltip.innerHTML = `
                             <div class="slide3-tooltip">
                                 <h1 style="background-color: ${d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
-                                For every <span class="female">female</span> MP, there were
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.values.slice(-1)[0].year.getFullYear()}.
+                                For every <span class="female">female</span> representative, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.values.slice(-1)[0].year.getFullYear()}.
                             </div>`
             }
         })
@@ -1757,8 +1757,8 @@ function third_slide(no_transition = false) {
             tooltip.innerHTML = `
                             <div class="slide3-tooltip">
                                 <h1 style="background-color: ${d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
-                                For every <span class="female">female</span> MP, there were
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> MPs in ${d.data.year.getFullYear()}.
+                                For every <span class="female">female</span> representative, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.data.year.getFullYear()}.
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
@@ -2479,7 +2479,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
                     <h1 style="background-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender.toUpperCase()}</h1>
-                    The average ${nodeData.gender.toUpperCase()} MP spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
+                    The average ${nodeData.gender.toUpperCase()} representative spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
             .select("circle")
