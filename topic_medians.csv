@@ -1,34 +1,48 @@
-topic,male,female
-business,-2.20,-2.05
-immigration,-2.22,-2.06
-counter-terrorism,-2.67,-2.46
-private housing,-1.80,-1.69
-banking,-2.13,-2.32
-police force,-2.15,-2.04
-local authority,-1.91,-1.96
-domestic violence,-2.10,-1.97
-airport & rail expansion,-2.45,-2.54
-scotland,-2.50,-2.60
-drugs and alcohol,-2.28,-2.06
-middle east,-2.01,-1.98
-nhs & social care,-1.78,-1.42
-farming,-2.41,-2.53
-development & climate change,-2.82,-2.25
-fishing industry,-2.09,-2.24
-armed forces,-2.05,-2.37
-wales,-2.30,-2.59
-animal welfare,-2.10,-2.14
-energy,-1.83,-2.05
-european union,-1.72,-1.88
-welfare reforms,-1.93,-1.36
-education,-1.94,-1.66
-pensioner income,-1.68,-1.69
-child poverty,-2.89,-2.14
-economy,-2.13,-2.17
-northern ireland,-2.04,-2.35
-child care,-2.14,-1.57
-nuclear weapons,-2.82,-3.12
-local services,-1.80,-1.58
-workers rights,-1.74,-1.84
-elections,-2.12,-2.12
-parliamentary terminology,-1.03,-1.26
+topic,female,male
+israel & palestine,-1.95,-2.05
+labor relations,-2.02,-2.04
+transportation,-2.13,-2.18
+arts & culture,-1.87,-1.95
+tobacco,-2.02,-2.01
+aviation,-2.40,-2.46
+FDA,-2.17,-2.17
+medicare,-1.39,-1.57
+fiscal policy,-1.61,-1.68
+budget,-1.72,-1.48
+secondary education,-1.61,-1.76
+wildlife conservation,-2.07,-2.27
+veteran affairs,-1.47,-1.54
+nasa & baseball ??,-2.30,-2.29
+health insurance,-2.00,-2.21
+agriculture,-2.55,-2.44
+elections,-1.68,-1.68
+disease prevention,-1.64,-2.07
+medicare+,-1.72,-2.17
+first names (male),-2.12,-2.06
+youth stuff,-1.70,-1.96
+iraq & afghanistan,-1.88,-1.82
+russia,-2.73,-2.68
+housing,-1.83,-1.89
+homeland security,-1.75,-1.81
+welfare reform,-1.92,-2.14
+honors,-1.06,-1.11
+oil & gas,-2.31,-2.23
+constitional law,-1.63,-1.80
+EPA,-1.97,-2.04
+indian affairs,-2.04,-1.98
+FEMA,-1.94,-2.08
+energy,-2.00,-2.11
+honors+,-1.31,-1.35
+affordable care act (?),-1.58,-1.80
+border enforcement,-2.05,-2.01
+congressional terminology,-1.09,-0.99
+MURICA,-1.71,-1.62
+china & india,-1.86,-1.82
+business & corporate responsibility (?),-1.63,-1.76
+congressional terminology+,-1.73,-1.79
+congressional terminology++,-1.59,-1.37
+veterans,-1.65,-1.65
+congressional terminology+++,-1.81,-1.71
+tax,-2.16,-2.06
+african-american civil rights,-1.82,-2.15
+minimum wages,-1.85,-2.07

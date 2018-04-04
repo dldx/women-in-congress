@@ -1378,21 +1378,18 @@ function second_slide(no_transition = false) {
                     var first_election = d.year
                     var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
                     if (chartTitle.text()
-                        .includes("Labour")) {
+                        .includes("Democratic")) {
                         var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].labour_women_mps
                         var gender_ratio = d.labour_mps / num_women - 1
                     } else if (chartTitle.text()
-                        .includes("Conservative")) {
+                        .includes("Republican")) {
                         num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].conservative_women_mps
                         gender_ratio = d.conservative_mps / num_women - 1
-                    } else if (chartTitle.text()
-                        .includes("Liberal")) {
-                        num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].lib_snp_women_mps
-                        gender_ratio = d.lib_snp_mps / num_women - 1
                     } else {
                         num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
                         gender_ratio = d.total_mps / num_women - 1
                     }
+                    console.log(number_women_over_time_data)
                     tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
             For every <span class="female">female</span> MP, there ${new Date() > second_election ? "were" : "are"}
@@ -3391,6 +3388,7 @@ function handleStepEnter(response) {
             break
 
         case 1:
+        // First step: first woman rep - Jeannette Rankin
             d3.select(".switch")
                 .style("opacity", 0)
             if (document.getElementById("zoom-checkbox")
@@ -3411,7 +3409,7 @@ function handleStepEnter(response) {
             break
 
         case 2:
-            // Second step: first mp to take seat
+            // Second step: first minority woman representative
             mpZoom("patsymink")
             canvas.style("pointer-events", "none")
             break

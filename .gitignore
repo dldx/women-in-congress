@@ -1,11 +1,8 @@
 # HDF5 files are too big to upload
-mp_speeches.h5
-raw.h5
 raw_speeches.h5
-processed.h5
-processed_2.h5
-processed_speeches.h5
 speeches.h5
+speeches.bcolz
+processed_speeches*
 
 # mp photos also too big to upload
 mp_photos/

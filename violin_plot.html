@@ -115,14 +115,14 @@
                     // make a new row
                     Object.keys(row).forEach(function(colname) {
                         // Ignore 'State' and 'Value' columns
-                        if (colname=="id" || colname == "full_name" || colname == "is_female" || colname == "Party") {
+                        if (colname=="id" || colname == "full_name" || colname == "gender" || colname == "party") {
                             return
                         }
                         nodes.push({
                             "id":+row["id"],
                             "full_name": row["full_name"],
-                            "gender": row["is_female"] == 1 ? "Female" : "Male",
-                            "party": row["Party"],
+                            "gender": row["gender"] == 1 ? "Female" : "Male",
+                            "party": row["party"],
                             "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
                             "topic_name": colname
                         });
@@ -186,9 +186,10 @@
                     .append("text")
                     .attr("x", width/2)
                     .attr("y", 0)
+					.attr("dy", -10)
                     .attr("text-anchor", "middle")
                     .attr("alignment-baseline", "hanging")
-                    .text(d => d.key + " MPs")
+                    .text(d => d.key + "s")
 
                 // One group per topic
                 var violin_wrappers = party_wrappers

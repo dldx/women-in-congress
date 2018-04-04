@@ -7,25 +7,14 @@ import bcolz
 import pandas as pd
 
 # Load speeches
-speeches = pd.read_hdf("/media/Stuff/processed_speeches_new.h5", "speeches_0")\
-    .append([pd.read_hdf("/media/Stuff/processed_speeches_new.h5", "speeches_1")], ignore_index=True)
-
-# Convert column types
-speeches["date"] = pd.to_datetime(speeches["date"])
-speeches["mp_id"] = pd.to_numeric(speeches["mp_id"]).astype("category")
-speeches["section_id"] = speeches["section_id"].astype(str)
-speeches["mp_name"] = speeches["mp_name"].astype(str)
-speeches["debate_title"] = speeches["debate_title"].astype(str).astype("category")
-speeches["n_words"] = speeches["n_words"].astype("float32")
-
-speeches[list(range(100))] = speeches[list(range(100))].apply(lambda x: x.astype("float32"))
+speeches = pd.read_hdf("raw_speeches.h5")
 
 # separate data and speech text into different dataframes
 speeches_ = speeches.drop("body", axis=1)
 speeches = speeches[["body"]]
 
 # Save data to hdf5
-speeches_.to_hdf("speeches.h5", "speeches", mode="w", format="table")
+speeches_.to_hdf("speeches_metadata.h5", "metadata", mode="w", format="table")
 
 # Save speeches to bcolz array
-bcolz.carray(speeches["body"], rootdir="/media/Stuff/speeches.bcolz", chunklen=10000000, cparams=bcolz.cparams(cname="lz4hc"))
+bcolz.carray(speeches["body"], rootdir="speeches.bcolz", chunklen=10000000, cparams=bcolz.cparams(cname="lz4hc"))
