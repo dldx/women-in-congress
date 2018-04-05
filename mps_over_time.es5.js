@@ -1460,8 +1460,8 @@ function fifth_slide() {
     if (typeof selected_topic != "undefined") {
         update_fifth_slide(no_transition, selected_topic);
     } else {
-        update_fifth_slide(no_transition, "honors", true, false);
-        chartTitle.transition().text("Time spent on honoring people");
+        update_fifth_slide(no_transition, "energy", true, false);
+        chartTitle.transition().text("Time spent on energy");
     }
 }
 
@@ -2725,9 +2725,9 @@ function handleStepEnter(response) {
             d3.select("#slide4").style("display", "none");
             switch (new_step) {
                 case 0:
-                    update_fifth_slide(false, "honors", true, false);
+                    update_fifth_slide(false, "energy", true, false);
 
-                    chartTitle.transition().text("Time spent on honoring people");
+                    chartTitle.transition().text("Time spent on energy");
                     break;
                 case 1:
                     update_fifth_slide(false, "medicare & healthcare", true, false);
