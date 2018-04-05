@@ -32,14 +32,14 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
     // Convert wide data to long
     nodes = data.map(function (d) {
         node = {
-            "id": +d.id,
+            "id": d.id,
             "full_name": d.full_name,
-            "party": d.Party,
-            "gender": d.is_female == 1 ? "Female" : "Male"
+            "party": d.party,
+            "gender": d.gender == 1 ? "Female" : "Male"
         };
         Object.keys(d)
             .forEach(function (key) {
-                if (key != "id" & key != "full_name" & key != "Party" & key != "is_female") {
+                if (key != "id" & key != "full_name" & key != "party" & key != "gender") {
                     node[key] = d[key] == '-inf' ? 0 : 10 ** (+d[key])
                 }
             })

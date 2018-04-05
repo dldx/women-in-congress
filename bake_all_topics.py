@@ -24,6 +24,6 @@ dfs = pool.map(bake_collision, topics)
 df = reduce(lambda left, right: pd.merge(left, right, on="id"), dfs)
 
 # Join MP data with baked positions and write to csv
-topic_fractions[["id", "full_name", "Party", "is_female"]]\
+topic_fractions[["id", "full_name", "party", "gender"]]\
     .join(df.set_index("id"), on="id")\
     .to_csv("baked_positions.csv", index=False, float_format='%.3f')

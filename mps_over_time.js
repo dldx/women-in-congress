@@ -36,6 +36,7 @@ var margin = {
 var colors = {
     "Republican": "#E31331",
     "Democratic": "#2A9FD7",
+    "Democrat": "#2A9FD7",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
     "Male": "#7A47C6",
     "Female": "#e5e5e5",
@@ -2023,7 +2024,7 @@ function fifth_slide(no_transition = false) {
         .range([0, width])
 
     slide5_yScale = d3.scaleLinear()
-        .domain([-0.005, 0.3])
+        .domain([-0.005, 0.5])
         .range([height, 0])
 
     y = slide5_yScale
@@ -2035,10 +2036,10 @@ function fifth_slide(no_transition = false) {
     if (typeof (selected_topic) != "undefined") {
         update_fifth_slide(no_transition, selected_topic)
     } else {
-        update_fifth_slide(no_transition, "economy", true, false)
+        update_fifth_slide(no_transition, "honors", true, false)
         chartTitle
             .transition()
-            .text("Time spent on the economy")
+            .text("Time spent on honoring people")
     }
 
 }
@@ -2279,7 +2280,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .attr("class", "female-median")
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
-        .attr("r", circleRadius * 2)
+        .attr("r", circleRadius * 1.5)
         .attr("opacity", drawMedian ? 1 : 0)
         .transition()
         .delay(2000)
@@ -2570,7 +2571,7 @@ function to_sixth_slide(current_slide) {
         // Change scales
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, 0.10])
+            .domain([0, 0.15])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
@@ -2579,7 +2580,7 @@ function to_sixth_slide(current_slide) {
         // Use x scale at end of transition instead
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([-0.04, 0.04])
+            .domain([-0.1, 0.1])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
@@ -2871,7 +2872,7 @@ function sixth_slide(no_transition = false) {
         var t3 = t2.transition()
             .delay(1000)
             .on("end", () => {
-                x.domain([-0.04, 0.04])
+                x.domain([-0.06, 0.06])
                 xAxis = d3.axisBottom(x)
                     .tickFormat(d => (d * 100)
                         .toFixed(0) + "%")
@@ -2974,7 +2975,7 @@ function sixth_slide(no_transition = false) {
         .style("text-anchor", (d, i) => {
             return label_pos[i] ? "end" : "start"
         })
-        .attr("x", (d, i) => label_pos[i] ? x.domain([-0.04, 0.04])(-0.001) : x.domain([-0.04, 0.04])(0.001))
+        .attr("x", (d, i) => label_pos[i] ? x.domain([-0.06, 0.06])(-0.001) : x.domain([-0.06, 0.06])(0.001))
         .transition()
         .delay(500)
         .duration(500)
@@ -3112,13 +3113,13 @@ function download_data() {
 
                 Object.keys(row)
                     .forEach(function (colname) {
-                        if (colname != "id" & colname != "full_name" & colname != "Party" & colname != "is_female" & colname.slice(-1) != "y") {
+                        if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname.slice(-1) != "y") {
                             var topic = colname.slice(0, -2)
                             baked_positions_data.push({
                                 "id": +row["id"],
                                 "full_name": row["full_name"],
-                                "party": row["Party"],
-                                "gender": row["is_female"] == 1 ? "Female" : "Male",
+                                "party": row["party"],
+                                "gender": row["gender"] == 1 ? "Female" : "Male",
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
                                 "y": +row[topic + "_y"] / 100,
@@ -3339,7 +3340,7 @@ function handleStepEnter(response) {
                 // Animate node entrances
                 all_mps_draw_timer = d3.timer((elapsed) => {
                     draw(context, false)
-                    if (elapsed > 5000) {
+                    if (elapsed > 3500) {
                         all_mps_draw_timer.stop()
                         draw(context)
                         // Draw hidden canvas nodes to catch interactions
@@ -3662,29 +3663,29 @@ function handleStepEnter(response) {
             .style("display", "none")
         switch (new_step) {
         case 0:
-            update_fifth_slide(false, "economy", true, false)
+            update_fifth_slide(false, "honors", true, false)
 
             chartTitle
                 .transition()
-                .text("Time spent on the economy")
+                .text("Time spent on honoring people")
             break
         case 1:
-            update_fifth_slide(false, "welfare reforms", true, false)
+            update_fifth_slide(false, "medicare & healthcare", true, false)
             chartTitle
                 .transition()
-                .text("Time spent on welfare reforms")
+                .text("Time spent on healthcare")
             break
         case 2:
-            update_fifth_slide(false, "parliamentary terminology", true, false)
+            update_fifth_slide(false, "congressional terminology", true, false)
             chartTitle
                 .transition()
-                .text("Time spent on parliamentary terminology")
+                .text("Time spent on congressional terminology")
             break
         case 3:
-            update_fifth_slide(false, "parliamentary terminology", true, true)
+            update_fifth_slide(false, "congressional terminology", true, true)
             chartTitle
                 .transition()
-                .text("Time spent on parliamentary terminology")
+                .text("Time spent on congressional terminology")
             break
         }
         d3.select(".slide5-dropdown")

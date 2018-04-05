@@ -35,8 +35,9 @@ var margin = {
     // These are the colours used to identify each political party as well as
     // a few additional functions
 };var colors = {
-    "Republican": "#C61148",
-    "Democratic": "#0096DB",
+    "Republican": "#E31331",
+    "Democratic": "#2A9FD7",
+    "Democrat": "#2A9FD7",
     "Other": "#50514F", // Used as fallback when no party colour has been defined
     "Male": "#7A47C6",
     "Female": "#e5e5e5",
@@ -306,7 +307,7 @@ function initial_render() {
     // Add axes labels
     xLabel = svg.append("text").attr("transform", "translate(" + (width + margin.left + margin.right) / 2 + " ," + (height + margin.top + margin.bottom) + ")").attr("class", "x-label").style("text-anchor", "middle").text("Time");
 
-    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", margin.left / 3).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").text("Number of Women MPs");
+    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", margin.left / 3).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").text("Number of Women Representatives");
 
     // Add zoom capabilities for the points
     zoom = d3.zoom().scaleExtent([0.95, 40]).on("zoom", zoomed);
@@ -430,7 +431,7 @@ function first_slide() {
     d3.select("#election-rects").remove();
 
     // Change chart title
-    chartTitle.transition().text("Women MPs in the House of Commons");
+    chartTitle.transition().text("Women in Congress");
 
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition);
@@ -466,15 +467,6 @@ function first_slide() {
             // and(2) map the colour to the node in the colourToNode-map.
             return d.hiddenCol;
         });
-        // .transition()
-        // .delay((d, i) => 500 + i * 2)
-        // .duration(1000)
-        // .attr("y1", (d) => y(d.stream))
-        // .attr("y2", (d) => y(d.stream))
-        // .transition()
-        // .delay((d, i) => 200 + i * 2)
-        // .duration(1000)
-        // .attr("x2", (d) => x(d.term_end) - lineThickness * 1.2)
     } else {
         dataContainer.selectAll("custom.line").attr("x1", function (d) {
             return x(d.term_start);
@@ -614,7 +606,7 @@ function show_mp_tooltip(nodeData, mousePos) {
 function to_first_slide(current_slide) {
     var t0 = svg.transition().duration(1000);
 
-    yLabel.transition(t0).text("Number of Women MPs");
+    yLabel.transition(t0).text("Number of Women Representatives");
 
     // Different actions depending on which slide we're coming from
     switch (current_slide) {
@@ -668,7 +660,7 @@ function to_second_slide(current_slide) {
     } else {
         var t0 = svg.transition().duration(1000);
 
-        yLabel.transition(t0).text("Number of MPs");
+        yLabel.transition(t0).text("Number of Representatives");
 
         // Different actions depending on which slide we're coming from
         switch (current_slide) {
@@ -729,7 +721,7 @@ function second_slide() {
     }).curve(d3.curveCardinal);
 
     // Add the svg path to display this line
-    max_mps_path = slide2Group.append("path").attr("class", "max-mps-path slide2").datum(total_mps_over_time_data).attr("stroke-width", 1.5 * lineThickness).attr("d", max_mps_line);
+    max_mps_path = slide2Group.append("path").attr("class", "max-mps-path slide2").datum(total_mps_over_time_data).attr("stroke-width", lineThickness).attr("d", max_mps_line);
 
     // Also add an area curve to shade the whole region below the max mp line
     max_mps_area = d3.area().curve(d3.curveCardinal).x(function (d) {
@@ -754,7 +746,7 @@ function second_slide() {
     }).curve(d3.curveCardinal);
 
     // Add this in svg
-    half_max_mps_path = slide2Group.append("path").attr("class", "half-max-mps-path slide2").datum(total_mps_over_time_data).attr("stroke-width", 1.5 * lineThickness).attr("d", half_max_mps_line);
+    half_max_mps_path = slide2Group.append("path").attr("class", "half-max-mps-path slide2").datum(total_mps_over_time_data).attr("stroke-width", lineThickness).attr("d", half_max_mps_line);
 
     // Curve to show total number of women MPs over time
     total_women_mps_line = d3.line().x(function (d) {
@@ -764,7 +756,7 @@ function second_slide() {
     }).curve(d3.curveBasis);
 
     // add the line path
-    total_women_mps_path = slide2Group.append("path").attr("class", "total-women-mps-path slide2").datum(number_women_over_time_data).attr("stroke-width", 1.5 * lineThickness).attr("d", total_women_mps_line);
+    total_women_mps_path = slide2Group.append("path").attr("class", "total-women-mps-path slide2").datum(number_women_over_time_data).attr("stroke-width", lineThickness).attr("d", total_women_mps_line);
 
     var path_node = total_women_mps_path.node();
     // path_node.style.transition = "none"
@@ -915,14 +907,14 @@ function second_slide() {
     total_women_mps_path_area.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).attr("d", total_women_mps_area).style("opacity", 1);
 
     // Rescale y axis to include all MPs
-    y.domain([0, 500]);
+    y.domain([0, 450]);
 
     // Change y axis label
-    yLabel.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("Number of MPs");
+    yLabel.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("Number of Representatives");
 
-    chartTitle.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("MPs in the House of Commons");
+    chartTitle.transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 750).text("Representatives in Congress");
 
-    slide2Group.append("text").attr("x", x(new Date(2010, 1, 1))).attr("y", y(0) - 10 * lineThickness).attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4, (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4)).attr("class", "women-label").text("Women").style("opacity", 0).transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 500).style("opacity", 1);
+    slide2Group.append("text").attr("x", x(new Date(2010, 1, 1))).attr("y", y(0) - 3 * lineThickness).attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4, (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4)).attr("class", "women-label").text("Women").style("opacity", 0).transition().delay(no_transition ? 0 : 4000).duration(no_transition ? 0 : 500).style("opacity", 1);
 
     // Do the actual axis rescale now
     gY.transition().delay(no_transition ? 0 : 5500).duration(no_transition ? 1000 : 750).call(yAxis);
@@ -986,20 +978,18 @@ function second_slide() {
             // Reconfigure tooltip to show different information
             var first_election = d.year;
             var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year;
-            if (chartTitle.text().includes("Labour")) {
+            if (chartTitle.text().includes("Democratic")) {
                 var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].labour_women_mps;
                 var gender_ratio = d.labour_mps / num_women - 1;
-            } else if (chartTitle.text().includes("Conservative")) {
+            } else if (chartTitle.text().includes("Republican")) {
                 num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].conservative_women_mps;
                 gender_ratio = d.conservative_mps / num_women - 1;
-            } else if (chartTitle.text().includes("Liberal")) {
-                num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].lib_snp_women_mps;
-                gender_ratio = d.lib_snp_mps / num_women - 1;
             } else {
                 num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps;
                 gender_ratio = d.total_mps / num_women - 1;
             }
-            tooltip.innerHTML = "<div class=\"slide2-tooltip\"><h1>" + formatDate(first_election) + " &rarr; " + formatDate(second_election) + "</h1>\n        " + (num_women > 0 ? "<p>" + num_women + " Wom" + (num_women == 1 ? "a" : "e") + "n</p><hr/>\n            For every <span class=\"female\">female</span> MP, there " + (new Date() > second_election ? "were" : "are") + "\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> MPs." : "There were no women in the House of Commons yet :(") + "\n                                </div>\n            ";
+            console.log(number_women_over_time_data);
+            tooltip.innerHTML = "<div class=\"slide2-tooltip\"><h1>" + formatDate(first_election) + " &rarr; " + formatDate(second_election) + "</h1>\n        " + (num_women > 0 ? "<p>" + num_women + " Wom" + (num_women == 1 ? "a" : "e") + "n</p><hr/>\n            For every <span class=\"female\">female</span> representative, there " + (new Date() > second_election ? "were" : "are") + "\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives." : "There were no women in the House of Representatives yet :(") + "\n                                </div>\n            ";
         }).on("mouseout", function () {
             d3.select(this).classed("hover", false);
         });
@@ -1137,7 +1127,7 @@ function third_slide() {
 
     mask.transition(t0).attr("d", max_mps_area);
 
-    yLabel.transition(t0).text("% of Women MPs");
+    yLabel.transition(t0).text("% of Women Representatives");
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1187,12 +1177,12 @@ function third_slide() {
 
     // Replace data about UK with more precise data
     women_in_govt_data.filter(function (d) {
-        return d.key == "United Kingdom";
+        return d.key == "United States";
     })[0].values = number_women_over_time_data.map(function (d) {
         return {
             year: d.year,
             women_pct: d.women_pct,
-            country: "United Kingdom"
+            country: "United States"
         };
     });
 
@@ -1200,8 +1190,8 @@ function third_slide() {
         return women_in_govt_line(d.values);
     }).attr("class", "women-in-govt-path").attr("id", function (d) {
         return d.key.replace(/[^a-zA-Z0-9s]/g, "");
-    }).attr("stroke-width", lineThickness * 2).style("stroke", function (d) {
-        return d.key == "United Kingdom" ? colors["Hover"] : countryColors(d.key);
+    }).attr("stroke-width", lineThickness).style("stroke", function (d) {
+        return d.key == "United States" ? colors["Hover"] : countryColors(d.key);
     }).style("fill", "none").style("opacity", 1).attr("stroke-dasharray", function () {
         return this.getTotalLength();
     }).attr("stroke-dashoffset", function () {
@@ -1218,22 +1208,22 @@ function third_slide() {
     women_in_govt_paths.transition(t2).delay(function (d, i) {
         return no_transition ? 0 : 1200 + i * 1000 - Math.pow(i, 1.5) * 100;
     }).ease(d3.easeCubic).attr("stroke-dashoffset", 0).style("opacity", function (d) {
-        return d.key == "United Kingdom" ? 1.0 : 0.5;
+        return d.key == "United States" ? 1.0 : 0.5;
     }).attr("stroke-width", function (d) {
-        return d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2;
+        return d.key == "United States" ? 0.75 * lineThickness : lineThickness / 4;
     }).on("start", function (d) {
         if (current_slide == 2) {
             d3.select("#tooltip").style("opacity", 1);
 
             // Show relevant tooltip info
             var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1;
-            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.values.slice(-1)[0].country == "United Kingdom" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)) + "\">" + d.values.slice(-1)[0].country + "</h1>\n                                For every <span class=\"female\">female</span> MP, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> MPs in " + d.values.slice(-1)[0].year.getFullYear() + ".\n                            </div>";
+            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)) + "\">" + d.values.slice(-1)[0].country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.values.slice(-1)[0].year.getFullYear() + ".\n                            </div>";
         }
     }).on("end", function (d) {
         // Record that the country is now visible on screen so that we can toggle its hover methods
         country_on_screen.push(d.key);
-        // If country is the UK, then we can get rid of the total women mps line
-        if (d.key == "United Kingdom") total_women_mps_path.remove();
+        // If country is the US, then we can get rid of the total women mps line
+        if (d.key == "United States") total_women_mps_path.remove();
     });
     var focus = slide3Group.append("g").attr("transform", "translate(-100,-100)").attr("class", "focus");
 
@@ -1266,10 +1256,10 @@ function third_slide() {
             d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
             // Show relevant tooltip info
             var gender_ratio = 100 / d.data.women_pct - 1;
-            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.data.country == "United Kingdom" ? colors["Hover"] : countryColors(d.data.country)) + ";\">" + d.data.country + "</h1>\n                                For every <span class=\"female\">female</span> MP, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> MPs in " + d.data.year.getFullYear() + ".\n                            </div>";
+            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)) + ";\">" + d.data.country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.data.year.getFullYear() + ".\n                            </div>";
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""));
             d.line.attr("stroke-width", function (d) {
-                return d.key == "United Kingdom" ? 2 * lineThickness : lineThickness;
+                return d.key == "United States" ? lineThickness : lineThickness / 2;
             }).style("opacity", 1);
 
             // d.line.parentNode.appendChild(d.line);
@@ -1282,9 +1272,9 @@ function third_slide() {
     function mouseout(d) {
         if (country_on_screen.indexOf(d.data.country) > -1) {
             d.line.attr("stroke-width", function (d) {
-                return d.key == "United Kingdom" ? 1.5 * lineThickness : lineThickness / 2;
+                return d.key == "United States" ? 0.75 * lineThickness : lineThickness / 4;
             }).style("opacity", function (d) {
-                return d.key == "United Kingdom" ? 1.0 : 0.5;
+                return d.key == "United States" ? 1.0 : 0.5;
             });
             // focus.attr("transform", "translate(-100,-100)")
         }
@@ -1460,7 +1450,7 @@ function fifth_slide() {
     // Scales for this data
     slide5_xScale = d3.scaleLinear().domain([-350, 150]).range([0, width]);
 
-    slide5_yScale = d3.scaleLinear().domain([-0.005, 0.3]).range([height, 0]);
+    slide5_yScale = d3.scaleLinear().domain([-0.005, 0.5]).range([height, 0]);
 
     y = slide5_yScale;
 
@@ -1470,8 +1460,8 @@ function fifth_slide() {
     if (typeof selected_topic != "undefined") {
         update_fifth_slide(no_transition, selected_topic);
     } else {
-        update_fifth_slide(no_transition, "economy", true, false);
-        chartTitle.transition().text("Time spent on the economy");
+        update_fifth_slide(no_transition, "honors", true, false);
+        chartTitle.transition().text("Time spent on honoring people");
     }
 }
 
@@ -1657,7 +1647,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     }).attr("opacity", drawMedian ? 1 : 0);
 
     // Enter
-    female_median_circle.enter().append("custom").attr("class", "female-median").attr("cx", slide5_xScale(0)).attr("cy", slide5_yScale(0)).attr("r", circleRadius * 2).attr("opacity", drawMedian ? 1 : 0).transition().delay(2000).duration(1000).attr("cy", function (d) {
+    female_median_circle.enter().append("custom").attr("class", "female-median").attr("cx", slide5_xScale(0)).attr("cy", slide5_yScale(0)).attr("r", circleRadius * 1.5).attr("opacity", drawMedian ? 1 : 0).transition().delay(2000).duration(1000).attr("cy", function (d) {
         return slide5_yScale(drawMedian ? d : 0);
     });
 
@@ -1798,7 +1788,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
         // Show relevant tooltip info
-        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Female"] : colors["Male"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " MP spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
+        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Female"] : colors["Male"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " representative spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
         mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
             return d.x;
         }).attr("cy", function (d) {
@@ -1864,14 +1854,14 @@ function to_sixth_slide(current_slide) {
 
     if (lastTransitioned < 5) {
         // Change scales
-        x = d3.scaleLinear().range([0, width]).domain([0, 0.10]);
+        x = d3.scaleLinear().range([0, width]).domain([0, 0.15]);
         // Redraw axes
         xAxis = d3.axisBottom(x).tickFormat(function (d) {
             return (d * 100).toFixed(1) + "%";
         });
     } else {
         // Use x scale at end of transition instead
-        x = d3.scaleLinear().range([0, width]).domain([-0.04, 0.04]);
+        x = d3.scaleLinear().range([0, width]).domain([-0.1, 0.1]);
         // Redraw axes
         xAxis = d3.axisBottom(x).tickFormat(function (d) {
             return (d * 100).toFixed(0) + "%";
@@ -2082,7 +2072,7 @@ function sixth_slide() {
 
         // Switch to relative change view
         var t3 = t2.transition().delay(1000).on("end", function () {
-            x.domain([-0.04, 0.04]);
+            x.domain([-0.06, 0.06]);
             xAxis = d3.axisBottom(x).tickFormat(function (d) {
                 return (d * 100).toFixed(0) + "%";
             });
@@ -2152,7 +2142,7 @@ function sixth_slide() {
     }).duration(no_transition ? 1 : 1000).style("text-anchor", function (d, i) {
         return label_pos[i] ? "end" : "start";
     }).attr("x", function (d, i) {
-        return label_pos[i] ? x.domain([-0.04, 0.04])(-0.001) : x.domain([-0.04, 0.04])(0.001);
+        return label_pos[i] ? x.domain([-0.06, 0.06])(-0.001) : x.domain([-0.06, 0.06])(0.001);
     }).transition().delay(500).duration(500).style("opacity", 1);
 }
 
@@ -2186,7 +2176,7 @@ function download_data() {
             conservative_women_mps: +d.rep_reps,
             labour_women_mps: +d.dem_reps
         };
-    }).defer(d3.csv, "total_mps_over_time.csv", function (d) {
+    }).defer(d3.csv, "total_members_over_time.csv", function (d) {
         var parseDate = d3.timeParse("%Y-%m-%d");
         return {
             year: parseDate(d.date),
@@ -2263,13 +2253,13 @@ function download_data() {
         baked_mp_positions.forEach(function (row) {
 
             Object.keys(row).forEach(function (colname) {
-                if (colname != "id" & colname != "full_name" & colname != "Party" & colname != "is_female" & colname.slice(-1) != "y") {
+                if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname.slice(-1) != "y") {
                     var topic = colname.slice(0, -2);
                     baked_positions_data.push({
                         "id": +row["id"],
                         "full_name": row["full_name"],
-                        "party": row["Party"],
-                        "gender": row["is_female"] == 1 ? "Female" : "Male",
+                        "party": row["party"],
+                        "gender": row["gender"] == 1 ? "Female" : "Male",
                         "topic": topic,
                         "x": +row[topic + "_x"],
                         "y": +row[topic + "_y"] / 100
@@ -2445,7 +2435,7 @@ function handleStepEnter(response) {
                         // Display tooltip
                         show_mp_tooltip(mps_over_time_data.filter(function (d) {
                             return d.clean_name == "marcykaptur";
-                        })[1]);
+                        })[0]);
                     });
                     // Animate node entrances
                     var t = d3.timer(function (elapsed) {
@@ -2477,7 +2467,7 @@ function handleStepEnter(response) {
                         // Animate node entrances
                         all_mps_draw_timer = d3.timer(function (elapsed) {
                             draw(context, false);
-                            if (elapsed > 5000) {
+                            if (elapsed > 3500) {
                                 all_mps_draw_timer.stop();
                                 draw(context);
                                 // Draw hidden canvas nodes to catch interactions
@@ -2512,6 +2502,7 @@ function handleStepEnter(response) {
                     break;
 
                 case 1:
+                    // First step: first woman rep - Jeannette Rankin
                     d3.select(".switch").style("opacity", 0);
                     if (document.getElementById("zoom-checkbox").checked != false) {
                         document.getElementById("zoom-checkbox").click();
@@ -2529,7 +2520,7 @@ function handleStepEnter(response) {
                     break;
 
                 case 2:
-                    // Second step: first mp to take seat
+                    // Second step: first minority woman representative
                     mpZoom("patsymink");
                     canvas.style("pointer-events", "none");
                     break;
@@ -2590,7 +2581,7 @@ function handleStepEnter(response) {
                         yLabel.transition().text("Number of Representatives");
                         chartTitle.transition().text("Representatives in Congress");
                         // All MPs first
-                        y.domain([0, 500]);
+                        y.domain([0, 450]);
                         gY.transition().call(yAxis);
 
                         max_mps_line.y(function (d) {
@@ -2734,21 +2725,21 @@ function handleStepEnter(response) {
             d3.select("#slide4").style("display", "none");
             switch (new_step) {
                 case 0:
-                    update_fifth_slide(false, "economy", true, false);
+                    update_fifth_slide(false, "honors", true, false);
 
-                    chartTitle.transition().text("Time spent on the economy");
+                    chartTitle.transition().text("Time spent on honoring people");
                     break;
                 case 1:
-                    update_fifth_slide(false, "welfare reforms", true, false);
-                    chartTitle.transition().text("Time spent on welfare reforms");
+                    update_fifth_slide(false, "medicare & healthcare", true, false);
+                    chartTitle.transition().text("Time spent on healthcare");
                     break;
                 case 2:
-                    update_fifth_slide(false, "parliamentary terminology", true, false);
-                    chartTitle.transition().text("Time spent on parliamentary terminology");
+                    update_fifth_slide(false, "congressional terminology", true, false);
+                    chartTitle.transition().text("Time spent on congressional terminology");
                     break;
                 case 3:
-                    update_fifth_slide(false, "parliamentary terminology", true, true);
-                    chartTitle.transition().text("Time spent on parliamentary terminology");
+                    update_fifth_slide(false, "congressional terminology", true, true);
+                    chartTitle.transition().text("Time spent on congressional terminology");
                     break;
             }
             d3.select(".slide5-dropdown").style("display", "none");
@@ -2865,7 +2856,7 @@ function draw_graph() {
         isMobile = width < 500;
 
         // SET THE THICKNESS OF EACH LINE BASED ON THE CHART HEIGHT
-        lineThickness = 0.0018 * height * 2;
+        lineThickness = 0.003 * height * 2;
         // SET THE RADIUS OF EACH LINE'S END BASED ON THE LINE THICKNESS
         circleRadius = lineThickness / 2;
         svg.attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom * 2);
