@@ -34,7 +34,6 @@
 
     <body>
         <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
-        <script src='//alexmacy.github.io/crossfilter/crossfilter.v1.min.js' defer></script>
         <script src="external/d3.v4.min.js"></script>
         <script src="external/d3-tip.js"></script>
         <script>
@@ -265,7 +264,7 @@
                     .attr("stroke", "#e5e5e5")
                     .attr("stroke-width", 0.3)
                     .attr("d", function(d) {
-                        kde = kernelDensityEstimator(kernelEpanechnikov(0.005), y_violin.ticks(50))
+                        kde = kernelDensityEstimator(kernelEpanechnikov(0.001), y_violin.ticks(100))
 
                         data = kde(d.values.map(function(x) {
                                 return x.value;

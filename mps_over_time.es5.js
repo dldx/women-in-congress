@@ -2730,16 +2730,16 @@ function handleStepEnter(response) {
                     chartTitle.transition().text("Time spent on energy");
                     break;
                 case 1:
-                    update_fifth_slide(false, "medicare & healthcare", true, false);
+                    update_fifth_slide(false, "healthcare", true, false);
                     chartTitle.transition().text("Time spent on healthcare");
                     break;
                 case 2:
-                    update_fifth_slide(false, "congressional terminology", true, false);
-                    chartTitle.transition().text("Time spent on congressional terminology");
+                    update_fifth_slide(false, "government budget", true, false);
+                    chartTitle.transition().text("Time spent on government budget");
                     break;
                 case 3:
-                    update_fifth_slide(false, "congressional terminology", true, true);
-                    chartTitle.transition().text("Time spent on congressional terminology");
+                    update_fifth_slide(false, "government budget", true, true);
+                    chartTitle.transition().text("Time spent on government budget");
                     break;
             }
             d3.select(".slide5-dropdown").style("display", "none");
