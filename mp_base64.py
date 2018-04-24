@@ -14,8 +14,8 @@ def generate_base64(img_src):
 import glob
 import pandas as pd
 
-images = pd.DataFrame({'src':glob.glob("./mp_photos/cropped/small/*.jpg")})
-images["id"] = images["src"].apply(lambda x: int(x.split("-")[-1].split(".")[0]))
+images = pd.DataFrame({'src':glob.glob("./member-images/*.jpg")})
+images["id"] = images["src"].apply(lambda x: x.split("/")[-1].split(".")[0])
 images["base64"] = list(map(generate_base64, images["src"].tolist()))
 
-images[["id", "base64"]].to_csv("mp_base64.csv", index=False)
+images[["id", "base64"]].to_csv("member_base64.csv", index=False)

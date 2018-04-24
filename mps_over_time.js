@@ -744,6 +744,14 @@ function show_mp_tooltip(nodeData, mousePos) {
             mousePos = [width / 2, 0]
         }
     }
+
+    // Hide tooltip on scroll
+    window.addEventListener("scroll", () => {
+        d3.select("#tooltip")
+            .style("opacity", 0)
+
+    }, {once: true})
+
     // Display tooltip
     d3.select("#tooltip")
         .style("opacity", 1)
@@ -761,14 +769,14 @@ function show_mp_tooltip(nodeData, mousePos) {
 
     if (typeof (mp_base64_data) == "undefined") {
         tooltip_innerHTML += `<img class="mp-image-blurred" style="opacity: 0;"/>
-                <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" />
+                <img class="mp-image" src="./member-images/${nodeData.id}.jpg" />
                 `
 
     } else {
         // If mp has a photo
         if (typeof (mp_base64_data[nodeData.id]) !== "undefined") {
             tooltip_innerHTML += `<img class="mp-image-blurred" src="data:image/jpeg;base64, ${mp_base64_data[nodeData.id]}"/>
-                <img class="mp-image" src="./mp-images/mp-${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
+                <img class="mp-image" src="./member-images/${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
                 `
         }
     }
@@ -1362,6 +1370,13 @@ function second_slide(no_transition = false) {
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
+                    // Hide tooltip on scroll
+                    window.addEventListener("scroll", () => {
+                        d3.select("#tooltip")
+                            .style("opacity", 0)
+
+                    }, {once: true})
+
                     // Get mouse positions
                     var mousePos = d3.mouse(this)
 
@@ -1390,7 +1405,6 @@ function second_slide(no_transition = false) {
                         num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
                         gender_ratio = d.total_mps / num_women - 1
                     }
-                    console.log(number_women_over_time_data)
                     tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
             For every <span class="female">female</span> representative, there ${new Date() > second_election ? "were" : "are"}
@@ -1741,6 +1755,13 @@ function third_slide(no_transition = false) {
         .on("mouseout", mouseout)
 
     function mouseover(d) {
+    // Hide tooltip on scroll
+        window.addEventListener("scroll", () => {
+            d3.select("#tooltip")
+                .style("opacity", 0)
+
+        }, {once: true})
+
         // If country line is on screen, then enable mouseover
         if (country_on_screen.indexOf(d.data.country) > -1) {
             // Get mouse positions
@@ -1763,7 +1784,7 @@ function third_slide(no_transition = false) {
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
-                .attr("stroke-width", d => d.key == "United States" ? lineThickness : lineThickness/2)
+                .attr("stroke-width", d => d.key == "United States" ? lineThickness*2 : lineThickness)
                 .style("opacity", 1)
 
             // d.line.parentNode.appendChild(d.line);
@@ -2036,10 +2057,10 @@ function fifth_slide(no_transition = false) {
     if (typeof (selected_topic) != "undefined") {
         update_fifth_slide(no_transition, selected_topic)
     } else {
-        update_fifth_slide(no_transition, "energy", true, false)
+        update_fifth_slide(no_transition, "energy policy", true, false)
         chartTitle
             .transition()
-            .text("Time spent on energy")
+            .text("Time spent on energy policy")
     }
 
 }
@@ -2163,7 +2184,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .enter()
         .append("custom")
         .attr("class", "male-node")
-        .attr("r", circleRadius * (isMobile ? 0.9 : 1.2))
+        .attr("r", circleRadius * (isMobile ? 0.5 : 0.8))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
@@ -2192,7 +2213,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .enter()
         .append("custom")
         .attr("class", "female-node")
-        .attr("r", circleRadius * (isMobile ? 0.9 : 1.2))
+        .attr("r", circleRadius * (isMobile ? 0.5 : 0.8))
         .attr("cx", d => no_transition ? d.x : slide5_xScale(0))
         .attr("cy", d => slide5_yScale(d.y))
         .attr("opacity", 0.0)
@@ -2252,7 +2273,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .attr("class", "male-median")
         .attr("cx", slide5_xScale(0))
         .attr("cy", slide5_yScale(0))
-        .attr("r", circleRadius * 2)
+        .attr("r", circleRadius * 1.5)
         .attr("opacity", drawMedian ? 1 : 0)
         .transition()
         .delay(2000)
@@ -2403,6 +2424,13 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // mouseover function for getting MP info
     function mpMouseover() {
+    // Hide tooltip on scroll
+        window.addEventListener("scroll", () => {
+            d3.select("#tooltip")
+                .style("opacity", 0)
+
+        }, {once: true})
+
         // Get mouse positions from the main canvas.
         var mousePos = d3.mouse(this)
         // Get the data from our map!
@@ -2434,7 +2462,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     <div class="body">
                     <div class="mp-image-parent">
                     ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="body-facts">
                     <p><em>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
@@ -2449,7 +2477,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     .datum(nodeData)
                     .attr("cx", (d) => d.x)
                     .attr("cy", (d) => d.y)
-                    .attr("r", circleRadius * 2.5)
+                    .attr("r", circleRadius * (isMobile ? 0.8 : 1.2))
                     .style("opacity", 1)
                     .style("stroke-width", circleRadius)
             } else {
@@ -2468,6 +2496,13 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
+    // Hide tooltip on scroll
+        window.addEventListener("scroll", () => {
+            d3.select("#tooltip")
+                .style("opacity", 0)
+
+        }, {once: true})
+
         d3.select("#tooltip")
             .style("opacity", 1)
             .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
@@ -2580,7 +2615,7 @@ function to_sixth_slide(current_slide) {
         // Use x scale at end of transition instead
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([-0.1, 0.1])
+            .domain([-2, 2])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
@@ -2648,7 +2683,7 @@ function sixth_slide(no_transition = false) {
 
     // Set the topics that will appear on the y axis
     let sorted_topics = Object.entries(topic_medians_data)
-        .sort((a, b) => (a[1]["female"] - a[1]["male"]) - (b[1]["female"] - b[1]["male"]))
+        .sort((a, b) => (a[1]["female"]/a[1]["male"] - b[1]["female"]/b[1]["male"]))
 
     y.domain(sorted_topics.map(d => d[0]))
     yAxis = d3.axisLeft(y)
@@ -2872,7 +2907,7 @@ function sixth_slide(no_transition = false) {
         var t3 = t2.transition()
             .delay(1000)
             .on("end", () => {
-                x.domain([-0.06, 0.06])
+                x.domain([-2, 2])
                 xAxis = d3.axisBottom(x)
                     .tickFormat(d => (d * 100)
                         .toFixed(0) + "%")
@@ -2885,18 +2920,18 @@ function sixth_slide(no_transition = false) {
                         slide6Group.selectAll(".median-connector")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
+                            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"]/d[1]["male"] - 1) : (-d[1]["male"]/d[1]["female"] + 1)))
                             .attr("x2", x(0))
 
                         slide6Group.selectAll(".female-median")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+                            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"]/d[1]["male"] - 1) : x(0))
 
                         slide6Group.selectAll(".male-median")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+                            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"]/d[1]["female"] + 1) : x(0))
                             .on("end", () => d3.selectAll(".y-axis > .tick text")
                                 .style("opacity", 0))
 
@@ -2928,14 +2963,14 @@ function sixth_slide(no_transition = false) {
     } else {
         // Switch to relative change view in case this was skipped before
         slide6Group.selectAll(".median-connector")
-            .attr("x1", d => x(d[1]["female"] - d[1]["male"]))
+            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"]/d[1]["male"] - 1) : (-d[1]["male"]/d[1]["female"] + 1)))
             .attr("x2", x(0))
 
         slide6Group.selectAll(".female-median")
-            .attr("cx", d => d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"]/d[1]["male"] - 1) : x(0))
 
         slide6Group.selectAll(".male-median")
-            .attr("cx", d => d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0))
+            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"]/d[1]["female"] + 1) : x(0))
 
         // Now fade in the slide
         t4 = d3.transition()
@@ -3058,7 +3093,7 @@ function download_data() {
     // These files can download later because we don't need to wait for them
     // to load initial view
     d3.queue()
-        .defer(d3.csv, "mp_base64.csv", function (d) {
+        .defer(d3.csv, "member_base64.csv", function (d) {
             return {
                 id: d.id,
                 base64: d.base64
@@ -3116,7 +3151,7 @@ function download_data() {
                         if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname.slice(-1) != "y") {
                             var topic = colname.slice(0, -2)
                             baked_positions_data.push({
-                                "id": +row["id"],
+                                "id": row["id"],
                                 "full_name": row["full_name"],
                                 "party": row["party"],
                                 "gender": row["gender"] == 1 ? "Female" : "Male",
@@ -3663,11 +3698,11 @@ function handleStepEnter(response) {
             .style("display", "none")
         switch (new_step) {
         case 0:
-            update_fifth_slide(false, "energy", true, false)
+            update_fifth_slide(false, "energy policy", true, false)
 
             chartTitle
                 .transition()
-                .text("Time spent on energy")
+                .text("Time spent on energy policy")
             break
         case 1:
             update_fifth_slide(false, "healthcare", true, false)

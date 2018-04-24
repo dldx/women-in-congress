@@ -577,11 +577,11 @@ function show_mp_tooltip(nodeData, mousePos) {
     var tooltip_innerHTML = "\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body\">\n                <div class=\"mp-image-parent\">";
 
     if (typeof mp_base64_data == "undefined") {
-        tooltip_innerHTML += "<img class=\"mp-image-blurred\" style=\"opacity: 0;\"/>\n                <img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" />\n                ";
+        tooltip_innerHTML += "<img class=\"mp-image-blurred\" style=\"opacity: 0;\"/>\n                <img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" />\n                ";
     } else {
         // If mp has a photo
         if (typeof mp_base64_data[nodeData.id] !== "undefined") {
-            tooltip_innerHTML += "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64, " + mp_base64_data[nodeData.id] + "\"/>\n                <img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: " + (typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded) + (nodeData.loaded = 1) + ";\" onload=\"this.style.opacity = 1;\" />\n                ";
+            tooltip_innerHTML += "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64, " + mp_base64_data[nodeData.id] + "\"/>\n                <img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: " + (typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded) + (nodeData.loaded = 1) + ";\" onload=\"this.style.opacity = 1;\" />\n                ";
         }
     }
     tooltip_innerHTML += "</div>\n            <div class=\"body-facts\">\n                    <div class=\"mp-term\">" + d3.timeFormat("%Y")(nodeData.term_start) + " &rarr;                     " + d3.timeFormat("%Y")(nodeData.term_end) + "</div>\n                    <div class=\"mp-constituency\">" + nodeData.district + "</div>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n                    ";
@@ -988,7 +988,6 @@ function second_slide() {
                 num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps;
                 gender_ratio = d.total_mps / num_women - 1;
             }
-            console.log(number_women_over_time_data);
             tooltip.innerHTML = "<div class=\"slide2-tooltip\"><h1>" + formatDate(first_election) + " &rarr; " + formatDate(second_election) + "</h1>\n        " + (num_women > 0 ? "<p>" + num_women + " Wom" + (num_women == 1 ? "a" : "e") + "n</p><hr/>\n            For every <span class=\"female\">female</span> representative, there " + (new Date() > second_election ? "were" : "are") + "\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives." : "There were no women in the House of Representatives yet :(") + "\n                                </div>\n            ";
         }).on("mouseout", function () {
             d3.select(this).classed("hover", false);
@@ -1259,7 +1258,7 @@ function third_slide() {
             tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)) + ";\">" + d.data.country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.data.year.getFullYear() + ".\n                            </div>";
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""));
             d.line.attr("stroke-width", function (d) {
-                return d.key == "United States" ? lineThickness : lineThickness / 2;
+                return d.key == "United States" ? lineThickness * 2 : lineThickness;
             }).style("opacity", 1);
 
             // d.line.parentNode.appendChild(d.line);
@@ -1460,8 +1459,8 @@ function fifth_slide() {
     if (typeof selected_topic != "undefined") {
         update_fifth_slide(no_transition, selected_topic);
     } else {
-        update_fifth_slide(no_transition, "energy", true, false);
-        chartTitle.transition().text("Time spent on energy");
+        update_fifth_slide(no_transition, "energy policy", true, false);
+        chartTitle.transition().text("Time spent on energy policy");
     }
 }
 
@@ -1569,7 +1568,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     });
 
     // ENTER
-    circle_male.enter().append("custom").attr("class", "male-node").attr("r", circleRadius * (isMobile ? 0.9 : 1.2)).attr("cx", function (d) {
+    circle_male.enter().append("custom").attr("class", "male-node").attr("r", circleRadius * (isMobile ? 0.5 : 0.8)).attr("cx", function (d) {
         return no_transition ? d.x : slide5_xScale(0);
     }).attr("cy", function (d) {
         return slide5_yScale(d.y);
@@ -1593,7 +1592,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     });
 
     // ENTER
-    circle_female.enter().append("custom").attr("class", "female-node").attr("r", circleRadius * (isMobile ? 0.9 : 1.2)).attr("cx", function (d) {
+    circle_female.enter().append("custom").attr("class", "female-node").attr("r", circleRadius * (isMobile ? 0.5 : 0.8)).attr("cx", function (d) {
         return no_transition ? d.x : slide5_xScale(0);
     }).attr("cy", function (d) {
         return slide5_yScale(d.y);
@@ -1633,7 +1632,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     }).attr("opacity", drawMedian ? 1 : 0);
 
     // Enter
-    male_median_circle.enter().append("custom").attr("class", "male-median").attr("cx", slide5_xScale(0)).attr("cy", slide5_yScale(0)).attr("r", circleRadius * 2).attr("opacity", drawMedian ? 1 : 0).transition().delay(2000).duration(1000).attr("cy", function (d) {
+    male_median_circle.enter().append("custom").attr("class", "male-median").attr("cx", slide5_xScale(0)).attr("cy", slide5_yScale(0)).attr("r", circleRadius * 1.5).attr("opacity", drawMedian ? 1 : 0).transition().delay(2000).duration(1000).attr("cy", function (d) {
         return slide5_yScale(drawMedian ? d : 0);
     });
 
@@ -1767,13 +1766,13 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
                 var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1;
                 // Show relevant tooltip info
-                tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.full_name + "</h1>\n                    <div class=\"body\">\n                    <div class=\"mp-image-parent\">\n                    " + (typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" + "<img class=\"mp-image\" src=\"./mp-images/mp-" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />") + "\n                    </div>\n                    <div class=\"body-facts\">\n                    <p><em>" + (slide5_yScale.invert(nodeData.y) * 100).toFixed(2) + "%</em> of " + nodeData.full_name + "'s time spent on <em>" + selected_topic + "</em></p>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n</div>";
+                tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.full_name + "</h1>\n                    <div class=\"body\">\n                    <div class=\"mp-image-parent\">\n                    " + (typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" + "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />") + "\n                    </div>\n                    <div class=\"body-facts\">\n                    <p><em>" + (slide5_yScale.invert(nodeData.y) * 100).toFixed(2) + "%</em> of " + nodeData.full_name + "'s time spent on <em>" + selected_topic + "</em></p>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n</div>";
                 // Also select the mouseover circle and move it to the right location
                 mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
                     return d.x;
                 }).attr("cy", function (d) {
                     return d.y;
-                }).attr("r", circleRadius * 2.5).style("opacity", 1).style("stroke-width", circleRadius);
+                }).attr("r", circleRadius * (isMobile ? 0.8 : 1.2)).style("opacity", 1).style("stroke-width", circleRadius);
             } else {
                 median_mouseover(nodeData, mousePos);
             }
@@ -2072,29 +2071,29 @@ function sixth_slide() {
 
         // Switch to relative change view
         var t3 = t2.transition().delay(1000).on("end", function () {
-            x.domain([-0.06, 0.06]);
-            xAxis = d3.axisBottom(x).tickFormat(function (d) {
-                return (d * 100).toFixed(0) + "%";
-            });
+            x.domain([-2, 2]);
+            xAxis = d3.axisBottom(x);
+            // .tickFormat(d => (d * 100)
+            //     .toFixed(0) + "%")
             gX.transition().call(xAxis).on("end", function () {
                 var t_ = d3.transition().duration(1000);
 
                 slide6Group.selectAll(".median-connector").transition(t_).delay(function (d, i) {
                     return i * 50;
                 }).attr("x1", function (d) {
-                    return x(d[1]["female"] - d[1]["male"]);
+                    return x(d[1]["female"] > d[1]["male"] ? d[1]["female"] / d[1]["male"] : -d[1]["male"] / d[1]["female"]);
                 }).attr("x2", x(0));
 
                 slide6Group.selectAll(".female-median").transition(t_).delay(function (d, i) {
                     return i * 50;
                 }).attr("cx", function (d) {
-                    return d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0);
+                    return d[1]["female"] > d[1]["male"] ? x(d[1]["female"] / d[1]["male"]) : x(0);
                 });
 
                 slide6Group.selectAll(".male-median").transition(t_).delay(function (d, i) {
                     return i * 50;
                 }).attr("cx", function (d) {
-                    return d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0);
+                    return d[1]["female"] < d[1]["male"] ? x(d[1]["male"] / d[1]["female"]) : x(0);
                 }).on("end", function () {
                     return d3.selectAll(".y-axis > .tick text").style("opacity", 0);
                 });
@@ -2110,15 +2109,15 @@ function sixth_slide() {
     } else {
         // Switch to relative change view in case this was skipped before
         slide6Group.selectAll(".median-connector").attr("x1", function (d) {
-            return x(d[1]["female"] - d[1]["male"]);
+            return x(d[1]["female"] > d[1]["male"] ? d[1]["female"] / d[1]["male"] : -d[1]["male"] / d[1]["female"]);
         }).attr("x2", x(0));
 
         slide6Group.selectAll(".female-median").attr("cx", function (d) {
-            return d[1]["female"] - d[1]["male"] > 0 ? x(d[1]["female"] - d[1]["male"]) : x(0);
+            return d[1]["female"] > d[1]["male"] ? x(d[1]["female"] / d[1]["male"]) : x(0);
         });
 
         slide6Group.selectAll(".male-median").attr("cx", function (d) {
-            return d[1]["female"] - d[1]["male"] < 0 ? x(d[1]["female"] - d[1]["male"]) : x(0);
+            return d[1]["female"] < d[1]["male"] ? x(d[1]["male"] / d[1]["female"]) : x(0);
         });
 
         // Now fade in the slide
@@ -2207,7 +2206,7 @@ function download_data() {
 
     // These files can download later because we don't need to wait for them
     // to load initial view
-    d3.queue().defer(d3.csv, "mp_base64.csv", function (d) {
+    d3.queue().defer(d3.csv, "member_base64.csv", function (d) {
         return {
             id: d.id,
             base64: d.base64
@@ -2256,7 +2255,7 @@ function download_data() {
                 if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname.slice(-1) != "y") {
                     var topic = colname.slice(0, -2);
                     baked_positions_data.push({
-                        "id": +row["id"],
+                        "id": row["id"],
                         "full_name": row["full_name"],
                         "party": row["party"],
                         "gender": row["gender"] == 1 ? "Female" : "Male",
@@ -2725,9 +2724,9 @@ function handleStepEnter(response) {
             d3.select("#slide4").style("display", "none");
             switch (new_step) {
                 case 0:
-                    update_fifth_slide(false, "energy", true, false);
+                    update_fifth_slide(false, "energy policy", true, false);
 
-                    chartTitle.transition().text("Time spent on energy");
+                    chartTitle.transition().text("Time spent on energy policy");
                     break;
                 case 1:
                     update_fifth_slide(false, "healthcare", true, false);

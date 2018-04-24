@@ -125,7 +125,7 @@ d3.queue()
         "mp_topic_fraction.csv" + "?" + Math.floor(Math.random() * 1000)
     )
     .defer(d3.csv, "topic_medians.csv", (d) => ({ topic: d.topic, male: Math.pow(10, +d.male), female: Math.pow(10, +d.female) }))
-    .defer(d3.csv, "mp_base64.csv", function (d) {
+    .defer(d3.csv, "member_base64.csv", function (d) {
         return {
             id: d.id,
             base64: d.base64
@@ -147,10 +147,10 @@ d3.queue()
                 Object.keys(row)
                     .forEach(
                         function (colname) {
-                            if (colname == "id" || colname.slice(-1) == "y") return
+                            if (colname == "id" || colname.slice(-1) == "y" || colname == "full_name" || colname == "gender" || colname == "party") return
                             var topic = colname.slice(0, -2)
                             baked_positions.push({
-                                "id": +row["id"],
+                                "id": row["id"],
 
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
@@ -167,14 +167,14 @@ d3.queue()
             // Convert wide data to long
             nodes = mp_data.map(function (d) {
                 var node = {
-                    "id": +d.id,
+                    "id": d.id,
                     "full_name": d.full_name,
-                    "party": d.Party,
-                    "gender": d.is_female == 1 ? "Female" : "Male",
+                    "party": d.party,
+                    "gender": d.gender == 1 ? "Female" : "Male",
                 }
                 Object.keys(d)
                     .forEach(function (key) {
-                        if (key != "id" & key != "full_name" & key != "Party" & key != "is_female") {
+                        if (key != "id" & key != "full_name" & key != "party" & key != "gender") {
                             node[key] = d[key] == "-inf" ? 0 : Math.pow(10, +d[key])
                         }
                     })
