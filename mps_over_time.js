@@ -750,7 +750,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         d3.select("#tooltip")
             .style("opacity", 0)
 
-    }, {once: true})
+    }, { once: true })
 
     // Display tooltip
     d3.select("#tooltip")
@@ -1375,7 +1375,7 @@ function second_slide(no_transition = false) {
                         d3.select("#tooltip")
                             .style("opacity", 0)
 
-                    }, {once: true})
+                    }, { once: true })
 
                     // Get mouse positions
                     var mousePos = d3.mouse(this)
@@ -1755,12 +1755,12 @@ function third_slide(no_transition = false) {
         .on("mouseout", mouseout)
 
     function mouseover(d) {
-    // Hide tooltip on scroll
+        // Hide tooltip on scroll
         window.addEventListener("scroll", () => {
             d3.select("#tooltip")
                 .style("opacity", 0)
 
-        }, {once: true})
+        }, { once: true })
 
         // If country line is on screen, then enable mouseover
         if (country_on_screen.indexOf(d.data.country) > -1) {
@@ -1784,7 +1784,7 @@ function third_slide(no_transition = false) {
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
-                .attr("stroke-width", d => d.key == "United States" ? lineThickness*2 : lineThickness)
+                .attr("stroke-width", d => d.key == "United States" ? lineThickness * 2 : lineThickness)
                 .style("opacity", 1)
 
             // d.line.parentNode.appendChild(d.line);
@@ -1840,7 +1840,7 @@ function to_fourth_slide(current_slide) {
 
         t0.select("#slide3-group")
             .style("opacity", 0)
-            .on("end", function() {
+            .on("end", function () {
                 this.remove()
             })
         break
@@ -2020,6 +2020,26 @@ function fifth_slide(no_transition = false) {
     d3.select(".switch")
         .style("opacity", 1)
 
+    // Calculate labels for dropdown based on how polarised the topic is
+    let hist = d3.histogram()
+        .domain([-1.5, 1.5])
+        .thresholds([-.8, -0.4, -0.05, 0.05, 0.4, .8])
+
+    // dictionary to store the labels
+    let dropdown_labels = {}
+
+    // Loop through each topic, calculating the histogram bin that it belongs to.
+    // All the male topics get ♂ symbols and all the female topics get ♀ symbols.
+    // We assign 3 symbols to the most polarised topics and 0 to the least polarised
+    Object.entries(topic_medians_data)
+        .map(d => [d[0],
+            ["♂♂♂", "♂♂ ", "♂  ", "⚤  ", "♀  ", "♀♀ ", "♀♀♀"][hist([(d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)])
+                .map(i => i.length)
+                .indexOf(1)
+            ] + " " + d[0]
+        ])
+        .forEach(d => { dropdown_labels[d[0]] = d[1] })
+
     // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
         d3.select("body")
@@ -2030,12 +2050,13 @@ function fifth_slide(no_transition = false) {
             .attr("class", "slide5-dropdown__select")
             .on("change", update_fifth_slide)
             .selectAll(".topic")
-            .data(baked_positions_data.map(topic => topic.key))
+            .data(baked_positions_data.map(topic => topic.key)
+                .reverse())
             .enter()
             .append("option")
             .attr("selected", d => d == selected_topic ? "selected" : null)
             .attr("value", d => d)
-            .text(d => d.toUpperCase())
+            .text(d => dropdown_labels[d].toUpperCase())
     }
 
 
@@ -2424,12 +2445,12 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // mouseover function for getting MP info
     function mpMouseover() {
-    // Hide tooltip on scroll
+        // Hide tooltip on scroll
         window.addEventListener("scroll", () => {
             d3.select("#tooltip")
                 .style("opacity", 0)
 
-        }, {once: true})
+        }, { once: true })
 
         // Get mouse positions from the main canvas.
         var mousePos = d3.mouse(this)
@@ -2496,12 +2517,12 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
-    // Hide tooltip on scroll
+        // Hide tooltip on scroll
         window.addEventListener("scroll", () => {
             d3.select("#tooltip")
                 .style("opacity", 0)
 
-        }, {once: true})
+        }, { once: true })
 
         d3.select("#tooltip")
             .style("opacity", 1)
@@ -2615,7 +2636,7 @@ function to_sixth_slide(current_slide) {
         // Use x scale at end of transition instead
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([-2, 2])
+            .domain([-1.5, 1.5])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
@@ -2683,7 +2704,7 @@ function sixth_slide(no_transition = false) {
 
     // Set the topics that will appear on the y axis
     let sorted_topics = Object.entries(topic_medians_data)
-        .sort((a, b) => (a[1]["female"]/a[1]["male"] - b[1]["female"]/b[1]["male"]))
+        .sort((a, b) => (a[1]["female"] / a[1]["male"] - b[1]["female"] / b[1]["male"]))
 
     y.domain(sorted_topics.map(d => d[0]))
     yAxis = d3.axisLeft(y)
@@ -2907,7 +2928,7 @@ function sixth_slide(no_transition = false) {
         var t3 = t2.transition()
             .delay(1000)
             .on("end", () => {
-                x.domain([-2, 2])
+                x.domain([-1.5, 1.5])
                 xAxis = d3.axisBottom(x)
                     .tickFormat(d => (d * 100)
                         .toFixed(0) + "%")
@@ -2920,18 +2941,18 @@ function sixth_slide(no_transition = false) {
                         slide6Group.selectAll(".median-connector")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"]/d[1]["male"] - 1) : (-d[1]["male"]/d[1]["female"] + 1)))
+                            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)))
                             .attr("x2", x(0))
 
                         slide6Group.selectAll(".female-median")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"]/d[1]["male"] - 1) : x(0))
+                            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"] / d[1]["male"] - 1) : x(0))
 
                         slide6Group.selectAll(".male-median")
                             .transition(t_)
                             .delay((d, i) => i * 50)
-                            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"]/d[1]["female"] + 1) : x(0))
+                            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"] / d[1]["female"] + 1) : x(0))
                             .on("end", () => d3.selectAll(".y-axis > .tick text")
                                 .style("opacity", 0))
 
@@ -2963,14 +2984,14 @@ function sixth_slide(no_transition = false) {
     } else {
         // Switch to relative change view in case this was skipped before
         slide6Group.selectAll(".median-connector")
-            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"]/d[1]["male"] - 1) : (-d[1]["male"]/d[1]["female"] + 1)))
+            .attr("x1", d => x((d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)))
             .attr("x2", x(0))
 
         slide6Group.selectAll(".female-median")
-            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"]/d[1]["male"] - 1) : x(0))
+            .attr("cx", d => d[1]["female"] > d[1]["male"] ? x(d[1]["female"] / d[1]["male"] - 1) : x(0))
 
         slide6Group.selectAll(".male-median")
-            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"]/d[1]["female"] + 1) : x(0))
+            .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"] / d[1]["female"] + 1) : x(0))
 
         // Now fade in the slide
         t4 = d3.transition()
@@ -3005,8 +3026,8 @@ function sixth_slide(no_transition = false) {
         .filter(d => Object.keys(topic_medians_data)
             .indexOf(d) != -1)
         .transition(t4)
-        .delay(() => no_transition ? 0 : 3000)
-        .duration(no_transition ? 1 : 1000)
+        .delay(() => no_transition ? 0 : 2000)
+        .duration(no_transition ? 1 : 0)
         .style("text-anchor", (d, i) => {
             return label_pos[i] ? "end" : "start"
         })
@@ -3398,7 +3419,8 @@ function handleStepEnter(response) {
             d3.select(".switch")
                 .style("opacity", 1)
                 .on("mouseover", () => {
-                    d3.select("#tooltip").style("opacity", 0)
+                    d3.select("#tooltip")
+                        .style("opacity", 0)
                 })
                 .select("#zoom-checkbox")
                 .on("change", function () {
@@ -3424,7 +3446,7 @@ function handleStepEnter(response) {
             break
 
         case 1:
-        // First step: first woman rep - Jeannette Rankin
+            // First step: first woman rep - Jeannette Rankin
             d3.select(".switch")
                 .style("opacity", 0)
             if (document.getElementById("zoom-checkbox")
