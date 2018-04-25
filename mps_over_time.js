@@ -147,6 +147,7 @@ var ratio,
     circle_female,
     slide5_xScale,
     slide5_yScale,
+    temp_nodes,
     mp_filter,
     isMobile,
     all_mps_draw_timer
@@ -1518,6 +1519,7 @@ function third_slide(no_transition = false) {
 
     chartTitle
         .transition()
+        .style("opacity", 1)
         .text("Parliaments in developed countries")
 
     // ----------------------------------------------------------------------------
@@ -1946,7 +1948,6 @@ function to_fifth_slide(current_slide) {
         .style("opacity", 0)
         .on("end", function () { this.innerHTML = "" })
 
-
     // Remove Election rectangles
     electionRects
         .transition(t0)
@@ -2036,7 +2037,7 @@ function fifth_slide(no_transition = false) {
             ["♂♂♂", "♂♂ ", "♂  ", "⚤  ", "♀  ", "♀♀ ", "♀♀♀"][hist([(d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)])
                 .map(i => i.length)
                 .indexOf(1)
-            ] + " " + d[0]
+            ] + " " + d[0]
         ])
         .forEach(d => { dropdown_labels[d[0]] = d[1] })
 
@@ -2117,13 +2118,11 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     if (typeof (default_selected_topic) != "undefined" && typeof (default_selected_topic) != "number" && from_scroll) {
         selected_topic = default_selected_topic
 
-        // Append a new label
-        wrapper.select("#topic-label")
-            .remove()
+        // Show title
+        chartTitle.style("opacity", 1)
     } else {
-        // Remove label because we have dropdown instead
-        wrapper.select("#topic-label")
-            .remove()
+        // Remove title because we have dropdown instead
+        chartTitle.style("opacity", 0)
         // Get value of topic dropdown
         try {
             selected_topic = d3.select("#topic-dropdown")
@@ -2144,7 +2143,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     nodes_female = baked_data.filter(d => d.gender != "Male")
 
     // Make alternate data store for medians
-    var temp_nodes = []
+    temp_nodes = []
 
     temp_nodes.push({
         "x": slide5_xScale(0),
@@ -2593,6 +2592,7 @@ function to_sixth_slide(current_slide) {
         break
 
     case 4:
+        chartTitle.style("opacity", 1)
         d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis")
             .style("opacity", 0)
             .transition()
@@ -2921,7 +2921,6 @@ function sixth_slide(no_transition = false) {
                 d3.select(".is-active")
                     .style("opacity", 0)
                 update_state()
-
             })
 
         // Switch to relative change view
