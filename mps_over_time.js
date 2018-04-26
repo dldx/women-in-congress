@@ -160,7 +160,8 @@ var mps_over_time_data,
     topic_medians_data,
     baked_positions_data,
     nodes_male,
-    nodes_female
+    nodes_female,
+    states
 
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
@@ -2073,13 +2074,17 @@ function fifth_slide(no_transition = false) {
         .attr("type", "text")
         .attr("placeholder", "🔎 Search for a representative!")
 
+
     let inp = document.getElementById("mp-search")
+    // Variable that holds the currently focused mp
     let currentFocus
 
     function doSearch() {
+        // This function is called every time the search input changes
         let val = this.value.toLowerCase()
         let results = temp_nodes.slice(2)
             .filter(d => d.search_string.includes(val))
+            .sort((a,b) => a.search_string.search(val) - b.search_string.search(val)) // MPs with strings matching first names go first
         closeAllLists()
         if (!val) { return false }
         currentFocus = -1
@@ -2090,17 +2095,20 @@ function fifth_slide(no_transition = false) {
         /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a)
         /*for each item in the array...*/
-        for (i = 0; i < results.length; i++) {
+        for (let i = 0; i < results.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
 
             /*create a DIV element for each matching element:*/
-            b = document.createElement("DIV")
+            let b = document.createElement("DIV")
+            // MP appears as "Nancy Pelosi (D-California)"
+            let mp_string = `${results[i].full_name} (${results[i].party[0]}-${states[results[i].state]})`
             /*make the matching letters bold:*/
-            b.innerHTML = results[i].full_name
+            let match_position = mp_string.toLowerCase().search(val)
+            b.innerHTML = mp_string.slice(0, match_position) + "<b>" + mp_string.slice(match_position, match_position+val.length) + "</b>" + mp_string.slice(match_position+val.length)
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + results[i].id + "'>"
             /*execute a function when someone clicks on the item value (DIV element):*/
-            b.addEventListener("click", function (e) {
+            b.addEventListener("click", function () {
                 /*insert the value for the autocomplete text field:*/
                 inp.value = temp_nodes.slice(2)
                     .filter(d => d.id == this.getElementsByTagName("input")[0].value)[0].full_name
@@ -2111,15 +2119,14 @@ function fifth_slide(no_transition = false) {
                 closeAllLists()
             })
             a.appendChild(b)
-
         }
-
     }
 
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function (e) {
         let x = document.getElementById(this.id + "autocomplete-list")
         if (x) x = x.getElementsByTagName("div")
+        if (x == null) return
         if (e.keyCode == 40) {
             /*If the arrow DOWN key is pressed,
             increase the currentFocus variable:*/
@@ -2230,10 +2237,10 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .style("opacity", 0)
 
     // Zoom out
-    if (document.getElementById("zoom-checkbox")
-        .checked != false) {
-        document.getElementById("zoom-checkbox")
-            .click()
+    if (document.getElementById("zoom-checkbox") != null) {
+        if (document.getElementById("zoom-checkbox").checked != false) {
+            document.getElementById("zoom-checkbox").click()
+        }
     }
 
     if (typeof (default_selected_topic) != "undefined" && typeof (default_selected_topic) != "number" && from_scroll) {
@@ -2740,10 +2747,12 @@ function to_sixth_slide(current_slide) {
 
         d3.select(".switch")
             .style("opacity", 0)
-        if (document.getElementById("zoom-checkbox")
-            .checked != false) {
-            document.getElementById("zoom-checkbox")
-                .click()
+        if (document.getElementById("zoom-checkbox") != null) {
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
+            }
         }
         break
     }
@@ -3313,7 +3322,7 @@ function download_data() {
                 Object.keys(row)
                     .forEach(function (colname) {
 
-                        let states = {
+                        states = {
                             "AL": "Alabama",
                             "AK": "Alaska",
                             "AS": "American Samoa",
@@ -3542,10 +3551,12 @@ function handleStepEnter(response) {
             if (response.direction == "up") {
                 d3.select(".switch")
                     .style("opacity", 0)
-                if (document.getElementById("zoom-checkbox")
-                    .checked != false) {
-                    document.getElementById("zoom-checkbox")
-                        .click()
+                if (document.getElementById("zoom-checkbox") != null) {
+                    if (document.getElementById("zoom-checkbox")
+                        .checked != false) {
+                        document.getElementById("zoom-checkbox")
+                            .click()
+                    }
                 }
 
                 dataContainer.selectAll("custom.line")
@@ -3730,10 +3741,12 @@ function handleStepEnter(response) {
     case 1:
         d3.select(".switch")
             .style("opacity", 0)
-        if (document.getElementById("zoom-checkbox")
-            .checked != false) {
-            document.getElementById("zoom-checkbox")
-                .click()
+        if (document.getElementById("zoom-checkbox") != null) {
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
+            }
         }
         switch (new_step) {
         // Change graph to show breakdown by party
@@ -3914,10 +3927,12 @@ function handleStepEnter(response) {
             .style("display", "none")
         d3.select(".switch")
             .style("opacity", 0)
-        if (document.getElementById("zoom-checkbox")
-            .checked != false) {
-            document.getElementById("zoom-checkbox")
-                .click()
+        if (document.getElementById("zoom-checkbox") != null) {
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
+            }
         }
         chartTitle
             .transition()
