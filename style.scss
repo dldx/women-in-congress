@@ -865,10 +865,10 @@ $tip-padding: .5;
   left: 0;
   right: 0;
   // margin: 0 auto;
-  width: 50%;
+  width: 30%;
   @include phone {
     font-size: 1.2rem;
-    width: 80%;
+    width: 50%;
   }
 
   input {
@@ -876,10 +876,11 @@ $tip-padding: .5;
   background-color: $graph-background;
   color: invert($graph-background);
     font-size: 16px;
-    width: 50%;
+    width: 100%;
     padding: .5em;
     margin: 0;
   border-radius: 3px;
+  box-sizing: border-box;
   }
 
   .autocomplete-items {
@@ -890,13 +891,13 @@ $tip-padding: .5;
     z-index: 99;
     //position the autocomplete items to be the same width as the container:
     max-height: 30vh;
-    overflow-y: scroll;
-    width: 50%;
+    overflow-y: auto;
+    width: 100%;
     // margin: auto;
     top: 100%;
     left: 0;
     right: 0;
-
+  box-sizing: border-box;
   }
 
   .autocomplete-items div {

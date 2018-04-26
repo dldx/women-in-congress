@@ -2086,6 +2086,9 @@ function fifth_slide(no_transition = false) {
             .filter(d => d.search_string.includes(val))
             .sort((a,b) => a.search_string.search(val) - b.search_string.search(val)) // MPs with strings matching first names go first
         closeAllLists()
+        if (results.length == 1) {
+            slide5_show_mp_tooltip(results[0])
+        }
         if (!val) { return false }
         currentFocus = -1
         /*create a DIV element that will contain the items (values):*/
@@ -2605,7 +2608,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="body-facts">
-                    <p><em>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
+                    <p>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(1)}%</em> of ${nodeData.gender == "Female" ? "her" : "his"} time spent on <em>${selected_topic}</em></p>
                     </div>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
@@ -3392,7 +3395,7 @@ function download_data() {
                                 "party": row["party"],
                                 "gender": row["gender"] == 1 ? "Female" : "Male",
                                 "state": row["state"],
-                                "search_string": (row["full_name"] + " " + row["state"] + " " + states[row["state"]])
+                                "search_string": (row["full_name"] + " " + row["state"] + " " + row["party"][0] + "-" + states[row["state"]])
                                     .toLowerCase(),
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
