@@ -851,6 +851,73 @@ $tip-padding: .5;
   }
 }
 
+.slide5-search {
+  display: inline-block;
+  vertical-align: middle;
+  // text-align: center;
+  transform: translateZ(0);
+  font-size: 1rem;
+  font-weight: 200;
+  position: fixed;
+  z-index: 50;
+  transition: opacity 0.2s ease-in-out;
+  top: 15%;
+  left: 0;
+  right: 0;
+  // margin: 0 auto;
+  width: 50%;
+  @include phone {
+    font-size: 1.2rem;
+    width: 80%;
+  }
+
+  input {
+    border: 1px solid rgb(169, 169, 169);
+  background-color: $graph-background;
+  color: invert($graph-background);
+    font-size: 16px;
+    width: 50%;
+    padding: .5em;
+    margin: 0;
+  border-radius: 3px;
+  }
+
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid rgb(169, 169, 169);
+    border-bottom: 0;
+    border-top: 0;
+    z-index: 99;
+    //position the autocomplete items to be the same width as the container:
+    max-height: 30vh;
+    overflow-y: scroll;
+    width: 50%;
+    // margin: auto;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+  }
+
+  .autocomplete-items div {
+    padding: 0.5em;
+    cursor: pointer;
+    background-color: $graph-background;
+    border-bottom: 1px solid lighten($graph-background, 10);
+  }
+
+  .autocomplete-items div:hover {
+    // when hovering an item:
+    background-color: darken($graph-background, 10);
+  }
+
+  .autocomplete-active {
+    //when navigating through the items using the arrow keys:
+    background-color: $male !important;
+    color: invert($graph-background);
+  }
+}
+
 .slide5-dropdown {
   display: inline-block;
   vertical-align: middle;
@@ -861,7 +928,7 @@ $tip-padding: .5;
   text-transform: uppercase;
   position: fixed;
   z-index: 50;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   top: 2%;
   left: 0;
   right: 0;
@@ -907,11 +974,11 @@ $tip-padding: .5;
   width: 52px;
   height: 25px;
   top: 15%;
+  transform: translateZ(0);
   position: fixed;
   z-index: 6;
   opacity: 0;
-  transform: translateZ(0);
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .switch input {
@@ -922,8 +989,9 @@ $tip-padding: .5;
   width: 30vw;
   transform: translate(57px, -2px);
 }
+
 .switch div label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .slider {

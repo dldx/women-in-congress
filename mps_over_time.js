@@ -1857,7 +1857,7 @@ function to_fourth_slide(current_slide) {
             .select("circle")
             .style("opacity", 0)
 
-        d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis, .switch")
+        d3.selectAll("#topic-label, .slide5-dropdown, .slide5-search, .x-custom-axis, .switch")
             .style("opacity", 0)
             .transition()
             .delay(500)
@@ -2021,28 +2021,29 @@ function fifth_slide(no_transition = false) {
     d3.select(".switch")
         .style("opacity", 1)
 
-    // Calculate labels for dropdown based on how polarised the topic is
-    let hist = d3.histogram()
-        .domain([-1.5, 1.5])
-        .thresholds([-.8, -0.4, -0.05, 0.05, 0.4, .8])
 
-    // dictionary to store the labels
-    let dropdown_labels = {}
-
-    // Loop through each topic, calculating the histogram bin that it belongs to.
-    // All the male topics get ♂ symbols and all the female topics get ♀ symbols.
-    // We assign 3 symbols to the most polarised topics and 0 to the least polarised
-    Object.entries(topic_medians_data)
-        .map(d => [d[0],
-            ["♂♂♂", "♂♂ ", "♂  ", "⚤  ", "♀  ", "♀♀ ", "♀♀♀"][hist([(d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)])
-                .map(i => i.length)
-                .indexOf(1)
-            ] + " " + d[0]
-        ])
-        .forEach(d => { dropdown_labels[d[0]] = d[1] })
-
-    // Add a dropdown to select different topics
     if (lastTransitioned > 4) {
+        // Calculate labels for dropdown based on how polarised the topic is
+        let hist = d3.histogram()
+            .domain([-1.5, 1.5])
+            .thresholds([-.8, -0.4, -0.05, 0.05, 0.4, .8])
+
+        // dictionary to store the labels
+        let dropdown_labels = {}
+
+        // Loop through each topic, calculating the histogram bin that it belongs to.
+        // All the male topics get ♂ symbols and all the female topics get ♀ symbols.
+        // We assign 3 symbols to the most polarised topics and 0 to the least polarised
+        Object.entries(topic_medians_data)
+            .map(d => [d[0],
+                ["♂♂♂", "♂♂ ", "♂  ", "⚤  ", "♀  ", "♀♀ ", "♀♀♀"][hist([(d[1]["female"] > d[1]["male"]) ? (d[1]["female"] / d[1]["male"] - 1) : (-d[1]["male"] / d[1]["female"] + 1)])
+                    .map(i => i.length)
+                    .indexOf(1)
+                ] + " " + d[0]
+            ])
+            .forEach(d => { dropdown_labels[d[0]] = d[1] })
+
+        // Add a dropdown to select different topics
         d3.select("body")
             .append("span")
             .attr("class", "slide5-dropdown")
@@ -2060,6 +2061,126 @@ function fifth_slide(no_transition = false) {
             .text(d => dropdown_labels[d].toUpperCase())
     }
 
+    // Add search box for MPs
+    d3.selectAll(".slide5-search")
+        .remove()
+    d3.select("body")
+        .append("span")
+        .attr("class", "slide5-search")
+        .style("transform", `translateX(${margin.left * (isMobile ? 1.2 : 2)}px)`)
+        .append("input")
+        .attr("id", "mp-search")
+        .attr("type", "text")
+        .attr("placeholder", "🔎 Search for a representative!")
+
+    let inp = document.getElementById("mp-search")
+    let currentFocus
+
+    function doSearch() {
+        let val = this.value.toLowerCase()
+        let results = temp_nodes.slice(2)
+            .filter(d => d.search_string.includes(val))
+        closeAllLists()
+        if (!val) { return false }
+        currentFocus = -1
+        /*create a DIV element that will contain the items (values):*/
+        let a = document.createElement("DIV")
+        a.setAttribute("id", this.id + "autocomplete-list")
+        a.setAttribute("class", "autocomplete-items")
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a)
+        /*for each item in the array...*/
+        for (i = 0; i < results.length; i++) {
+            /*check if the item starts with the same letters as the text field value:*/
+
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV")
+            /*make the matching letters bold:*/
+            b.innerHTML = results[i].full_name
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + results[i].id + "'>"
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function (e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = temp_nodes.slice(2)
+                    .filter(d => d.id == this.getElementsByTagName("input")[0].value)[0].full_name
+                slide5_show_mp_tooltip(temp_nodes.slice(2)
+                    .filter(d => d.id == this.getElementsByTagName("input")[0].value)[0])
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists()
+            })
+            a.appendChild(b)
+
+        }
+
+    }
+
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function (e) {
+        let x = document.getElementById(this.id + "autocomplete-list")
+        if (x) x = x.getElementsByTagName("div")
+        if (e.keyCode == 40) {
+            /*If the arrow DOWN key is pressed,
+            increase the currentFocus variable:*/
+            currentFocus++
+
+            // Show the MP that it corresponds to
+            slide5_show_mp_tooltip(temp_nodes.slice(2)
+                .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            /*and and make the current item more visible:*/
+            addActive(x)
+        } else if (e.keyCode == 38) { //up
+            /*If the arrow UP key is pressed,
+            decrease the currentFocus variable:*/
+            currentFocus--
+            // Show the MP that it corresponds to
+            slide5_show_mp_tooltip(temp_nodes.slice(2)
+                .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            /*and and make the current item more visible:*/
+            addActive(x)
+        } else if (e.keyCode == 13) {
+            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+            e.preventDefault()
+            if (currentFocus > -1) {
+                /*and simulate a click on the "active" item:*/
+                if (x) x[currentFocus].click()
+            }
+        }
+    })
+
+    function addActive(x) {
+        /*a function to classify an item as "active":*/
+        if (!x) return false
+        /*start by removing the "active" class on all items:*/
+        removeActive(x)
+        if (currentFocus >= x.length) currentFocus = 0
+        if (currentFocus < 0) currentFocus = (x.length - 1)
+        /*add class "autocomplete-active":*/
+        x[currentFocus].classList.add("autocomplete-active")
+    }
+
+    function removeActive(x) {
+        /*a function to remove the "active" class from all autocomplete items:*/
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active")
+        }
+    }
+
+    function closeAllLists(elmnt) {
+        /*close all autocomplete lists in the document,
+        except the one passed as an argument:*/
+        var x = document.getElementsByClassName("autocomplete-items")
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i])
+            }
+        }
+    }
+
+    // Bind search function to input event
+    document.getElementById("mp-search")
+        .addEventListener("input", doSearch)
 
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
@@ -2075,7 +2196,7 @@ function fifth_slide(no_transition = false) {
     d3.select("#slide5-group")
         .remove()
 
-    // Call function initially
+    // Call draw function initially
     if (typeof (selected_topic) != "undefined") {
         update_fifth_slide(no_transition, selected_topic)
     } else {
@@ -2442,6 +2563,58 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .ticks(20))
     draw_custom_labels()
 
+    window.slide5_show_mp_tooltip = function (nodeData, mousePos) {
+        if (typeof (mousePos) === "undefined") {
+            mousePos = [nodeData.x, nodeData.y] //[width * 3 / 4, height * 3 / 4]
+            // if (isMobile) {
+            //     mousePos = [width / 2, 0]
+            // }
+        }
+
+        // Hide tooltip on scroll
+        window.addEventListener("scroll", () => {
+            d3.select("#tooltip")
+                .style("opacity", 0)
+
+        }, { once: true })
+
+        // Display tooltip either near mouse cursor or near MP
+        d3.select("#tooltip")
+            .style("opacity", 1)
+            .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+                width - tooltip.offsetWidth - margin.right),
+            0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
+                height + tooltip.offsetHeight - 20), margin.top)}px)`)
+            .style("pointer-events", "none")
+
+        var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
+        // Show relevant tooltip info
+        tooltip.innerHTML = `
+                            <div class="slide5-tooltip">
+                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
+                    <div class="body">
+                    <div class="mp-image-parent">
+                    ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
+                    "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    </div>
+                    <div class="body-facts">
+                    <p><em>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
+                    </div>
+                    </div>
+                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
+</div>`
+        // Also select the mouseover circle and move it to the right location
+        mouseover_svg
+            .select("circle")
+            .datum(nodeData)
+            .attr("cx", (d) => d.x)
+            .attr("cy", (d) => d.y)
+            .attr("r", circleRadius * (isMobile ? 0.8 : 1.2))
+            .style("opacity", 1)
+            .style("stroke-width", circleRadius)
+    }
+
     // mouseover function for getting MP info
     function mpMouseover() {
         // Hide tooltip on scroll
@@ -2465,41 +2638,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         if (typeof (nodeData) !== "undefined") {
             // If we're dealing with mp nodes
             if (typeof (nodeData.id) !== "undefined") {
-                // For each point group, set tooltip to display on mouseover
-                d3.select("#tooltip")
-                    .style("opacity", 1)
-                    .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                        width - tooltip.offsetWidth - margin.right),
-                    0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
-                        height + tooltip.offsetHeight - 20), margin.top)}px)`)
-                    .style("pointer-events", "none")
-
-                var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
-                // Show relevant tooltip info
-                tooltip.innerHTML = `
-                            <div class="slide5-tooltip">
-                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
-                    <div class="body">
-                    <div class="mp-image-parent">
-                    ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
-                    </div>
-                    <div class="body-facts">
-                    <p><em>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(2)}%</em> of ${nodeData.full_name}'s time spent on <em>${selected_topic}</em></p>
-                    </div>
-                    </div>
-                    <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
-</div>`
-                // Also select the mouseover circle and move it to the right location
-                mouseover_svg
-                    .select("circle")
-                    .datum(nodeData)
-                    .attr("cx", (d) => d.x)
-                    .attr("cy", (d) => d.y)
-                    .attr("r", circleRadius * (isMobile ? 0.8 : 1.2))
-                    .style("opacity", 1)
-                    .style("stroke-width", circleRadius)
+                slide5_show_mp_tooltip(nodeData, mousePos)
             } else {
                 median_mouseover(nodeData, mousePos)
             }
@@ -2593,7 +2732,7 @@ function to_sixth_slide(current_slide) {
 
     case 4:
         chartTitle.style("opacity", 1)
-        d3.selectAll("#topic-label, .slide5-dropdown, .x-custom-axis")
+        d3.selectAll("#topic-label, .slide5-dropdown, .slide5-search, .x-custom-axis")
             .style("opacity", 0)
             .transition()
             .delay(1000)
@@ -2699,6 +2838,11 @@ function sixth_slide(no_transition = false) {
 
     // remove dropdown
     d3.select(".slide5-dropdown")
+        .style("opacity", 0)
+        .remove()
+
+    // remove mp search
+    d3.select(".slide5-search")
         .style("opacity", 0)
         .remove()
 
@@ -3168,13 +3312,79 @@ function download_data() {
 
                 Object.keys(row)
                     .forEach(function (colname) {
-                        if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname.slice(-1) != "y") {
+
+                        let states = {
+                            "AL": "Alabama",
+                            "AK": "Alaska",
+                            "AS": "American Samoa",
+                            "AZ": "Arizona",
+                            "AR": "Arkansas",
+                            "CA": "California",
+                            "CO": "Colorado",
+                            "CT": "Connecticut",
+                            "DE": "Delaware",
+                            "DC": "District Of Columbia",
+                            "FM": "Federated States Of Micronesia",
+                            "FL": "Florida",
+                            "GA": "Georgia",
+                            "GU": "Guam",
+                            "HI": "Hawaii",
+                            "ID": "Idaho",
+                            "IL": "Illinois",
+                            "IN": "Indiana",
+                            "IA": "Iowa",
+                            "KS": "Kansas",
+                            "KY": "Kentucky",
+                            "LA": "Louisiana",
+                            "ME": "Maine",
+                            "MH": "Marshall Islands",
+                            "MD": "Maryland",
+                            "MA": "Massachusetts",
+                            "MI": "Michigan",
+                            "MN": "Minnesota",
+                            "MS": "Mississippi",
+                            "MO": "Missouri",
+                            "MT": "Montana",
+                            "NE": "Nebraska",
+                            "NV": "Nevada",
+                            "NH": "New Hampshire",
+                            "NJ": "New Jersey",
+                            "NM": "New Mexico",
+                            "NY": "New York",
+                            "NC": "North Carolina",
+                            "ND": "North Dakota",
+                            "MP": "Northern Mariana Islands",
+                            "OH": "Ohio",
+                            "OK": "Oklahoma",
+                            "OR": "Oregon",
+                            "PW": "Palau",
+                            "PA": "Pennsylvania",
+                            "PR": "Puerto Rico",
+                            "RI": "Rhode Island",
+                            "SC": "South Carolina",
+                            "SD": "South Dakota",
+                            "TN": "Tennessee",
+                            "TX": "Texas",
+                            "UT": "Utah",
+                            "VT": "Vermont",
+                            "VI": "Virgin Islands",
+                            "VA": "Virginia",
+                            "WA": "Washington",
+                            "WV": "West Virginia",
+                            "WI": "Wisconsin",
+                            "WY": "Wyoming",
+                            "PI": "Philippine Islands"
+                        }
+                        if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname != "state" & colname.slice(-1) != "y") {
                             var topic = colname.slice(0, -2)
                             baked_positions_data.push({
                                 "id": row["id"],
                                 "full_name": row["full_name"],
                                 "party": row["party"],
                                 "gender": row["gender"] == 1 ? "Female" : "Male",
+                                "state": row["state"],
+                                "search_string": (row["full_name"] + " " + row["state"] + " " + states[row["state"]])
+                                    .toLowerCase(),
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
                                 "y": +row[topic + "_y"] / 100,
@@ -3745,6 +3955,8 @@ function handleStepEnter(response) {
             break
         }
         d3.select(".slide5-dropdown")
+            .style("display", "none")
+        d3.select(".slide5-search")
             .style("display", "none")
         break
     }
