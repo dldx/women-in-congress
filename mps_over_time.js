@@ -1243,10 +1243,8 @@ function second_slide(no_transition = false) {
         .text("Representatives in Congress")
 
     slide2Group.append("text")
-        .attr("x", x(new Date(2010, 1, 1)))
-        .attr("y", y(0) - 3 * lineThickness)
-        .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
-            (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
+        .attr("x", x(new Date(2017, 1, 1)))
+        .attr("y", y(0) - 2.5*lineThickness)
         .attr("class", "women-label")
         .text("Women")
         .style("opacity", 0)
@@ -1325,10 +1323,8 @@ function second_slide(no_transition = false) {
         .on("end", () => {
             // Add text labels for areas
             slide2Group.append("text")
-                .attr("x", x(new Date(2010, 1, 1)))
+                .attr("x", x(new Date(2017, 1, 1)))
                 .attr("y", y(300))
-                .attr("font-size", Math.min(y(number_women_over_time_data.slice(-1)[0].total_women_mps) / 4,
-                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 4))
                 .attr("class", "men-label")
                 .text("Men")
                 .style("opacity", 0)
@@ -1342,7 +1338,7 @@ function second_slide(no_transition = false) {
                     return x(d.year)
                 })
                 .y(function (d) {
-                    return y(d.total_mps / 2 + 2)
+                    return y(d.total_mps / 2 + 3.5)
                 })
                 .curve(d3.curveBundle.beta(0.2))
 
@@ -1361,8 +1357,6 @@ function second_slide(no_transition = false) {
                 // .attr("y", y(630/2))
                 .attr("startOffset", "50%")
                 .attr("xlink:href", "#half-max-textpath")
-                .attr("font-size", Math.max(lineThickness * 10, Math.min(lineThickness * 20,
-                    (x(new Date(2020, 1, 1)) - x(new Date(2000, 1, 1))) / 6)))
                 .attr("class", "i5050-label")
                 .text("50:50 gender representation")
                 .style("opacity", 0)
@@ -1496,8 +1490,8 @@ function to_third_slide(current_slide) {
             d3.select("#slide2-group")
                 .style("opacity", 1)
 
-            d3.selectAll(".i5050-label")
-                .attr("startOffset", "90%")
+            // Crop the 5050 line to 1990 onwards
+            text_path_50_50.datum(total_mps_over_time_data.slice(13))
 
             // Disable all pointer events for canvas
             canvas.style("pointer-events", "none")
@@ -1587,7 +1581,7 @@ function third_slide(no_transition = false) {
         .attr("d", half_max_mps_line)
 
     half_max_mps_line_smooth
-        .y(() => y(52))
+        .y(() => y(51))
 
     text_path_50_50
         .transition(t0)
@@ -3832,6 +3826,11 @@ function handleStepEnter(response) {
                 half_max_mps_path.transition()
                     .attr("d", half_max_mps_line)
 
+                half_max_mps_line_smooth.y(d => y(d.total_mps/2 + 3.5))
+                text_path_50_50
+                    .transition()
+                    .attr("d", half_max_mps_line_smooth)
+
                 total_women_mps_line.y(d => y(d.total_women_mps))
                 total_women_mps_path.transition()
                     .attr("d", total_women_mps_line)
@@ -3873,7 +3872,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(52))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -3886,7 +3885,7 @@ function handleStepEnter(response) {
                 .attr("d", total_women_mps_area)
 
             d3.select(".women-label")
-                .style("fill", colors["Demcratic"])
+                .style("fill", colors["Democratic"])
             break
         case 2:
             // Republicans
@@ -3917,7 +3916,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(52))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -3961,7 +3960,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(52))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
