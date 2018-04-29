@@ -274,7 +274,7 @@ function reset_zoom(callback, current_slide) {
 
 
             // Add the y axis to the left of the graph
-            yAxis = d3.axisLeft(y)
+            // yAxis = d3.axisLeft(y)
             gY = d3.select(".y-axis")
                 .call(yAxis)
             if (typeof (callback) != "undefined") {
@@ -855,7 +855,7 @@ function to_first_slide(current_slide) {
     y.domain([0, 90])
     gY.transition()
         .duration(1000)
-        .call(yAxis)
+        .call(yAxis.tickFormat(d => d))
     xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]))
     gX.transition()
         .duration(1000)
@@ -1227,6 +1227,7 @@ function second_slide(no_transition = false) {
 
     // Rescale y axis to include all MPs
     y.domain([0, 450])
+    yAxis = d3.axisLeft(y)
 
     // Change y axis label
     yLabel
@@ -1445,7 +1446,15 @@ function to_third_slide(current_slide) {
             t0.select("#slide1-group")
                 .style("opacity", 0)
                 .remove()
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d + "%")
             break
+        case 1:
+            // If we're coming from the second slide
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d + "%")
+            break
+
         case 3:
             // If we're coming from the fourth slide
             d3.select("#slide4")
@@ -1463,18 +1472,21 @@ function to_third_slide(current_slide) {
             if (isMobile) xAxis.ticks(5)
 
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d)
+                .tickFormat(d => d + "%")
 
             xLabel
                 .text("Time")
                 .style("opacity", 1)
 
             yLabel
+                .attr("y", margin.left/3)
                 .style("opacity", 1)
 
             gX.call(xAxis)
                 .style("opacity", 1)
             gY.call(yAxis)
+                .attr("transform", null)
+                .attr("text-anchor", "end")
                 .style("opacity", 1)
 
             d3.select(".y-axis > path")
@@ -1537,7 +1549,7 @@ function third_slide(no_transition = false) {
     y.domain([0, 100])
     gY
         .transition(t0)
-        .call(yAxis)
+        .call(yAxis.tickFormat(d => d + "%"))
 
     total_women_mps_line
         .y(d => y(d.women_pct))
@@ -1841,10 +1853,11 @@ function to_fourth_slide(current_slide) {
         d3.select("#slide2-group")
             .style("opacity", 0)
 
-        t0.select("#slide3-group")
+        d3.select("#slide3-group")
             .style("opacity", 0)
+        t0
             .on("end", function () {
-                this.remove()
+                d3.select("#slide3-group").remove()
             })
         break
     case 4:
@@ -1932,9 +1945,7 @@ function to_fifth_slide(current_slide) {
         break
     case 5:
         // Fade out sixth slide
-        d3.select("#slide6-group")
-            .style("opacity", 0)
-        d3.selectAll(".x-custom-label")
+        d3.selectAll("#slide6-group, .x-custom-label, .y-axis")
             .style("opacity", 0)
             .on("end", () => {
                 d3.selectAll(".x-custom-label")
@@ -1959,12 +1970,8 @@ function to_fifth_slide(current_slide) {
 
     gX
         .style("opacity", 0)
-    gY
-        .style("opacity", 0)
 
     xLabel
-        .style("opacity", 0)
-    yLabel
         .style("opacity", 0)
 
     d3.select("#topic-label")
@@ -1972,11 +1979,16 @@ function to_fifth_slide(current_slide) {
     d3.select(".slide5-dropdown")
         .remove()
 
+
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 4) {
         lastTransitioned = 4
         fifth_slide(false)
+    } else if (lastTransitioned == 5) {
+        // Wait a bit for axes to fade out first
+        d3.transition().duration(600).on("end", () => {fifth_slide(true)})
     } else {
+        // Wait a bit for axes to fade out first
         fifth_slide(true)
     }
     d3.select("#slide4")
@@ -2019,8 +2031,8 @@ function fifth_slide(no_transition = false) {
         .style("display", null)
         .style("pointer-events", "all")
 
-    d3.select(".switch")
-        .style("opacity", 1)
+    // d3.select(".switch")
+    //     .style("opacity", 1)
 
 
     if (lastTransitioned > 4) {
@@ -2072,7 +2084,7 @@ function fifth_slide(no_transition = false) {
         .append("input")
         .attr("id", "mp-search")
         .attr("type", "text")
-        .attr("placeholder", "🔎 Search for a representative!")
+        .attr("placeholder", "🔎 Search for your rep by name or district!")
 
 
     let inp = document.getElementById("mp-search")
@@ -2084,7 +2096,7 @@ function fifth_slide(no_transition = false) {
         let val = this.value.toLowerCase()
         let results = temp_nodes.slice(2)
             .filter(d => d.search_string.includes(val))
-            .sort((a,b) => a.search_string.search(val) - b.search_string.search(val)) // MPs with strings matching first names go first
+            .sort((a, b) => a.search_string.search(val) - b.search_string.search(val)) // MPs with strings matching first names go first
         closeAllLists()
         if (results.length == 1) {
             slide5_show_mp_tooltip(results[0])
@@ -2106,8 +2118,13 @@ function fifth_slide(no_transition = false) {
             // MP appears as "Nancy Pelosi (D-California)"
             let mp_string = `${results[i].full_name} (${results[i].party[0]}-${states[results[i].state]})`
             /*make the matching letters bold:*/
-            let match_position = mp_string.toLowerCase().search(val)
-            b.innerHTML = mp_string.slice(0, match_position) + "<b>" + mp_string.slice(match_position, match_position+val.length) + "</b>" + mp_string.slice(match_position+val.length)
+            let match_position = mp_string.toLowerCase()
+                .search(val)
+            if (match_position != -1) {
+                b.innerHTML = mp_string.slice(0, match_position) + "<b>" + mp_string.slice(match_position, match_position + val.length) + "</b>" + mp_string.slice(match_position + val.length)
+            } else {
+                b.innerHTML = mp_string
+            }
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + results[i].id + "'>"
             /*execute a function when someone clicks on the item value (DIV element):*/
@@ -2194,7 +2211,7 @@ function fifth_slide(no_transition = false) {
 
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
-        .domain([-350, 150])
+        .domain([-350, 120])
         .range([0, width])
 
     slide5_yScale = d3.scaleLinear()
@@ -2202,6 +2219,20 @@ function fifth_slide(no_transition = false) {
         .range([height, 0])
 
     y = slide5_yScale
+
+    // Move y axis to the right and hide main line
+    yAxis = d3.axisRight(y).ticks(10).tickFormat(d => ((d % 0.25 == 0) ? ((d * 100).toFixed(0) + "%") : ""))
+    gY.call(yAxis)
+        .attr("transform", `translate(${slide5_xScale(90)}, 0)`)
+        .attr("text-anchor", "start")
+        .style("opacity", 1)
+
+    d3.select(".y-axis path").style("opacity", 0)
+
+    yLabel
+        .attr("y", width+margin.left)
+        .text("% of time spent on topic")
+        .style("opacity", 1)
 
     d3.select("#slide5-group")
         .remove()
@@ -2241,8 +2272,10 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Zoom out
     if (document.getElementById("zoom-checkbox") != null) {
-        if (document.getElementById("zoom-checkbox").checked != false) {
-            document.getElementById("zoom-checkbox").click()
+        if (document.getElementById("zoom-checkbox")
+            .checked != false) {
+            document.getElementById("zoom-checkbox")
+                .click()
         }
     }
 
@@ -2608,6 +2641,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="body-facts">
+                    <div class="mp-constituency">${nodeData.district}</div>
                     <p>${(slide5_yScale.invert(nodeData.y) * 100).toFixed(1)}%</em> of ${nodeData.gender == "Female" ? "her" : "his"} time spent on <em>${selected_topic}</em></p>
                     </div>
                     </div>
@@ -2748,6 +2782,11 @@ function to_sixth_slide(current_slide) {
             .delay(1000)
             .on("end", function () { this.remove() })
 
+        d3.select(".y-axis").style("opacity", 0)
+
+        // Move y axis and label back
+        yLabel.style("opacity", 0).transition().duration(1000).on("end", () => {yLabel.attr("y", margin.left / 3)})
+
         d3.select(".switch")
             .style("opacity", 0)
         if (document.getElementById("zoom-checkbox") != null) {
@@ -2775,6 +2814,7 @@ function to_sixth_slide(current_slide) {
 
 
     if (lastTransitioned < 5) {
+        // If first time transitioning
         // Change scales
         x = d3.scaleLinear()
             .range([0, width])
@@ -2792,6 +2832,11 @@ function to_sixth_slide(current_slide) {
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
                 .toFixed(0) + "%")
+        // Hide canvas
+        canvas
+            .style("opacity", 0)
+            .style("display", null)
+            .style("pointer-events", "none")
     }
     gX.transition()
         .call(xAxis)
@@ -2799,6 +2844,8 @@ function to_sixth_slide(current_slide) {
     y = d3.scalePoint()
         .range([height, 0])
         .padding(1)
+    yAxis = d3.axisLeft(y)
+    gY.style("opacity", 0).call(yAxis)
 
 
     // Increment lastTransitioned counter if it is less than 0
@@ -2865,6 +2912,8 @@ function sixth_slide(no_transition = false) {
     y.domain(sorted_topics.map(d => d[0]))
     yAxis = d3.axisLeft(y)
     gY.transition()
+        .attr("transform", null)
+        .attr("text-anchor", "start")
         .call(yAxis)
 
     // Hide axis line and ticks
@@ -3387,7 +3436,8 @@ function download_data() {
                             "WY": "Wyoming",
                             "PI": "Philippine Islands"
                         }
-                        if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" & colname != "state" & colname.slice(-1) != "y") {
+                        if (colname != "id" & colname != "full_name" & colname != "party" & colname != "gender" &
+                            colname != "state" & colname != "district" & colname.slice(-1) != "y") {
                             var topic = colname.slice(0, -2)
                             baked_positions_data.push({
                                 "id": row["id"],
@@ -3395,7 +3445,8 @@ function download_data() {
                                 "party": row["party"],
                                 "gender": row["gender"] == 1 ? "Female" : "Male",
                                 "state": row["state"],
-                                "search_string": (row["full_name"] + " " + row["state"] + " " + row["party"][0] + "-" + states[row["state"]])
+                                "district": states[row["state"]] + (row["district"] != "" ? ("'s " + row["district"]) : ""),
+                                "search_string": (row["full_name"] + " " + row["state"] + " " + row["party"][0] + "-" + states[row["state"]] + " " + row["district"])
                                     .toLowerCase(),
                                 "topic": topic,
                                 "x": +row[topic + "_x"],
@@ -3742,6 +3793,7 @@ function handleStepEnter(response) {
         break
 
     case 1:
+    // Second slide
         d3.select(".switch")
             .style("opacity", 0)
         if (document.getElementById("zoom-checkbox") != null) {
@@ -3763,6 +3815,7 @@ function handleStepEnter(response) {
                     .text("Representatives in Congress")
                 // All MPs first
                 y.domain([0, 450])
+                yAxis = d3.axisLeft(y)
                 gY.transition()
                     .call(yAxis)
 
@@ -3803,6 +3856,7 @@ function handleStepEnter(response) {
                 .text("Representatives in the Democratic Party")
 
             y.domain([0, 100])
+            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3846,6 +3900,7 @@ function handleStepEnter(response) {
                 .text("Representatives in the Republican Party")
 
             y.domain([0, 100])
+            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3889,6 +3944,7 @@ function handleStepEnter(response) {
                 .text("Representatives in Congress")
 
             y.domain([0, 100])
+            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3926,6 +3982,7 @@ function handleStepEnter(response) {
         break
 
     case 3:
+    // Fourth slide (no data, just text)
         d3.select("#slide4")
             .style("display", "none")
         d3.select(".switch")
@@ -3943,6 +4000,7 @@ function handleStepEnter(response) {
         break
 
     case 4:
+    // Fifth slide
         d3.select("#slide4")
             .style("display", "none")
         switch (new_step) {
@@ -3974,8 +4032,8 @@ function handleStepEnter(response) {
         }
         d3.select(".slide5-dropdown")
             .style("display", "none")
-        d3.select(".slide5-search")
-            .style("display", "none")
+        // d3.select(".slide5-search")
+        //     .style("display", "none")
         break
     }
 

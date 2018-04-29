@@ -114,7 +114,7 @@
                     // make a new row
                     Object.keys(row).forEach(function(colname) {
                         // Ignore 'State' and 'Value' columns
-                        if (colname=="id" || colname == "full_name" || colname == "gender" || colname == "party" || colname == "state") {
+                        if (colname=="id" || colname == "full_name" || colname == "gender" || colname == "party" || colname == "state" || colname == "district") {
                             return
                         }
                         nodes.push({
@@ -123,6 +123,7 @@
                             "gender": row["gender"] == 1 ? "Female" : "Male",
                             "party": row["party"],
                             "state": row["state"],
+                            "district": row["district"],
                             "value": row[colname] == '-inf' ? 0 : 10 ** (+row[colname]),
                             "topic_name": colname
                         });

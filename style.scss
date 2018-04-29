@@ -312,21 +312,21 @@ a {
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
   font-weight: 500;
-  -webkit-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
   @include phone {
     font-size: .5rem;
   }
 }
 
 .x-custom-axis {
-  -webkit-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
 
 .x-custom-label {
-  -webkit-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
   @include phone {
     font-size: .5rem;
   }
@@ -334,8 +334,8 @@ a {
 
 .x-axis,
 .y-axis {
-  -webkit-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
 
 .x-label,
@@ -343,8 +343,8 @@ a {
   text-anchor: middle;
   font-size: 1rem;
   font-weight: 500;
-  -webkit-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
   @include phone {
     font-size: .8rem;
   }
@@ -860,7 +860,7 @@ $tip-padding: .5;
   font-weight: 200;
   position: fixed;
   z-index: 50;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity .2s ease-in-out;
   top: 15%;
   left: 0;
   right: 0;
@@ -873,14 +873,14 @@ $tip-padding: .5;
 
   input {
     border: 1px solid rgb(169, 169, 169);
-  background-color: $graph-background;
-  color: invert($graph-background);
+    background-color: $graph-background;
+    color: invert($graph-background);
     font-size: 16px;
     width: 100%;
     padding: .5em;
     margin: 0;
-  border-radius: 3px;
-  box-sizing: border-box;
+    border-radius: 3px;
+    box-sizing: border-box;
   }
 
   .autocomplete-items {
@@ -897,11 +897,11 @@ $tip-padding: .5;
     top: 100%;
     left: 0;
     right: 0;
-  box-sizing: border-box;
+    box-sizing: border-box;
   }
 
   .autocomplete-items div {
-    padding: 0.5em;
+    padding: .5em;
     cursor: pointer;
     background-color: $graph-background;
     border-bottom: 1px solid lighten($graph-background, 10);
@@ -929,7 +929,7 @@ $tip-padding: .5;
   text-transform: uppercase;
   position: fixed;
   z-index: 50;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity .2s ease-in-out;
   top: 2%;
   left: 0;
   right: 0;
@@ -979,7 +979,7 @@ $tip-padding: .5;
   position: fixed;
   z-index: 6;
   opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity .2s ease-in-out;
 }
 
 .switch input {
@@ -1034,8 +1034,8 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-#slide6-group {
-  transition: opacity 1s ease-in-out;
+#slide3-group, #slide6-group {
+  transition: opacity .5s ease-in-out;
 }
 
 .chart-title {

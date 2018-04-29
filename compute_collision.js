@@ -37,10 +37,11 @@ fs.readFile("mp_topic_fraction.csv", "utf-8", function (error, data) {
             "party": d.party,
             "gender": d.gender == 1 ? "Female" : "Male",
             "state": d.state,
+			"district": d.district
         };
         Object.keys(d)
             .forEach(function (key) {
-                if (key != "id" & key != "full_name" & key != "party" & key != "gender" & key != "state") {
+                if (key != "id" & key != "full_name" & key != "party" & key != "gender" & key != "state" & key != "district") {
                     node[key] = d[key] == '-inf' ? 0 : 10 ** (+d[key])
                 }
             })
