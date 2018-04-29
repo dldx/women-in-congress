@@ -2610,12 +2610,14 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             // }
         }
 
-        // Hide tooltip on scroll
-        window.addEventListener("scroll", () => {
-            d3.select("#tooltip")
-                .style("opacity", 0)
+        // Hide tooltip on scroll but wait for window to settle first
+        d3.timeout(() => {
+            window.addEventListener("scroll", () => {
+                d3.select("#tooltip")
+                    .style("opacity", 0)
 
-        }, { once: true })
+            }, { once: true })
+        }, 1000)
 
         // Display tooltip either near mouse cursor or near MP
         d3.select("#tooltip")
@@ -4145,8 +4147,8 @@ function draw_graph() {
     //     })
 
 
-    var new_width = timeline.clientWidth - margin.left - margin.right,
-        new_height = (timeline.clientHeight - margin.top - margin.bottom)
+    var new_width = Math.min(window.innerWidth, timeline.clientWidth) - margin.left - margin.right,
+        new_height = (Math.min(window.innerHeight, timeline.clientHeight) - margin.top - margin.bottom)
 
     if (new_width != width | new_height != height) {
         width = new_width
