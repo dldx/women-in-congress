@@ -855,7 +855,7 @@ $tip-padding: .5;
   display: inline-block;
   vertical-align: middle;
   // text-align: center;
-  transform: translateZ(0);
+  transform: translateZ(0) translateX(10vw);
   font-size: 1rem;
   font-weight: 200;
   position: fixed;
@@ -865,10 +865,11 @@ $tip-padding: .5;
   left: 0;
   right: 0;
   // margin: 0 auto;
-  width: 30%;
+  width: 50%;
+  max-width: 80ch;
   @include phone {
     font-size: 1.2rem;
-    width: 50%;
+    width: 80%;
   }
 
   input {
@@ -936,7 +937,7 @@ $tip-padding: .5;
   margin: 0 auto;
   width: 50%;
   @include phone {
-    font-size: 1.2rem;
+    // font-size: 1.2rem;
     width: 80%;
   }
 }
@@ -948,19 +949,20 @@ $tip-padding: .5;
   margin: 0;
   background-color: $graph-background;
   color: invert($graph-background);
-  padding-right: 2.5em;
   // border: 0;
   border-radius: 3px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  padding-right: 2.5em;
+  @include phone {
+    padding-right: 1.5em;
+  }
 }
 
 .slide5-dropdown::after {
-  content: "";
-  position: absolute;
+  position: fixed;
   pointer-events: none;
-  transform: translateX(-200%);
   content: "\25BC";
   height: 1em;
   font-size: .625em;
@@ -968,6 +970,7 @@ $tip-padding: .5;
   top: 50%;
   margin-top: -.5em;
   color: invert($graph-background);
+  transform: translateX(-1rem);
 }
 
 .switch {
@@ -1034,7 +1037,8 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-#slide3-group, #slide6-group {
+#slide3-group,
+#slide6-group {
   transition: opacity .5s ease-in-out;
 }
 

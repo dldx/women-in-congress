@@ -2080,7 +2080,6 @@ function fifth_slide(no_transition = false) {
     d3.select("body")
         .append("span")
         .attr("class", "slide5-search")
-        .style("transform", `translateX(${margin.left * (isMobile ? 1.2 : 2)}px)`)
         .append("input")
         .attr("id", "mp-search")
         .attr("type", "text")
