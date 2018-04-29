@@ -2204,8 +2204,8 @@ function fifth_slide(no_transition = false) {
 
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
-        .domain([-350, 120])
-        .range([0, width])
+        .domain([-250, 120])
+        .range([margin.left, width-margin.right])
 
     slide5_yScale = d3.scaleLinear()
         .domain([-0.005, 0.5])
@@ -2332,7 +2332,6 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         temp_nodes.push(node)
     })
 
-
     // Quadtree to look up points
     var quadtree = d3.quadtree()
         .extent([
@@ -2351,7 +2350,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     // UPDATE
     circle_male
         .transition()
-        .duration(2000)
+        .duration(1500)
         .attr("opacity", 0.7)
         .attr("cx", d => slide5_xScale(d.x) - 10)
         .attr("cy", d => slide5_yScale(d.y))
@@ -2380,7 +2379,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     // UPDATE
     circle_female
         .transition()
-        .duration(2000)
+        .duration(1500)
         .attr("opacity", 0.7)
         .attr("cx", d => slide5_xScale(d.x) + 10)
         .attr("cy", d => slide5_yScale(d.y))
@@ -2410,7 +2409,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     // Update
     median_connector_line
         .transition()
-        .duration(1000)
+        .duration(1500)
+        .attr("x1", slide5_xScale(0))
+        .attr("x2", slide5_xScale(0))
         .attr("y1", d => slide5_yScale(drawMedian ? d["female"] : 0.5))
         .attr("y2", d => slide5_yScale(drawMedian ? d["male"] : 0.5))
         .attr("opacity", drawMedian ? 1 : 0)
@@ -2439,7 +2440,8 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     // Update
     male_median_circle
         .transition()
-        .duration(1000)
+        .duration(1500)
+        .attr("cx", slide5_xScale(0))
         .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
         .attr("opacity", drawMedian ? 1 : 0)
 
@@ -2467,7 +2469,8 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     // Update
     female_median_circle
         .transition()
-        .duration(1000)
+        .duration(1500)
+        .attr("cx", slide5_xScale(0))
         .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
         .attr("opacity", drawMedian ? 1 : 0)
 

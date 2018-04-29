@@ -208,7 +208,7 @@ body {
   pointer-events: none;
   @include phone {
     width: 75vw !important;
-    font-size: .9rem;
+    font-size: .8rem;
     font-weight: 500;
   }
   @include tablet {
@@ -315,7 +315,7 @@ a {
   -webkit-transition: opacity .5s ease-in-out;
   transition: opacity .5s ease-in-out;
   @include phone {
-    font-size: .5rem;
+    font-size: .7rem;
   }
 }
 
@@ -328,7 +328,7 @@ a {
   -webkit-transition: opacity .5s ease-in-out;
   transition: opacity .5s ease-in-out;
   @include phone {
-    font-size: .5rem;
+    font-size: .7rem;
   }
 }
 
@@ -466,7 +466,6 @@ a {
 }
 $tip-padding: .5;
 
-#slide4,
 .tooltip {
   z-index: 99;
   opacity: 1;
@@ -490,13 +489,12 @@ $tip-padding: .5;
   top: 10%;
   @include phone {
     width: 75vw !important;
-    font-size: .9rem;
+    font-size: .8rem;
     line-height: 1.3;
   }
 
   .slide2-tooltip,
-  .slide3-tooltip,
-  .slide4-tooltip {
+  .slide3-tooltip {
     font-size: 1rem;
     font-weight: 200;
     text-align: center;
@@ -683,146 +681,6 @@ $tip-padding: .5;
     grid-area: facts;
     align-self: center;
   }
-
-  .slide4-tooltip {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    animation: fadein 1s;
-    pointer-events: auto;
-    text-align: unset;
-    @keyframes fadein {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-    $speech-flex-row-height: 5;
-
-    p {
-      font-size: 1rem;
-      line-height: 1.5;
-      text-align: center;
-      @include phone {
-        font-size: .7rem;
-        line-height: 1.3;
-      }
-    }
-
-    .speech-flex-row {
-      display: flex;
-      align-items: flex-start;
-      flex: 0 0 $speech-flex-row-height + rem;
-      padding-bottom: 2rem;
-
-      button {
-        margin-top: auto;
-        margin-bottom: auto;
-        width: $speech-flex-row-height + rem;
-        height: $speech-flex-row-height + rem;
-      }
-    }
-
-    .mp-image-parent {
-      margin-top: auto;
-      margin-bottom: auto;
-      flex: 0 0 $speech-flex-row-height + rem;
-    }
-
-    .mp-name-debate {
-      flex-grow: 1;
-      margin-top: auto;
-      margin-bottom: auto;
-      text-align: center;
-    }
-
-    .mp-name {
-      margin: auto;
-      font-weight: lighter;
-      font-size: 2rem;
-      padding: .5rem;
-      @include phone {
-        font-size: 1.5rem;
-        padding: unset;
-      }
-    }
-
-    .blockquote {
-      margin-left: 20px;
-      padding-left: $tip-padding * 1.5 + rem;
-      text-align: left;
-      // flex-grow: 1;
-      overflow: auto;
-      margin: auto;
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      // font-style: italic;
-      font-size: 1rem;
-      line-height: 1.5;
-      pointer-events: all;
-
-      &::before {
-        // top: 0;
-        // left: $tip-padding + rem;
-        font-family: Arial, sans-serif;
-        transform: translate(-20px, -40px);
-        color: #fff;
-        content: '“';
-        font-size: 4em;
-        position: absolute;
-        // text-shadow: -3px 0 #c2c2c2;
-      }
-      @include phone {
-        font-size: .7rem;
-        line-height: 1.3;
-      }
-      // &::after {
-      //   right: 16px;
-      //   color: #fff;
-      //   content: '”';
-      //   bottom: -32px;
-      //   font-size: 4em;
-      //   position: absolute;
-      //   // text-shadow: 3px 0 #c2c2c2;
-      // }
-    }
-
-    .end-quote {
-      color: #fff;
-      font-size: 4em;
-      margin-right: 0;
-    }
-
-    .speech-debate {
-      font-size: .7rem;
-      font-weight: 400;
-      padding: .5rem;
-      @include phone {
-        display: none;
-      }
-    }
-  }
-}
-
-#slide4-speech-topic-bar {
-  padding-top: $tip-padding + rem;
-  flex: 0 0 2rem;
-  margin: auto auto 0;
-}
-
-.rect-label {
-  text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 200;
-  text-shadow: 1px 1px 1px rgba(black, .5);
-  pointer-events: none;
-  @include phone {
-    font-size: .7rem;
-  }
 }
 
 #tooltip {
@@ -832,23 +690,6 @@ $tip-padding: .5;
   opacity: 0;
   // transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
-}
-
-#slide4 {
-  width: 80%;
-  max-width: unset;
-  height: 80%;
-  top: 10%;
-  left: 10%;
-  position: fixed;
-  opacity: 0;
-  transition: opacity .5s ease-in-out;
-  @include phone {
-    width: 85% !important;
-    height: 90%;
-    top: 5%;
-    left: 5%;
-  }
 }
 
 .slide5-search {
@@ -868,15 +709,15 @@ $tip-padding: .5;
   width: 50%;
   max-width: 80ch;
   @include phone {
-    font-size: 1.2rem;
+    font-size: .8rem;
     width: 80%;
   }
 
   input {
+    font-size: inherit;
     border: 1px solid rgb(169, 169, 169);
     background-color: $graph-background;
     color: invert($graph-background);
-    font-size: 16px;
     width: 100%;
     padding: .5em;
     margin: 0;
@@ -937,7 +778,7 @@ $tip-padding: .5;
   margin: 0 auto;
   width: 50%;
   @include phone {
-    // font-size: 1.2rem;
+    font-size: .8rem;
     width: 80%;
   }
 }
