@@ -54,7 +54,6 @@ body {
   margin: auto 0;
 }
 
-
 #header {
   margin: 5rem auto;
   max-width: 50rem;
@@ -266,13 +265,15 @@ body {
 
 .annotation path {
   stroke: map-get($colors, Hover);
+  stroke-width: 2;
 }
 
-.annotation text, .connector-dot {
+.annotation text,
+.connector-dot {
   fill: map-get($colors, Hover);
   font-size: 1rem;
   @include phone {
-    font-size: 0.8rem;
+    font-size: .8rem;
   }
 }
 
@@ -703,12 +704,23 @@ $tip-padding: .5;
   opacity: 0;
   // transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
+  box-shadow: none;
+  padding: 0;
+  border-width: 0;
 
   @include phone {
     right: 0;
     top: 25%;
     margin: auto;
     transform: none !important;
+  }
+
+  &::after {
+    border-bottom: 2px solid map-get($colors, Hover);
+    content: "";
+    padding-bottom: .5rem;
+    display: block;
+    margin: 0 auto;
   }
 }
 
@@ -957,7 +969,6 @@ input:checked + .slider:before {
 
 .women-label {
   fill: $male;
-
 }
 
 .men-label {

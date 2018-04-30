@@ -772,10 +772,10 @@ function show_mp_tooltip(nodeData, mousePos) {
     // Display tooltip
     d3.select("#tooltip")
         .style("opacity", 1)
-        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
             width - tooltip.offsetWidth - margin.right),
-        0 + margin.left/2)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
-            height + tooltip.offsetHeight - 20), margin.top)}px)`)
+        0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight * 2 - 20,
+            height + tooltip.offsetHeight * 2 - 20), margin.top)}px)`)
         .style("pointer-events", "none")
 
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
@@ -820,6 +820,42 @@ function show_mp_tooltip(nodeData, mousePos) {
         .attr("y2", (d) => y(d.stream))
         .style("stroke-width", lineThickness)
         .style("opacity", 1)
+
+    d3.timeout(() => {
+        // Point to MP
+        var tooltip_pos = tooltip.getBoundingClientRect()
+        // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+        //     width - tooltip.offsetWidth - margin.right),
+        // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
+        //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
+        var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
+
+        d3.selectAll(".annotation-group").remove()
+
+        makeAnnotations = d3.annotation()
+            .type(d3.annotationLabel)
+            .annotations([{
+                note: {
+                    title: "...."
+                },
+                connector: {
+                    end: "dot"
+                },
+                //can use x, y directly instead of data
+                x: line_pos.x + line_pos.width/2,
+                y: line_pos.y + line_pos.height/2,
+                dx: tooltip_pos.x + tooltip_pos.width/2 - line_pos.x,
+                dy: tooltip_pos.bottom - line_pos.y - 3
+            }])
+
+        mouseover_svg
+            .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
+
+        // Hide label because we are using tooltip instead
+        mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
+    }, 300)
 }
 
 // ----------------------------------------------------------------------------
@@ -2714,7 +2750,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
         d3.selectAll(".annotation-group").remove()
 
-        makeAnnotations = d3.annotation()
+        var makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
             .annotations([{
                 note: {
@@ -3872,7 +3908,7 @@ function handleStepEnter(response) {
                         //can use x, y directly instead of data
                         x: line_pos.x + line_pos.width/2,
                         y: line_pos.y + line_pos.height/2,
-                        dx: isMobile ? 0 : 100,
+                        dx: isMobile ? 50 : 100,
                         dy: 100
                     }])
                 mouseover_svg
@@ -3901,7 +3937,7 @@ function handleStepEnter(response) {
                         //can use x, y directly instead of data
                         x: line_pos.x + line_pos.width/2,
                         y: line_pos.y + line_pos.height/2,
-                        dx: isMobile ? 0 : -100,
+                        dx: isMobile ? 50 : -100,
                         dy: 200
                     }])
                 mouseover_svg
