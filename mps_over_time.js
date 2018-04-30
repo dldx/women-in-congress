@@ -281,6 +281,8 @@ function reset_zoom(callback, current_slide) {
                 callback(current_slide)
             }
         })
+
+    d3.select(".switch").select("label").text("Make it zoomable")
 }
 // ----------------------------------------------------------------------------
 // UPDATE GRAPH WHEN USER MOVES TO A NEW SLIDE
@@ -747,12 +749,25 @@ function show_mp_tooltip(nodeData, mousePos) {
         }
     }
 
-    // Hide tooltip on scroll
-    window.addEventListener("scroll", () => {
-        d3.select("#tooltip")
-            .style("opacity", 0)
+    // Interrupt previous transition
+    d3.select("#tooltip").interrupt()
+    // Hide tooltip on scroll but wait for window to settle first
+    d3.timeout(() => {
+        window.addEventListener("scroll", () => {
+            d3.select("#tooltip")
+                .style("opacity", 0)
+                // Get rid of annotation line too
+            d3.selectAll(".annotation-group").remove()
 
-    }, { once: true })
+        }, { once: true })
+    }, 1000)
+    // Hide tooltip after 5 secs
+    d3.select("#tooltip").transition().delay(5000)
+        .style("opacity", 0)
+        .on("end", () => {
+            // Get rid of annotation line too
+            d3.selectAll(".annotation-group").remove()
+        })
 
     // Display tooltip
     d3.select("#tooltip")
@@ -1244,7 +1259,7 @@ function second_slide(no_transition = false) {
 
     slide2Group.append("text")
         .attr("x", x(new Date(2017, 1, 1)))
-        .attr("y", y(0) - 2.5*lineThickness)
+        .attr("y", y(0) - 2.5 * lineThickness)
         .attr("class", "women-label")
         .text("Women")
         .style("opacity", 0)
@@ -1367,12 +1382,19 @@ function second_slide(no_transition = false) {
             // Use election rects to catch mouseovers and display information
             electionRects
                 .on("mouseover", function (d, i) {
-                    // Hide tooltip on scroll
-                    window.addEventListener("scroll", () => {
-                        d3.select("#tooltip")
-                            .style("opacity", 0)
+                    // Interrupt previous transition
+                    d3.select("#tooltip").interrupt()
+                    // Hide tooltip on scroll but wait for window to settle first
+                    d3.timeout(() => {
+                        window.addEventListener("scroll", () => {
+                            d3.select("#tooltip")
+                                .style("opacity", 0)
 
-                    }, { once: true })
+                        }, { once: true })
+                    }, 1000)
+                    // Hide tooltip after 5 secs
+                    d3.select("#tooltip").transition().delay(5000)
+                        .style("opacity", 0)
 
                     // Get mouse positions
                     var mousePos = d3.mouse(this)
@@ -1473,7 +1495,7 @@ function to_third_slide(current_slide) {
                 .style("opacity", 1)
 
             yLabel
-                .attr("y", margin.left/3)
+                .attr("y", margin.left / 3)
                 .style("opacity", 1)
 
             gX.call(xAxis)
@@ -1764,12 +1786,19 @@ function third_slide(no_transition = false) {
         .on("mouseout", mouseout)
 
     function mouseover(d) {
-        // Hide tooltip on scroll
-        window.addEventListener("scroll", () => {
-            d3.select("#tooltip")
-                .style("opacity", 0)
+        // Interrupt previous transition
+        d3.select("#tooltip").interrupt()
+        // Hide tooltip on scroll but wait for window to settle first
+        d3.timeout(() => {
+            window.addEventListener("scroll", () => {
+                d3.select("#tooltip")
+                    .style("opacity", 0)
 
-        }, { once: true })
+            }, { once: true })
+        }, 1000)
+        // Hide tooltip after 5 secs
+        d3.select("#tooltip").transition().delay(5000)
+            .style("opacity", 0)
 
         // If country line is on screen, then enable mouseover
         if (country_on_screen.indexOf(d.data.country) > -1) {
@@ -1851,7 +1880,8 @@ function to_fourth_slide(current_slide) {
             .style("opacity", 0)
         t0
             .on("end", function () {
-                d3.select("#slide3-group").remove()
+                d3.select("#slide3-group")
+                    .remove()
             })
         break
     case 4:
@@ -1980,7 +2010,9 @@ function to_fifth_slide(current_slide) {
         fifth_slide(false)
     } else if (lastTransitioned == 5) {
         // Wait a bit for axes to fade out first
-        d3.transition().duration(600).on("end", () => {fifth_slide(true)})
+        d3.transition()
+            .duration(600)
+            .on("end", () => { fifth_slide(true) })
     } else {
         // Wait a bit for axes to fade out first
         fifth_slide(true)
@@ -2205,7 +2237,7 @@ function fifth_slide(no_transition = false) {
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
         .domain([-250, 120])
-        .range([margin.left, width-margin.right])
+        .range([margin.left, width - margin.right])
 
     slide5_yScale = d3.scaleLinear()
         .domain([-0.005, 0.5])
@@ -2214,16 +2246,20 @@ function fifth_slide(no_transition = false) {
     y = slide5_yScale
 
     // Move y axis to the right and hide main line
-    yAxis = d3.axisRight(y).ticks(10).tickFormat(d => ((d % 0.25 == 0) ? ((d * 100).toFixed(0) + "%") : ""))
+    yAxis = d3.axisRight(y)
+        .ticks(10)
+        .tickFormat(d => ((d % 0.25 == 0) ? ((d * 100)
+            .toFixed(0) + "%") : ""))
     gY.call(yAxis)
         .attr("transform", `translate(${slide5_xScale(90)}, 0)`)
         .attr("text-anchor", "start")
         .style("opacity", 1)
 
-    d3.select(".y-axis path").style("opacity", 0)
+    d3.select(".y-axis path")
+        .style("opacity", 0)
 
     yLabel
-        .attr("y", width+margin.left)
+        .attr("y", width + margin.left)
         .text("% of time spent on topic")
         .style("opacity", 1)
 
@@ -2610,19 +2646,30 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             // }
         }
 
+        // Interrupt previous transition
+        d3.select("#tooltip").interrupt()
         // Hide tooltip on scroll but wait for window to settle first
         d3.timeout(() => {
             window.addEventListener("scroll", () => {
                 d3.select("#tooltip")
                     .style("opacity", 0)
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
 
             }, { once: true })
         }, 1000)
+        // Hide tooltip after 5 secs
+        d3.select("#tooltip").transition().delay(5000)
+            .style("opacity", 0)
+            .on("end", () => {
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
+            })
 
         // Display tooltip either near mouse cursor or near MP
         d3.select("#tooltip")
             .style("opacity", 1)
-            .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
+            .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
                 width - tooltip.offsetWidth - margin.right),
             0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
                 height + tooltip.offsetHeight - 20), margin.top)}px)`)
@@ -2655,6 +2702,38 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .attr("r", circleRadius * (isMobile ? 0.8 : 1.2))
             .style("opacity", 1)
             .style("stroke-width", circleRadius)
+
+
+            // Annotate circle
+        var tooltip_pos = tooltip.getBoundingClientRect()
+        // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+        //     width - tooltip.offsetWidth - margin.right),
+        // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
+        //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
+        var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
+
+        d3.selectAll(".annotation-group").remove()
+
+        makeAnnotations = d3.annotation()
+            .type(d3.annotationLabel)
+            .annotations([{
+                note: {
+                    title: "...."
+                },
+                //can use x, y directly instead of data
+                x: circle_pos.x,
+                y: circle_pos.y,
+                dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
+                dy: tooltip_pos.bottom - circle_pos.y
+            }])
+
+        mouseover_svg
+            .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
+
+        // Hide label because we are using tooltip instead
+        mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
     }
 
     // mouseover function for getting MP info
@@ -2697,12 +2776,25 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
-        // Hide tooltip on scroll
-        window.addEventListener("scroll", () => {
-            d3.select("#tooltip")
-                .style("opacity", 0)
+        // Interrupt previous transition
+        d3.select("#tooltip").interrupt()
+        // Hide tooltip on scroll but wait for window to settle first
+        d3.timeout(() => {
+            window.addEventListener("scroll", () => {
+                d3.select("#tooltip")
+                    .style("opacity", 0)
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
 
-        }, { once: true })
+            }, { once: true })
+        }, 1000)
+        // Hide tooltip after 5 secs
+        d3.select("#tooltip").transition().delay(5000)
+            .style("opacity", 0)
+            .on("end", () => {
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
+            })
 
         d3.select("#tooltip")
             .style("opacity", 1)
@@ -2780,10 +2872,14 @@ function to_sixth_slide(current_slide) {
             .delay(1000)
             .on("end", function () { this.remove() })
 
-        d3.select(".y-axis").style("opacity", 0)
+        d3.select(".y-axis")
+            .style("opacity", 0)
 
         // Move y axis and label back
-        yLabel.style("opacity", 0).transition().duration(1000).on("end", () => {yLabel.attr("y", margin.left / 3)})
+        yLabel.style("opacity", 0)
+            .transition()
+            .duration(1000)
+            .on("end", () => { yLabel.attr("y", margin.left / 3) })
 
         d3.select(".switch")
             .style("opacity", 0)
@@ -2843,7 +2939,8 @@ function to_sixth_slide(current_slide) {
         .range([height, 0])
         .padding(1)
     yAxis = d3.axisLeft(y)
-    gY.style("opacity", 0).call(yAxis)
+    gY.style("opacity", 0)
+        .call(yAxis)
 
 
     // Increment lastTransitioned counter if it is less than 0
@@ -3560,6 +3657,9 @@ function handleStepEnter(response) {
     d3.select("#tooltip")
         .style("opacity", 0)
 
+    // Remove any annotations
+    d3.selectAll(".annotation-group").remove()
+
     // go to next slide based on slide attribute
     new_slide = +$step.nodes()[response.index].getAttribute("data-slide")
     update_state()
@@ -3586,6 +3686,7 @@ function handleStepEnter(response) {
                 electionRects.filter((d, i) => i == 4)
                     .classed("hover", false)
                     .style("opacity", 0.15)
+
             }
             // Show election rects
             electionRects
@@ -3598,6 +3699,28 @@ function handleStepEnter(response) {
             electionRects.filter((d, i) => i == 4)
                 .classed("hover", true)
                 .style("opacity", null)
+
+            var makeAnnotations = d3.annotation()
+                .type(d3.annotationCallout)
+                .annotations([{
+                    note: {
+                        title: "FDR's Presidency"
+                    },
+                    connector: {
+                        end: "dot"
+                    },
+                    //can use x, y directly instead of data
+                    x: x(new Date(1940, 1, 1)),
+                    y: y(50),
+                    dx: isMobile ? 50 : 100,
+                    dy: 200
+                }])
+
+            wrapper
+                .append("g")
+                .attr("class", "annotation-group")
+                .call(makeAnnotations)
+
             break
         case 0.2:
             if (response.direction == "up") {
@@ -3625,6 +3748,7 @@ function handleStepEnter(response) {
             electionRects.filter((d, i) => i == 4)
                 .classed("hover", false)
                 .style("opacity", 0.15)
+
             // Draw lines for longest serving woman
             dataContainer.selectAll("custom.line")
                 .filter(d => d.clean_name == "marcykaptur")
@@ -3701,6 +3825,7 @@ function handleStepEnter(response) {
                         canvas.call(zoom)
                         d3.select(".is-active")
                             .style("opacity", 0)
+                        d3.select(".switch").select("label").text("Stop zooming")
                     } else {
                         reset_zoom()
                         d3.select(".is-active")
@@ -3712,9 +3837,6 @@ function handleStepEnter(response) {
                     }
 
                 })
-
-
-
             break
 
         case 1:
@@ -3728,19 +3850,67 @@ function handleStepEnter(response) {
                 // If we have to zoom out first, wait a bit before executing next bit
                 d3.timeout(() => {
                     all_mps_draw_timer.stop()
-                    mpZoom("jeannetterankin", "mid", 10, 0, width / 4)
+                    mpZoom("jeannetterankin")
                 }, 1000)
+                var zooming = true
             } else {
                 // First step: zoom into first mp
                 all_mps_draw_timer.stop()
-                mpZoom("jeannetterankin", "mid", 10, 0, width / 4)
+                mpZoom("jeannetterankin")
             }
+
+            // Annotate Jeannette
+            d3.timeout(() => {
+                var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
+
+                makeAnnotations = d3.annotation()
+                    .type(d3.annotationCallout)
+                    .annotations([{
+                        note: {
+                            title: "Jeannette Rankin"
+                        },
+                        //can use x, y directly instead of data
+                        x: line_pos.x + line_pos.width/2,
+                        y: line_pos.y + line_pos.height/2,
+                        dx: isMobile ? 0 : 100,
+                        dy: 100
+                    }])
+                mouseover_svg
+                    .append("g")
+                    .attr("class", "annotation-group")
+                    .call(makeAnnotations)
+            }, zooming ? 2000 : 1000)
+
+
             canvas.style("pointer-events", "none")
             break
 
         case 2:
             // Second step: first minority woman representative
             mpZoom("patsymink")
+            // Annotate Patsy
+            d3.timeout(() => {
+                var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
+
+                makeAnnotations = d3.annotation()
+                    .type(d3.annotationCallout)
+                    .annotations([{
+                        note: {
+                            title: "Patsy Mink"
+                        },
+                        //can use x, y directly instead of data
+                        x: line_pos.x + line_pos.width/2,
+                        y: line_pos.y + line_pos.height/2,
+                        dx: isMobile ? 0 : -100,
+                        dy: 200
+                    }])
+                mouseover_svg
+                    .append("g")
+                    .attr("class", "annotation-group")
+                    .call(makeAnnotations)
+            }, 1000)
+
+
             canvas.style("pointer-events", "none")
             break
 
@@ -3791,7 +3961,7 @@ function handleStepEnter(response) {
         break
 
     case 1:
-    // Second slide
+        // Second slide
         d3.select(".switch")
             .style("opacity", 0)
         if (document.getElementById("zoom-checkbox") != null) {
@@ -3831,7 +4001,7 @@ function handleStepEnter(response) {
                 half_max_mps_path.transition()
                     .attr("d", half_max_mps_line)
 
-                half_max_mps_line_smooth.y(d => y(d.total_mps/2 + 3.5))
+                half_max_mps_line_smooth.y(d => y(d.total_mps / 2 + 3.5))
                 text_path_50_50
                     .transition()
                     .attr("d", half_max_mps_line_smooth)
@@ -3859,7 +4029,8 @@ function handleStepEnter(response) {
                 .text("Representatives in the Democratic Party")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3903,7 +4074,8 @@ function handleStepEnter(response) {
                 .text("Representatives in the Republican Party")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3947,7 +4119,8 @@ function handleStepEnter(response) {
                 .text("Representatives in Congress")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y).tickFormat(d => d + "%")
+            yAxis = d3.axisLeft(y)
+                .tickFormat(d => d + "%")
             gY.transition()
                 .call(yAxis)
 
@@ -3985,7 +4158,7 @@ function handleStepEnter(response) {
         break
 
     case 3:
-    // Fourth slide (no data, just text)
+        // Fourth slide (no data, just text)
         d3.select("#slide4")
             .style("display", "none")
         d3.select(".switch")
@@ -4003,7 +4176,7 @@ function handleStepEnter(response) {
         break
 
     case 4:
-    // Fifth slide
+        // Fifth slide
         d3.select("#slide4")
             .style("display", "none")
         switch (new_step) {
@@ -4147,8 +4320,8 @@ function draw_graph() {
     //     })
 
 
-    var new_width = Math.min(window.innerWidth, timeline.clientWidth) - margin.left - margin.right,
-        new_height = (Math.min(window.innerHeight, timeline.clientHeight) - margin.top - margin.bottom)
+    var new_width = timeline.clientWidth - margin.left - margin.right,
+        new_height = (timeline.clientHeight - margin.top - margin.bottom)
 
     if (new_width != width | new_height != height) {
         width = new_width

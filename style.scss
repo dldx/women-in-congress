@@ -54,6 +54,7 @@ body {
   margin: auto 0;
 }
 
+
 #header {
   margin: 5rem auto;
   max-width: 50rem;
@@ -263,6 +264,18 @@ body {
   }
 }
 
+.annotation path {
+  stroke: map-get($colors, Hover);
+}
+
+.annotation text, .connector-dot {
+  fill: map-get($colors, Hover);
+  font-size: 1rem;
+  @include phone {
+    font-size: 0.8rem;
+  }
+}
+
 #zoom-checkbox {
   top: 15%;
   position: fixed;
@@ -469,7 +482,7 @@ $tip-padding: .5;
 .tooltip {
   z-index: 99;
   opacity: 1;
-  background-color: rgba($tip-background, .8);
+  background-color: rgba($tip-background, .9);
   color: invert($tip-background);
   border: solid 1px $tip-background;
   border-radius: 5px;
@@ -690,6 +703,13 @@ $tip-padding: .5;
   opacity: 0;
   // transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
+
+  @include phone {
+    right: 0;
+    top: 25%;
+    margin: auto;
+    transform: none !important;
+  }
 }
 
 .slide5-search {

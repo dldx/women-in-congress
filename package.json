@@ -1,7 +1,7 @@
 {
-  "name": "women-in-parliament",
+  "name": "women-in-congress",
   "version": "1.0.0",
-  "description": "Visualisation about Women MPs",
+  "description": "Visualisation about Women Reps",
   "main": "mps_over_time.js",
   "scripts": {
     "prepublish": "rollup -c && uglifyjs d3.js -c -m -o d3.min.js;python mp_base64.py"
@@ -21,6 +21,7 @@
     "d3-scale": "^1.0.6",
     "d3-selection": "^1.1.0",
     "d3-shape": "^1.2.0",
+    "d3-svg-annotation": "^2.2.5",
     "d3-time-format": "^2.1.0",
     "d3-transition": "^1.1.0",
     "d3-voronoi": "^1.1.2",
@@ -33,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dldx/women-in-parliament.git"
+    "url": "git+https://github.com/dldx/women-in-congress.git"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
