@@ -891,6 +891,10 @@ function to_first_slide(current_slide) {
         t0.select("#slide3-group")
             .style("opacity", 0)
             .remove()
+        d3.select("#tooltip")
+            .classed("slide3-tooltip", false)
+            .classed("slide5-tooltip", false)
+
         break
     }
 
@@ -957,6 +961,10 @@ function to_second_slide(current_slide) {
             t0.select("#slide3-group")
                 .style("opacity", 0)
                 .remove()
+
+            d3.select("#tooltip")
+                .classed("slide3-tooltip", false)
+                .classed("slide5-tooltip", false)
             break
 
         }
@@ -1754,6 +1762,7 @@ function third_slide(no_transition = false) {
 
     // Move tooltip to better location
     d3.select("#tooltip")
+        .classed("slide3-tooltip", true)
         .style("transform", `translate(${Math.max(Math.min(width/2 - tooltip.offsetWidth / 2,
             width - tooltip.offsetWidth - margin.right),
         0 + margin.left/2)}px,${Math.max(Math.min(- tooltip.offsetHeight - 20,
@@ -1919,6 +1928,9 @@ function to_fourth_slide(current_slide) {
                 d3.select("#slide3-group")
                     .remove()
             })
+        d3.select("#tooltip")
+            .classed("slide3-tooltip", false)
+            .classed("slide5-tooltip", false)
         break
     case 4:
         // Fade canvas
@@ -2002,6 +2014,9 @@ function to_fifth_slide(current_slide) {
         t0.select("#slide3-group")
             .style("opacity", 0)
             .remove()
+        d3.select("#tooltip")
+            .classed("slide3-tooltip", false)
+            .classed("slide5-tooltip", false)
         break
     case 5:
         // Fade out sixth slide
@@ -2682,29 +2697,10 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             // }
         }
 
-        // Interrupt previous transition
-        d3.select("#tooltip").interrupt()
-        // Hide tooltip on scroll but wait for window to settle first
-        d3.timeout(() => {
-            window.addEventListener("scroll", () => {
-                d3.select("#tooltip")
-                    .style("opacity", 0)
-                // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
-
-            }, { once: true })
-        }, 1000)
-        // Hide tooltip after 5 secs
-        d3.select("#tooltip").transition().delay(5000)
-            .style("opacity", 0)
-            .on("end", () => {
-                // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
-            })
-
         // Display tooltip either near mouse cursor or near MP
         d3.select("#tooltip")
             .style("opacity", 1)
+            .classed("slide5-tooltip", true)
             .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
                 width - tooltip.offsetWidth - margin.right),
             0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
@@ -2740,46 +2736,29 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .style("stroke-width", circleRadius)
 
 
-            // Annotate circle
-        var tooltip_pos = tooltip.getBoundingClientRect()
-        // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
-        //     width - tooltip.offsetWidth - margin.right),
-        // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
-        //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
-        var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
-
-        d3.selectAll(".annotation-group").remove()
-
-        var makeAnnotations = d3.annotation()
-            .type(d3.annotationLabel)
-            .annotations([{
-                note: {
-                    title: "...."
-                },
-                //can use x, y directly instead of data
-                x: circle_pos.x,
-                y: circle_pos.y,
-                dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
-                dy: tooltip_pos.bottom - circle_pos.y
-            }])
-
-        mouseover_svg
-            .append("g")
-            .attr("class", "annotation-group")
-            .call(makeAnnotations)
-
-        // Hide label because we are using tooltip instead
-        mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
     }
 
     // mouseover function for getting MP info
     function mpMouseover() {
-        // Hide tooltip on scroll
-        window.addEventListener("scroll", () => {
-            d3.select("#tooltip")
-                .style("opacity", 0)
+        // Interrupt previous transition
+        d3.select("#tooltip").interrupt()
+        // Hide tooltip on scroll but wait for window to settle first
+        d3.timeout(() => {
+            window.addEventListener("scroll", () => {
+                d3.select("#tooltip")
+                    .style("opacity", 0)
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
 
-        }, { once: true })
+            }, { once: true })
+        }, 1000)
+        // Hide tooltip after 5 secs
+        d3.select("#tooltip").transition().delay(5000)
+            .style("opacity", 0)
+            .on("end", () => {
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
+            })
 
         // Get mouse positions from the main canvas.
         var mousePos = d3.mouse(this)
@@ -2801,6 +2780,37 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             }
         }
         d3.event.preventDefault()
+
+        // Annotate circle
+        var tooltip_pos = tooltip.getBoundingClientRect()
+        // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+        //     width - tooltip.offsetWidth - margin.right),
+        // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
+        //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
+        var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
+
+        d3.selectAll(".annotation-group").remove()
+
+        var makeAnnotations = d3.annotation()
+            .type(d3.annotationLabel)
+            .annotations([{
+                note: {
+                    title: "...."
+                },
+                //can use x, y directly instead of data
+                x: circle_pos.x,
+                y: circle_pos.y,
+                dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
+                dy: tooltip_pos.bottom - circle_pos.y - 3
+            }])
+
+        mouseover_svg
+            .append("g")
+            .attr("class", "annotation-group")
+            .call(makeAnnotations)
+
+        // Hide label because we are using tooltip instead
+        mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
     }
 
     canvas
@@ -2812,28 +2822,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Mouseover for medians
     function median_mouseover(nodeData, mousePos) {
-        // Interrupt previous transition
-        d3.select("#tooltip").interrupt()
-        // Hide tooltip on scroll but wait for window to settle first
-        d3.timeout(() => {
-            window.addEventListener("scroll", () => {
-                d3.select("#tooltip")
-                    .style("opacity", 0)
-                // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
-
-            }, { once: true })
-        }, 1000)
-        // Hide tooltip after 5 secs
-        d3.select("#tooltip").transition().delay(5000)
-            .style("opacity", 0)
-            .on("end", () => {
-                // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
-            })
-
         d3.select("#tooltip")
             .style("opacity", 1)
+            .classed("slide5-tooltip", true)
             .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
                 width - tooltip.offsetWidth / 2 - margin.right),
             0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
@@ -2890,6 +2881,10 @@ function to_sixth_slide(current_slide) {
         t0.select("#slide3-group")
             .style("opacity", 0)
             .on("end", function () { this.remove() })
+
+        d3.select("#tooltip")
+            .classed("slide3-tooltip", false)
+            .classed("slide5-tooltip", false)
         break
 
     case 3:
@@ -3908,7 +3903,7 @@ function handleStepEnter(response) {
                         //can use x, y directly instead of data
                         x: line_pos.x + line_pos.width/2,
                         y: line_pos.y + line_pos.height/2,
-                        dx: isMobile ? 50 : 100,
+                        dx: isMobile ? 30 : 100,
                         dy: 100
                     }])
                 mouseover_svg
@@ -3937,7 +3932,7 @@ function handleStepEnter(response) {
                         //can use x, y directly instead of data
                         x: line_pos.x + line_pos.width/2,
                         y: line_pos.y + line_pos.height/2,
-                        dx: isMobile ? 50 : -100,
+                        dx: isMobile ? 30 : -100,
                         dy: 200
                     }])
                 mouseover_svg

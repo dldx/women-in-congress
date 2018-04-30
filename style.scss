@@ -12,6 +12,12 @@ $colors: (
   Hover: #e5e5e5, // Used when hovering over an item
   Active: #a1c181 // Used for the active slide on the tracker
 );
+
+$margin-top: 50;
+$margin-right: 20;
+$margin-bottom: 30;
+$margin-left: 70;
+
 $tracker-colors: #5c5c5c, #424242;
 $body-background: #131313;
 $graph-background: #252525;
@@ -709,9 +715,10 @@ $tip-padding: .5;
   border-width: 0;
 
   @include phone {
-    right: 0;
+    left: $margin-left + 1 + px;
     top: 25%;
     margin: auto;
+    width: calc(100% - #{$margin-left + px} - #{$margin-right + px} - 1px) !important;
     transform: none !important;
   }
 
@@ -721,6 +728,18 @@ $tip-padding: .5;
     padding-bottom: .5rem;
     display: block;
     margin: 0 auto;
+  }
+}
+
+.slide3-tooltip {
+  @include phone {
+    top: 10% !important;
+  }
+}
+
+.slide5-tooltip {
+  @include phone {
+    left: $margin-left/2 + px !important;
   }
 }
 
