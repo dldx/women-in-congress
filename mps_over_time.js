@@ -2689,7 +2689,59 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .ticks(20))
     draw_custom_labels()
 
+
+    // mouseover function for getting MP info
+    function mpMouseover() {
+
+        // Get mouse positions from the main canvas.
+        var mousePos = d3.mouse(this)
+        // Get the data from our map!
+        if (typeof (transform) !== "undefined") {
+            var nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"],
+                (mousePos[1] - margin.top - transform["y"]) / transform["k"], 50)
+        } else {
+            nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50)
+        }
+
+        // Only show mouseover if hovering near a point
+        if (typeof (nodeData) !== "undefined") {
+            // If we're dealing with mp nodes
+            if (typeof (nodeData.id) !== "undefined") {
+                slide5_show_mp_tooltip(nodeData, mousePos)
+            } else {
+                median_mouseover(nodeData, mousePos)
+            }
+        }
+        d3.event.preventDefault()
+
+    }
+
+    canvas
+        .on("mousemove", mpMouseover)
+        .on("drag", mpMouseover)
+        .on("touchend", mpMouseover)
+
+
     window.slide5_show_mp_tooltip = function (nodeData, mousePos) {
+        // Interrupt previous transition
+        d3.select("#tooltip").interrupt()
+        // Hide tooltip on scroll but wait for window to settle first
+        d3.timeout(() => {
+            window.addEventListener("scroll", () => {
+                d3.select("#tooltip")
+                    .style("opacity", 0)
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
+
+            }, { once: true })
+        }, 1000)
+        // Hide tooltip after 5 secs
+        d3.select("#tooltip").transition().delay(5000)
+            .style("opacity", 0)
+            .on("end", () => {
+                // Get rid of annotation line too
+                d3.selectAll(".annotation-group").remove()
+            })
         if (typeof (mousePos) === "undefined") {
             mousePos = [nodeData.x, nodeData.y] //[width * 3 / 4, height * 3 / 4]
             // if (isMobile) {
@@ -2735,11 +2787,47 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .style("opacity", 1)
             .style("stroke-width", circleRadius)
 
+        d3.timeout(() => {
+        // Annotate circle
+            var tooltip_pos = tooltip.getBoundingClientRect()
+            // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+            //     width - tooltip.offsetWidth - margin.right),
+            // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
+            //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
+            var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
+
+            d3.selectAll(".annotation-group").remove()
+
+            var makeAnnotations = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations([{
+                    note: {
+                        title: "...."
+                    },
+                    connector: {
+                        end: "dot"
+                    },
+                    //can use x, y directly instead of data
+                    x: circle_pos.x + circle_pos.width/2,
+                    y: circle_pos.y + circle_pos.width/2,
+                    dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
+                    dy: tooltip_pos.bottom - circle_pos.y - 3
+                }])
+
+            mouseover_svg
+                .append("g")
+                .attr("class", "annotation-group")
+                .call(makeAnnotations)
+
+            // Hide label because we are using tooltip instead
+            mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
+        }, 300)
+
 
     }
 
-    // mouseover function for getting MP info
-    function mpMouseover() {
+    // Mouseover for medians
+    function median_mouseover(nodeData, mousePos) {
         // Interrupt previous transition
         d3.select("#tooltip").interrupt()
         // Hide tooltip on scroll but wait for window to settle first
@@ -2752,6 +2840,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
             }, { once: true })
         }, 1000)
+
         // Hide tooltip after 5 secs
         d3.select("#tooltip").transition().delay(5000)
             .style("opacity", 0)
@@ -2759,69 +2848,6 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                 // Get rid of annotation line too
                 d3.selectAll(".annotation-group").remove()
             })
-
-        // Get mouse positions from the main canvas.
-        var mousePos = d3.mouse(this)
-        // Get the data from our map!
-        if (typeof (transform) !== "undefined") {
-            var nodeData = quadtree.find((mousePos[0] - margin.left - transform["x"]) / transform["k"],
-                (mousePos[1] - margin.top - transform["y"]) / transform["k"], 50)
-        } else {
-            nodeData = quadtree.find(mousePos[0] - margin.left, mousePos[1] - margin.top, 50)
-        }
-
-        // Only show mouseover if hovering near a point
-        if (typeof (nodeData) !== "undefined") {
-            // If we're dealing with mp nodes
-            if (typeof (nodeData.id) !== "undefined") {
-                slide5_show_mp_tooltip(nodeData, mousePos)
-            } else {
-                median_mouseover(nodeData, mousePos)
-            }
-        }
-        d3.event.preventDefault()
-
-        // Annotate circle
-        var tooltip_pos = tooltip.getBoundingClientRect()
-        // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
-        //     width - tooltip.offsetWidth - margin.right),
-        // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
-        //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
-        var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
-
-        d3.selectAll(".annotation-group").remove()
-
-        var makeAnnotations = d3.annotation()
-            .type(d3.annotationLabel)
-            .annotations([{
-                note: {
-                    title: "...."
-                },
-                //can use x, y directly instead of data
-                x: circle_pos.x,
-                y: circle_pos.y,
-                dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
-                dy: tooltip_pos.bottom - circle_pos.y - 3
-            }])
-
-        mouseover_svg
-            .append("g")
-            .attr("class", "annotation-group")
-            .call(makeAnnotations)
-
-        // Hide label because we are using tooltip instead
-        mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
-    }
-
-    canvas
-        .on("mousemove", mpMouseover)
-        .on("drag", mpMouseover)
-        .on("touchend", mpMouseover)
-
-
-
-    // Mouseover for medians
-    function median_mouseover(nodeData, mousePos) {
         d3.select("#tooltip")
             .style("opacity", 1)
             .classed("slide5-tooltip", true)
@@ -2845,6 +2871,42 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .attr("r", circleRadius * 2.5)
             .style("opacity", 1)
             .style("stroke-width", circleRadius)
+
+        d3.timeout(() => {
+        // Annotate circle
+            var tooltip_pos = tooltip.getBoundingClientRect()
+            // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+            //     width - tooltip.offsetWidth - margin.right),
+            // 0 + margin.left), width: tooltip.offsetWidth, bottom: Math.max(Math.min(mousePos[1] - 20,
+            //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
+            var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
+
+            d3.selectAll(".annotation-group").remove()
+
+            var makeAnnotations = d3.annotation()
+                .type(d3.annotationLabel)
+                .annotations([{
+                    note: {
+                        title: "...."
+                    },
+                    connector: {
+                        end: "dot"
+                    },
+                    //can use x, y directly instead of data
+                    x: circle_pos.x + circle_pos.width/2,
+                    y: circle_pos.y + circle_pos.width/2,
+                    dx: tooltip_pos.x + tooltip_pos.width/2 - circle_pos.x,
+                    dy: tooltip_pos.bottom - circle_pos.y - 3
+                }])
+
+            mouseover_svg
+                .append("g")
+                .attr("class", "annotation-group")
+                .call(makeAnnotations)
+
+            // Hide label because we are using tooltip instead
+            mouseover_svg.selectAll(".annotation-group text").style("opacity", 0)
+        }, 300)
     }
 
 }
@@ -3260,6 +3322,7 @@ function sixth_slide(no_transition = false) {
             .on("end", () => {
                 x.domain([-1.5, 1.5])
                 xAxis = d3.axisBottom(x)
+                    .ticks(6)
                     .tickFormat(d => (d * 100)
                         .toFixed(0) + "%")
                 gX.transition()
@@ -3932,7 +3995,34 @@ function handleStepEnter(response) {
                         //can use x, y directly instead of data
                         x: line_pos.x + line_pos.width/2,
                         y: line_pos.y + line_pos.height/2,
-                        dx: isMobile ? 30 : -100,
+                        dx: isMobile ? 30 : 100,
+                        dy: 200
+                    }])
+                mouseover_svg
+                    .append("g")
+                    .attr("class", "annotation-group")
+                    .call(makeAnnotations)
+            }, 1000)
+
+
+            canvas.style("pointer-events", "none")
+            break
+        case 3:
+            // Third step: first african-american woman representative
+            mpZoom("shirleychisholm")
+            d3.timeout(() => {
+                var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
+
+                makeAnnotations = d3.annotation()
+                    .type(d3.annotationCallout)
+                    .annotations([{
+                        note: {
+                            title: "Shirley Chisholm"
+                        },
+                        //can use x, y directly instead of data
+                        x: line_pos.x + line_pos.width/2,
+                        y: line_pos.y + line_pos.height/2,
+                        dx: isMobile ? 30 : 100,
                         dy: 200
                     }])
                 mouseover_svg

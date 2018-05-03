@@ -739,7 +739,7 @@ $tip-padding: .5;
 
 .slide5-tooltip {
   @include phone {
-    left: $margin-left/2 + px !important;
+    left: $margin-left / 2 + px !important;
   }
 }
 
@@ -941,7 +941,7 @@ input:checked + .slider:before {
   fill: invert($graph-background);
   font-family: 'Quicksand', sans-serif;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .half-max-mps-path,
