@@ -1396,6 +1396,14 @@ function second_slide(no_transition = false) {
                 .duration(no_transition ? 0 : 500)
                 .style("opacity", 1)
 
+            // Add text label for party
+            slide2Group.append("text")
+                .attr("x", x(new Date(1920, 1, 1)))
+                .attr("y", y(425))
+                .attr("class", "party-label")
+                .attr("alignment-baseline", "hanging")
+                .text("")
+
             // Add a smoothed 50% line to show halfway mark for gender and place text label on it
             half_max_mps_line_smooth = d3.line()
                 .x(function (d) {
@@ -1975,7 +1983,7 @@ function to_fourth_slide(current_slide) {
             .select("circle")
             .style("opacity", 0)
 
-        d3.selectAll("#topic-label, .slide5-dropdown, .slide5-search, .x-custom-axis, .switch")
+        d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis, .switch")
             .style("opacity", 0)
             .transition()
             .delay(500)
@@ -2081,8 +2089,6 @@ function to_fifth_slide(current_slide) {
     xLabel
         .style("opacity", 0)
 
-    d3.select("#topic-label")
-        .remove()
     d3.select(".slide5-dropdown")
         .remove()
 
@@ -3049,7 +3055,7 @@ function to_sixth_slide(current_slide) {
 
     case 4:
         chartTitle.style("opacity", 1)
-        d3.selectAll("#topic-label, .slide5-dropdown, .slide5-search, .x-custom-axis")
+        d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis")
             .style("opacity", 0)
             .transition()
             .delay(1000)
@@ -4191,6 +4197,8 @@ function handleStepEnter(response) {
                 chartTitle
                     .transition()
                     .text("Representatives in Congress")
+
+                slide2Group.select(".party-label").transition().text("")
                 // All MPs first
                 y.domain([0, 450])
                 yAxis = d3.axisLeft(y)
@@ -4238,6 +4246,8 @@ function handleStepEnter(response) {
                 .transition()
                 .text("Representatives in the Democratic Party")
 
+            slide2Group.select(".party-label").transition().text("Democrats")
+
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)
                 .tickFormat(d => d + "%")
@@ -4283,6 +4293,8 @@ function handleStepEnter(response) {
                 .transition()
                 .text("Representatives in the Republican Party")
 
+            slide2Group.select(".party-label").transition().text("Republicans")
+
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)
                 .tickFormat(d => d + "%")
@@ -4327,6 +4339,8 @@ function handleStepEnter(response) {
             chartTitle
                 .transition()
                 .text("Representatives in Congress")
+
+            slide2Group.select(".party-label").transition().text("")
 
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)

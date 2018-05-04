@@ -977,7 +977,8 @@ input:checked + .slider:before {
 
 .i5050-label,
 .men-label,
-.women-label {
+.women-label,
+.party-label {
   font-weight: 500;
   text-anchor: end;
   font-size: 2.5rem;
@@ -990,8 +991,12 @@ input:checked + .slider:before {
   fill: $male;
 }
 
-.men-label {
+.men-label, .party-label {
   fill: $female;
+}
+
+.party-label {
+  text-anchor: start;
 }
 
 .i5050-label {
