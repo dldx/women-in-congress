@@ -439,7 +439,7 @@ function initial_render() {
             (height + margin.top + margin.bottom) + ")")
         .attr("class", "x-label")
         .style("text-anchor", "middle")
-        .text("Time")
+        .text("Year")
 
     yLabel = svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -666,8 +666,9 @@ function first_slide(no_transition = false) {
             .each(function () {
                 let node = d3.select(this)
                 context.beginPath()
-                context.lineWidth = hidden ? lineThickness * 1.3 : lineThickness
+                context.lineWidth = hidden ? lineThickness * 1.6 : lineThickness
                 context.strokeStyle = hidden ? node.attr("hiddenStrokeStyle") : node.attr("strokeStyle")
+                // Different thickness and shape for hidden layer
                 if (!hidden) {
                     context.lineCap = "round"
                     context.moveTo(node.attr("x1"), node.attr("y1"))
@@ -772,7 +773,7 @@ function show_mp_tooltip(nodeData, mousePos) {
     // Display tooltip
     d3.select("#tooltip")
         .style("opacity", 1)
-        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
+        .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth/2,
             width - tooltip.offsetWidth - margin.right),
         0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight * 2 - 20,
             height + tooltip.offsetHeight * 2 - 20), margin.top)}px)`)
@@ -901,6 +902,8 @@ function to_first_slide(current_slide) {
     // Hide tooltip
     d3.select("#tooltip")
         .style("opacity", 0)
+    // Get rid of annotation line too
+    d3.selectAll(".annotation-group").remove()
 
     // Show canvas
     d3.select("#visible-canvas")
@@ -1142,6 +1145,8 @@ function second_slide(no_transition = false) {
     // Hide the tooltip
     d3.select("#tooltip")
         .style("opacity", 0)
+    // Get rid of annotation line too
+    d3.selectAll(".annotation-group").remove()
 
     // Hide the mouseover line
     mouseover_svg.select("line")
@@ -1433,12 +1438,18 @@ function second_slide(no_transition = false) {
                         window.addEventListener("scroll", () => {
                             d3.select("#tooltip")
                                 .style("opacity", 0)
+                            // Get rid of annotation line too
+                            d3.selectAll(".annotation-group").remove()
 
                         }, { once: true })
                     }, 1000)
                     // Hide tooltip after 5 secs
                     d3.select("#tooltip").transition().delay(5000)
                         .style("opacity", 0)
+                        .on("end", () => {
+                            // Get rid of annotation line too
+                            d3.selectAll(".annotation-group").remove()
+                        })
 
                     // Get mouse positions
                     var mousePos = d3.mouse(this)
@@ -1446,7 +1457,7 @@ function second_slide(no_transition = false) {
                     d3.select("#tooltip")
                         .style("opacity", 1)
                         .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
-                            width - tooltip.offsetWidth / 2 - margin.right),
+                            width - tooltip.offsetWidth - margin.right),
                         0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
                             height + tooltip.offsetHeight - 20), margin.top)}px)`)
                         .style("pointer-events", "none")
@@ -1458,23 +1469,44 @@ function second_slide(no_transition = false) {
                     var second_election = total_mps_over_time_data[Math.min(total_mps_over_time_data.length - 1, i + 1)].year
                     if (chartTitle.text()
                         .includes("Democratic")) {
-                        var num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].labour_women_mps
-                        var gender_ratio = d.labour_mps / num_women - 1
+                        // Take highest number of women who served during that time
+                        var num_women = Math.max(...number_women_over_time_data
+                            .filter(d => d.year > first_election && d.year <= second_election)
+                            .map(d => d.democrat_women_mps))
+                        var gender_ratio = d.democrat_mps / num_women - 1
+                        tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+                        ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
+                        For every <span class="female">female</span> Democrat, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> Democrats.` :
+        "There were no Democratic women in the House of Representatives yet :("}
+                        </div>
+                        `
                     } else if (chartTitle.text()
                         .includes("Republican")) {
-                        num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].conservative_women_mps
-                        gender_ratio = d.conservative_mps / num_women - 1
+                        num_women = Math.max(...number_women_over_time_data
+                            .filter(d => d.year > first_election && d.year <= second_election)
+                            .map(d => d.republican_women_mps))
+                        gender_ratio = d.republican_mps / num_women - 1
+                        tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+                        ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
+                        For every <span class="female">female</span> Republican, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> Republicans.` :
+        "There were no Republican women in the House of Representatives yet :("}
+                        </div>
+                        `
                     } else {
-                        num_women = number_women_over_time_data[bisect(number_women_over_time_data, first_election)].total_women_mps
+                        num_women = Math.max(...number_women_over_time_data
+                            .filter(d => d.year > first_election && d.year <= second_election)
+                            .map(d => d.total_women_mps))
                         gender_ratio = d.total_mps / num_women - 1
-                    }
-                    tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
-        ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
-            For every <span class="female">female</span> representative, there ${new Date() > second_election ? "were" : "are"}
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives.` :
+                        tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
+                        ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
+                        For every <span class="female">female</span> representative, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives.` :
         "There were no women in the House of Representatives yet :("}
-                                </div>
-            `
+                        </div>
+                        `
+                    }
                 })
                 .on("mouseout", function () {
                     d3.select(this)
@@ -1535,7 +1567,7 @@ function to_third_slide(current_slide) {
                 .tickFormat(d => d + "%")
 
             xLabel
-                .text("Time")
+                .text("Year")
                 .style("opacity", 1)
 
             yLabel
@@ -2575,6 +2607,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .duration(1000)
         .attr("cy", d => slide5_yScale(drawMedian ? d : 0))
 
+
     // Clear the hidden canvas so that we don't catch the wrong hover info
     context_hidden.clearRect(0, 0, width + margin.left + margin.right, height + margin.bottom + margin.top)
 
@@ -2689,6 +2722,63 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .ticks(20))
     draw_custom_labels()
 
+    // ----------------------------------------------------------------------------
+    // Annotate medians with labels
+    // ----------------------------------------------------------------------------
+
+    // Remove existing annotations
+    mouseover_svg.selectAll(".female-label, .male-label").remove()
+
+    if (drawMedian) {
+    // Label female median dot
+        var make_female_label = d3.annotation()
+            .type(d3.annotationCallout)
+            .annotations([{
+                note: {
+                    title: "Median female: " + (topic_medians_data[selected_topic]["female"]*100).toFixed(1) + "%"
+                },
+                connector: {
+                    end: "dot"
+                },
+                //can use x, y directly instead of data
+                x: slide5_xScale(0),
+                y: slide5_yScale(topic_medians_data[selected_topic]["female"]),
+                dx: slide5_xScale(-100) - slide5_xScale(0),
+                dy: slide5_yScale(topic_medians_data[selected_topic]["female"] > topic_medians_data[selected_topic]["male"] ? 0.25 : 0.1) - slide5_yScale(topic_medians_data[selected_topic]["female"])
+            }])
+
+        d3.timeout(() => {
+            mouseover_svg
+                .select(".timeline-wrapper")
+                .append("g")
+                .attr("class", "female-label")
+                .call(make_female_label)
+        }, 1500)
+        // Label female median dot
+        var make_male_label = d3.annotation()
+            .type(d3.annotationCallout)
+            .annotations([{
+                note: {
+                    title: "Median male: " + (topic_medians_data[selected_topic]["male"]*100).toFixed(1) + "%"
+                },
+                connector: {
+                    end: "dot"
+                },
+                //can use x, y directly instead of data
+                x: slide5_xScale(0),
+                y: slide5_yScale(topic_medians_data[selected_topic]["male"]),
+                dx: slide5_xScale(-100) - slide5_xScale(0),
+                dy: slide5_yScale(topic_medians_data[selected_topic]["male"] > topic_medians_data[selected_topic]["female"] ? 0.25 : 0.1) - slide5_yScale(topic_medians_data[selected_topic]["male"])
+            }])
+
+        d3.timeout(() => {
+            mouseover_svg
+                .select(".timeline-wrapper")
+                .append("g")
+                .attr("class", "male-label")
+                .call(make_male_label)
+        }, 1500)
+    }
 
     // mouseover function for getting MP info
     function mpMouseover() {
@@ -3462,8 +3552,8 @@ function download_data() {
             return {
                 year: parseDate(d.date),
                 total_women_mps: +d.total_women_reps,
-                conservative_women_mps: +d.rep_reps,
-                labour_women_mps: +d.dem_reps,
+                republican_women_mps: +d.rep_reps,
+                democrat_women_mps: +d.dem_reps,
             }
         })
         .defer(d3.csv, "total_members_over_time.csv", function (d) {
@@ -3471,8 +3561,8 @@ function download_data() {
             return {
                 year: parseDate(d.date),
                 total_mps: +d.total_reps,
-                conservative_mps: +d.rep_reps,
-                labour_mps: +d.dem_reps,
+                republican_mps: +d.rep_reps,
+                democrat_mps: +d.dem_reps,
             }
         })
         .await(function (error,
@@ -3490,12 +3580,10 @@ function download_data() {
             number_women_over_time_data.forEach(d => {
                 d.total_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].total_mps
                 d.women_pct = d.total_women_mps / d.total_mps * 100,
-                d.conservative_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].conservative_mps
-                d.conservative_women_pct = d.conservative_women_mps / d.conservative_mps * 100,
-                d.labour_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].labour_mps
-                d.labour_women_pct = d.labour_women_mps / d.labour_mps * 100,
-                d.lib_snp_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].lib_snp_mps
-                d.lib_snp_women_pct = d.lib_snp_women_mps / d.lib_snp_mps * 100
+                d.republican_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].republican_mps
+                d.republican_women_pct = d.republican_women_mps / d.republican_mps * 100,
+                d.democrat_mps = total_mps_over_time_data[Math.max(0, bisect(total_mps_over_time_data, d.year) - 1)].democrat_mps
+                d.democrat_women_pct = d.democrat_women_mps / d.democrat_mps * 100
             })
             // Hide loading text
             d3.select("#loading")
@@ -3753,6 +3841,8 @@ function handleStepEnter(response) {
 
     // Remove any annotations
     d3.selectAll(".annotation-group").remove()
+    // Remove existing labels
+    mouseover_svg.selectAll(".female-label, .male-label").remove()
 
     // go to next slide based on slide attribute
     new_slide = +$step.nodes()[response.index].getAttribute("data-slide")
@@ -3772,7 +3862,15 @@ function handleStepEnter(response) {
     // Run different functions depending on slide and step no.
     switch (current_slide) {
     case 0:
+        mouseover_svg.select("line").style("opacity", 0)
         switch (new_step) {
+        case -1:
+        // Hide election rects
+            electionRects
+                .transition()
+                .delay((d, i) => (electionRects.nodes().length - i) * 50)
+                .style("opacity", 0)
+            break
         case 0:
             if (response.direction == "up") {
 
@@ -4047,15 +4145,15 @@ function handleStepEnter(response) {
                     d3.selectAll(".y-axis .tick")
                         .style("opacity", d => d >= 0 ? 1 : 0)
 
-                    // Unhighlight election term
-                    electionRects.filter((d, i) => i == 22)
-                        .classed("hover", false)
-                    // Set default mp_filter
-                    mp_filter = mps_over_time_data.map(mp => mp.clean_name)
-                    // Unfade all MPs
-                    dataContainer.selectAll("custom.line")
-                        .transition()
-                        .attr("strokeStyle", d => colorParty(d.party))
+                    // // Unhighlight election term
+                    // electionRects.filter((d, i) => i == 22)
+                    //     .classed("hover", false)
+                    // // Set default mp_filter
+                    // mp_filter = mps_over_time_data.map(mp => mp.clean_name)
+                    // // Unfade all MPs
+                    // dataContainer.selectAll("custom.line")
+                    //     .transition()
+                    //     .attr("strokeStyle", d => colorParty(d.party))
 
                     var t = d3.timer((elapsed) => {
                         draw(context, false)
@@ -4065,16 +4163,7 @@ function handleStepEnter(response) {
                         }
                     })
                 })
-            break
 
-        case 8:
-            d3.select(".switch")
-                .style("opacity", 1)
-
-            if (response.direction == "up") {
-                // Draw canvas if coming from below
-                draw(context, false)
-            }
             break
 
 
@@ -4174,10 +4263,10 @@ function handleStepEnter(response) {
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
 
-            total_women_mps_line.y(d => y(d.labour_women_pct))
+            total_women_mps_line.y(d => y(d.democrat_women_pct))
             total_women_mps_path.transition()
                 .attr("d", total_women_mps_line)
-            total_women_mps_area.y1(d => y(d.labour_women_pct))
+            total_women_mps_area.y1(d => y(d.democrat_women_pct))
             total_women_mps_path_area.transition()
                 .attr("d", total_women_mps_area)
 
@@ -4219,10 +4308,10 @@ function handleStepEnter(response) {
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
 
-            total_women_mps_line.y(d => y(d.conservative_women_pct))
+            total_women_mps_line.y(d => y(d.republican_women_pct))
             total_women_mps_path.transition()
                 .attr("d", total_women_mps_line)
-            total_women_mps_area.y1(d => y(d.conservative_women_pct))
+            total_women_mps_area.y1(d => y(d.republican_women_pct))
             total_women_mps_path_area.transition()
                 .attr("d", total_women_mps_area)
 
@@ -4300,25 +4389,28 @@ function handleStepEnter(response) {
         // Fifth slide
         d3.select("#slide4")
             .style("display", "none")
+
         switch (new_step) {
         case 0:
             update_fifth_slide(false, "energy policy", true, false)
-
             chartTitle
                 .transition()
                 .text("Time spent on energy policy")
+
             break
         case 1:
-            update_fifth_slide(false, "healthcare", true, false)
+            update_fifth_slide(false, "energy policy", true, true)
+            chartTitle
+                .transition()
+                .text("Time spent on energy policy")
+
+
+            break
+        case 2:
+            update_fifth_slide(false, "healthcare", true, true)
             chartTitle
                 .transition()
                 .text("Time spent on healthcare")
-            break
-        case 2:
-            update_fifth_slide(false, "government budget", true, false)
-            chartTitle
-                .transition()
-                .text("Time spent on government budget")
             break
         case 3:
             update_fifth_slide(false, "government budget", true, true)

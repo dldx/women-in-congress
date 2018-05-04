@@ -1007,3 +1007,27 @@ input:checked + .slider:before {
 .women-pct-track {
   stroke: steelblue;
 }
+
+.female-label {
+  text {
+    fill: $female;
+  }
+  path {
+    stroke: $female;
+  }
+  .connector-dot {
+    fill: $female;
+  }
+}
+
+.male-label {
+  text {
+    fill: $male;
+  }
+  path {
+    stroke: $male;
+  }
+  .connector-dot {
+    fill: $male;
+  }
+}
