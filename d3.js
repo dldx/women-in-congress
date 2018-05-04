@@ -8373,210 +8373,6 @@ treeProto.visitAfter = tree_visitAfter;
 treeProto.x = tree_x;
 treeProto.y = tree_y;
 
-var translateSelection = function(xy, dim) {
-  var node = this.node();
-  return !node ? this : node.getBBox ?
-    this.attr('transform', function(d,i) {
-      var p = typeof xy == 'function' ? xy.call(this, d,i) : xy;
-      if (dim === 0) p = [p, 0]; else if (dim === 1) p = [0, p];
-      return 'translate(' + p[0] +','+ p[1]+')';
-    }) :
-    this.style('transform', function(d,i) {
-      var p = typeof xy == 'function' ? xy.call(this, d,i) : xy;
-      if (dim === 0) p = [p, 0]; else if (dim === 1) p = [0, p];
-      return 'translate(' + p[0] +'px,'+ p[1]+'px)';
-    });
-};
-
-var parseAttributes = function(name) {
-  if (typeof name === "string") {
-    var attr = {},
-      parts = name.split(/([\.#])/g), p;
-      name = parts.shift();
-    while ((p = parts.shift())) {
-      if (p == '.') attr['class'] = attr['class'] ? attr['class'] + ' ' + parts.shift() : parts.shift();
-      else if (p == '#') attr.id = parts.shift();
-    }
-    return {tag: name, attr: attr};
-  }
-  return name;
-};
-
-var append = function(name) {
-  var create, n;
-
-  if (typeof name === "function"){
-    create = name;
-  } else {
-    n = parseAttributes(name);
-    create = creator(n.tag);
-  }
-  var sel = this.select(function(){
-    return this.appendChild(create.apply(this, arguments));
-  });
-
-  if (n) for (var key in n.attr) { sel.attr(key, n.attr[key]); }
-  return sel;
-};
-
-function constantNull$1() {
-  return null;
-}
-
-var insert = function(name, before) {
-  var n = parseAttributes(name),
-      create = creator(n.tag),
-      select = before == null ? constantNull$1 : typeof before === "function" ? before : selector(before);
-
-  var s = this.select(function() {
-    return this.insertBefore(create.apply(this, arguments), select.apply(this, arguments) || null);
-  });
-
-
-  //attrs not provided by default in v4
-  for (var key in n.attr) { s.attr(key, n.attr[key]); }
-  return s;
-};
-
-var parent = function() {
-  var parents = [];
-  return this.filter(function() {
-    if (parents.indexOf(this.parentNode) > -1) return false;
-    parents.push(this.parentNode);
-    return true;
-  }).select(function() {
-    return this.parentNode;
-  });
-};
-
-var selectAppend = function(name) {
-  var select = selector(name),
-     n = parseAttributes(name), s;
-
-  name = creator(n.tag);
-
-  s = this.select(function() {
-    return select.apply(this, arguments) ||
-        this.appendChild(name.apply(this, arguments));
-  });
-
-  //attrs not provided by default in v4
-  for (var key in n.attr) { s.attr(key, n.attr[key]); }
-  return s;
-};
-
-var tspans = function(lines, lh) {
-  return this.selectAll('tspan')
-      .data(function(d) {
-        return (typeof(lines) == 'function' ? lines(d) : lines)
-          .map(function(l) {
-            return { line: l, parent: d };
-          });
-      })
-      .enter()
-    .append('tspan')
-      .text(function(d) { return d.line; })
-      .attr('x', 0)
-      .attr('dy', function(d, i) { return i ? (typeof(lh) == 'function' ? lh(d.parent, d.line, i) : lh) || 15 : 0; });
-};
-
-var appendMany = function(name, data){
-  if (typeof(data) == 'string'){
-    console.warn("DEPRECATED: jetpack's appendMany order of arguments has changed. It's appendMany('div', data) from now on");
-    var temp = data;
-    data = name;
-    name = temp;
-  }
-
-  return this.selectAll(null).data(data).enter().append(name);
-};
-
-var at = function(name, value) {
-  if (typeof(name) == 'object'){
-    for (var key in name){
-      this.attr(key.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase(), name[key]);
-    }
-    return this;
-  } else{
-    return arguments.length == 1 ? this.attr(name) : this.attr(name, value);
-  }
-};
-
-var st = function(name, value) {
-  if (typeof(name) == 'object'){
-    for (var key in name){
-      addStyle(this, key, name[key]);
-    }
-    return this;
-  } else {
-    return arguments.length == 1 ? this.style(name) : addStyle(this, name, value);
-  }
-
-
-  function addStyle(sel, style, value){
-    style = style.replace(/([a-z\d])([A-Z])/g, '$1-$2').toLowerCase();
-
-    var pxStyles = 'top left bottom right padding-top padding-left padding-bottom padding-right border-top b-width border-left-width border-botto-width m border-right-width  margin-top margin-left margin-bottom margin-right font-size width height stroke-width line-height margin padding border border-radius max-width min-width';
-
-    if (~pxStyles.indexOf(style) ){
-      sel.style(style, typeof value == 'function' ? wrapPx(value) : addPx(value));
-    } else{
-      sel.style(style, value);
-    }
-
-    return sel;
-  } 
-
-  function addPx(d){ return d.match ? d : d + 'px'; }
-  function wrapPx(fn){
-    return function(){
-      var val = fn.apply(this, arguments);
-      return addPx(val)
-    }
-
-  }
-};
-
-// Clips the specified subject polygon to the specified clip polygon;
-// requires the clip polygon to be counterclockwise and convex.
-// https://en.wikipedia.org/wiki/Sutherland–Hodgman_algorithm
-
-var prev = {};
-
-var timer$1 = function(fn, delay, time, name){
-  if (prev[name]) prev[name].stop();
-
-  var newTimer = timer(fn, delay, time, name);
-  if (name) prev[name] = newTimer;
-  
-  return newTimer
-};
-
-var prev$2 = {};
-
-var timeout$2 = function(fn, delay, time, name){
-  if (prev$2[name]) prev$2[name].stop();
-
-  var newTimer = timeout$1(fn, delay, time, name);
-  if (name) prev$2[name] = newTimer;
-  
-  return newTimer
-};
-
-selection.prototype.translate = translateSelection;
-transition.prototype.translate = translateSelection;
-selection.prototype.append = append;
-selection.prototype.insert = insert;
-selection.prototype.parent = parent;
-selection.prototype.selectAppend = selectAppend;
-selection.prototype.tspans = tspans;
-selection.prototype.appendMany = appendMany;
-selection.prototype.at = at;
-selection.prototype.st = st;
-transition.prototype.at = at;
-transition.prototype.st = st;
-selection.prototype.prop = selection.prototype.property;
-
 var xhtml$1 = "http://www.w3.org/1999/xhtml";
 
 var namespaces$1 = {
@@ -9321,13 +9117,13 @@ var selection_append$1 = function(name) {
   });
 };
 
-function constantNull$2() {
+function constantNull$1() {
   return null;
 }
 
 var selection_insert$1 = function(name, before) {
   var create = typeof name === "function" ? name : creator$1(name),
-      select = before == null ? constantNull$2 : typeof before === "function" ? before : selector$1(before);
+      select = before == null ? constantNull$1 : typeof before === "function" ? before : selector$1(before);
   return this.select(function() {
     return this.insertBefore(create.apply(this, arguments), select.apply(this, arguments) || null);
   });
@@ -12145,8 +11941,8 @@ exports.nest = nest;
 exports.transition = transition;
 exports.quadtree = quadtree;
 exports.dispatch = dispatch;
-exports.timer = timer$1;
-exports.timeout = timeout$2;
+exports.timer = timer;
+exports.timeout = timeout$1;
 exports.annotation = annotation;
 exports.annotationTypeBase = Type;
 exports.annotationLabel = d3Label;

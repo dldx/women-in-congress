@@ -150,7 +150,8 @@ var ratio,
     temp_nodes,
     mp_filter,
     isMobile,
-    all_mps_draw_timer
+    all_mps_draw_timer,
+    annotate_timer
 
 var mps_over_time_data,
     number_women_over_time_data,
@@ -833,7 +834,7 @@ function show_mp_tooltip(nodeData, mousePos) {
 
         d3.selectAll(".annotation-group").remove()
 
-        makeAnnotations = d3.annotation()
+        var makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
             .annotations([{
                 note: {
@@ -4058,7 +4059,7 @@ function handleStepEnter(response) {
             }
 
             // Annotate Jeannette
-            d3.timeout(() => {
+            annotate_timer = d3.timeout(() => {
                 var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
 
                 makeAnnotations = d3.annotation()
@@ -4086,8 +4087,9 @@ function handleStepEnter(response) {
         case 2:
             // Second step: first minority woman representative
             mpZoom("patsymink")
+            annotate_timer.stop()
             // Annotate Patsy
-            d3.timeout(() => {
+            annotate_timer = d3.timeout(() => {
                 var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
 
                 makeAnnotations = d3.annotation()
@@ -4114,7 +4116,8 @@ function handleStepEnter(response) {
         case 3:
             // Third step: first african-american woman representative
             mpZoom("shirleychisholm")
-            d3.timeout(() => {
+            annotate_timer.stop()
+            annotate_timer = d3.timeout(() => {
                 var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
 
                 makeAnnotations = d3.annotation()
@@ -4140,6 +4143,7 @@ function handleStepEnter(response) {
             break
 
         case 5:
+            annotate_timer.stop()
             canvas.style("pointer-events", "all")
             d3.select(".switch")
                 .style("opacity", 1)
@@ -4261,6 +4265,7 @@ function handleStepEnter(response) {
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Democratic"])
+                .style("opacity", 1)
             mask.transition()
                 .attr("d", max_mps_area)
 
@@ -4308,6 +4313,7 @@ function handleStepEnter(response) {
             max_mps_path_area.transition()
                 .attr("d", max_mps_area)
                 .style("fill", colors["Republican"])
+                .style("opacity", 1)
             mask.transition()
                 .attr("d", max_mps_area)
 
