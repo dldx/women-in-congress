@@ -593,7 +593,7 @@ function first_slide(no_transition = false) {
     // Change chart title
     chartTitle
         .transition()
-        .text("Women in Congress")
+        .text("Women in the House of Representatives")
 
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition)
@@ -2389,6 +2389,9 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     d3.select("#tooltip")
         .style("opacity", 0)
 
+    // Remove annotations
+    d3.selectAll(".annotation-group").remove()
+
     // Zoom out
     if (document.getElementById("zoom-checkbox") != null) {
         if (document.getElementById("zoom-checkbox")
@@ -3080,6 +3083,8 @@ function to_sixth_slide(current_slide) {
                     .click()
             }
         }
+        // Remove existing annotations
+        mouseover_svg.selectAll(".female-label, .male-label").remove()
         break
     }
 
@@ -3102,7 +3107,7 @@ function to_sixth_slide(current_slide) {
         // Change scales
         x = d3.scaleLinear()
             .range([0, width])
-            .domain([0, 0.15])
+            .domain([0, 0.30])
         // Redraw axes
         xAxis = d3.axisBottom(x)
             .tickFormat(d => (d * 100)
@@ -3131,6 +3136,8 @@ function to_sixth_slide(current_slide) {
     yAxis = d3.axisLeft(y)
     gY.style("opacity", 0)
         .call(yAxis)
+
+    d3.selectAll(".y-axis > .tick text").style("transition", null)
 
 
     // Increment lastTransitioned counter if it is less than 0
@@ -3201,6 +3208,28 @@ function sixth_slide(no_transition = false) {
         .attr("text-anchor", "start")
         .call(yAxis)
 
+        // Move the axis labels while still hidden
+        // Label position is on left or right according to location of point
+    let label_pos = sorted_topics
+        .map(d => {
+            // If more space on the right
+            if((x.range()[1] - x(Math.max(d[1]["male"], d[1]["female"]))) > (x(Math.min(d[1]["male"], d[1]["female"])) - x.range()[0])) {
+                return "start"
+            }
+            return "end"
+        })
+
+    // Make y-axis topic labels all uppercase too
+    d3.selectAll(".y-axis > .tick text")
+        .transition()
+        .delay(500)
+        .duration(1)
+        .attr("x", (d, i) => label_pos[i] == "start" ? x(Math.max(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])) : x(Math.min(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])))
+        .style("text-anchor", (d, i) => {
+            return label_pos[i]
+        })
+
+
     // Hide axis line and ticks
     d3.select(".y-axis > path")
         .style("opacity", 0)
@@ -3211,11 +3240,9 @@ function sixth_slide(no_transition = false) {
     var t0 = d3.transition()
         .duration(1000)
 
-    // Make y-axis topic labels all uppercase
-    d3.selectAll(".y-axis > .tick text")
-        .style("text-transform", "uppercase")
 
-    // Only do the ollowing steps if we'e coming from slide 5
+
+    // Only do the following steps if we'e coming from slide 5 for the first time
     if (lastTransitioned == 4) {
         // Only show selected topic's label for now
         d3.selectAll(".y-axis > .tick text")
@@ -3367,6 +3394,12 @@ function sixth_slide(no_transition = false) {
             .attr("opacity", d => d[0] == selected_topic ? 0 : 1)
             .attr("cx", d => x(d[1]["female"]))
 
+        // Make all axis tick labels visible
+        d3.selectAll(".y-axis > .tick text")
+            .transition(t1)
+            .delay((d, i) => 1800 + i * 50)
+            .style("opacity", 1)
+
         var t2 = t1.transition()
             .delay(2500)
             .on("end", () => {
@@ -3376,10 +3409,6 @@ function sixth_slide(no_transition = false) {
                     .attr("opacity", 1)
                 slide6Group.selectAll(".tmp")
                     .remove()
-                // Make all axis tick labels visible
-                d3.selectAll(".y-axis > .tick text")
-                    .style("opacity", 1)
-                    .style("transition", "opacity 0.2s ease-in-out")
             })
 
         // Hover rects to catch mouseovers
@@ -3443,8 +3472,9 @@ function sixth_slide(no_transition = false) {
                             .transition(t_)
                             .delay((d, i) => i * 50)
                             .attr("cx", d => d[1]["female"] < d[1]["male"] ? x(-d[1]["male"] / d[1]["female"] + 1) : x(0))
-                            .on("end", () => d3.selectAll(".y-axis > .tick text")
-                                .style("opacity", 0))
+
+                        d3.selectAll(".y-axis > .tick text")
+                            .style("opacity", 0)
 
                         xLabel
                             .text("Median female - Median male")
@@ -3509,7 +3539,7 @@ function sixth_slide(no_transition = false) {
     }
 
 
-    let label_pos = sorted_topics
+    label_pos = sorted_topics
         .map(d => d[1]["female"] - d[1]["male"] > 0)
 
     d3.selectAll(".y-axis > .tick text")
@@ -3523,7 +3553,7 @@ function sixth_slide(no_transition = false) {
         })
         .attr("x", (d, i) => label_pos[i] ? x.domain([-0.06, 0.06])(-0.001) : x.domain([-0.06, 0.06])(0.001))
         .transition()
-        .delay(500)
+        .delay(1000)
         .duration(500)
         .style("opacity", 1)
 

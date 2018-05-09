@@ -18,7 +18,7 @@
             <h2>100 Years of Women in the United States House of Representatives</h2>
             <p>
                 The first woman was elected to the House of Representatives on November 7th, 1916.
-                Since then, 288 diferent women have been elected to represent their constituents and have collectively redefined the state of American politics. In this piece, we dive into this colorful history through the lens of data, visualization and machine learning. By analyzing all 500,000 speeches delivered in the House of Representatives over the last 25 years, we measure the impact of gender on the political discourse.
+                Since then, 288 diferent women have represented their constituents and redefined the state of American politics. But does equal gender representation matter? In this piece, we dive into the colorful history of women in politics and look through the lens of data visualization and machine learning. By analyzing 500,000 speeches delivered in the House of Representatives over the last 25 years, we measure the impact of gender on the political discourse.
             </p>
             <h3>Created by <b>Durand D'souza</b></h3>
 
@@ -128,47 +128,56 @@
                 <div class="step" data-slide="1" data-step="0" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="1" data-step="0">
-                    <b>89</b> women representatives is significant, but we still haven't hit 50:50 yet. In fact, for every woman currently serving in the House of Representatives, there are 3.9 men. Hover/tap on the graph to see the ratio of men to women for each Presidential term.
+                    <b>89</b> women representatives is significant, but we still haven't hit 50:50 yet. In fact, for every woman currently serving in the House of Representatives, there are 3.9 men. Hover/tap on the graph to see the ratio of men to women for each presidential term.
                 </div>
                 <div class="step" data-slide="1" data-step="1">
-                    The situation is also very party dependent. In 2018, 33% of Democratic House Reps are women. [Placeholder text]
+                    <h3>Democratic Party</h3>
+                    The situation is also very party dependent. In 2018, 33% of Democratic House Reps are women. In the 2016 presidential election, women voted for Hillary Clinton by a majority of 12 points.
                 </div>
                 <div class="step" data-slide="1" data-step="2">
-                    But only 10% of Republicans in the House are currently women. [Placeholder text]
+                    <h3>Republican Party</h3>
+                    On the other hand, only 10% of Republicans in the House are currently women.
                 </div>
                 <div class="step" data-slide="1" data-step="4">
-                    So both parties need to do better to attract women to the job. Overall, 20% of House Reps are women. And how does this compare to other developed countries? Let's take a look!
+                    <h3>All Representatives</h3>
+                    Both parties need to do a better job of attracting women to the job. Overall, 20% of House Reps are women. So how does this compare to other developed countries? Let's take a look!
                 </div>
                 <div class="step" data-slide="2" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="2">
+                    <h3>Representation in other developed countries</h3>
                     <p>
-                        Right! On this graph, we see the % of women elected to the equivalent of the House of Representatives in other developed countries. For Norway, this is the <em>Stortinget</em>, for Mexico, <em>Cámara de Diputados</em>, for the United Kingdom,
-                        it is the <em>House of Commons</em>.
+                        Visualized here is the % of women elected to the equivalent of the House of Representatives in other developed countries (in the OECD). In Norway, this is the <em>Stortinget</em>, in Mexico, <em>Cámara de Diputados</em>, for the United Kingdom, it is the <em>House of Commons</em>.
                     </p>
                     <p>
-                        As usual, the Nordic countries lead the pack. Mexico has also made great strides recently.
+                        The Nordic countries lead the pack although Mexico has also made great strides recently. Many of these countries have implemented gender quotas to improve representation, although Iceland, notably, has not.
                     </p>
                     <p>
-                        The US is in fact quite regressive when compared to the rest of the developed world. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet this threshold are Bolivia and Rwanda.
+                        The US, on the other hand, is quite regressive and ranks 28th out of 34 OECD countries. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet or exceed this threshold are Bolivia and Rwanda, both of which also have gender quotas.
                     </p>
                 </div>
                 <div class="step" data-slide="3" data-step="0">
+                        <h3>Gender in congressional speeches</h3>
                     <p>
-                        At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few women. And I know how much further we have to go. But why? What does a 50:50 Congress give us that we don't have already?</em>
+                        At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few important women. And I know how much further the country has to go. But why? What does a 50:50 Congress give us that we don't have already?</em>
                     </p>
                     <p>
-                        Let’s look at how much time House Representatives spend speaking about the different issues that concern them. We collected 500,000 speeches from 1994 to the present day and analysed them using machine learning.
+                        To answer this question, we gathered a corpus of 500,000 speeches delivered by men and women in the House of Representatives between 1994 and the present day. This includes monologues, long debates that went back and forth, single sentence replies, and even acknowledgements praising particular individuals (of which there were many!). We then analysed them using a probabilistic machine learning technique called <a href="https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d">Latent Dirichlet Allocation</a> (LDA), which we used to infer which topics were mentioned in a speech. While there are many different machine learning techniques to do this, each with their own pros and cons, the beauty of LDA is that it is an unsupervised learning algorithm - that is, it does not require a human to label a bunch of speeches in order to train it. This is important because we didn't want to bias the inference process by selecting a bunch of topics in advance. All that is needed by LDA is to roughly guess the total number of topics. LDA then iteratively tries to identify this number of topics within the whole corpus by looking for words that often appear together and clustering them into one topic.
+                    </p>
+                    <p>For example, if we choose a small number of topics - let's say 10 - it will simply identify the 10 most overarching themes in congressional speeches. Since we wanted to identify more subtle topics and themes, after a bit of experimentation, we settled on 75 topics. Many of the topics identified were nonsensical, as is often the case with LDA, but the majority were sensible. The model identified topics such as heathcare, energy policy, war &amp; foreign policy discussions, national security, and so on.
+                    </p> Once the model was trained, we used it to identify the topics within each speech. Due to the inherent uncertainty in probabilistic modelling, there will be some misidentified topics, but these errors should not affect our analysis because longer speeches are labelled more accurately and also contribute more to the final results.
+                    </p>
+                    <p>
+                        For example, the model infers that the sentence <em>"Wind and solar power are renewable energy sources while natural gas is a fossil fuel."</em> is 84% about energy policy whereas "There is a lot of natural gas in the middle east." is only 46% about energy policy. Many speeches are made up of multiple topics.
+                    </p>
+                    <p>
+                        We then grouped all the speeches by each House Rep together and calculated the total fraction of time they spent on each topic. Scroll on to see this visualized.
                     </p>
 
                 </div>
                 <div class="step" data-slide="4" data-step="0">
                     <p>
-
-                        Here’s the chart for the topic “ENERGY POLICY”. Each dot in this chart represents one representative (from 1994 to today). The higher the dot, the greater the proportion of their time in the House was spent talking about energy policy. Hover/tap on each dot to see who they are and their percentage.
-                    </p>
-                    <p>
-                        The horizontal position of a dot is meaningless.
+                        Here’s the visualization for the topic “ENERGY POLICY”. Each dot in this chart represents a particular House Rep, with men on the right and women on the left. The higher the dot, the greater the proportion of their time in the House was spent talking about energy policy. Hover/tap on each dot to see who they are and their percentage. You can also use the search bar to find your own by entering either your district (eg. California 12) or their name (Nancy Pelosi).
                     </p>
                 </div>
                 <div class="step" data-slide="4" data-step="1">
@@ -182,7 +191,7 @@
                 </div>
                 <div class="step" data-slide="4" data-step="2">
                     <p>
-                        And here's the chart for the topic “HEALTHCARE”. Women reps clearly spend more of their time discussing healthcare and medicine than men.
+                        Here's the topic “HEALTHCARE”. Women reps spent more than twice as much time discussing healthcare and medicine than men did.
                     </p>
                     <p>
                         What about a topic favoured by men?
@@ -191,19 +200,19 @@
                 </div>
                 <div class="step" data-slide="4" data-step="3">
                     <p>
-                        Finally, a chart for the topic “GOVERNMENT BUDGET”. This time, we see that men spend [...] as much time talking about the budget and taxes than women.
+                        Here's the topic “GOVERNMENT BUDGET”. This time, we see that men spent more time talking about the budget and taxes than women did.
                     </p>
-                    Let's take this median line and plot it with the median lines of all the other topics.
+                    Let's take the median line and plot it with the median lines of all the other topics to identify some broader trends.
                 </div>
                 <div class="step" data-slide="5" style="opacity: 0;">
                 </div>
                 <div class="step" data-slide="5">
                     <p>
-                        We see that women representatives spend more of their time than men time talking about HEALTHCARE, CIVIL RIGHTS, LABOR RIGHTS and the ENVIRONMENT.
+                        So female representatives spend more of their time than men time talking about HEALTHCARE, CIVIL RIGHTS, LABOR RIGHTS and the ENVIRONMENT...
                     </p>
                     <p>
 
-                        And we can see that male representatives spend more of their time than women talking about the BUDGET.
+                        ...and male representatives spend more of their time than women talking about the MILITARY, AGRICULTURE and the BUDGET.
                     </p>
 
                     <p>Tap on a line to take a closer look at a topic</p>
