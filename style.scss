@@ -12,12 +12,10 @@ $colors: (
   Hover: #e5e5e5, // Used when hovering over an item
   Active: #a1c181 // Used for the active slide on the tracker
 );
-
 $margin-top: 50;
 $margin-right: 20;
 $margin-bottom: 30;
 $margin-left: 70;
-
 $tracker-colors: #5c5c5c, #424242;
 $body-background: #131313;
 $graph-background: #252525;
@@ -174,7 +172,7 @@ body {
 .scroll__text {
   // padding: 5rem;
   // padding-top: 30vh;
-  pointer-events: none;
+  // pointer-events: none;
   position: relative;
   padding-left: 120px;
   max-width: 30rem;
@@ -182,6 +180,39 @@ body {
   @include phone {
     padding-left: 30px;
   }
+}
+
+a.footnote {
+  cursor: help;
+  text-decoration: none;
+  background-color: nth($tracker-colors, 1);
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-right: 2px;
+}
+
+a.footnote span {
+  max-width: 60ch;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 4ex;
+  z-index: -1;
+  display: none;
+  position: absolute;
+  padding: 14px 20px;
+  border-radius: 4px;
+  box-shadow: 3px 3px 5px rgba($tip-background, .8);
+  background-color: map-get($colors, Hover);
+  border: 1px solid darken(map-get($colors, Hover), 20);
+  color: $body-background;
+  font-size: small;
+  transition: all .5s ease;
+}
+
+a.footnote:hover span {
+  display: inline-block;
+  z-index: 9;
 }
 
 .step {
@@ -211,7 +242,7 @@ body {
   -webkit-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
   left: unset !important;
-  pointer-events: none;
+  // pointer-events: none;
   @include phone {
     width: 75vw !important;
     font-size: .8rem;
@@ -267,9 +298,10 @@ body {
       opacity: 0 !important;
     }
   }
+
   h3 {
-    margin-top: 0.2em;
-    margin-bottom: 0.2em;
+    margin-top: .2em;
+    margin-bottom: .2em;
   }
 }
 
@@ -717,7 +749,6 @@ $tip-padding: .5;
   box-shadow: none;
   padding: 0;
   border-width: 0;
-
   @include phone {
     left: $margin-left + 1 + px;
     top: 25%;
@@ -981,8 +1012,8 @@ input:checked + .slider:before {
 
 .i5050-label,
 .men-label,
-.women-label,
-.party-label {
+.party-label,
+.women-label {
   font-weight: 500;
   text-anchor: end;
   font-size: 2.5rem;
@@ -995,7 +1026,8 @@ input:checked + .slider:before {
   fill: $male;
 }
 
-.men-label, .party-label {
+.men-label,
+.party-label {
   fill: $female;
 }
 
@@ -1021,9 +1053,11 @@ input:checked + .slider:before {
   text {
     fill: $female;
   }
+
   path {
     stroke: $female;
   }
+
   .connector-dot {
     fill: $female;
   }
@@ -1033,9 +1067,11 @@ input:checked + .slider:before {
   text {
     fill: $male;
   }
+
   path {
     stroke: $male;
   }
+
   .connector-dot {
     fill: $male;
   }

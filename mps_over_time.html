@@ -150,10 +150,10 @@
                         Visualized here is the % of women elected to the equivalent of the House of Representatives in other developed countries (in the OECD). In Norway, this is the <em>Stortinget</em>, in Mexico, <em>Cámara de Diputados</em>, for the United Kingdom, it is the <em>House of Commons</em>.
                     </p>
                     <p>
-                        The Nordic countries lead the pack although Mexico has also made great strides recently. Many of these countries have implemented gender quotas to improve representation, although Iceland, notably, has not.
+                        The Nordic countries lead the OECD in equal gender representation although Mexico has also made great strides recently. Many of these countries have also implemented gender quotas to improve representation (although Iceland, notably, has not).
                     </p>
                     <p>
-                        The US, on the other hand, is quite regressive and ranks 28th out of 34 OECD countries. You may also note that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet or exceed this threshold are Bolivia and Rwanda, both of which also have gender quotas.
+                        The US, on the other hand, is quite regressive and ranks 28th out of 34 in the OECD. Notice also that none of these countries have made it to equal gender representation yet. In fact, the only two countries in the world to meet or exceed this threshold are Bolivia and Rwanda, both of which also have gender quotas.
                     </p>
                 </div>
                 <div class="step" data-slide="3" data-step="0">
@@ -162,7 +162,30 @@
                         At this point, you may be thinking - <em>great, I've seen how much progress we've made. I've been introduced to a few important women. And I know how much further the country has to go. But why? What does a 50:50 Congress give us that we don't have already?</em>
                     </p>
                     <p>
-                        To answer this question, we gathered a corpus of 500,000 speeches delivered by men and women in the House of Representatives between 1994 and the present day. This includes monologues, long debates that went back and forth, single sentence replies, and even acknowledgements praising particular individuals (of which there were many!). We then analysed them using a probabilistic machine learning technique called <a href="https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d">Latent Dirichlet Allocation</a> (LDA), which we used to infer which topics were mentioned in a speech. While there are many different machine learning techniques to do this, each with their own pros and cons, the beauty of LDA is that it is an unsupervised learning algorithm - that is, it does not require a human to label a bunch of speeches in order to train it. This is important because we didn't want to bias the inference process by selecting a bunch of topics in advance. All that is needed by LDA is to roughly guess the total number of topics. LDA then iteratively tries to identify this number of topics within the whole corpus by looking for words that often appear together and clustering them into one topic.
+                        Here's what we can do to answer this question:
+                        <ol>
+                            <li>
+                                Gather a bunch of speeches made by representatives.
+                            </li>
+                            <li>
+                                Make a machine learning model that can identify the topics within a speech automatically because we're lazy.
+                            </li>
+                            <li>
+                                Tally up all the times a representative spoke about a particular topic.
+                            </li>
+                            <li>
+                                Compare the difference in time spent by each gender.
+                            </li>
+                            <li>
+                                Identify which topics have a bias towards one gender or another.
+                            </li>
+                        </ol>
+                    </p>
+                    <p>
+                        We scraped a corpus of 500,000 speeches delivered by men and women in the House of Representatives between 1994 and the present day from the Congressional Record. This corpus included long monologues, debates, single sentence replies and acknowledgements praising particular individuals (of which there were many!).
+                    </p>
+                    <p>
+                        We then created a probabilistic machine learning model called <a href="https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d">Latent Dirichlet Allocation</a> (LDA) to help us infer which topics were mentioned within a speech. <a class="footnote">&sup1<span>While there are many different machine learning techniques to do this, each with their own pros and cons, the beauty of LDA is that it is an unsupervised learning algorithm - that is, it does not require a human to label a bunch of speeches in order to train it. This is important because we didn't want to bias the inference process by selecting a bunch of topics in advance.</span></a>All that is needed by LDA is to roughly guess the total number of topics. LDA then iteratively tries to identify this number of topics within the whole corpus by looking for words that often appear together and clustering them into one topic.
                     </p>
                     <p>For example, if we choose a small number of topics - let's say 10 - it will simply identify the 10 most overarching themes in congressional speeches. Since we wanted to identify more subtle topics and themes, after a bit of experimentation, we settled on 75 topics. Many of the topics identified were nonsensical, as is often the case with LDA, but the majority were sensible. The model identified topics such as heathcare, energy policy, war &amp; foreign policy discussions, national security, and so on.
                     </p> Once the model was trained, we used it to identify the topics within each speech. Due to the inherent uncertainty in probabilistic modelling, there will be some misidentified topics, but these errors should not affect our analysis because longer speeches are labelled more accurately and also contribute more to the final results.
