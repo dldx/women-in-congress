@@ -172,7 +172,7 @@ body {
 .scroll__text {
   // padding: 5rem;
   // padding-top: 30vh;
-  // pointer-events: none;
+  pointer-events: none;
   position: relative;
   padding-left: 120px;
   max-width: 30rem;
@@ -242,9 +242,9 @@ a.footnote:hover span {
   -webkit-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
   left: unset !important;
-  // pointer-events: none;
+  pointer-events: all;
   @include phone {
-    width: 75vw !important;
+    width: 80vw !important;
     font-size: .8rem;
     font-weight: 500;
   }
@@ -796,7 +796,7 @@ $tip-padding: .5;
   max-width: 80ch;
   @include phone {
     font-size: .8rem;
-    width: 80%;
+    width: 70vw;
   }
 
   input {

@@ -3110,6 +3110,7 @@ function to_sixth_slide(current_slide) {
             .domain([0, 0.30])
         // Redraw axes
         xAxis = d3.axisBottom(x)
+            .ticks(6)
             .tickFormat(d => (d * 100)
                 .toFixed(1) + "%")
     } else {
@@ -3119,6 +3120,7 @@ function to_sixth_slide(current_slide) {
             .domain([-1.5, 1.5])
         // Redraw axes
         xAxis = d3.axisBottom(x)
+            .ticks(6)
             .tickFormat(d => (d * 100)
                 .toFixed(0) + "%")
         // Hide canvas
@@ -3219,12 +3221,11 @@ function sixth_slide(no_transition = false) {
             return "end"
         })
 
-    // Make y-axis topic labels all uppercase too
     d3.selectAll(".y-axis > .tick text")
         .transition()
         .delay(500)
         .duration(1)
-        .attr("x", (d, i) => label_pos[i] == "start" ? x(Math.max(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])) : x(Math.min(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])))
+        .attr("x", (d, i) => label_pos[i] == "start" ? x(Math.max(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])) + 5 : x(Math.min(sorted_topics[i][1]["male"], sorted_topics[i][1]["female"])) - 5)
         .style("text-anchor", (d, i) => {
             return label_pos[i]
         })
