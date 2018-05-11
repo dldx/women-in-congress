@@ -182,21 +182,21 @@ body {
   }
 }
 
-a.footnote {
+.footnote {
+  display: inline;
   cursor: help;
   text-decoration: none;
   background-color: nth($tracker-colors, 1);
   padding-left: 2px;
   padding-right: 2px;
-  margin-right: 2px;
+  // margin-right: 2px;
 }
 
-a.footnote span {
+.footnote span {
   max-width: 60ch;
-    left: 0;
-    right: 0;
-    margin: auto;
-    margin-top: 4ex;
+  left: 0;
+  right: 0;
+  margin: 4ex auto auto;
   z-index: -1;
   display: none;
   position: absolute;
@@ -210,9 +210,51 @@ a.footnote span {
   transition: all .5s ease;
 }
 
-a.footnote:hover span {
+.footnote:hover span {
   display: inline-block;
   z-index: 9;
+}
+
+table {
+  margin: 1em;
+  width: 80%;
+  color: #333;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  height: 3.5ex;
+  transition: all .3s;
+}
+
+th {
+  background: #DFDFDF;
+  font-weight: bold;
+}
+
+td {
+  background: #FAFAFA;
+  text-align: center;
+}
+
+table td + td,
+th + th {
+  border-left: 10px solid map-get($colors, Hover);
+}
+
+tr:nth-child(even) td {
+  background: #F1F1F1;
+}
+
+tr:nth-child(odd) td {
+  background: #FEFEFE;
+}
+
+tr td:hover {
+  background: #666;
+  color: #FFF;
 }
 
 .step {

@@ -23,14 +23,6 @@
 //  ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝      ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝
 // ----------------------------------------------------------------------------
 
-// These are the margins for the SVG
-var margin = {
-    top: 50,
-    right: 20,
-    bottom: 30,
-    left: 70
-}
-
 // These are the colours used to identify each political party as well as
 // a few additional functions
 var colors = {
@@ -106,7 +98,8 @@ var detachedContainer = document.createElement("custom")
 var dataContainer = d3.select(detachedContainer)
 
 var width = 0,
-    height = 0
+    height = 0,
+    margin
 
 var ratio,
     clippedArea,
@@ -1548,12 +1541,12 @@ function to_third_slide(current_slide) {
                 .style("opacity", 0)
                 .remove()
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
             break
         case 1:
             // If we're coming from the second slide
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
             break
 
         case 3:
@@ -1573,7 +1566,7 @@ function to_third_slide(current_slide) {
             if (isMobile) xAxis.ticks(5)
 
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
 
             xLabel
                 .text("Year")
@@ -1650,7 +1643,7 @@ function third_slide(no_transition = false) {
     y.domain([0, 100])
     gY
         .transition(t0)
-        .call(yAxis.tickFormat(d => d + "%"))
+        .call(yAxis.tickFormat(d => d))
 
     total_women_mps_line
         .y(d => y(d.women_pct))
@@ -3112,7 +3105,7 @@ function to_sixth_slide(current_slide) {
         xAxis = d3.axisBottom(x)
             .ticks(6)
             .tickFormat(d => (d * 100)
-                .toFixed(1) + "%")
+                .toFixed(0) + "%")
     } else {
         // Use x scale at end of transition instead
         x = d3.scaleLinear()
@@ -3334,7 +3327,7 @@ function sixth_slide(no_transition = false) {
             .text("Gender bias of topics")
 
         xLabel
-            .text("Average % of time spent on topic")
+            .text("Relative gender bias")
             .style("opacity", 1)
 
         gX.style("opacity", 1)
@@ -3478,13 +3471,13 @@ function sixth_slide(no_transition = false) {
                             .style("opacity", 0)
 
                         xLabel
-                            .text("Median female - Median male")
+                            .text("Relative gender bias")
 
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", width)
-                            .attr("y", height + margin.bottom)
-                            .text("FEMALE FRIENDLY")
+                            .attr("y", height + (isMobile ? margin.bottom*2/3 : margin.bottom))
+                            .text("Discussed more by women" + (isMobile ? "→" : " ⟶"))
                             .style("text-anchor", "end")
                             .style("fill", colors["Female"])
                             .style("alignment-baseline", "hanging")
@@ -3492,8 +3485,8 @@ function sixth_slide(no_transition = false) {
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", 0)
-                            .attr("y", height + margin.bottom)
-                            .text("MALE FRIENDLY")
+                            .attr("y", height + (isMobile ? margin.bottom*2/3 : margin.bottom))
+                            .text((isMobile ? "←" : "⟵ ") + "Discussed more by men")
                             .style("text-anchor", "start")
                             .style("fill", colors["Male"])
                             .style("alignment-baseline", "hanging")
@@ -3524,7 +3517,7 @@ function sixth_slide(no_transition = false) {
             .attr("class", "x-custom-label")
             .attr("x", width)
             .attr("y", height + margin.bottom)
-            .text("FEMALE FRIENDLY")
+            .text("Discussed more by women ⟶")
             .style("text-anchor", "end")
             .style("fill", colors["Female"])
             .style("alignment-baseline", "hanging")
@@ -3533,7 +3526,7 @@ function sixth_slide(no_transition = false) {
             .attr("class", "x-custom-label")
             .attr("x", 0)
             .attr("y", height + margin.bottom)
-            .text("MALE FRIENDLY")
+            .text("⟵ Discussed more by men")
             .style("text-anchor", "start")
             .style("fill", colors["Male"])
             .style("alignment-baseline", "hanging")
@@ -3872,6 +3865,9 @@ function handleStepEnter(response) {
     $step.classed("is-active", function (d, i) {
         return i === response.index
     })
+    if(d3.select(".is-active").node().innerText != "") {
+        d3.select(".is-active").style("opacity", 1)
+    }
 
     // Hide tooltip
     d3.select("#tooltip")
@@ -4285,7 +4281,7 @@ function handleStepEnter(response) {
 
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
 
@@ -4333,7 +4329,7 @@ function handleStepEnter(response) {
 
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
 
@@ -4381,7 +4377,7 @@ function handleStepEnter(response) {
 
             y.domain([0, 100])
             yAxis = d3.axisLeft(y)
-                .tickFormat(d => d + "%")
+                .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
 
@@ -4584,6 +4580,14 @@ function draw_graph() {
     //     })
 
 
+
+    // These are the margins for the SVG
+    margin = {
+        top: 50,
+        right: 20,
+        bottom: 30,
+        left: (timeline.clientWidth < 500 ? 50 : 70)
+    }
     var new_width = timeline.clientWidth - margin.left - margin.right,
         new_height = (timeline.clientHeight - margin.top - margin.bottom)
 
