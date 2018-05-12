@@ -3059,7 +3059,6 @@ function to_sixth_slide(current_slide) {
         d3.select(".y-axis")
             .style("opacity", 0)
 
-        // Move y axis and label back
         yLabel.style("opacity", 0)
 
         d3.select(".switch")
@@ -3894,11 +3893,13 @@ function handleStepEnter(response) {
         mouseover_svg.select("line").style("opacity", 0)
         switch (new_step) {
         case -1:
-        // Hide election rects
-            electionRects
-                .transition()
-                .delay((d, i) => (electionRects.nodes().length - i) * 50)
-                .style("opacity", 0)
+            if (response.direction == "up") {
+                // Hide election rects
+                electionRects
+                    .transition()
+                    .delay((d, i) => (electionRects.nodes().length - i) * 50)
+                    .style("opacity", 0)
+            }
             break
         case 0:
             if (response.direction == "up") {
@@ -4038,6 +4039,7 @@ function handleStepEnter(response) {
                 .on("mouseover", () => {
                     d3.select("#tooltip")
                         .style("opacity", 0)
+                    d3.selectAll(".annotation-group").remove()
                 })
                 .select("#zoom-checkbox")
                 .on("change", function () {
