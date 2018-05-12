@@ -13,9 +13,9 @@ $colors: (
   Active: #a1c181 // Used for the active slide on the tracker
 );
 $margin-top: 50;
-$margin-right: 20;
+$margin-right: 50;
 $margin-bottom: 30;
-$margin-left: 70;
+$margin-left: 25;
 $tracker-colors: #5c5c5c, #424242;
 $body-background: #131313;
 $graph-background: #252525;
@@ -174,11 +174,12 @@ body {
   // padding-top: 30vh;
   pointer-events: none;
   position: relative;
-  padding-left: 120px;
+  padding-left: 3 * $margin-left + px;
   max-width: 30rem;
   transition: 1s opacity ease-in-out;
   @include phone {
-    padding-left: 30px;
+  padding-left: $margin-left + px;
+    width: calc(100% - #{$margin-left + px} - #{$margin-right + px} - 1px);
   }
 }
 
@@ -258,6 +259,7 @@ tr td:hover {
 }
 
 .step {
+  box-sizing: border-box;
   opacity: 1;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -273,7 +275,8 @@ tr td:hover {
   font-weight: 500;
   // height: 33vh !important;
   // height: unset !important;
-  width: 50vw !important;
+  width: 40vw !important;
+  min-width: 60ch;
   max-width: 35rem !important;
   line-height: 1.5 !important;
   padding: 1rem !important;
@@ -286,12 +289,13 @@ tr td:hover {
   left: unset !important;
   pointer-events: all;
   @include phone {
-    width: 80vw !important;
+    width: 100% !important;
+    min-width: 85vw;
     font-size: .8rem;
     font-weight: 500;
   }
   @include tablet {
-    width: 75vw !important;
+    width: 100% !important;
   }
 
   .mp-party-logo {
@@ -303,6 +307,19 @@ tr td:hover {
 
   &.is-active {
     opacity: 1;
+  }
+
+  &.tooltip {
+    padding: 0 !important;
+    border: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  p + p {
+    margin-top: 1em;
   }
 
   .body {
@@ -336,6 +353,7 @@ tr td:hover {
 
   .mp-party-logo {
     grid-area: photo;
+    padding-left: 0.25em;
     @include phone {
       opacity: 0 !important;
     }
@@ -586,7 +604,7 @@ $tip-padding: .5;
   left: 20%;
   top: 10%;
   @include phone {
-    width: 75vw !important;
+    // width: 75vw !important;
     font-size: .8rem;
     line-height: 1.3;
   }
@@ -764,7 +782,8 @@ $tip-padding: .5;
   //   display: flex;
   // }
   .body {
-    padding: 0 !important;
+    padding: 0.5em !important;
+    padding-top: 0em !important;
     display: grid;
     grid-template-columns: 5.5rem auto;
     grid-template-areas: "photo facts";
@@ -788,7 +807,7 @@ $tip-padding: .5;
   opacity: 0;
   // transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
-  box-shadow: none;
+  box-shadow: 1px 1px 5px rgba($tip-background, .8);
   padding: 0;
   border-width: 0;
   @include phone {

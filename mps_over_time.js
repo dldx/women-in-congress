@@ -413,10 +413,11 @@ function initial_render() {
         .call(xAxis)
 
     // Add the y axis to the left of the graph
-    yAxis = d3.axisLeft(y)
+    yAxis = d3.axisRight(y)
     gY = wrapper.append("g")
         .attr("class", "y-axis")
         .call(yAxis)
+        .attr("transform", "translate(" + width  + ", 0)")
 
     // Add chart title
     chartTitle = svg.append("text")
@@ -437,9 +438,10 @@ function initial_render() {
 
     yLabel = svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", margin.left / 3)
+        .attr("y", width + margin.left + margin.right*3/4)
         .attr("x", 0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
+        .attr("dominant-baseline", "baseline")
         .text("Number of Women Representatives")
 
     // Add zoom capabilities for the points
@@ -1285,7 +1287,7 @@ function second_slide(no_transition = false) {
 
     // Rescale y axis to include all MPs
     y.domain([0, 450])
-    yAxis = d3.axisLeft(y)
+    yAxis = d3.axisRight(y)
 
     // Change y axis label
     yLabel
@@ -1540,12 +1542,12 @@ function to_third_slide(current_slide) {
             t0.select("#slide1-group")
                 .style("opacity", 0)
                 .remove()
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
             break
         case 1:
             // If we're coming from the second slide
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
             break
 
@@ -1565,7 +1567,7 @@ function to_third_slide(current_slide) {
             xAxis = d3.axisBottom(x)
             if (isMobile) xAxis.ticks(5)
 
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
 
             xLabel
@@ -1573,14 +1575,11 @@ function to_third_slide(current_slide) {
                 .style("opacity", 1)
 
             yLabel
-                .attr("y", margin.left / 3)
                 .style("opacity", 1)
 
             gX.call(xAxis)
                 .style("opacity", 1)
             gY.call(yAxis)
-                .attr("transform", null)
-                .attr("text-anchor", "end")
                 .style("opacity", 1)
 
             d3.select(".y-axis > path")
@@ -2320,7 +2319,7 @@ function fifth_slide(no_transition = false) {
     // Scales for this data
     slide5_xScale = d3.scaleLinear()
         .domain([-250, 120])
-        .range([margin.left, width - margin.right])
+        .range([margin.left, width + margin.left + margin.right])
 
     slide5_yScale = d3.scaleLinear()
         .domain([-0.005, 0.5])
@@ -2334,7 +2333,7 @@ function fifth_slide(no_transition = false) {
         .tickFormat(d => ((d % 0.25 == 0) ? ((d * 100)
             .toFixed(0) + "%") : ""))
     gY.call(yAxis)
-        .attr("transform", `translate(${slide5_xScale(90)}, 0)`)
+        .attr("transform", `translate(${width}, 0)`)
         .attr("text-anchor", "start")
         .style("opacity", 1)
 
@@ -2342,7 +2341,6 @@ function fifth_slide(no_transition = false) {
         .style("opacity", 0)
 
     yLabel
-        .attr("y", width + margin.left)
         .text("% of time spent on topic")
         .style("opacity", 1)
 
@@ -3063,9 +3061,6 @@ function to_sixth_slide(current_slide) {
 
         // Move y axis and label back
         yLabel.style("opacity", 0)
-            .transition()
-            .duration(1000)
-            .on("end", () => { yLabel.attr("y", margin.left / 3) })
 
         d3.select(".switch")
             .style("opacity", 0)
@@ -3128,7 +3123,7 @@ function to_sixth_slide(current_slide) {
     y = d3.scalePoint()
         .range([height, 0])
         .padding(1)
-    yAxis = d3.axisLeft(y)
+    yAxis = d3.axisRight(y)
     gY.style("opacity", 0)
         .call(yAxis)
 
@@ -3197,7 +3192,7 @@ function sixth_slide(no_transition = false) {
         .sort((a, b) => (a[1]["female"] / a[1]["male"] - b[1]["female"] / b[1]["male"]))
 
     y.domain(sorted_topics.map(d => d[0]))
-    yAxis = d3.axisLeft(y)
+    yAxis = d3.axisRight(y)
     gY.transition()
         .attr("transform", null)
         .attr("text-anchor", "start")
@@ -4232,7 +4227,7 @@ function handleStepEnter(response) {
                 slide2Group.select(".party-label").transition().text("")
                 // All MPs first
                 y.domain([0, 450])
-                yAxis = d3.axisLeft(y)
+                yAxis = d3.axisRight(y)
                 gY.transition()
                     .call(yAxis)
 
@@ -4280,7 +4275,7 @@ function handleStepEnter(response) {
             slide2Group.select(".party-label").transition().text("Democrats")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
@@ -4328,7 +4323,7 @@ function handleStepEnter(response) {
             slide2Group.select(".party-label").transition().text("Republicans")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
@@ -4376,7 +4371,7 @@ function handleStepEnter(response) {
             slide2Group.select(".party-label").transition().text("")
 
             y.domain([0, 100])
-            yAxis = d3.axisLeft(y)
+            yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
             gY.transition()
                 .call(yAxis)
@@ -4584,9 +4579,9 @@ function draw_graph() {
     // These are the margins for the SVG
     margin = {
         top: 50,
-        right: 20,
+        left: 25,
         bottom: 30,
-        left: (timeline.clientWidth < 500 ? 50 : 70)
+        right: (timeline.clientWidth < 500 ? 50 : 70)
     }
     var new_width = timeline.clientWidth - margin.left - margin.right,
         new_height = (timeline.clientHeight - margin.top - margin.bottom)
