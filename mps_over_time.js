@@ -153,6 +153,7 @@ var mps_over_time_data,
     mp_base64_data,
     topic_medians_data,
     baked_positions_data,
+    house_candidates_data,
     nodes_male,
     nodes_female,
     states
@@ -304,6 +305,9 @@ function update_state() {
         } else if (new_slide == 5) {
             // Load sixth slide
             reset_zoom(to_sixth_slide, current_slide)
+        } else if (new_slide == 6) {
+            // Load seventh slide
+            reset_zoom(to_seventh_slide, current_slide)
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed)
@@ -442,7 +446,7 @@ function initial_render() {
         .attr("x", 0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
         .attr("dominant-baseline", "baseline")
-        .text("Number of Women Representatives")
+        .text("Number of Female Representatives")
 
     // Add zoom capabilities for the points
     zoom = d3.zoom()
@@ -864,7 +868,7 @@ function to_first_slide(current_slide) {
         .duration(1000)
 
     yLabel.transition(t0)
-        .text("Number of Women Representatives")
+        .text("Number of Female Representatives")
 
     // Different actions depending on which slide we're coming from
     switch (current_slide) {
@@ -1692,7 +1696,7 @@ function third_slide(no_transition = false) {
 
     yLabel
         .transition(t0)
-        .text("% of Women Representatives")
+        .text("% of Female Representatives")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -3072,7 +3076,10 @@ function to_sixth_slide(current_slide) {
         }
         // Remove existing annotations
         mouseover_svg.selectAll(".female-label, .male-label").remove()
+        d3.selectAll(".annotation-group").remove()
         break
+    case 6:
+        d3.select("#slide7-group").style("opacity", 0)
     }
 
     // Fade tooltip
@@ -3549,6 +3556,233 @@ function sixth_slide(no_transition = false) {
 }
 
 // ----------------------------------------------------------------------------
+// TRANSITION TO SEVENTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_seventh_slide(current_slide) {
+    "use strict"
+    var t0 = svg
+        .transition()
+        .duration(1000)
+
+    // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+    case 0:
+        // If we're coming from the first slide
+        t0.select("#slide1-group")
+            .style("opacity", 0)
+            .remove()
+        break
+
+    case 1:
+        // If we're coming from the second slide
+        d3.select("#slide2-group")
+            .style("opacity", 0)
+        break
+
+    case 2:
+        // Fade all objects belonging to third slide
+        d3.select("#slide2-group")
+            .style("opacity", 0)
+
+        t0.select("#slide3-group")
+            .style("opacity", 0)
+            .on("end", function () { this.remove() })
+
+        d3.select("#tooltip")
+            .classed("slide3-tooltip", false)
+            .classed("slide5-tooltip", false)
+        break
+
+    case 3:
+        d3.select("#slide4")
+            .style("opacity", 0)
+            .transition()
+            .delay(1000)
+            .on("end", function () { this.remove() })
+        break
+
+    case 4:
+        chartTitle.style("opacity", 1)
+        d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis")
+            .remove()
+
+        d3.select(".switch")
+            .style("opacity", 0)
+        if (document.getElementById("zoom-checkbox") != null) {
+            if (document.getElementById("zoom-checkbox")
+                .checked != false) {
+                document.getElementById("zoom-checkbox")
+                    .click()
+            }
+        }
+        // Remove existing annotations
+        mouseover_svg.selectAll(".female-label, .male-label").remove()
+        // Hide mouseover circle
+        mouseover_svg
+            .select("circle")
+            .style("opacity", 0)
+        break
+    case 5:
+        // Fade out sixth slide
+        d3.selectAll("#slide6-group, .x-custom-label")
+            .style("opacity", 0)
+            .on("end", () => {
+                d3.selectAll(".x-custom-label")
+                    .remove()
+            })
+
+    }
+
+    // Fade tooltip
+    d3.select("#tooltip")
+        .transition(t0)
+        .style("opacity", 0)
+        .on("end", function () { this.innerHTML = "" })
+
+
+    // Remove Election rectangles
+    electionRects
+        .transition(t0)
+        .style("opacity", 0)
+        .remove()
+
+    canvas.style("opacity", 0)
+        .style("display", "none")
+        .style("pointer-events", "none")
+
+
+    // Change axes
+    x = d3.scaleBand().range([0, width])
+        .domain(house_candidates_data.map(d => d.year)).paddingInner(0.2)
+    xAxis = d3.axisBottom(x)
+    gX.transition(t0)
+        .call(xAxis)
+        .style("opacity", 1)
+        .on("end", () => {
+            if(isMobile) {
+                d3.selectAll(".x-axis text")
+                    .attr("transform", "rotate(-45)")
+                    .attr("text-anchor", "end")
+                    .attr("dx", -5)
+            }
+        })
+    y = d3.scaleLinear().domain([0, 400]).range([height, 0])
+    yAxis = d3.axisRight(y).ticks(5).tickFormat(d => d)
+    gY.style("opacity", 0)
+
+    d3.timeout(() => {
+        gY
+            .transition(t0)
+            .call(yAxis)
+            .attr("transform", `translate(${width}, 0)`)
+            .style("opacity", 1)
+    }, 1000)
+
+    yLabel.style("opacity", 1)
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 6) {
+        t0.on("end", () => {
+            seventh_slide(false)
+            lastTransitioned = 6
+        })
+    } else {
+        t0.on("end", () => seventh_slide(true))
+    }
+
+}
+
+// ----------------------------------------------------------------------------
+// ███████╗███████╗██╗   ██╗███████╗███╗   ██╗████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// ███████╗█████╗  ██║   ██║█████╗  ██╔██╗ ██║   ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
+// ╚════██║██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ███████║███████╗ ╚████╔╝ ███████╗██║ ╚████║   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
+// ╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// SHOW CANDIDATES RUNNING IN 2018
+// ----------------------------------------------------------------------------
+function seventh_slide(no_transition = false) {
+    // If we've already visited this slide, set no_transition to true
+    no_transition = lastTransitioned >= 6
+
+    xLabel.text("Year")
+    yLabel.text("Number of Female House Candidates")
+    chartTitle.text("Female House Candidates over Time")
+
+    if(no_transition) {
+        var slide7Group = d3.select("#slide7-group").style("opacity", 1)
+    } else {
+
+        d3.select("#slide7-group").selectAll("*").remove()
+
+        slide7Group = zoomedArea.append("g").attr("id", "slide7-group")
+
+
+        var bar_stack = slide7Group.append("g")
+            .selectAll("g")
+            .data(d3.stack().keys(["dem_candidates", "rep_candidates"])(house_candidates_data))
+            .enter().append("g")
+            .attr("fill", d => d.key == "dem_candidates" ? colors["Democrat"] : colors["Republican"])
+
+        bar_stack
+            .selectAll("rect")
+            .data(d => d)
+            .enter().append("rect")
+            .attr("x", d => x(d.data.year))
+            .attr("y", height)
+            .attr("height", 0)
+            .attr("width", x.bandwidth())
+            .transition()
+            .duration(500)
+            .delay((d,i) => i*100)
+            .attr("y", d => y(d[1]))
+            .attr("height", d => y(d[0]) - y(d[1]))
+
+        bar_stack
+            .selectAll("text")
+            .data(d => d)
+            .enter()
+            .append("text")
+            .classed("bar-label", true)
+            .attr("x", d => x(d.data.year) + x.bandwidth()/2)
+            .attr("y", d => y(d[1]))
+            .attr("dy", 10)
+            .attr("dominant-baseline", "hanging")
+            .style("opacity", 0)
+            .text(d => d[1])
+            .transition()
+            .duration(1)
+            .delay((d,i) => 500 + i*100)
+            .style("opacity", 1)
+    }
+
+    // Label 2018 election
+    var make_2018_label = d3.annotation()
+        .type(d3.annotationCallout)
+        .annotations([{
+            note: {
+                title: "Record number of Democratic candidates in 2018",
+                wrap: 250
+            },
+            connector: {
+                end: "dot"
+            },
+            //can use x, y directly instead of data
+            x: x(2018) + x.bandwidth()/2,
+            y: y(250),
+            dx: x(2014) - x(2018),
+            dy: y(320) - y(250),
+        }])
+
+    d3.timeout(() => {
+        slide7Group
+            .append("g")
+            .attr("class", "i2018-label")
+            .call(make_2018_label)
+    }, 14*100+500)
+}
+
+
+// ----------------------------------------------------------------------------
 // ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗      ██████╗  █████╗ ██████╗     ██████╗  █████╗ ████████╗ █████╗
 // ██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
 // ██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║███████║██║  ██║    ██║  ██║███████║   ██║   ███████║
@@ -3644,9 +3878,9 @@ function download_data() {
             }
         })
         .defer(d3.csv,
-            "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)
+            "baked_positions.csv"
         )
-        .defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100),
+        .defer(d3.csv, "topic_medians.csv",
             function (d) {
                 return {
                     topic: d.topic,
@@ -3654,7 +3888,15 @@ function download_data() {
                     female: Math.pow(10, +d.female)
                 }
             })
-        .await(function (error, women_in_govt, baked_mp_positions, topic_medians) {
+        .defer(d3.csv, "number_women_house_candidates_over_time.csv",
+            d => {
+                return {
+                    year: +d.Year,
+                    dem_candidates: +d.Dem_Candidates,
+                    rep_candidates: +d.Rep_Candidates
+                }
+            })
+        .await(function (error, women_in_govt, baked_mp_positions, topic_medians, house_candidates) {
             // Group stats by country
             women_in_govt_data = d3.nest()
                 .key(d => d.country)
@@ -3762,6 +4004,7 @@ function download_data() {
                 .key(d => d.topic)
                 .entries(baked_positions_data)
 
+            house_candidates_data = house_candidates
         })
 
 }
@@ -3807,9 +4050,9 @@ function handleContainerExit(response) {
     $graphic.classed("is-fixed", false)
     $graphic.classed("is-bottom", response.direction === "down")
 
-    if (response.direction == "down" && lastTransitioned >= 4) {
-        // Go to sixth slide
-        new_slide = 5
+    if (response.direction == "down" && lastTransitioned >= 5) {
+        // Go to seventh slide
+        new_slide = 7
         update_state()
     }
 }

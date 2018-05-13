@@ -1137,3 +1137,22 @@ input:checked + .slider:before {
     fill: $male;
   }
 }
+
+.bar-label {
+  font-weight: bold;
+  fill: map-get($colors, Hover);
+  text-anchor: middle;
+  transition: opacity .5s ease-in-out;
+  @include phone {
+    font-size: 0.6rem;
+  }
+}
+
+.i2018-label {
+  animation: fadein .5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
