@@ -98,7 +98,7 @@ var ratio, clippedArea, electionRects, zoom, wrapper, transform, zoomedArea, poi
 // slide5Group,
 slide6Group, max_mps_line, max_mps_path, max_mps_area, max_mps_path_area, half_max_mps_line, half_max_mps_path, total_women_mps_line, total_women_mps_path, total_women_mps_area, total_women_mps_path_area, half_max_mps_line_smooth, text_path_50_50, women_in_govt_paths, mask, instance, x, y, chartTitle, xAxis, gX, xLabel, yAxis, gY, yLabel, tooltip, lineThickness, circleRadius, selected_topic, circle_male, circle_female, slide5_xScale, slide5_yScale, temp_nodes, mp_filter, isMobile, all_mps_draw_timer, annotate_timer;
 
-var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data, topic_medians_data, baked_positions_data, nodes_male, nodes_female, states;
+var mps_over_time_data, number_women_over_time_data, total_mps_over_time_data, women_in_govt_data, mp_base64_data, topic_medians_data, baked_positions_data, house_candidates_data, nodes_male, nodes_female, states;
 
 // If a political party has a colour defined,
 // then it also has an SVG logo that we can use
@@ -228,6 +228,9 @@ function update_state() {
         } else if (new_slide == 5) {
             // Load sixth slide
             reset_zoom(to_sixth_slide, current_slide);
+        } else if (new_slide == 6) {
+            // Load seventh slide
+            reset_zoom(to_seventh_slide, current_slide);
         } else if (current_slide != -1 & new_slide == 0) {
             // Add zoom capabilities for the points
             zoom.on("zoom", zoomed);
@@ -303,9 +306,9 @@ function initial_render() {
     chartTitle = svg.append("text").attr("x", width / 2 + margin.left).attr("y", margin.top / 2).style("text-anchor", "middle").attr("class", "chart-title").text("");
 
     // Add axes labels
-    xLabel = svg.append("text").attr("transform", "translate(" + (width + margin.left + margin.right) / 2 + " ," + (height + margin.top + margin.bottom) + ")").attr("class", "x-label").style("text-anchor", "middle").text("Year");
+    xLabel = svg.append("text").attr("transform", "translate(" + (width + margin.left + margin.right) / 2 + " ," + (height + margin.top + margin.bottom * 1.3) + ")").attr("class", "x-label").style("text-anchor", "middle").text("Year");
 
-    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", width + margin.left + margin.right * 3 / 4).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").attr("dominant-baseline", "baseline").text("Number of Women Representatives");
+    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", width + margin.left + margin.right * 3 / 4).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").attr("dominant-baseline", "baseline").text("Number of Female Representatives");
 
     // Add zoom capabilities for the points
     zoom = d3.zoom().scaleExtent([0.95, 40]).on("zoom", zoomed);
@@ -653,7 +656,7 @@ function show_mp_tooltip(nodeData, mousePos) {
 function to_first_slide(current_slide) {
     var t0 = svg.transition().duration(1000);
 
-    yLabel.transition(t0).text("Number of Women Representatives");
+    yLabel.transition(t0).text("Number of Female Representatives");
 
     // Different actions depending on which slide we're coming from
     switch (current_slide) {
@@ -686,6 +689,8 @@ function to_first_slide(current_slide) {
     }));
     xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]));
     gX.transition().duration(1000).call(xAxis);
+
+    d3.selectAll(".x-axis path").style("opacity", 1);
 
     pointsGroup.style("opacity", 0);
     t0.select("#slide1-group").style("opacity", 1);
@@ -731,8 +736,12 @@ function to_second_slide(current_slide) {
         }
 
         // Scale axes to fit all data
-        xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]));
+        x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]);
+        xAxis = d3.axisBottom(x);
+        if (isMobile) xAxis.ticks(5);
         gX.transition().duration(1000).call(xAxis);
+
+        d3.selectAll(".x-axis path").style("opacity", 1);
 
         add_election_rects(true);
         second_slide(true);
@@ -811,7 +820,7 @@ function second_slide() {
     }).curve(d3.curveBasis);
 
     // add the line path
-    total_women_mps_path = slide2Group.append("path").attr("class", "total-women-mps-path slide2").datum(number_women_over_time_data).attr("stroke-width", lineThickness).attr("d", total_women_mps_line);
+    total_women_mps_path = slide2Group.append("path").attr("class", "total-women-mps-path slide2").datum(number_women_over_time_data).attr("stroke-width", lineThickness).attr("d", total_women_mps_line).style("opacity", 0);
 
     var path_node = total_women_mps_path.node();
     // path_node.style.transition = "none"
@@ -981,7 +990,8 @@ function second_slide() {
 
     total_women_mps_path_area.transition().delay(no_transition ? 0 : 5500).duration(no_transition ? 0 : 750).attr("d", total_women_mps_area);
 
-    total_women_mps_path.transition().delay(no_transition ? 0 : 5500 + 750).duration(0).attr("d", total_women_mps_line).style("opacity", 1);
+    total_women_mps_path.transition().delay(no_transition ? 0 : 5500 + 750).duration(0).attr("d", total_women_mps_line);
+    // .style("opacity", 0)
 
     // Draw a line and area for the total number of MPs
     max_mps_path.transition().delay(no_transition ? 0 : 6500).duration(no_transition ? 0 : 750).attr("d", max_mps_line);
@@ -1049,7 +1059,7 @@ function second_slide() {
             // Get mouse positions
             var mousePos = d3.mouse(this);
 
-            d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
+            d3.select("#tooltip").style("opacity", 1).classed("slide3-tooltip", true).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
             d3.select(this).classed("hover", true);
             // Reconfigure tooltip to show different information
@@ -1125,8 +1135,12 @@ function to_third_slide(current_slide) {
                 // Change scales
                 x = d3.scaleUtc().range([0, width]).domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]);
                 // Redraw axes
-                xAxis = d3.axisBottom(x);
-                if (isMobile) xAxis.ticks(5);
+                xAxis = d3.axisBottom(x).tickFormat(function (d) {
+                    return d3.timeFormat("%Y")(d);
+                });
+                if (isMobile) {
+                    xAxis.tickValues(x.ticks(8).concat(x.domain()));
+                }
 
                 yAxis = d3.axisRight(y).tickFormat(function (d) {
                     return d;
@@ -1152,6 +1166,7 @@ function to_third_slide(current_slide) {
                 break;
         }
 
+        d3.selectAll(".x-axis path").style("opacity", 1);
         third_slide(true);
     }
 }
@@ -1197,7 +1212,26 @@ function third_slide() {
         return y(d.women_pct);
     });
 
-    total_women_mps_path.transition(t0).attr("d", total_women_mps_line);
+    total_women_mps_path.style("opacity", 1).transition(t0).attr("d", total_women_mps_line);
+
+    // Label this line
+    var make_country_label = d3.annotation().type(d3.annotationCallout).annotations([{
+        note: {
+            title: "United States"
+        },
+        connector: {
+            end: "arrow"
+        },
+        //can use x, y directly instead of data
+        x: x(new Date(2017, 1, 1)),
+        y: y(20.3),
+        dx: x(new Date(2014, 1, 1)) - x(new Date(2017, 1, 1)),
+        dy: y(5) - y(20.3)
+    }]);
+
+    d3.timeout(function () {
+        slide3Group.append("g").attr("class", "country-label").call(make_country_label);
+    }, no_transition ? 500 : 1000);
 
     total_women_mps_area.y1(function (d) {
         return y(d.women_pct);
@@ -1231,7 +1265,7 @@ function third_slide() {
 
     mask.transition(t0).attr("d", max_mps_area);
 
-    yLabel.transition(t0).text("% of Women Representatives");
+    yLabel.transition(t0).text("% of Female Representatives");
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1245,7 +1279,12 @@ function third_slide() {
     var countryColors = d3.scaleOrdinal(d3.schemeCategory20);
 
     // Scale axis to focus on modern history
-    xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]));
+    x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]);
+    xAxis.scale(x);
+
+    if (isMobile) xAxis.tickValues(x.ticks(8).concat(x.domain())).tickFormat(function (d) {
+        return d3.timeFormat("%Y")(d);
+    });
 
     var t1 = t0.transition().duration(no_transition ? 500 : 1000);
 
@@ -2282,7 +2321,6 @@ function to_sixth_slide(current_slide) {
 
             d3.select(".y-axis").style("opacity", 0);
 
-            // Move y axis and label back
             yLabel.style("opacity", 0);
 
             d3.select(".switch").style("opacity", 0);
@@ -2293,7 +2331,11 @@ function to_sixth_slide(current_slide) {
             }
             // Remove existing annotations
             mouseover_svg.selectAll(".female-label, .male-label").remove();
+            d3.selectAll(".annotation-group").remove();
             break;
+        case 6:
+            d3.select("#slide7-group").style("opacity", 0);
+            d3.selectAll(".x-axis path").style("opacity", 1);
     }
 
     // Fade tooltip
@@ -2579,6 +2621,7 @@ function sixth_slide() {
 
                 xLabel.text("Relative gender bias");
 
+                wrapper.selectAll(".x-custom-label").remove();
                 wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + (isMobile ? margin.bottom * 2 / 3 : margin.bottom)).text("Discussed more by women" + (isMobile ? "→" : " ⟶")).style("text-anchor", "end").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
 
                 wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + (isMobile ? margin.bottom * 2 / 3 : margin.bottom)).text((isMobile ? "←" : "⟵ ") + "Discussed more by men").style("text-anchor", "start").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
@@ -2622,6 +2665,190 @@ function sixth_slide() {
     }).attr("x", function (d, i) {
         return label_pos[i] ? x.domain([-0.06, 0.06])(-0.001) : x.domain([-0.06, 0.06])(0.001);
     }).transition().delay(1000).duration(500).style("opacity", 1);
+}
+
+// ----------------------------------------------------------------------------
+// TRANSITION TO SEVENTH SLIDE, EITHER WITH OR WITHOUT FANCY TRANSITIONS
+// ----------------------------------------------------------------------------
+function to_seventh_slide(current_slide) {
+    "use strict";
+
+    var t0 = svg.transition().duration(1000);
+
+    // Different actions depending on which slide we're coming from
+    switch (current_slide) {
+        case 0:
+            // If we're coming from the first slide
+            t0.select("#slide1-group").style("opacity", 0).remove();
+            break;
+
+        case 1:
+            // If we're coming from the second slide
+            d3.select("#slide2-group").style("opacity", 0);
+            break;
+
+        case 2:
+            // Fade all objects belonging to third slide
+            d3.select("#slide2-group").style("opacity", 0);
+
+            t0.select("#slide3-group").style("opacity", 0).on("end", function () {
+                this.remove();
+            });
+
+            d3.select("#tooltip").classed("slide3-tooltip", false).classed("slide5-tooltip", false);
+            break;
+
+        case 3:
+            d3.select("#slide4").style("opacity", 0).transition().delay(1000).on("end", function () {
+                this.remove();
+            });
+            break;
+
+        case 4:
+            chartTitle.style("opacity", 1);
+            d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis").remove();
+
+            d3.select(".switch").style("opacity", 0);
+            if (document.getElementById("zoom-checkbox") != null) {
+                if (document.getElementById("zoom-checkbox").checked != false) {
+                    document.getElementById("zoom-checkbox").click();
+                }
+            }
+            // Remove existing annotations
+            mouseover_svg.selectAll(".female-label, .male-label").remove();
+            // Hide mouseover circle
+            mouseover_svg.select("circle").style("opacity", 0);
+            break;
+        case 5:
+            // Fade out sixth slide
+            d3.selectAll("#slide6-group, .x-custom-label").style("opacity", 0).on("end", function () {
+                d3.selectAll(".x-custom-label").remove();
+            });
+
+    }
+
+    // Fade tooltip
+    d3.select("#tooltip").transition(t0).style("opacity", 0).on("end", function () {
+        this.innerHTML = "";
+    });
+
+    // Remove Election rectangles
+    electionRects.transition(t0).style("opacity", 0).remove();
+
+    canvas.style("opacity", 0).style("display", "none").style("pointer-events", "none");
+
+    // Change axes
+    x = d3.scaleBand().range([0, width]).domain(house_candidates_data.map(function (d) {
+        return d.year;
+    })).paddingInner(0.2);
+    xAxis = d3.axisBottom(x);
+    gX.transition(t0).call(xAxis).style("opacity", 1).on("end", function () {
+        d3.selectAll(".x-axis path").style("opacity", 0);
+        if (isMobile) {
+            d3.selectAll(".x-axis text").attr("transform", "rotate(-45)").attr("text-anchor", "end").attr("dx", -5);
+        }
+    });
+    y = d3.scaleLinear().domain([0, 500]).range([height, 0]);
+    yAxis = d3.axisRight(y).ticks(5).tickFormat(function (d) {
+        return d;
+    });
+    gY.style("opacity", 0);
+
+    d3.timeout(function () {
+        gY.transition(t0).call(yAxis).attr("transform", "translate(" + width + ", 0)").style("opacity", 1);
+    }, 1000);
+
+    xLabel.style("opacity", 1);
+    yLabel.style("opacity", 1);
+    // Increment lastTransitioned counter if it is less than 0
+    if (lastTransitioned < 6) {
+        t0.on("end", function () {
+            seventh_slide(false);
+            lastTransitioned = 6;
+        });
+    } else {
+        t0.on("end", function () {
+            return seventh_slide(true);
+        });
+    }
+}
+
+// ----------------------------------------------------------------------------
+// ███████╗███████╗██╗   ██╗███████╗███╗   ██╗████████╗██╗  ██╗    ███████╗██╗     ██╗██████╗ ███████╗
+// ██╔════╝██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝██║  ██║    ██╔════╝██║     ██║██╔══██╗██╔════╝
+// ███████╗█████╗  ██║   ██║█████╗  ██╔██╗ ██║   ██║   ███████║    ███████╗██║     ██║██║  ██║█████╗
+// ╚════██║██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ██╔══██║    ╚════██║██║     ██║██║  ██║██╔══╝
+// ███████║███████╗ ╚████╔╝ ███████╗██║ ╚████║   ██║   ██║  ██║    ███████║███████╗██║██████╔╝███████╗
+// ╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝
+// SHOW CANDIDATES RUNNING IN 2018
+// ----------------------------------------------------------------------------
+function seventh_slide() {
+    var no_transition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    // If we've already visited this slide, set no_transition to true
+    no_transition = lastTransitioned >= 6;
+
+    xLabel.text("Year");
+    yLabel.text("Number of Female House Candidates");
+    chartTitle.text("Female House Candidates over Time");
+
+    if (no_transition) {
+        var slide7Group = d3.select("#slide7-group").style("opacity", 1);
+    } else {
+
+        d3.select("#slide7-group").selectAll("*").remove();
+
+        slide7Group = zoomedArea.append("g").attr("id", "slide7-group");
+
+        var bar_stack = slide7Group.append("g").selectAll("g").data(d3.stack().keys(["dem_candidates", "rep_candidates"])(house_candidates_data)).enter().append("g").attr("fill", function (d) {
+            return d.key == "dem_candidates" ? colors["Democrat"] : colors["Republican"];
+        });
+
+        bar_stack.selectAll("rect").data(function (d) {
+            return d;
+        }).enter().append("rect").attr("x", function (d) {
+            return x(d.data.year);
+        }).attr("y", height).attr("height", 0).attr("width", x.bandwidth()).transition().duration(500).delay(function (d, i) {
+            return i * 100;
+        }).attr("y", function (d) {
+            return y(d[1]);
+        }).attr("height", function (d) {
+            return y(d[0]) - y(d[1]);
+        });
+
+        // Add some text labels for the values
+        bar_stack.selectAll("text").data(function (d) {
+            return d;
+        }).enter().append("text").classed("bar-label", true).attr("x", function (d) {
+            return x(d.data.year) + x.bandwidth() / 2;
+        }).attr("y", function (d) {
+            return y(d[1]);
+        }).attr("dy", 10).attr("dominant-baseline", "hanging").style("opacity", 0).text(function (d) {
+            return d[1] - d[0];
+        }).transition().duration(1).delay(function (d, i) {
+            return 500 + i * 100;
+        }).style("opacity", 1);
+    }
+
+    // Label 2018 election
+    var make_2018_label = d3.annotation().type(d3.annotationCallout).annotations([{
+        note: {
+            title: "Record number of Democratic candidates in 2018",
+            wrap: 250
+        },
+        connector: {
+            end: "dot"
+        },
+        //can use x, y directly instead of data
+        x: x(2018) + x.bandwidth() / 2,
+        y: y(320),
+        dx: x(2014) - x(2018),
+        dy: y(370) - y(320)
+    }]);
+
+    d3.timeout(function () {
+        slide7Group.append("g").attr("class", "i2018-label").call(make_2018_label);
+    }, 14 * 100 + 500);
 }
 
 // ----------------------------------------------------------------------------
@@ -2704,13 +2931,19 @@ function download_data() {
             women_pct: +d.women_parliament,
             country: d.country
         };
-    }).defer(d3.csv, "baked_positions.csv" + "?" + Math.floor(Math.random() * 1000)).defer(d3.csv, "topic_medians.csv" + "?" + Math.floor(Math.random() * 100), function (d) {
+    }).defer(d3.csv, "baked_positions.csv").defer(d3.csv, "topic_medians.csv", function (d) {
         return {
             topic: d.topic,
             male: Math.pow(10, +d.male),
             female: Math.pow(10, +d.female)
         };
-    }).await(function (error, women_in_govt, baked_mp_positions, topic_medians) {
+    }).defer(d3.csv, "number_women_house_candidates_over_time.csv", function (d) {
+        return {
+            year: +d.Year,
+            dem_candidates: +d.Dem_Candidates,
+            rep_candidates: +d.Rep_Candidates
+        };
+    }).await(function (error, women_in_govt, baked_mp_positions, topic_medians, house_candidates) {
         // Group stats by country
         women_in_govt_data = d3.nest().key(function (d) {
             return d.country;
@@ -2814,6 +3047,8 @@ function download_data() {
         baked_positions_data = d3.nest().key(function (d) {
             return d.topic;
         }).entries(baked_positions_data);
+
+        house_candidates_data = house_candidates;
     });
 }
 
@@ -2852,9 +3087,9 @@ function handleContainerExit(response) {
     $graphic.classed("is-fixed", false);
     $graphic.classed("is-bottom", response.direction === "down");
 
-    if (response.direction == "down" && lastTransitioned >= 4) {
-        // Go to sixth slide
-        new_slide = 5;
+    if (response.direction == "down" && lastTransitioned >= 5) {
+        // Go to seventh slide
+        new_slide = 7;
         update_state();
     }
 }
