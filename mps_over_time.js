@@ -435,7 +435,7 @@ function initial_render() {
     xLabel = svg.append("text")
         .attr("transform",
             "translate(" + (width + margin.left + margin.right) / 2 + " ," +
-            (height + margin.top + margin.bottom) + ")")
+            (height + margin.top + margin.bottom*1.3) + ")")
         .attr("class", "x-label")
         .style("text-anchor", "middle")
         .text("Year")
@@ -1101,6 +1101,7 @@ function second_slide(no_transition = false) {
         .datum(number_women_over_time_data)
         .attr("stroke-width", lineThickness)
         .attr("d", total_women_mps_line)
+        .style("opacity", 0)
 
     let path_node = total_women_mps_path.node()
     // path_node.style.transition = "none"
@@ -1337,7 +1338,7 @@ function second_slide(no_transition = false) {
         .delay(no_transition ? 0 : 5500 + 750)
         .duration(0)
         .attr("d", total_women_mps_line)
-        .style("opacity", 1)
+        // .style("opacity", 0)
 
     // Draw a line and area for the total number of MPs
     max_mps_path
@@ -1464,6 +1465,7 @@ function second_slide(no_transition = false) {
 
                     d3.select("#tooltip")
                         .style("opacity", 1)
+                        .classed("slide3-tooltip", true)
                         .style("transform", `translate(${Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2,
                             width - tooltip.offsetWidth - margin.right),
                         0 + margin.left)}px,${Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20,
@@ -1652,6 +1654,7 @@ function third_slide(no_transition = false) {
         .y(d => y(d.women_pct))
 
     total_women_mps_path
+        .style("opacity", 1)
         .transition(t0)
         .attr("d", total_women_mps_line)
 
@@ -3678,6 +3681,7 @@ function to_seventh_slide(current_slide) {
             .style("opacity", 1)
     }, 1000)
 
+    xLabel.style("opacity", 1)
     yLabel.style("opacity", 1)
     // Increment lastTransitioned counter if it is less than 0
     if (lastTransitioned < 6) {

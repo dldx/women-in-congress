@@ -640,7 +640,7 @@ $tip-padding: .5;
     .gender-ratio {
       font-size: 5rem;
       @include phone {
-        font-size: 3rem;
+        font-size: 2.5rem;
       }
     }
 
@@ -672,7 +672,7 @@ $tip-padding: .5;
     font-weight: bold;
     margin-top: 0;
     margin-bottom: $tip-padding + rem;
-    padding: .5rem;
+    padding: 0.5rem;
     text-align: center;
     text-shadow: 1px 1px 1px rgba(black, .5);
     @include phone {
@@ -688,6 +688,10 @@ $tip-padding: .5;
     border: 0;
     height: 1px;
     background: invert($tip-background);
+    @include phone {
+      margin-top: $tip-padding/2 + rem;
+      margin-bottom: $tip-padding/2 + rem;
+    }
   }
   // This is for parties that don't have a logo
   .mp-party,
@@ -827,8 +831,9 @@ $tip-padding: .5;
   }
 }
 
-.slide3-tooltip {
+.slide2-tooltip, .slide3-tooltip {
   @include phone {
+      line-height: 1.2;
     top: 10% !important;
   }
 }
