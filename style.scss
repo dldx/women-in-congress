@@ -1115,7 +1115,7 @@ input:checked + .slider:before {
   stroke: steelblue;
 }
 
-.female-label {
+.female-label, .country-label {
   text {
     fill: $female;
   }
@@ -1124,7 +1124,8 @@ input:checked + .slider:before {
     stroke: $female;
   }
 
-  .connector-dot {
+  .connector-dot, .connector-arrow {
+    // stroke: unset;
     fill: $female;
   }
 }

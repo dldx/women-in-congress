@@ -919,6 +919,8 @@ function to_first_slide(current_slide) {
         .duration(1000)
         .call(xAxis)
 
+    d3.selectAll(".x-axis path").style("opacity", 1)
+
     pointsGroup.style("opacity", 0)
     t0.select("#slide1-group")
         .style("opacity", 1)
@@ -973,10 +975,15 @@ function to_second_slide(current_slide) {
         }
 
         // Scale axes to fit all data
-        xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]))
+        x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
+        xAxis = d3.axisBottom(x)
+        if (isMobile) xAxis.ticks(5)
         gX.transition()
             .duration(1000)
             .call(xAxis)
+
+
+        d3.selectAll(".x-axis path").style("opacity", 1)
 
         add_election_rects(true)
         second_slide(true)
@@ -1571,7 +1578,11 @@ function to_third_slide(current_slide) {
                 .domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
             // Redraw axes
             xAxis = d3.axisBottom(x)
-            if (isMobile) xAxis.ticks(5)
+                .tickFormat(d => d3.timeFormat("%Y")(d))
+            if (isMobile) {
+                xAxis
+                    .tickValues(x.ticks(8).concat(x.domain()))
+            }
 
             yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
@@ -1603,6 +1614,7 @@ function to_third_slide(current_slide) {
             break
         }
 
+        d3.selectAll(".x-axis path").style("opacity", 1)
         third_slide(true)
     }
 }
@@ -1657,6 +1669,31 @@ function third_slide(no_transition = false) {
         .style("opacity", 1)
         .transition(t0)
         .attr("d", total_women_mps_line)
+
+    // Label this line
+    var make_country_label = d3.annotation()
+        .type(d3.annotationCallout)
+        .annotations([{
+            note: {
+                title: "United States"
+            },
+            connector: {
+                end: "arrow"
+            },
+            //can use x, y directly instead of data
+            x: x(new Date(2017, 1,1)),
+            y: y(20.3),
+            dx: x(new Date(2014,1,1)) - x(new Date(2017, 1,1)),
+            dy: y(5) - y(20.3)
+        }])
+
+    d3.timeout(() => {
+        slide3Group
+            .append("g")
+            .attr("class", "country-label")
+            .call(make_country_label)
+
+    }, no_transition ? 500 : 1000)
 
     total_women_mps_area
         .y1(d => y(d.women_pct))
@@ -1713,7 +1750,10 @@ function third_slide(no_transition = false) {
     var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
 
     // Scale axis to focus on modern history
-    xAxis.scale(x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)]))
+    x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
+    xAxis.scale(x)
+
+    if(isMobile) xAxis.tickValues(x.ticks(8).concat(x.domain())).tickFormat(d => d3.timeFormat("%Y")(d))
 
     var t1 = t0.transition()
         .duration(no_transition ? 500 : 1000)
@@ -3083,6 +3123,7 @@ function to_sixth_slide(current_slide) {
         break
     case 6:
         d3.select("#slide7-group").style("opacity", 0)
+        d3.selectAll(".x-axis path").style("opacity", 1)
     }
 
     // Fade tooltip
@@ -3477,6 +3518,7 @@ function sixth_slide(no_transition = false) {
                         xLabel
                             .text("Relative gender bias")
 
+                        wrapper.selectAll(".x-custom-label").remove()
                         wrapper.append("text")
                             .attr("class", "x-custom-label")
                             .attr("x", width)
@@ -3662,6 +3704,7 @@ function to_seventh_slide(current_slide) {
         .call(xAxis)
         .style("opacity", 1)
         .on("end", () => {
+            d3.selectAll(".x-axis path").style("opacity", 0)
             if(isMobile) {
                 d3.selectAll(".x-axis text")
                     .attr("transform", "rotate(-45)")
@@ -3669,7 +3712,7 @@ function to_seventh_slide(current_slide) {
                     .attr("dx", -5)
             }
         })
-    y = d3.scaleLinear().domain([0, 400]).range([height, 0])
+    y = d3.scaleLinear().domain([0, 500]).range([height, 0])
     yAxis = d3.axisRight(y).ticks(5).tickFormat(d => d)
     gY.style("opacity", 0)
 
@@ -3741,6 +3784,7 @@ function seventh_slide(no_transition = false) {
             .attr("y", d => y(d[1]))
             .attr("height", d => y(d[0]) - y(d[1]))
 
+        // Add some text labels for the values
         bar_stack
             .selectAll("text")
             .data(d => d)
@@ -3752,7 +3796,7 @@ function seventh_slide(no_transition = false) {
             .attr("dy", 10)
             .attr("dominant-baseline", "hanging")
             .style("opacity", 0)
-            .text(d => d[1])
+            .text(d => d[1] - d[0])
             .transition()
             .duration(1)
             .delay((d,i) => 500 + i*100)
@@ -3772,9 +3816,9 @@ function seventh_slide(no_transition = false) {
             },
             //can use x, y directly instead of data
             x: x(2018) + x.bandwidth()/2,
-            y: y(250),
+            y: y(320),
             dx: x(2014) - x(2018),
-            dy: y(320) - y(250),
+            dy: y(370) - y(320),
         }])
 
     d3.timeout(() => {
