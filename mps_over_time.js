@@ -1,17 +1,16 @@
 // ----------------------------------------------------------------------------
-// ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗    ██████╗  █████╗ ██████╗ ██╗     ██╗ █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗
-// ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔══██╗██╔══██╗██╔══██╗██║     ██║██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
-// ██║ █╗ ██║██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║    ██║██╔██╗ ██║    ██████╔╝███████║██████╔╝██║     ██║███████║██╔████╔██║█████╗  ██╔██╗ ██║   ██║
-// ██║███╗██║██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ██║██║╚██╗██║    ██╔═══╝ ██╔══██║██╔══██╗██║     ██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║
-// ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║    ██║██║ ╚████║    ██║     ██║  ██║██║  ██║███████╗██║██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║
-//  ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ╚═╝╚═╝  ╚═══╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+// ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗     ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗ ███████╗███████╗
+// ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔════╝██╔════╝
+// ██║ █╗ ██║██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║    ██║██╔██╗ ██║    ██║     ██║   ██║██╔██╗ ██║██║  ███╗██████╔╝█████╗  ███████╗
+// ██║███╗██║██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ██║██║╚██╗██║    ██║     ██║   ██║██║╚██╗██║██║   ██║██╔══██╗██╔══╝  ╚════██║
+// ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║    ██║██║ ╚████║    ╚██████╗╚██████╔╝██║ ╚████║╚██████╔╝██║  ██║███████╗███████║
+//  ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ╚═╝╚═╝  ╚═══╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 // ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-// A visualization celebrating women MPs in the UK House of Commons
+// A visualization celebrating women in the House of Representatives
 //
 // by Durand D'souza
 //
-// https://github.com/dldx/women-in-parliament
+// https://github.com/dldx/women-in-congress
 //
 // ----------------------------------------------------------------------------
 //
@@ -336,7 +335,7 @@ function initial_render() {
         .range([0, width])
 
     y = d3.scaleLinear()
-        .domain([0, 90]) // Almost 210 MPs by 2020
+        .domain([0, 90]) // Almost 90 reps by 2020
         .range([height, 0])
 
     svg.append("defs")
@@ -723,6 +722,9 @@ function first_slide(no_transition = false) {
                 .transition()
                 .delay(3000)
                 .style("opacity", 0)
+                .on("end", () => {
+                    d3.selectAll(".annotation-group").remove()
+                })
 
             // Also select the mouseover line and fade it out
             if (IGNORE_STATE == false) {
@@ -1219,7 +1221,7 @@ function second_slide(no_transition = false) {
     // ----------------------------------------------------------------------------
 
     let y_canvas = d3.scaleLinear()
-        .domain([0, 90]) // Almost 210 MPs by 2020
+        .domain([0, 90]) // Almost 90 reps by 2020
         .range([height, 0])
 
     let total_women_mps_line_canvas = d3.line()
@@ -2254,6 +2256,14 @@ function fifth_slide(no_transition = false) {
         closeAllLists()
         if (results.length == 1) {
             slide5_show_mp_tooltip(results[0])
+        } else {
+            // Hide tooltip
+            d3.select(tooltip)
+                .style("opacity", 0)
+
+            // Get rid of annotation line too
+            d3.selectAll(".annotation-group").remove()
+
         }
         if (!val) { return false }
         currentFocus = -1
@@ -2307,8 +2317,10 @@ function fifth_slide(no_transition = false) {
             currentFocus++
 
             // Show the MP that it corresponds to
-            slide5_show_mp_tooltip(temp_nodes.slice(2)
-                .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            if(!isMobile) {
+                slide5_show_mp_tooltip(temp_nodes.slice(2)
+                    .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            }
             /*and and make the current item more visible:*/
             addActive(x)
         } else if (e.keyCode == 38) { //up
@@ -2316,8 +2328,10 @@ function fifth_slide(no_transition = false) {
             decrease the currentFocus variable:*/
             currentFocus--
             // Show the MP that it corresponds to
-            slide5_show_mp_tooltip(temp_nodes.slice(2)
-                .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            if(!isMobile) {
+                slide5_show_mp_tooltip(temp_nodes.slice(2)
+                    .filter(d => d.id == x[currentFocus].getElementsByTagName("input")[0].value)[0])
+            }
             /*and and make the current item more visible:*/
             addActive(x)
         } else if (e.keyCode == 13) {
@@ -3280,7 +3294,6 @@ function sixth_slide(no_transition = false) {
         .duration(1000)
 
 
-
     // Only do the following steps if we'e coming from slide 5 for the first time
     if (lastTransitioned == 4) {
         // Only show selected topic's label for now
@@ -3478,6 +3491,7 @@ function sixth_slide(no_transition = false) {
                 new_slide = 4
                 d3.select(".is-active")
                     .style("opacity", 0)
+                    .style("pointer-events", "none")
                 update_state()
             })
 
@@ -4151,7 +4165,9 @@ function handleStepEnter(response) {
         return i === response.index
     })
     if(d3.select(".is-active").node().innerText != "") {
-        d3.select(".is-active").style("opacity", 1)
+        d3.select(".is-active")
+            .style("opacity", 1)
+            .style("pointer-events", "all")
     }
 
     // Hide tooltip
@@ -4339,6 +4355,7 @@ function handleStepEnter(response) {
                         canvas.call(zoom)
                         d3.select(".is-active")
                             .style("opacity", 0)
+                            .style("pointer-events", "none")
                         d3.select(".switch").select("label").text("Stop zooming")
                     } else {
                         reset_zoom()
@@ -4348,6 +4365,7 @@ function handleStepEnter(response) {
                                 return this.innerText != ""
                             })
                             .style("opacity", 1)
+                            .style("pointer-events", "all")
                     }
 
                 })
