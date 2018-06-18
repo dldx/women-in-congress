@@ -723,7 +723,7 @@ function first_slide(no_transition = false) {
                 .delay(3000)
                 .style("opacity", 0)
                 .on("end", () => {
-                    d3.selectAll(".annotation-group").remove()
+                    mouseover_svg.selectAll(".annotation-group").remove()
                 })
 
             // Also select the mouseover line and fade it out
@@ -760,7 +760,7 @@ function show_mp_tooltip(nodeData, mousePos) {
             d3.select("#tooltip")
                 .style("opacity", 0)
                 // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove()
+            mouseover_svg.selectAll(".annotation-group").remove()
 
         }, { once: true })
     }, 1000)
@@ -769,7 +769,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         .style("opacity", 0)
         .on("end", () => {
             // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove()
+            mouseover_svg.selectAll(".annotation-group").remove()
         })
 
     // Display tooltip
@@ -833,7 +833,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
         var line_pos = mouseover_svg.select("line").node().getBoundingClientRect()
 
-        d3.selectAll(".annotation-group").remove()
+        mouseover_svg.selectAll(".annotation-group").remove()
 
         var makeAnnotations = d3.annotation()
             .type(d3.annotationLabel)
@@ -905,7 +905,7 @@ function to_first_slide(current_slide) {
     d3.select("#tooltip")
         .style("opacity", 0)
     // Get rid of annotation line too
-    d3.selectAll(".annotation-group").remove()
+    mouseover_svg.selectAll(".annotation-group").remove()
 
     // Show canvas
     d3.select("#visible-canvas")
@@ -1156,7 +1156,7 @@ function second_slide(no_transition = false) {
     d3.select("#tooltip")
         .style("opacity", 0)
     // Get rid of annotation line too
-    d3.selectAll(".annotation-group").remove()
+    mouseover_svg.selectAll(".annotation-group").remove()
 
     // Hide the mouseover line
     mouseover_svg.select("line")
@@ -1457,7 +1457,7 @@ function second_slide(no_transition = false) {
                             d3.select("#tooltip")
                                 .style("opacity", 0)
                             // Get rid of annotation line too
-                            d3.selectAll(".annotation-group").remove()
+                            mouseover_svg.selectAll(".annotation-group").remove()
 
                         }, { once: true })
                     }, 1000)
@@ -1466,7 +1466,7 @@ function second_slide(no_transition = false) {
                         .style("opacity", 0)
                         .on("end", () => {
                             // Get rid of annotation line too
-                            d3.selectAll(".annotation-group").remove()
+                            mouseover_svg.selectAll(".annotation-group").remove()
                         })
 
                     // Get mouse positions
@@ -2262,7 +2262,7 @@ function fifth_slide(no_transition = false) {
                 .style("opacity", 0)
 
             // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove()
+            mouseover_svg.selectAll(".annotation-group").remove()
 
         }
         if (!val) { return false }
@@ -2442,7 +2442,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         .style("opacity", 0)
 
     // Remove annotations
-    d3.selectAll(".annotation-group").remove()
+    mouseover_svg.selectAll(".annotation-group").remove()
 
     // Zoom out
     if (document.getElementById("zoom-checkbox") != null) {
@@ -2883,7 +2883,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                 d3.select("#tooltip")
                     .style("opacity", 0)
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
+                mouseover_svg.selectAll(".annotation-group").remove()
 
             }, { once: true })
         }, 1000)
@@ -2892,7 +2892,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .style("opacity", 0)
             .on("end", () => {
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
+                mouseover_svg.selectAll(".annotation-group").remove()
             })
         if (typeof (mousePos) === "undefined") {
             mousePos = [nodeData.x, nodeData.y] //[width * 3 / 4, height * 3 / 4]
@@ -2948,7 +2948,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
             var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
 
-            d3.selectAll(".annotation-group").remove()
+            mouseover_svg.selectAll(".annotation-group").remove()
 
             var makeAnnotations = d3.annotation()
                 .type(d3.annotationLabel)
@@ -2988,7 +2988,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                 d3.select("#tooltip")
                     .style("opacity", 0)
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
+                mouseover_svg.selectAll(".annotation-group").remove()
 
             }, { once: true })
         }, 1000)
@@ -2998,7 +2998,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .style("opacity", 0)
             .on("end", () => {
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove()
+                mouseover_svg.selectAll(".annotation-group").remove()
             })
         d3.select("#tooltip")
             .style("opacity", 1)
@@ -3024,7 +3024,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .style("opacity", 1)
             .style("stroke-width", circleRadius)
 
-        d3.timeout(() => {
+        annotate_timer = d3.timeout(() => {
         // Annotate circle
             var tooltip_pos = tooltip.getBoundingClientRect()
             // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
@@ -3033,7 +3033,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
             var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect()
 
-            d3.selectAll(".annotation-group").remove()
+            mouseover_svg.selectAll(".annotation-group").remove()
 
             var makeAnnotations = d3.annotation()
                 .type(d3.annotationLabel)
@@ -4176,6 +4176,14 @@ function handleStepEnter(response) {
 
     // Remove any annotations
     d3.selectAll(".annotation-group").remove()
+
+    window.addEventListener("scroll", () => {
+        d3.select("#tooltip")
+            .style("opacity", 0)
+        // Get rid of annotation line too
+        mouseover_svg.selectAll(".annotation-group").remove()
+
+    }, { once: true })
     // Remove existing labels
     mouseover_svg.selectAll(".female-label, .male-label").remove()
 
@@ -4346,7 +4354,7 @@ function handleStepEnter(response) {
                 .on("mouseover", () => {
                     d3.select("#tooltip")
                         .style("opacity", 0)
-                    d3.selectAll(".annotation-group").remove()
+                    mouseover_svg.selectAll(".annotation-group").remove()
                 })
                 .select("#zoom-checkbox")
                 .on("change", function () {
@@ -4742,6 +4750,9 @@ function handleStepEnter(response) {
         // Fifth slide
         d3.select("#slide4")
             .style("display", "none")
+
+        // Stop previous annotation timer
+        annotate_timer.stop()
 
         switch (new_step) {
         case 0:
