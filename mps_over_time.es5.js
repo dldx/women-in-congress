@@ -3,19 +3,18 @@
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 // ----------------------------------------------------------------------------
-// ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗    ██████╗  █████╗ ██████╗ ██╗     ██╗ █████╗ ███╗   ███╗███████╗███╗   ██╗████████╗
-// ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔══██╗██╔══██╗██╔══██╗██║     ██║██╔══██╗████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
-// ██║ █╗ ██║██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║    ██║██╔██╗ ██║    ██████╔╝███████║██████╔╝██║     ██║███████║██╔████╔██║█████╗  ██╔██╗ ██║   ██║
-// ██║███╗██║██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ██║██║╚██╗██║    ██╔═══╝ ██╔══██║██╔══██╗██║     ██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║
-// ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║    ██║██║ ╚████║    ██║     ██║  ██║██║  ██║███████╗██║██║  ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║
-//  ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ╚═╝╚═╝  ╚═══╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝
+// ██╗    ██╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗    ██╗███╗   ██╗     ██████╗ ██████╗ ███╗   ██╗ ██████╗ ██████╗ ███████╗███████╗
+// ██║    ██║██╔═══██╗████╗ ████║██╔════╝████╗  ██║    ██║████╗  ██║    ██╔════╝██╔═══██╗████╗  ██║██╔════╝ ██╔══██╗██╔════╝██╔════╝
+// ██║ █╗ ██║██║   ██║██╔████╔██║█████╗  ██╔██╗ ██║    ██║██╔██╗ ██║    ██║     ██║   ██║██╔██╗ ██║██║  ███╗██████╔╝█████╗  ███████╗
+// ██║███╗██║██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║    ██║██║╚██╗██║    ██║     ██║   ██║██║╚██╗██║██║   ██║██╔══██╗██╔══╝  ╚════██║
+// ╚███╔███╔╝╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║    ██║██║ ╚████║    ╚██████╗╚██████╔╝██║ ╚████║╚██████╔╝██║  ██║███████╗███████║
+//  ╚══╝╚══╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝    ╚═╝╚═╝  ╚═══╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
 // ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-// A visualization celebrating women MPs in the UK House of Commons
+// A visualization celebrating women in the House of Representatives
 //
 // by Durand D'souza
 //
-// https://github.com/dldx/women-in-parliament
+// https://github.com/dldx/women-in-congress
 //
 // ----------------------------------------------------------------------------
 //
@@ -257,7 +256,7 @@ function initial_render() {
 
     x = d3.scaleUtc().domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]).range([0, width]);
 
-    y = d3.scaleLinear().domain([0, 90]) // Almost 210 MPs by 2020
+    y = d3.scaleLinear().domain([0, 90]) // Almost 90 reps by 2020
     .range([height, 0]);
 
     svg.append("defs");
@@ -550,7 +549,9 @@ function first_slide() {
     canvas.on("mousemove", mpMouseover)
     // On mouse out, change everything back
     .on("mouseout", function () {
-        d3.select(tooltip).transition().delay(3000).style("opacity", 0);
+        d3.select(tooltip).transition().delay(3000).style("opacity", 0).on("end", function () {
+            mouseover_svg.selectAll(".annotation-group").remove();
+        });
 
         // Also select the mouseover line and fade it out
         if (IGNORE_STATE == false) {
@@ -580,13 +581,13 @@ function show_mp_tooltip(nodeData, mousePos) {
         window.addEventListener("scroll", function () {
             d3.select("#tooltip").style("opacity", 0);
             // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove();
+            mouseover_svg.selectAll(".annotation-group").remove();
         }, { once: true });
     }, 1000);
     // Hide tooltip after 5 secs
     d3.select("#tooltip").transition().delay(5000).style("opacity", 0).on("end", function () {
         // Get rid of annotation line too
-        d3.selectAll(".annotation-group").remove();
+        mouseover_svg.selectAll(".annotation-group").remove();
     });
 
     // Display tooltip
@@ -627,7 +628,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
         var line_pos = mouseover_svg.select("line").node().getBoundingClientRect();
 
-        d3.selectAll(".annotation-group").remove();
+        mouseover_svg.selectAll(".annotation-group").remove();
 
         var makeAnnotations = d3.annotation().type(d3.annotationLabel).annotations([{
             note: {
@@ -678,7 +679,7 @@ function to_first_slide(current_slide) {
     // Hide tooltip
     d3.select("#tooltip").style("opacity", 0);
     // Get rid of annotation line too
-    d3.selectAll(".annotation-group").remove();
+    mouseover_svg.selectAll(".annotation-group").remove();
 
     // Show canvas
     d3.select("#visible-canvas").style("opacity", 1).style("display", null);
@@ -855,7 +856,7 @@ function second_slide() {
     // Hide the tooltip
     d3.select("#tooltip").style("opacity", 0);
     // Get rid of annotation line too
-    d3.selectAll(".annotation-group").remove();
+    mouseover_svg.selectAll(".annotation-group").remove();
 
     // Hide the mouseover line
     mouseover_svg.select("line").style("opacity", 0);
@@ -910,7 +911,7 @@ function second_slide() {
     // DRAW LINE SHOWING TOTAL WOMEN MPS OVER TIME
     // ----------------------------------------------------------------------------
 
-    var y_canvas = d3.scaleLinear().domain([0, 90]) // Almost 210 MPs by 2020
+    var y_canvas = d3.scaleLinear().domain([0, 90]) // Almost 90 reps by 2020
     .range([height, 0]);
 
     var total_women_mps_line_canvas = d3.line().x(function (d) {
@@ -1047,13 +1048,13 @@ function second_slide() {
                 window.addEventListener("scroll", function () {
                     d3.select("#tooltip").style("opacity", 0);
                     // Get rid of annotation line too
-                    d3.selectAll(".annotation-group").remove();
+                    mouseover_svg.selectAll(".annotation-group").remove();
                 }, { once: true });
             }, 1000);
             // Hide tooltip after 5 secs
             d3.select("#tooltip").transition().delay(5000).style("opacity", 0).on("end", function () {
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove();
+                mouseover_svg.selectAll(".annotation-group").remove();
             });
 
             // Get mouse positions
@@ -1644,6 +1645,12 @@ function fifth_slide() {
         closeAllLists();
         if (results.length == 1) {
             slide5_show_mp_tooltip(results[0]);
+        } else {
+            // Hide tooltip
+            d3.select(tooltip).style("opacity", 0);
+
+            // Get rid of annotation line too
+            mouseover_svg.selectAll(".annotation-group").remove();
         }
         if (!val) {
             return false;
@@ -1702,9 +1709,11 @@ function fifth_slide() {
             currentFocus++;
 
             // Show the MP that it corresponds to
-            slide5_show_mp_tooltip(temp_nodes.slice(2).filter(function (d) {
-                return d.id == x[currentFocus].getElementsByTagName("input")[0].value;
-            })[0]);
+            if (!isMobile) {
+                slide5_show_mp_tooltip(temp_nodes.slice(2).filter(function (d) {
+                    return d.id == x[currentFocus].getElementsByTagName("input")[0].value;
+                })[0]);
+            }
             /*and and make the current item more visible:*/
             addActive(x);
         } else if (e.keyCode == 38) {
@@ -1713,9 +1722,11 @@ function fifth_slide() {
             decrease the currentFocus variable:*/
             currentFocus--;
             // Show the MP that it corresponds to
-            slide5_show_mp_tooltip(temp_nodes.slice(2).filter(function (d) {
-                return d.id == x[currentFocus].getElementsByTagName("input")[0].value;
-            })[0]);
+            if (!isMobile) {
+                slide5_show_mp_tooltip(temp_nodes.slice(2).filter(function (d) {
+                    return d.id == x[currentFocus].getElementsByTagName("input")[0].value;
+                })[0]);
+            }
             /*and and make the current item more visible:*/
             addActive(x);
         } else if (e.keyCode == 13) {
@@ -1807,7 +1818,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
     d3.select("#tooltip").style("opacity", 0);
 
     // Remove annotations
-    d3.selectAll(".annotation-group").remove();
+    mouseover_svg.selectAll(".annotation-group").remove();
 
     // Zoom out
     if (document.getElementById("zoom-checkbox") != null) {
@@ -2155,13 +2166,13 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             window.addEventListener("scroll", function () {
                 d3.select("#tooltip").style("opacity", 0);
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove();
+                mouseover_svg.selectAll(".annotation-group").remove();
             }, { once: true });
         }, 1000);
         // Hide tooltip after 5 secs
         d3.select("#tooltip").transition().delay(5000).style("opacity", 0).on("end", function () {
             // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove();
+            mouseover_svg.selectAll(".annotation-group").remove();
         });
         if (typeof mousePos === "undefined") {
             mousePos = [nodeData.x, nodeData.y]; //[width * 3 / 4, height * 3 / 4]
@@ -2192,7 +2203,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
             var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect();
 
-            d3.selectAll(".annotation-group").remove();
+            mouseover_svg.selectAll(".annotation-group").remove();
 
             var makeAnnotations = d3.annotation().type(d3.annotationLabel).annotations([{
                 note: {
@@ -2224,14 +2235,14 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             window.addEventListener("scroll", function () {
                 d3.select("#tooltip").style("opacity", 0);
                 // Get rid of annotation line too
-                d3.selectAll(".annotation-group").remove();
+                mouseover_svg.selectAll(".annotation-group").remove();
             }, { once: true });
         }, 1000);
 
         // Hide tooltip after 5 secs
         d3.select("#tooltip").transition().delay(5000).style("opacity", 0).on("end", function () {
             // Get rid of annotation line too
-            d3.selectAll(".annotation-group").remove();
+            mouseover_svg.selectAll(".annotation-group").remove();
         });
         d3.select("#tooltip").style("opacity", 1).classed("slide5-tooltip", true).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
@@ -2243,7 +2254,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             return d.y;
         }).attr("r", circleRadius * 2.5).style("opacity", 1).style("stroke-width", circleRadius);
 
-        d3.timeout(function () {
+        annotate_timer = d3.timeout(function () {
             // Annotate circle
             var tooltip_pos = tooltip.getBoundingClientRect();
             // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
@@ -2252,7 +2263,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             //     height + 2*tooltip.offsetHeight - 20), margin.top + tooltip.offsetHeight)}
             var circle_pos = mouseover_svg.select("circle").node().getBoundingClientRect();
 
-            d3.selectAll(".annotation-group").remove();
+            mouseover_svg.selectAll(".annotation-group").remove();
 
             var makeAnnotations = d3.annotation().type(d3.annotationLabel).annotations([{
                 note: {
@@ -2586,7 +2597,7 @@ function sixth_slide() {
         }).on("click", function (d) {
             selected_topic = d[0];
             new_slide = 4;
-            d3.select(".is-active").style("opacity", 0);
+            d3.select(".is-active").style("opacity", 0).style("pointer-events", "none");
             update_state();
         });
 
@@ -3139,7 +3150,7 @@ function handleStepEnter(response) {
         return i === response.index;
     });
     if (d3.select(".is-active").node().innerText != "") {
-        d3.select(".is-active").style("opacity", 1);
+        d3.select(".is-active").style("opacity", 1).style("pointer-events", "all");
     }
 
     // Hide tooltip
@@ -3147,6 +3158,12 @@ function handleStepEnter(response) {
 
     // Remove any annotations
     d3.selectAll(".annotation-group").remove();
+
+    window.addEventListener("scroll", function () {
+        d3.select("#tooltip").style("opacity", 0);
+        // Get rid of annotation line too
+        mouseover_svg.selectAll(".annotation-group").remove();
+    }, { once: true });
     // Remove existing labels
     mouseover_svg.selectAll(".female-label, .male-label").remove();
 
@@ -3300,19 +3317,19 @@ function handleStepEnter(response) {
 
                     d3.select(".switch").style("opacity", 1).on("mouseover", function () {
                         d3.select("#tooltip").style("opacity", 0);
-                        d3.selectAll(".annotation-group").remove();
+                        mouseover_svg.selectAll(".annotation-group").remove();
                     }).select("#zoom-checkbox").on("change", function () {
                         if (this.checked) {
                             zoom.on("zoom", zoomed);
                             canvas.call(zoom);
-                            d3.select(".is-active").style("opacity", 0);
+                            d3.select(".is-active").style("opacity", 0).style("pointer-events", "none");
                             d3.select(".switch").select("label").text("Stop zooming");
                         } else {
                             reset_zoom();
                             d3.select(".is-active").filter(function () {
                                 // If it is an empty div, don't show
                                 return this.innerText != "";
-                            }).style("opacity", 1);
+                            }).style("opacity", 1).style("pointer-events", "all");
                         }
                     });
                     break;
@@ -3618,6 +3635,9 @@ function handleStepEnter(response) {
         case 4:
             // Fifth slide
             d3.select("#slide4").style("display", "none");
+
+            // Stop previous annotation timer
+            annotate_timer.stop();
 
             switch (new_step) {
                 case 0:
