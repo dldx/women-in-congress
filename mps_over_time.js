@@ -1040,7 +1040,7 @@ function second_slide(no_transition = false) {
         .y(function (d) {
             return y(d.total_mps)
         })
-        .curve(d3.curveCardinal)
+        .curve(d3.curveLinear)
 
     // Add the svg path to display this line
     max_mps_path = slide2Group.append("path")
@@ -1051,7 +1051,7 @@ function second_slide(no_transition = false) {
 
     // Also add an area curve to shade the whole region below the max mp line
     max_mps_area = d3.area()
-        .curve(d3.curveCardinal)
+        .curve(d3.curveLinear)
         .x(function (d) {
             return x(d.year)
         })
@@ -1089,7 +1089,7 @@ function second_slide(no_transition = false) {
         .y(function (d) {
             return y(d.total_mps / 2)
         })
-        .curve(d3.curveCardinal)
+        .curve(d3.curveLinear)
 
     // Add this in svg
     half_max_mps_path = slide2Group.append("path")
@@ -1106,7 +1106,7 @@ function second_slide(no_transition = false) {
         .y(function (d) {
             return y(d.total_women_mps)
         })
-        .curve(d3.curveBasis)
+        .curve(d3.curveLinear)
 
     // add the line path
     total_women_mps_path = slide2Group.append("path")
@@ -1125,7 +1125,7 @@ function second_slide(no_transition = false) {
 
     // Area curve for total number of women MPs
     total_women_mps_area = d3.area()
-        .curve(d3.curveBasis)
+        .curve(d3.curveLinear)
         .x(function (d) {
             return x(d.year)
         })
@@ -1235,7 +1235,7 @@ function second_slide(no_transition = false) {
         .y(function (d) {
             return y_canvas(d.total_women_mps)
         })
-        .curve(d3.curveBasis)
+        .curve(d3.curveLinear)
         .context(context)
 
     if (no_transition == false) {
@@ -1809,7 +1809,7 @@ function third_slide(no_transition = false) {
     // ----------------------------------------------------------------------------
 
     var women_in_govt_line = d3.line()
-        .curve(d3.curveBasis)
+        .curve(d3.curveLinear)
         .x(d => x(d.year))
         .y(d => y(d.women_pct))
 
