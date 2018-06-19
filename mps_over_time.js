@@ -554,7 +554,7 @@ function add_election_rects(show_rect = true) {
         .data(total_mps_over_time_data)
         .enter()
         .append("rect")
-        .style("opacity", show_rect ? 0.25 : 0)
+        .style("opacity", show_rect ? 0.35 : 0)
         .attr("class", "election-rect")
         .classed("c-1", function (d, i) {
             return i % 2 == 0
@@ -882,9 +882,6 @@ function to_first_slide(current_slide) {
         t0.select("#info-bubbles")
             .style("opacity", 0)
             .remove()
-        d3.selectAll(".election-rect")
-            .on("mouseover", null)
-            .on("mouseout", null)
         break
     case 2:
         // Fade all objects belonging to second and third slides
@@ -900,6 +897,11 @@ function to_first_slide(current_slide) {
 
         break
     }
+    // Reduce opacity of election rects for first slide
+    d3.selectAll(".election-rect")
+        .on("mouseover", null)
+        .on("mouseout", null)
+
 
     // Hide tooltip
     d3.select("#tooltip")
@@ -1076,6 +1078,8 @@ function second_slide(no_transition = false) {
     d3.select("#election-rects")
         .attr("clip-path", "url(#slide2-hover-mask)")
         .moveToFront()
+        .selectAll("rect")
+        .style("opacity", 0.25)
 
     // Add a 50% line to show halfway mark for gender
     half_max_mps_line = d3.line()
