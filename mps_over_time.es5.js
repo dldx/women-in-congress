@@ -403,7 +403,7 @@ function add_election_rects() {
 
     // remove pre-existing rects
     d3.select("#election-rects").remove();
-    electionRects = zoomedArea.append("g").attr("id", "election-rects").selectAll("rect").data(total_mps_over_time_data).enter().append("rect").style("opacity", show_rect ? 0.15 : 0).attr("class", "election-rect").classed("c-1", function (d, i) {
+    electionRects = zoomedArea.append("g").attr("id", "election-rects").selectAll("rect").data(total_mps_over_time_data).enter().append("rect").style("opacity", show_rect ? 0.35 : 0).attr("class", "election-rect").classed("c-1", function (d, i) {
         return i % 2 == 0;
     }).classed("c-2", function (d, i) {
         return i % 2 == 1;
@@ -594,7 +594,7 @@ function show_mp_tooltip(nodeData, mousePos) {
     d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight * 2 - 20, height + tooltip.offsetHeight * 2 - 20), margin.top) + "px)").style("pointer-events", "none");
 
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1;
-    var tooltip_innerHTML = "\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body\">\n                <div class=\"mp-image-parent\">";
+    var tooltip_innerHTML = "\n                    <h1 style=\"border-color: " + colorParty(nodeData.party) + ";\">" + nodeData.name + "</h1>\n                    <div class=\"body\">\n                <div class=\"mp-image-parent\">";
 
     if (typeof mp_base64_data == "undefined") {
         tooltip_innerHTML += "<img class=\"mp-image-blurred\" style=\"opacity: 0;\"/>\n                <img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" />\n                ";
@@ -665,7 +665,6 @@ function to_first_slide(current_slide) {
             // If we're coming from the second slide
             t0.select("#slide2-group").style("opacity", 0).remove();
             t0.select("#info-bubbles").style("opacity", 0).remove();
-            d3.selectAll(".election-rect").on("mouseover", null).on("mouseout", null);
             break;
         case 2:
             // Fade all objects belonging to second and third slides
@@ -675,6 +674,8 @@ function to_first_slide(current_slide) {
 
             break;
     }
+    // Reduce opacity of election rects for first slide
+    d3.selectAll(".election-rect").on("mouseover", null).on("mouseout", null);
 
     // Hide tooltip
     d3.select("#tooltip").style("opacity", 0);
@@ -801,7 +802,7 @@ function second_slide() {
     // Mask election rectangles with the total area path
     mask = slide2Group.append("clipPath").attr("id", "slide2-hover-mask").append("path").data([total_mps_over_time_data]).attr("d", max_mps_area);
 
-    d3.select("#election-rects").attr("clip-path", "url(#slide2-hover-mask)").moveToFront();
+    d3.select("#election-rects").attr("clip-path", "url(#slide2-hover-mask)").moveToFront().selectAll("rect").style("opacity", 0.25);
 
     // Add a 50% line to show halfway mark for gender
     half_max_mps_line = d3.line().x(function (d) {
@@ -1028,7 +1029,7 @@ function second_slide() {
         half_max_mps_line_smooth = d3.line().x(function (d) {
             return x(d.year);
         }).y(function (d) {
-            return y(d.total_mps / 2 + 3.5);
+            return y(d.total_mps / 2);
         }).curve(d3.curveBundle.beta(0.2));
 
         // Add path for text to follow
@@ -1259,7 +1260,7 @@ function third_slide() {
     half_max_mps_path.transition(t0).attr("d", half_max_mps_line);
 
     half_max_mps_line_smooth.y(function () {
-        return y(51);
+        return y(50);
     });
 
     text_path_50_50.transition(t0).attr("d", half_max_mps_line_smooth);
@@ -1361,7 +1362,7 @@ function third_slide() {
 
             // Show relevant tooltip info
             var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1;
-            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)) + "\">" + d.values.slice(-1)[0].country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.values.slice(-1)[0].year.getFullYear() + ".\n                            </div>";
+            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"border-color: " + (d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)) + "\">" + d.values.slice(-1)[0].country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.values.slice(-1)[0].year.getFullYear() + ".\n                            </div>";
         }
     }).on("end", function (d) {
         // Record that the country is now visible on screen so that we can toggle its hover methods
@@ -1411,7 +1412,7 @@ function third_slide() {
             d3.select("#tooltip").style("opacity", 1).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
             // Show relevant tooltip info
             var gender_ratio = 100 / d.data.women_pct - 1;
-            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"background-color: " + (d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)) + ";\">" + d.data.country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.data.year.getFullYear() + ".\n                            </div>";
+            tooltip.innerHTML = "\n                            <div class=\"slide3-tooltip\">\n                                <h1 style=\"border-color: " + (d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)) + ";\">" + d.data.country + "</h1>\n                                For every <span class=\"female\">female</span> representative, there were\n                                <div class=\"gender-ratio\">" + gender_ratio.toFixed(1) + "</div> <span class=\"male\">male</span> representatives in " + d.data.year.getFullYear() + ".\n                            </div>";
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""));
             d.line.attr("stroke-width", function (d) {
                 return d.key == "United States" ? lineThickness * 2 : lineThickness;
@@ -2186,7 +2187,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
         var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1;
         // Show relevant tooltip info
-        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + colorParty(nodeData.party) + ";\">" + nodeData.full_name + "</h1>\n                    <div class=\"body\">\n                    <div class=\"mp-image-parent\">\n                    " + (typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" + "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />") + "\n                    </div>\n                    <div class=\"body-facts\">\n                    <div class=\"mp-constituency\">" + nodeData.district + "</div>\n                    <p>" + (slide5_yScale.invert(nodeData.y) * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "Female" ? "her" : "his") + " time spent on <em>" + selected_topic + "</em></p>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n</div>";
+        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"border-color: " + colorParty(nodeData.party) + ";\">" + nodeData.full_name + "</h1>\n                    <div class=\"body\">\n                    <div class=\"mp-image-parent\">\n                    " + (typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" + "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />") + "\n                    </div>\n                    <div class=\"body-facts\">\n                    <div class=\"mp-constituency\">" + nodeData.district + "</div>\n                    <p>" + (slide5_yScale.invert(nodeData.y) * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "Female" ? "her" : "his") + " time spent on <em>" + selected_topic + "</em></p>\n                    </div>\n                    </div>\n                    <div class=\"mp-party\" style=\"opacity: " + (partyLogo ? 0 : 1) + "\">" + nodeData.party + "</div>\n                    " + (partyLogo ? "<img class=\"mp-party-logo\" alt=\"" + nodeData.party + " logo\" style=\"opacity: " + (partyLogo ? 1 : 0) + "\" src=\"./party_logos/" + nodeData.party + ".svg\"/>" : "") + "\n</div>";
         // Also select the mouseover circle and move it to the right location
         mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
             return d.x;
@@ -2247,7 +2248,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         d3.select("#tooltip").style("opacity", 1).classed("slide5-tooltip", true).style("transform", "translate(" + Math.max(Math.min(mousePos[0] - tooltip.offsetWidth / 2, width - tooltip.offsetWidth / 2 - margin.right), 0 + margin.left) + "px," + Math.max(Math.min(mousePos[1] - tooltip.offsetHeight - 20, height + tooltip.offsetHeight - 20), margin.top) + "px)").style("pointer-events", "none");
 
         // Show relevant tooltip info
-        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"background-color: " + (nodeData.gender == "female" ? colors["Female"] : colors["Male"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " representative spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
+        tooltip.innerHTML = "\n                            <div class=\"slide5-tooltip\">\n                    <h1 style=\"border-color: " + (nodeData.gender == "female" ? colors["Female"] : colors["Male"]) + ";\">" + nodeData.gender.toUpperCase() + "</h1>\n                    The average " + nodeData.gender.toUpperCase() + " representative spends <em>" + (nodeData.median * 100).toFixed(1) + "%</em> of " + (nodeData.gender == "male" ? "his" : "her") + " time talking about <em>" + selected_topic + "</em>.\n</div>";
         mouseover_svg.select("circle").datum(nodeData).attr("cx", function (d) {
             return d.x;
         }).attr("cy", function (d) {
@@ -3200,12 +3201,12 @@ function handleStepEnter(response) {
                         // Unhighlight Roosevelt's term
                         electionRects.filter(function (d, i) {
                             return i == 4;
-                        }).classed("hover", false).style("opacity", 0.15);
+                        }).classed("hover", false).style("opacity", 0.35);
                     }
                     // Show election rects
                     electionRects.transition().delay(function (d, i) {
                         return i * 50;
-                    }).style("opacity", 0.15);
+                    }).style("opacity", 0.35);
                     break;
                 case 0.1:
                     // Highlight Roosevelt's term
@@ -3252,7 +3253,7 @@ function handleStepEnter(response) {
                     // Unhighlight Roosevelt's term
                     electionRects.filter(function (d, i) {
                         return i == 4;
-                    }).classed("hover", false).style("opacity", 0.15);
+                    }).classed("hover", false).style("opacity", 0.35);
 
                     // Draw lines for longest serving woman
                     dataContainer.selectAll("custom.line").filter(function (d) {
@@ -3488,7 +3489,7 @@ function handleStepEnter(response) {
                         half_max_mps_path.transition().attr("d", half_max_mps_line);
 
                         half_max_mps_line_smooth.y(function (d) {
-                            return y(d.total_mps / 2 + 3.5);
+                            return y(d.total_mps / 2);
                         });
                         text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
@@ -3528,7 +3529,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(51));
+                    half_max_mps_line_smooth.y(y(50));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3565,7 +3566,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(51));
+                    half_max_mps_line_smooth.y(y(50));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3602,7 +3603,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(51));
+                    half_max_mps_line_smooth.y(y(50));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {

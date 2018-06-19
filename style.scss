@@ -1141,8 +1141,9 @@ input:checked + .slider:before {
 }
 
 .half-max-mps-path {
-  stroke-dasharray: 5,10;
+  stroke-dasharray: 1,4;
   stroke: $female;
+  stroke-width: 1.5;
 }
 
 .total-women-mps-area {
@@ -1157,9 +1158,10 @@ input:checked + .slider:before {
 .men-label,
 .party-label,
 .women-label {
-  font-weight: 500;
+  text-transform:uppercase;
+  font-weight: bold;
   text-anchor: end;
-  font-size: 2.5rem;
+  font-size: 2rem;
   @include phone {
     font-size: 1.5rem;
   }
@@ -1179,10 +1181,10 @@ input:checked + .slider:before {
 }
 
 .i5050-label {
-  // alignment-baseline: ideographic;
+  alignment-baseline: middle;
   text-anchor: middle;
   fill: $female;
-  font-size: 2rem;
+  font-size: 1.5rem;
   @include phone {
     font-size: 1rem;
   }

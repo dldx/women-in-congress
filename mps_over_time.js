@@ -1424,7 +1424,7 @@ function second_slide(no_transition = false) {
                     return x(d.year)
                 })
                 .y(function (d) {
-                    return y(d.total_mps / 2 + 3.5)
+                    return y(d.total_mps / 2)
                 })
                 .curve(d3.curveBundle.beta(0.2))
 
@@ -1730,7 +1730,7 @@ function third_slide(no_transition = false) {
         .attr("d", half_max_mps_line)
 
     half_max_mps_line_smooth
-        .y(() => y(51))
+        .y(() => y(50))
 
     text_path_50_50
         .transition(t0)
@@ -4568,7 +4568,7 @@ function handleStepEnter(response) {
                 half_max_mps_path.transition()
                     .attr("d", half_max_mps_line)
 
-                half_max_mps_line_smooth.y(d => y(d.total_mps / 2 + 3.5))
+                half_max_mps_line_smooth.y(d => y(d.total_mps / 2))
                 text_path_50_50
                     .transition()
                     .attr("d", half_max_mps_line_smooth)
@@ -4618,7 +4618,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(51))
+            half_max_mps_line_smooth.y(y(50))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4666,7 +4666,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(51))
+            half_max_mps_line_smooth.y(y(50))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4713,7 +4713,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(51))
+            half_max_mps_line_smooth.y(y(50))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
