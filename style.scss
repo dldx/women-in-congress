@@ -17,8 +17,10 @@ $margin-right: 50;
 $margin-bottom: 30;
 $margin-left: 25;
 $tracker-colors: #5c5c5c, #424242;
-$body-background: #131313;
-$graph-background: #252525;
+$body-background: #0B0B0B;
+$body-foreground: #FFFAE9;
+$graph-background: #2A2A2A;
+$graph-foreground: $body-foreground;
 $tip-background: $body-background;
 $female: map-get($colors, Female);
 $male: map-get($colors, Male);
@@ -46,90 +48,151 @@ $desktop-width: 1024px;
     @content;
   }
 }
+/*
+	        This font software is the property of Commercial Type.
+
+	        You may not modify the font software, use it on another website, or install it on a computer.
+
+	        License information is available at http://commercialtype.com/eula
+	        For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
+
+	        Copyright (C) 2017 Schwartzco Inc.
+	        License: 1704-GNCLGK
+	*/
+/* Canela */
+@font-face {
+  font-family: 'Canela Web';
+  src: url("https://pudding.cool/assets/fonts/canela/Canela-Light-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/canela/Canela-Light-Web.woff") format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Canela Web';
+  src: url("https://pudding.cool/assets/fonts/canela/Canela-Bold-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/canela/Canela-Bold-Web.woff") format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+}
+/* Publico Text */
+@font-face {
+  font-family: 'Publico Text Web';
+  src: url("https://pudding.cool/assets/fonts/publico/PublicoText-Roman-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/publico/PublicoText-Roman-Web.woff") format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Publico Text Web';
+  src: url("https://pudding.cool/assets/fonts/publico/PublicoText-Bold-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/publico/PublicoText-Bold-Web.woff") format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Publico Text Web';
+  src: url("https://pudding.cool/assets/fonts/publico/PublicoText-Italic-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/publico/PublicoText-Italic-Web.woff") format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+}
+/* Atlast Grotesk */
+/*
+		@font-face {
+			font-family: 'Atlas Grotesk Web';
+			src: url('https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Light-Web.woff2') format('woff2'),
+			url('https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Light-Web.woff') format('woff');
+			font-weight: 300;
+			font-style: normal;
+			font-stretch: normal;
+		}
+		*/
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Regular-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Regular-Web.woff") format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Medium-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Medium-Web.woff") format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Atlas Grotesk Web';
+  src: url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Bold-Web.woff2") format('woff2'), url("https://pudding.cool/assets/fonts/atlas/AtlasGrotesk-Bold-Web.woff") format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+}
 
 body {
   -webkit-font-smoothing: antialiased;
   background-color: $body-background;
-  color: invert($body-background);
-  font-family: 'Quicksand', sans-serif;
+  color: $body-foreground;
+  font-family: 'Atlas Grotesk', sans-serif;
   font-size: 1em;
   font-weight: 400;
   line-height: 2;
   margin: auto 0;
 }
 
+#pudding-logo {
+  margin: 2.5rem auto 5rem;
+  display: block;
+}
+
 #header {
-  margin: 5rem auto;
-  max-width: 50rem;
-  @include phone {
-    margin: 1.5rem;
-  }
+  background: linear-gradient(180deg, #0B0B0B 0%, #2A2A2A 100%);
+  margin: 0 auto;
+  padding-bottom: 2rem;
 
   h1 {
-    margin: .5rem auto;
+    font-family: 'Canela Web','Publico Text Web',Georgia,Times,serif;
+    color: #FCDCBF;
+    max-width: 50rem;
+    margin: 2rem auto 0;
     text-align: center;
     font-size: 4rem;
-    font-weight: bold;
-    line-height: 1.5;
+    font-weight: lighter;
+    line-height: 1.2;
     @include phone {
+      max-width: 30rem;
       font-size: 2.5rem;
     }
   }
 
   h2 {
-    margin: .5rem auto;
+    font-family: 'Atlas Grotesk', sans-serif;
+    margin: 0 auto .5rem;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: lighter;
+    max-width: 50rem;
     @include phone {
+    max-width: 30rem;
       font-size: 1.2rem;
     }
   }
 
   h3 {
-    margin-top: .5rem;
+    margin: 5rem auto;
     text-align: center;
     font-size: 1rem;
     font-weight: lighter;
   }
 
   p {
-    margin: 3rem;
+    max-width: 40rem;
+    margin: 3rem auto;
     @include phone {
-      margin: 2rem 1rem;
-    }
-  }
-}
-
-.outer {
-  vertical-align: middle;
-  display: inline-block;
-  border-top: .3rem #593989 solid;
-  border-bottom: .3rem #593989 solid;
-  line-height: 1;
-  background-color: white;
-}
-
-.inner {
-  padding: .2rem 1rem;
-  border-top: .3rem #22784a solid;
-  border-bottom: .3rem #22784a solid;
-  color: #3A3A39;
-  font-weight: bold;
-  font-family: Lato, sans-serif;
-  text-align: center;
-
-  .top {
-    font-size: 2rem;
-    @include phone {
-      font-size: 3rem;
-    }
-  }
-
-  .bottom {
-    font-size: 1rem;
-    @include phone {
-      font-size: 1.5rem;
+    max-width: 30rem;
+      margin: 2rem auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
 }
@@ -178,7 +241,7 @@ body {
   max-width: 30rem;
   transition: 1s opacity ease-in-out;
   @include phone {
-  padding-left: $margin-left + px;
+    padding-left: $margin-left + px;
     width: calc(100% - #{$margin-left + px} - #{$margin-right + px} - 1px);
   }
 }
@@ -194,7 +257,7 @@ body {
 }
 
 .footnote span {
-  max-width: 60ch;
+  max-width: 60vw;
   left: 0;
   right: 0;
   margin: 3ex auto auto;
@@ -266,9 +329,8 @@ tr td:hover {
   position: relative !important;
   z-index: 99;
   background-color: rgba($tip-background, .8);
-  color: invert($tip-background);
-  border: solid 1px $tip-background;
-  border-radius: 5px;
+  border-right: solid 5px $body-foreground;
+  border-radius: 0px;
   -webkit-box-shadow: 1px 1px 5px rgba($tip-background, .8);
   box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
@@ -353,7 +415,7 @@ tr td:hover {
 
   .mp-party-logo {
     grid-area: photo;
-    padding-left: 0.25em;
+    padding-left: .25em;
     @include phone {
       opacity: 0 !important;
     }
@@ -415,7 +477,7 @@ a {
 .y-axis line,
 .y-axis path {
   // stroke-opacity: 0;
-  stroke: invert($graph-background);
+  stroke: $graph-foreground;
   stroke-width: .5;
 }
 
@@ -424,8 +486,8 @@ a {
 .y-axis text,
 .y-label {
   pointer-events: none;
-  fill: invert($graph-background);
-  font-family: 'Quicksand', sans-serif;
+  fill: $graph-foreground;
+  font-family: 'Atlas Grotesk', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   -webkit-transition: opacity .5s ease-in-out;
@@ -537,7 +599,7 @@ a {
 }
 
 .election-rect {
-  opacity: .15;
+  opacity: .35;
   @each $item in $tracker-colors {
     &.c-#{index($tracker-colors, $item)} {
       fill: $item;
@@ -585,12 +647,11 @@ $tip-padding: .5;
 .tooltip {
   z-index: 99;
   opacity: 1;
-  background-color: rgba($tip-background, .9);
-  color: invert($tip-background);
-  border: solid 1px $tip-background;
-  border-radius: 5px;
-  -webkit-box-shadow: 1px 1px 5px rgba($tip-background, .8);
-  box-shadow: 1px 1px 5px rgba($tip-background, .8);
+  background-color: rgba($tip-background, .8);
+  // color: invert($tip-background);
+  border-radius: 0px;
+  // -webkit-box-shadow: 1px 1px 5px rgba($tip-background, .8);
+  // box-shadow: 1px 1px 5px rgba($tip-background, .8);
   font-size: 1rem;
   font-weight: 500;
   // height: 20vh;
@@ -645,7 +706,7 @@ $tip-padding: .5;
     }
 
     h1 {
-      background-color: $slide2-header-color;
+      border-color: $slide2-header-color;
     }
   }
 
@@ -654,7 +715,7 @@ $tip-padding: .5;
     font-weight: 200;
 
     h1 {
-      background-color: $info-bubble-header-color;
+      border-color: $info-bubble-header-color;
     }
 
     .date {
@@ -671,10 +732,13 @@ $tip-padding: .5;
     font-size: 1rem;
     font-weight: bold;
     margin-top: 0;
+    margin-bottom: 0;
     margin-bottom: $tip-padding + rem;
-    padding: 0.5rem;
+    padding: .5rem;
+    padding-bottom: 0;
     text-align: center;
     text-shadow: 1px 1px 1px rgba(black, .5);
+  border-top: 5px solid;
     @include phone {
       font-size: .8rem;
       // padding: 0.2rem;
@@ -786,8 +850,7 @@ $tip-padding: .5;
   //   display: flex;
   // }
   .body {
-    padding: 0.5em !important;
-    padding-top: 0em !important;
+    padding: 0 .5em !important;
     display: grid;
     grid-template-columns: 5.5rem auto;
     grid-template-areas: "photo facts";
@@ -811,7 +874,7 @@ $tip-padding: .5;
   opacity: 0;
   // transform: translate(20vh, 25vh) translateZ(0);
   transition: transform .1s ease-in-out;
-  box-shadow: 1px 1px 5px rgba($tip-background, .8);
+  // box-shadow: 1px 1px 5px rgba($tip-background, .8);
   padding: 0;
   border-width: 0;
   @include phone {
@@ -831,9 +894,10 @@ $tip-padding: .5;
   }
 }
 
-.slide2-tooltip, .slide3-tooltip {
+.slide2-tooltip,
+.slide3-tooltip {
   @include phone {
-      line-height: 1.2;
+    line-height: 1.2;
     top: 10% !important;
   }
 }
@@ -859,7 +923,7 @@ $tip-padding: .5;
   right: 0;
   // margin: 0 auto;
   width: 50%;
-  max-width: 80ch;
+  max-width: 50vw;
   @include phone {
     font-size: .8rem;
     width: 70vw;
@@ -869,7 +933,7 @@ $tip-padding: .5;
     font-size: inherit;
     border: 1px solid rgb(169, 169, 169);
     background-color: $graph-background;
-    color: invert($graph-background);
+    color: $graph-foreground;
     width: 100%;
     padding: .5em;
     margin: 0;
@@ -909,7 +973,7 @@ $tip-padding: .5;
   .autocomplete-active {
     //when navigating through the items using the arrow keys:
     background-color: $male !important;
-    color: invert($graph-background);
+    color: $graph-foreground;
   }
 }
 
@@ -1039,8 +1103,8 @@ input:checked + .slider:before {
 }
 
 .chart-title {
-  fill: invert($graph-background);
-  font-family: 'Quicksand', sans-serif;
+  fill: $graph-foreground;
+  font-family: 'Atlas Grotesk', sans-serif;
   font-size: 1rem;
   font-weight: 600;
 }
@@ -1115,7 +1179,8 @@ input:checked + .slider:before {
   stroke: steelblue;
 }
 
-.female-label, .country-label {
+.country-label,
+.female-label {
   text {
     fill: $female;
   }
@@ -1124,7 +1189,8 @@ input:checked + .slider:before {
     stroke: $female;
   }
 
-  .connector-dot, .connector-arrow {
+  .connector-arrow,
+  .connector-dot {
     // stroke: unset;
     fill: $female;
   }
@@ -1150,15 +1216,19 @@ input:checked + .slider:before {
   text-anchor: middle;
   transition: opacity .5s ease-in-out;
   @include phone {
-    font-size: 0.6rem;
+    font-size: .6rem;
   }
 }
 
 .i2018-label {
   animation: fadein .5s;
 }
-
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

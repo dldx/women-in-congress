@@ -554,7 +554,7 @@ function add_election_rects(show_rect = true) {
         .data(total_mps_over_time_data)
         .enter()
         .append("rect")
-        .style("opacity", show_rect ? 0.15 : 0)
+        .style("opacity", show_rect ? 0.25 : 0)
         .attr("class", "election-rect")
         .classed("c-1", function (d, i) {
             return i % 2 == 0
@@ -783,7 +783,7 @@ function show_mp_tooltip(nodeData, mousePos) {
 
     var partyLogo = partyHasLogo.indexOf(nodeData.party) != -1
     var tooltip_innerHTML = `
-                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
+                    <h1 style="border-color: ${colorParty(nodeData.party)};">${nodeData.name}</h1>
                     <div class="body">
                 <div class="mp-image-parent">`
 
@@ -1868,7 +1868,7 @@ function third_slide(no_transition = false) {
                 var gender_ratio = 100 / d.values.slice(-1)[0].women_pct - 1
                 tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
+                                <h1 style="border-color: ${d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
                                 For every <span class="female">female</span> representative, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.values.slice(-1)[0].year.getFullYear()}.
                             </div>`
@@ -1943,7 +1943,7 @@ function third_slide(no_transition = false) {
             var gender_ratio = 100 / d.data.women_pct - 1
             tooltip.innerHTML = `
                             <div class="slide3-tooltip">
-                                <h1 style="background-color: ${d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
+                                <h1 style="border-color: ${d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
                                 For every <span class="female">female</span> representative, there were
                                 <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.data.year.getFullYear()}.
                             </div>`
@@ -2915,7 +2915,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
+                    <h1 style="border-color: ${colorParty(nodeData.party)};">${nodeData.full_name}</h1>
                     <div class="body">
                     <div class="mp-image-parent">
                     ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
@@ -3012,7 +3012,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="background-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender.toUpperCase()}</h1>
+                    <h1 style="border-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender.toUpperCase()}</h1>
                     The average ${nodeData.gender.toUpperCase()} representative spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
@@ -4222,14 +4222,14 @@ function handleStepEnter(response) {
                 // Unhighlight Roosevelt's term
                 electionRects.filter((d, i) => i == 4)
                     .classed("hover", false)
-                    .style("opacity", 0.15)
+                    .style("opacity", 0.35)
 
             }
             // Show election rects
             electionRects
                 .transition()
                 .delay((d, i) => i * 50)
-                .style("opacity", 0.15)
+                .style("opacity", 0.35)
             break
         case 0.1:
             // Highlight Roosevelt's term
@@ -4284,7 +4284,7 @@ function handleStepEnter(response) {
             // Unhighlight Roosevelt's term
             electionRects.filter((d, i) => i == 4)
                 .classed("hover", false)
-                .style("opacity", 0.15)
+                .style("opacity", 0.35)
 
             // Draw lines for longest serving woman
             dataContainer.selectAll("custom.line")
