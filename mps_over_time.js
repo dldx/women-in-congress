@@ -129,6 +129,7 @@ var ratio,
     instance,
     x, y,
     chartTitle,
+    credit_alink,
     xAxis, gX, xLabel,
     yAxis, gY, yLabel,
     tooltip,
@@ -143,7 +144,8 @@ var ratio,
     mp_filter,
     isMobile,
     all_mps_draw_timer,
-    annotate_timer
+    annotate_timer,
+    tooltip_timer
 
 var mps_over_time_data,
     number_women_over_time_data,
@@ -276,7 +278,7 @@ function reset_zoom(callback, current_slide) {
             }
         })
 
-    d3.select(".switch").select("label").text("Make it zoomable")
+    d3.select(".switch").select("label").text("ZOOM")
 }
 // ----------------------------------------------------------------------------
 // UPDATE GRAPH WHEN USER MOVES TO A NEW SLIDE
@@ -363,8 +365,8 @@ function initial_render() {
     d3.select("body")
         .append("label")
         .attr("class", "switch")
-        .style("transform", `translateX(${margin.left * (isMobile ? 1.2 : 2)}px)`)
-        .html("<input type=\"checkbox\" id=\"zoom-checkbox\"><span class=\"slider\"></span><div><label for='zoom-checkbox'>Make it zoomable</label></div>")
+        .style("transform", `translate(${margin.left * (isMobile ? 1.2 : 2)}px, ${isMobile ? 0.15*height : margin.top/2}px)`)
+        .html("<input type=\"checkbox\" id=\"zoom-checkbox\"><span class=\"slider\"></span><div><label for='zoom-checkbox'>ZOOM</label></div>")
 
     // Add a bounding box to clip points so that they aren't visible outside
     // the chart area when we zoom in
@@ -431,13 +433,22 @@ function initial_render() {
         .text("")
 
     // Add axes labels
+    credit_alink = svg.append("a")
+        .attr("target", "_blank")
+    credit_alink.append("text")
+        .attr("transform",
+            "translate(" + (margin.left) + " ," +
+            (height + margin.top + margin.bottom) + ")")
+        .attr("class", "credit-label")
+        .style("text-anchor", "start")
+
     xLabel = svg.append("text")
         .attr("transform",
-            "translate(" + (width + margin.left + margin.right) / 2 + " ," +
-            (height + margin.top + margin.bottom*1.3) + ")")
+            "translate(" + (margin.left + margin.right + width)/2 + " ," +
+            (height + margin.top + margin.bottom) + ")")
         .attr("class", "x-label")
         .style("text-anchor", "middle")
-        .text("Year")
+        .text("")
 
     yLabel = svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -445,7 +456,7 @@ function initial_render() {
         .attr("x", 0 - (height + margin.top + margin.bottom) / 2)
         .attr("class", "y-label")
         .attr("dominant-baseline", "baseline")
-        .text("Number of Female Representatives")
+        .text("Number of Women Representatives")
 
     // Add zoom capabilities for the points
     zoom = d3.zoom()
@@ -592,6 +603,12 @@ function first_slide(no_transition = false) {
     chartTitle
         .transition()
         .text("Women in the House of Representatives")
+    // Change credits
+    credit_alink
+        .attr("xlink:href", "https://en.wikipedia.org/wiki/Women_in_the_United_States_House_of_Representatives#List_of_female_members")
+        .select("text")
+        .transition()
+        .text("Data: Wikipedia")
 
     // Add rectangles in the background to identify parliamentary terms
     add_election_rects(no_transition)
@@ -824,7 +841,7 @@ function show_mp_tooltip(nodeData, mousePos) {
         .style("stroke-width", lineThickness)
         .style("opacity", 1)
 
-    d3.timeout(() => {
+    tooltip_timer = d3.timeout(() => {
         // Point to MP
         var tooltip_pos = tooltip.getBoundingClientRect()
         // var tooltip_pos = {x: Math.max(Math.min(mousePos[0] - tooltip.offsetWidth,
@@ -870,7 +887,7 @@ function to_first_slide(current_slide) {
         .duration(1000)
 
     yLabel.transition(t0)
-        .text("Number of Female Representatives")
+        .text("Number of Women Representatives")
 
     // Different actions depending on which slide we're coming from
     switch (current_slide) {
@@ -1320,6 +1337,14 @@ function second_slide(no_transition = false) {
         .duration(no_transition ? 0 : 750)
         .text("Representatives in Congress")
 
+    // Change credits
+    credit_alink
+        .attr("xlink:href", "https://en.wikipedia.org/wiki/Party_divisions_of_United_States_Congresses")
+        .select("text")
+        .transition()
+        .text("Data: Wikipedia")
+
+
     slide2Group.append("text")
         .attr("x", x(new Date(2017, 1, 1)))
         .attr("y", y(0) - 2.5 * lineThickness)
@@ -1499,8 +1524,8 @@ function second_slide(no_transition = false) {
                         var gender_ratio = d.democrat_mps / num_women - 1
                         tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
                         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
-                        For every <span class="female">female</span> Democrat, there ${new Date() > second_election ? "were" : "are"}
-                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> Democrats.` :
+                        For every <span class="female">woman</span> Democrat, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">men</span> Democrats.` :
         "There were no Democratic women in the House of Representatives yet :("}
                         </div>
                         `
@@ -1512,8 +1537,8 @@ function second_slide(no_transition = false) {
                         gender_ratio = d.republican_mps / num_women - 1
                         tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
                         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
-                        For every <span class="female">female</span> Republican, there ${new Date() > second_election ? "were" : "are"}
-                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> Republicans.` :
+                        For every <span class="female">woman</span> Republican, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">men</span> Republicans.` :
         "There were no Republican women in the House of Representatives yet :("}
                         </div>
                         `
@@ -1524,8 +1549,8 @@ function second_slide(no_transition = false) {
                         gender_ratio = d.total_mps / num_women - 1
                         tooltip.innerHTML = `<div class="slide2-tooltip"><h1>${formatDate(first_election)} &rarr; ${formatDate(second_election)}</h1>
                         ${num_women > 0 ? `<p>${num_women} Wom${num_women == 1 ? "a" : "e"}n</p><hr/>
-                        For every <span class="female">female</span> representative, there ${new Date() > second_election ? "were" : "are"}
-                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives.` :
+                        For every <span class="female">woman</span> representative, there ${new Date() > second_election ? "were" : "are"}
+                        <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">men</span> representatives.` :
         "There were no women in the House of Representatives yet :("}
                         </div>
                         `
@@ -1594,7 +1619,7 @@ function to_third_slide(current_slide) {
                 .tickFormat(d => d)
 
             xLabel
-                .text("Year")
+                .text("")
                 .style("opacity", 1)
 
             yLabel
@@ -1651,6 +1676,12 @@ function third_slide(no_transition = false) {
         .transition()
         .style("opacity", 1)
         .text("Parliaments in developed countries")
+
+    // Change credits
+    credit_alink.attr("xlink:href", "https://data.worldbank.org/indicator/SG.GEN.PARL.ZS")
+        .select("text")
+        .transition()
+        .text("Data: Inter-parliamentary Union")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗     ██╗
@@ -1742,7 +1773,7 @@ function third_slide(no_transition = false) {
 
     yLabel
         .transition(t0)
-        .text("% of Female Representatives")
+        .text("% of Women Representatives")
 
     // ----------------------------------------------------------------------------
     //  █████╗  ██████╗████████╗    ██████╗
@@ -1873,8 +1904,8 @@ function third_slide(no_transition = false) {
                 tooltip.innerHTML = `
                             <div class="slide3-tooltip">
                                 <h1 style="border-color: ${d.values.slice(-1)[0].country == "United States" ? colors["Hover"] : countryColors(d.values.slice(-1)[0].country)}">${d.values.slice(-1)[0].country}</h1>
-                                For every <span class="female">female</span> representative, there were
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.values.slice(-1)[0].year.getFullYear()}.
+                                For every <span class="female">woman</span> representative, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">men</span> representatives in ${d.values.slice(-1)[0].year.getFullYear()}.
                             </div>`
             }
         })
@@ -1948,8 +1979,8 @@ function third_slide(no_transition = false) {
             tooltip.innerHTML = `
                             <div class="slide3-tooltip">
                                 <h1 style="border-color: ${d.data.country == "United States" ? colors["Hover"] : countryColors(d.data.country)};">${d.data.country}</h1>
-                                For every <span class="female">female</span> representative, there were
-                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">male</span> representatives in ${d.data.year.getFullYear()}.
+                                For every <span class="female">woman</span> representative, there were
+                                <div class="gender-ratio">${gender_ratio.toFixed(1)}</div> <span class="male">men</span> representatives in ${d.data.year.getFullYear()}.
                             </div>`
             d.line = d3.select("#" + d.data.country.replace(/[^a-zA-Z0-9s]/g, ""))
             d.line
@@ -2053,6 +2084,12 @@ function to_fourth_slide(current_slide) {
         .style("opacity", 0)
     yLabel
         .style("opacity", 0)
+    // Change credits
+    credit_alink
+        .attr("xlink:href", null)
+        .select("text")
+        .transition()
+        .text("")
 
     d3.select("#tooltip")
         .transition(t0)
@@ -2169,6 +2206,12 @@ function fifth_slide(no_transition = false) {
 
     d3.selectAll(".slide5-dropdown")
         .remove()
+    // Change credits
+    credit_alink
+        .attr("xlink:href", null)
+        .select("text")
+        .transition()
+        .text("")
 
     wrapper.select(".x-custom-axis")
         .remove()
@@ -2801,7 +2844,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .type(d3.annotationCallout)
             .annotations([{
                 note: {
-                    title: "Median female: " + (topic_medians_data[selected_topic]["female"]*100).toFixed(1) + "%"
+                    title: "Median woman: " + (topic_medians_data[selected_topic]["female"]*100).toFixed(1) + "%"
                 },
                 connector: {
                     end: "dot"
@@ -2825,7 +2868,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             .type(d3.annotationCallout)
             .annotations([{
                 note: {
-                    title: "Median male: " + (topic_medians_data[selected_topic]["male"]*100).toFixed(1) + "%"
+                    title: "Median man: " + (topic_medians_data[selected_topic]["male"]*100).toFixed(1) + "%"
                 },
                 connector: {
                     end: "dot"
@@ -3016,8 +3059,8 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
         // Show relevant tooltip info
         tooltip.innerHTML = `
                             <div class="slide5-tooltip">
-                    <h1 style="border-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender.toUpperCase()}</h1>
-                    The average ${nodeData.gender.toUpperCase()} representative spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
+                    <h1 style="border-color: ${nodeData.gender == "female" ? colors["Female"] : colors["Male"]};">${nodeData.gender == "female" ? "WOMEN" : "MEN"}</h1>
+                    The average ${nodeData.gender == "female" ? "WOMAN" : "MAN"} representative spends <em>${(nodeData.median*100).toFixed(1)}%</em> of ${nodeData.gender == "male" ? "his" : "her"} time talking about <em>${selected_topic}</em>.
 </div>`
         mouseover_svg
             .select("circle")
@@ -3254,6 +3297,13 @@ function sixth_slide(no_transition = false) {
     d3.select(".slide5-search")
         .style("opacity", 0)
         .remove()
+
+    // Change credits
+    credit_alink
+        .attr("xlink:href", null)
+        .select("text")
+        .transition()
+        .text("")
 
     // Set the topics that will appear on the y axis
     let sorted_topics = Object.entries(topic_medians_data)
@@ -3769,9 +3819,15 @@ function seventh_slide(no_transition = false) {
     // If we've already visited this slide, set no_transition to true
     no_transition = lastTransitioned >= 6
 
-    xLabel.text("Year")
-    yLabel.text("Number of Female House Candidates")
-    chartTitle.text("Female House Candidates over Time")
+    xLabel.text("")
+    yLabel.text("Number of Women House Candidates")
+    chartTitle.text("Women House Candidates over Time")
+    // Change credits
+    credit_alink
+        .attr("xlink:href", "http://cawp.rutgers.edu/facts/elections/past_candidates")
+        .select("text")
+        .transition()
+        .text("Data: Center for American Women and Politics")
 
     if(no_transition) {
         var slide7Group = d3.select("#slide7-group").style("opacity", 1)
@@ -4368,7 +4424,7 @@ function handleStepEnter(response) {
                         d3.select(".is-active")
                             .style("opacity", 0)
                             .style("pointer-events", "none")
-                        d3.select(".switch").select("label").text("Stop zooming")
+                        d3.select(".switch").select("label").text("STOP")
                     } else {
                         reset_zoom()
                         d3.select(".is-active")

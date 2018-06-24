@@ -188,6 +188,7 @@ body {
   p {
     max-width: 40rem;
     margin: 3rem auto;
+    line-height: 1.7;
     @include phone {
     max-width: 30rem;
       margin: 2rem auto;
@@ -452,7 +453,7 @@ tr td:hover {
 }
 
 #zoom-checkbox {
-  top: 15%;
+  top: 0;
   position: fixed;
   z-index: 6;
   opacity: 0;
@@ -494,7 +495,8 @@ a {
 .x-axis text,
 .x-label,
 .y-axis text,
-.y-label {
+.y-label,
+.credit-label {
   pointer-events: none;
   fill: $graph-foreground;
   font-family: 'Atlas Grotesk Web', sans-serif;
@@ -526,8 +528,10 @@ a {
   transition: opacity .5s ease-in-out;
 }
 
+
 .x-label,
-.y-label {
+.y-label,
+.credit-label {
   text-anchor: middle;
   font-size: 1rem;
   font-weight: 400;
@@ -538,8 +542,15 @@ a {
   }
 }
 
-.x-label {
+.x-label, .credit-label {
   alignment-baseline: hanging;
+  dominant-baseline: hanging;
+}
+
+.credit-label {
+  fill: fade-out($graph-foreground, 0.2);
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 #timeline {
@@ -1047,7 +1058,7 @@ $tip-padding: .5;
   display: inline-block;
   width: 52px;
   height: 25px;
-  top: 15%;
+  top: 0;
   transform: translateZ(0);
   position: fixed;
   z-index: 6;
@@ -1061,19 +1072,19 @@ $tip-padding: .5;
 
 .switch div {
   width: 30vw;
-  transform: translate(57px, -2px);
+  transform: translate(57px, -50%);
 }
 
 .switch div label {
+  font-size: small;
+  font-weight: bold;
   cursor: pointer;
-  @include phone {
-    font-size: small;
-  }
 }
 
 .slider {
   position: absolute;
   cursor: pointer;
+  transform: translateY(-50%);
   top: 0;
   left: 0;
   right: 0;
@@ -1120,6 +1131,7 @@ input:checked + .slider:before {
   font-family: 'Atlas Grotesk Web', sans-serif;
   font-size: 1rem;
   font-weight: 600;
+  dominant-baseline: middle;
 }
 
 .half-max-mps-path,
@@ -1143,7 +1155,7 @@ input:checked + .slider:before {
 .half-max-mps-path {
   stroke-dasharray: 1,4;
   stroke: $female;
-  stroke-width: 1.5;
+  stroke-width: 2.5;
 }
 
 .total-women-mps-area {
@@ -1181,7 +1193,7 @@ input:checked + .slider:before {
 }
 
 .i5050-label {
-  alignment-baseline: middle;
+  alignment-baseline: central;
   text-anchor: middle;
   fill: $female;
   font-size: 1.5rem;
