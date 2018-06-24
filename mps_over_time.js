@@ -2208,10 +2208,10 @@ function fifth_slide(no_transition = false) {
         .remove()
     // Change credits
     credit_alink
-        .attr("xlink:href", null)
+        .attr("xlink:href", "https://www.congress.gov/congressional-record")
         .select("text")
         .transition()
-        .text("")
+        .text("Data: Congressional Record (raw transcripts)")
 
     wrapper.select(".x-custom-axis")
         .remove()

@@ -250,8 +250,8 @@ body {
 .footnote {
   display: inline;
   cursor: help;
-  text-decoration: none;
-  background-color: nth($tracker-colors, 1);
+  text-decoration: underline;
+  // background-color: nth($tracker-colors, 1);
   padding-left: 2px;
   padding-right: 2px;
   // margin-right: 2px;
