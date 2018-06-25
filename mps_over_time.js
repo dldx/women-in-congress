@@ -2287,7 +2287,7 @@ function fifth_slide(no_transition = false) {
         .append("input")
         .attr("id", "mp-search")
         .attr("type", "text")
-        .attr("placeholder", "🔎 Search for your rep by name or district!")
+        .attr("placeholder", "🔎 Search for your rep by name or district")
 
 
     let inp = document.getElementById("mp-search")

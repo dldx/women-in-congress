@@ -71,7 +71,7 @@
                 </div>
                 <div class="step" data-slide="0" data-step="0.3">
                     <p>
-                        Here are all the women who have served in the House of Representatives Let's look at a few prominent ones.
+                        Here are all the women who have served in the House of Representatives. <span style="background-color:#2A9FD7;">Democrats</span> and <span style="background-color: #E31331;">Republicans</span> are represented by their usual colors. Let's look at a few prominent women.
                     </p>
                 </div>
 
@@ -123,7 +123,7 @@
                         </div>
                         <div class="body-text">
 
-                            <hr /> Shirley Chisholm became, in 1968, the first black woman elected to Congress, and in 1972, the first woman to run for the Democratic Party's presidential nomination. She famously said, “I ran because somebody had to do it first” after earning 152 delegates at the national convention. While in Congress, she was an unabashed supporter of her constituents in Brooklyn, NY, championing daycare funding, minimum wages, and gender equality.
+                            <hr /> Shirley Chisholm became, in 1968, the first black woman elected to Congress, and in 1972, the first woman to run for the Democratic Party's presidential nomination. She famously said, “I ran because somebody had to do it first,” after earning 152 delegates at the national convention. While in Congress, she was an unabashed supporter of her constituents in Brooklyn, NY, championing daycare funding, minimum wages, and gender equality.
                         </div>
                         <img class="mp-party-logo" alt="Democratic logo" style="opacity: 1" src="./party_logos/Democratic.svg">
                     </div>
@@ -165,13 +165,13 @@
                         With gender parity, constituents might hope that elected officials focus on more inclusive issues (as, for example, Patsy Mink did with Title IX legislation). To better understand how a gender shift in the House might affect the topics debated by our representatives, consider the speeches made by House members.
                     </p>
                     <p>
-                        From the Congressional Record, we compiled a collection of 500,000 speeches delivered by men and women in the House from 1994 to the present, including monologues, debates, single sentence replies, and even acknowledgements praising particular individuals.
+                        From the Congressional Record, we compiled a collection of 500,000 speeches delivered by men and women in the House from 1994 to the present, including monologues, debates, single-sentence replies, and even acknowledgments praising particular individuals.
                     </p>
                     <br/>
 
                     <p style="display: inline;">
-                        We then used a probabilistic machine learning model<span class="footnote"><sup>1</sup><span>While there are a number of different machine learning techniques that can do this, including neural networks, the beauty of <a target="_blank" href="https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d">Latent Dirichlet Allocation</a> (LDA) is that it is an unsupervised learning algorithm. Unlike most other algorithms, it does not require pre-labelled speeches to train the model, which would bias the inference process by selecting the topics in advance. The only necessary inputs are the corpus of speeches and a rough guess of the total number of topics within the corpus.</span></span> to help us infer the
-                        topics within a speech, looking for words that often appear together and clustering them into the same group<span class="footnote"><sup>2</sup><span>For example, suppose we choose a small number of topics (e.g., 10), the model will identify the 10 most overarching themes in Ccongressional speeches. We wanted to identify more subtle topics and themes, and after a bit of experimentation, we settled on 75 topics. As is often the case with LDA models, many of the topics identified were nonsensical, but the majority were well-defined.</span></span> (eg. energy policy, jobs, economy, taxes, healthcare, etc.)<div class="footnote"><sup>3</sup><span>LDA does not output these names. Rather,  it gives us a list of words and phrases that are most closely associated with a particular topic.<br/>
+                        We then used a probabilistic machine learning model<span class="footnote"><sup>1</sup><span>While there are a number of different machine learning techniques that can do this, including neural networks, the beauty of <a target="_blank" href="https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d">Latent Dirichlet Allocation</a> (LDA) is that it is an unsupervised learning algorithm. Unlike most other algorithms, it does not require pre-labeled speeches to train the model, which would bias the inference process by selecting the topics in advance. The only necessary inputs are the corpus of speeches and a rough guess of the total number of topics within the corpus.</span></span> to help us infer the
+                        topics within a speech, looking for words that often appear together and clustering them into the same group<span class="footnote"><sup>2</sup><span>For example, suppose we choose a small number of topics (e.g., 10), the model will identify the 10 most overarching themes in congressional speeches. We wanted to identify more subtle topics and themes, and after a bit of experimentation, we settled on 75 topics. As is often the case with LDA models, many of the topics identified were nonsensical, but the majority were well-defined.</span></span> (eg. energy policy, jobs, economy, taxes, health care, etc.)<div class="footnote"><sup>3</sup><span>LDA does not output these names. Rather, it gives us a list of words and phrases that are most closely associated with a particular topic.<br/>
 
                     <br/> Suppose we had two topics:
 <table>
@@ -248,12 +248,12 @@
         </td>
     </tr>
 </table>
-We label <b>Topic 1</b> as <i>“energy policy”</i> and <b>Topic 2</b> as <i>“natural disasters”</i>.
+We label <b>Topic 1</b> as <i>“energy policy”</i> and <b>Topic 2</b> as <i>“natural disasters.”</i>
 
 <br/>
 
 <br/>
-For example, if we input the sentence “Wind and solar power are renewable energy sources while natural gas is a fossil fuel.”, the model outputs that it is 84% about the “energy policy” topic whereas “There is a lot of natural gas in the Middle East.” is only 46% about “energy policy”. Speeches can also include multiple topics.
+For example, if we input the sentence “Wind and solar power are renewable energy sources while natural gas is a fossil fuel,” the model outputs that it is 84% about the “energy policy” topic whereas “There is a lot of natural gas in the Middle East” is only 46% about “energy policy”. Speeches can also include multiple topics.
                     </span></div>
                 </p>
 
@@ -302,14 +302,14 @@ For example, if we input the sentence “Wind and solar power are renewable ener
                 <div class="step" data-slide="5">
 
                     <p>
-                        A difference of +100% (e.g. as is the case with <i>“child welfare”</i>) means that women are twice as likely as men to refer to the topic in a speech. A difference of -100% means the opposite: men are twice as likely as women to refer to the topic.
+                        A difference of +100% (e.g., as is the case with <i>“child welfare”</i>) means that women are twice as likely as men to refer to the topic in a speech. A difference of -100% means the opposite: men are twice as likely as women to refer to the topic.
                     </p>
                     <p>
                         Women representatives focus more of their speeches on <i>healthcare</i>, <i>civil rights</i>, <i>labor rights</i> and the <i>environment</i>.
                     </p>
                     <p>
 
-                        Men focus more of their speeches on the <i>military</i>, <i>agriculture</i> and the <i>budget</i>.
+                        Men focus more of their speeches on the <i>military</i>, <i>agriculture</i>, and the <i>budget</i>.
                     </p>
 
                     <p>Select a topic to examine its data more closely.</p>
@@ -317,7 +317,7 @@ For example, if we input the sentence “Wind and solar power are renewable ener
                 </div>
                 <div class="step" data-slide="6">
                     <p>
-                        In the upcoming 2018 midterm elections, a record number of women have filed to (or are planning to) run for a House seat (as of May 2018) and there is still time to file. The outcome has the potential to dramatically shift the gender breakdown of the House.
+                        In the upcoming 2018 midterm elections, a record number of women have filed to (or are planning to) run for a House seat (as of May 2018) and there is still time to file. <span style="background-color:#2A9FD7;">Democratic</span> women candidates in particular are running in record numbers, but <span style="background-color: #E31331;">Republican</span> women candidates are also on the rise. The outcome has the potential to dramatically shift the gender breakdown of the House.
                     </p>
                 </div>
                 <div class="step" data-slide="6" style="opacity: 0;">
@@ -329,7 +329,23 @@ For example, if we input the sentence “Wind and solar power are renewable ener
                 Both parties need to do more to catch up with the international stage. Electing more women representatives has the potential to alter the topics we debate and the laws they pass.
             </p>
 
-            <p>You may find all the code for this project on <a href="https://github.com/dldx/women-in-congress">Github</a>. Speech transcripts are from the <a href="https://www.congress.gov/congressional-record">Congressional Record</a>, scraped with the help of <a href="https://github.com/unitedstates/congressional-record">this awesome tool</a>. 
+        </section>
+        <section id="credits">
+            <p>You may find all the code for this project on <a href="https://github.com/dldx/women-in-congress">Github</a>.</p>
+            <p>
+                Data on <a href="https://en.wikipedia.org/wiki/Women_in_the_United_States_House_of_Representatives#List_of_female_members">women representatives</a> and on <a href="https://en.wikipedia.org/wiki/Party_divisions_of_United_States_Congresses">total number of representatives</a> is from Wikipedia.
+            </p>
+            <p>
+                Data on women in parliaments across the world is from the <a href="https://www.ipu.org/">Inter-parliamentary Union</a> and can be accessed on the <a href="https://data.worldbank.org/indicator/SG.GEN.PARL.ZS">World Bank's data repository</a>.
+            </p>
+            <p>
+                Speech transcripts are from the <a href="https://www.congress.gov/congressional-record">Congressional Record</a>, scraped with the help of <a href="https://github.com/unitedstates/congressional-record">this awesome tool</a>.
+            </p>
+            <p>
+                Data on women candidates running for Congress is from the <a href="http://cawp.rutgers.edu/facts/elections/past_candidates">Center for American Women and Politics, Eagleton Institute of Politics, Rutgers University</a>.
+            </p>
+            <p>
+                Finally, this work wouldn't be possible without the help of various machine learning libraries such as <a href="https://spacy.io">spaCy</a> and <a href="https://radimrehurek.com/gensim">gensim</a>, data libaries such as <a href="https://pandas.pydata.org/">pandas</a>, visualisation libraries such as <a href="https://d3js.org/">D3</a> and the python and R ecosystems.
             </p>
         </section>
         <div class="debug"></div>
@@ -337,7 +353,7 @@ For example, if we input the sentence “Wind and solar power are renewable ener
         <script src="external/stickyfill.min.js"></script>
         <script src="external/scrollama.min.js"></script>
         <script src="external/babel-polyfill.min.js"></script>
-        <script src="mps_over_time.js"></script>
+        <script src="mps_over_time.min.js"></script>
         <script>
             // using d3 for convenience
             var container = d3.select('#scroll');
