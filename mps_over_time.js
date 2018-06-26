@@ -3171,6 +3171,7 @@ function to_sixth_slide(current_slide) {
 
         d3.select(".switch")
             .style("opacity", 0)
+            .style("display", "none")
         if (document.getElementById("zoom-checkbox") != null) {
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {
@@ -3721,6 +3722,7 @@ function to_seventh_slide(current_slide) {
 
         d3.select(".switch")
             .style("opacity", 0)
+        style("display", "none")
         if (document.getElementById("zoom-checkbox") != null) {
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {
@@ -4323,6 +4325,7 @@ function handleStepEnter(response) {
             if (response.direction == "up") {
                 d3.select(".switch")
                     .style("opacity", 0)
+                    .style("display", "none")
                 if (document.getElementById("zoom-checkbox") != null) {
                     if (document.getElementById("zoom-checkbox")
                         .checked != false) {
@@ -4411,6 +4414,7 @@ function handleStepEnter(response) {
 
             d3.select(".switch")
                 .style("opacity", 1)
+                .style("display", "inline-block")
                 .on("mouseover", () => {
                     d3.select("#tooltip")
                         .style("opacity", 0)
@@ -4443,6 +4447,7 @@ function handleStepEnter(response) {
             // First step: first woman rep - Jeannette Rankin
             d3.select(".switch")
                 .style("opacity", 0)
+                .style("display", "none")
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {
                 document.getElementById("zoom-checkbox")
@@ -4548,6 +4553,7 @@ function handleStepEnter(response) {
             canvas.style("pointer-events", "all")
             d3.select(".switch")
                 .style("opacity", 1)
+                .style("display", "inline-block")
 
             mouseover_svg.transition()
                 .duration(1000)
@@ -4585,6 +4591,7 @@ function handleStepEnter(response) {
         // Second slide
         d3.select(".switch")
             .style("opacity", 0)
+            .style("display", "none")
         if (document.getElementById("zoom-checkbox") != null) {
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {
@@ -4794,6 +4801,7 @@ function handleStepEnter(response) {
             .style("display", "none")
         d3.select(".switch")
             .style("opacity", 0)
+            .style("display", "none")
         if (document.getElementById("zoom-checkbox") != null) {
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {

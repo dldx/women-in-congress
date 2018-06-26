@@ -142,7 +142,28 @@ body {
 
 #pudding-logo {
   margin: 2.5rem auto 5rem;
-  display: block;
+  display: inline-block;
+  transform: translateX(calc(50vw - 50%));
+}
+
+#other-project-link {
+  position: absolute;
+  left: 5%;
+  top: 2rem;
+  display: inline-block;
+
+  @include phone {
+    left: 0;
+    transform: translateX(calc(50vw - 50%));
+    margin-left: unset;
+    top: 6rem;
+  }
+  @include tablet {
+    left: 0;
+    transform: translateX(calc(50vw - 50%));
+    margin-left: unset;
+    top: 6rem;
+  }
 }
 
 #header {
@@ -197,6 +218,7 @@ body {
     }
   }
 }
+
 
 #footer {
   margin: 5rem auto;
@@ -291,6 +313,9 @@ body {
   color: $body-background;
   font-size: small;
   transition: all .5s ease;
+  a {
+    color: $body-background;
+  }
 }
 
 .footnote:hover span {
@@ -1073,7 +1098,7 @@ $tip-padding: .5;
 }
 
 .switch {
-  display: inline-block;
+  display: none;
   width: 52px;
   height: 25px;
   top: 0;

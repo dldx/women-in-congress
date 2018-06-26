@@ -2350,7 +2350,7 @@ function to_sixth_slide(current_slide) {
 
             yLabel.style("opacity", 0);
 
-            d3.select(".switch").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0).style("display", "none");
             if (document.getElementById("zoom-checkbox") != null) {
                 if (document.getElementById("zoom-checkbox").checked != false) {
                     document.getElementById("zoom-checkbox").click();
@@ -2739,6 +2739,7 @@ function to_seventh_slide(current_slide) {
             d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis").remove();
 
             d3.select(".switch").style("opacity", 0);
+            style("display", "none");
             if (document.getElementById("zoom-checkbox") != null) {
                 if (document.getElementById("zoom-checkbox").checked != false) {
                     document.getElementById("zoom-checkbox").click();
@@ -3253,7 +3254,7 @@ function handleStepEnter(response) {
                     break;
                 case 0.2:
                     if (response.direction == "up") {
-                        d3.select(".switch").style("opacity", 0);
+                        d3.select(".switch").style("opacity", 0).style("display", "none");
                         if (document.getElementById("zoom-checkbox") != null) {
                             if (document.getElementById("zoom-checkbox").checked != false) {
                                 document.getElementById("zoom-checkbox").click();
@@ -3336,7 +3337,7 @@ function handleStepEnter(response) {
                     }
                     canvas.style("pointer-events", "auto");
 
-                    d3.select(".switch").style("opacity", 1).on("mouseover", function () {
+                    d3.select(".switch").style("opacity", 1).style("display", "inline-block").on("mouseover", function () {
                         d3.select("#tooltip").style("opacity", 0);
                         mouseover_svg.selectAll(".annotation-group").remove();
                     }).select("#zoom-checkbox").on("change", function () {
@@ -3357,7 +3358,7 @@ function handleStepEnter(response) {
 
                 case 1:
                     // First step: first woman rep - Jeannette Rankin
-                    d3.select(".switch").style("opacity", 0);
+                    d3.select(".switch").style("opacity", 0).style("display", "none");
                     if (document.getElementById("zoom-checkbox").checked != false) {
                         document.getElementById("zoom-checkbox").click();
                         // If we have to zoom out first, wait a bit before executing next bit
@@ -3441,7 +3442,7 @@ function handleStepEnter(response) {
                 case 5:
                     annotate_timer.stop();
                     canvas.style("pointer-events", "all");
-                    d3.select(".switch").style("opacity", 1);
+                    d3.select(".switch").style("opacity", 1).style("display", "inline-block");
 
                     mouseover_svg.transition().duration(1000).call(zoom.transform, d3.zoomIdentity).on("end", function () {
                         d3.selectAll(".y-axis .tick").style("opacity", function (d) {
@@ -3474,7 +3475,7 @@ function handleStepEnter(response) {
 
         case 1:
             // Second slide
-            d3.select(".switch").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0).style("display", "none");
             if (document.getElementById("zoom-checkbox") != null) {
                 if (document.getElementById("zoom-checkbox").checked != false) {
                     document.getElementById("zoom-checkbox").click();
@@ -3644,7 +3645,7 @@ function handleStepEnter(response) {
         case 3:
             // Fourth slide (no data, just text)
             d3.select("#slide4").style("display", "none");
-            d3.select(".switch").style("opacity", 0);
+            d3.select(".switch").style("opacity", 0).style("display", "none");
             if (document.getElementById("zoom-checkbox") != null) {
                 if (document.getElementById("zoom-checkbox").checked != false) {
                     document.getElementById("zoom-checkbox").click();
