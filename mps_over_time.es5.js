@@ -435,6 +435,7 @@ function first_slide() {
 
     // Change chart title
     chartTitle.transition().text("Women in the House of Representatives");
+
     // Change credits
     credit_alink.attr("xlink:href", "https://en.wikipedia.org/wiki/Women_in_the_United_States_House_of_Representatives#List_of_female_members").select("text").transition().text("Data: Wikipedia");
 
@@ -679,7 +680,6 @@ function to_first_slide(current_slide) {
 
             break;
     }
-    // Reduce opacity of election rects for first slide
     d3.selectAll(".election-rect").on("mouseover", null).on("mouseout", null);
 
     // Hide tooltip
