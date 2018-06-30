@@ -333,7 +333,7 @@ function initial_render() {
     "use strict"
     // INITIALISE THE X AND Y AXIS SCALES AND RANGES
     x = d3.scaleUtc()
-        .domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
+        .domain([new Date(1915, 1, 1), new Date(2019, 1, 1)])
         .range([0, width])
 
     y = d3.scaleLinear()
@@ -411,7 +411,11 @@ function initial_render() {
 
     // Add the x axis to the bottom of the graph
     xAxis = d3.axisBottom(x)
-    if (isMobile) xAxis.ticks(5)
+        .tickValues(x.ticks().concat(x.domain()))
+        .tickFormat(d3.timeFormat("%Y"))
+    if (isMobile) xAxis
+        .tickValues(x.ticks(5).concat(x.domain()[1]))
+        .tickFormat(d3.timeFormat("%Y"))
     gX = wrapper.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + height + ")")
@@ -935,7 +939,15 @@ function to_first_slide(current_slide) {
     gY.transition()
         .duration(1000)
         .call(yAxis.tickFormat(d => d))
-    xAxis.scale(x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)]))
+    xAxis
+        .scale(x.domain([new Date(1915, 1, 1), new Date(2019, 1, 1)]))
+        .tickValues(x.ticks().concat(x.domain()))
+        .tickFormat(d3.timeFormat("%Y"))
+
+    if (isMobile) {
+        xAxis
+            .tickValues(x.ticks(5).concat(x.domain()[1]))
+    }
     gX.transition()
         .duration(1000)
         .call(xAxis)
@@ -996,9 +1008,12 @@ function to_second_slide(current_slide) {
         }
 
         // Scale axes to fit all data
-        x.domain([new Date(1915, 1, 1), new Date(2020, 1, 1)])
+        x.domain([new Date(1915, 1, 1), new Date(2019, 1, 1)])
         xAxis = d3.axisBottom(x)
-        if (isMobile) xAxis.ticks(5)
+            .tickValues(x.ticks().concat(x.domain()))
+            .tickFormat(d3.timeFormat("%Y"))
+        if (isMobile) xAxis.tickValues(x.ticks(5).concat(x.domain()[1]))
+            .tickFormat(d3.timeFormat("%Y"))
         gX.transition()
             .duration(1000)
             .call(xAxis)
@@ -1335,7 +1350,7 @@ function second_slide(no_transition = false) {
         .transition()
         .delay(no_transition ? 0 : 4000)
         .duration(no_transition ? 0 : 750)
-        .text("Representatives in Congress")
+        .text("Representatives in the House")
 
     // Change credits
     credit_alink
@@ -1602,19 +1617,6 @@ function to_third_slide(current_slide) {
                 .style("opacity", 0)
                 .on("end", function () { this.remove() })
 
-
-            // Change scales
-            x = d3.scaleUtc()
-                .range([0, width])
-                .domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
-            // Redraw axes
-            xAxis = d3.axisBottom(x)
-                .tickFormat(d => d3.timeFormat("%Y")(d))
-            if (isMobile) {
-                xAxis
-                    .tickValues(x.ticks(8).concat(x.domain()))
-            }
-
             yAxis = d3.axisRight(y)
                 .tickFormat(d => d)
 
@@ -1643,6 +1645,18 @@ function to_third_slide(current_slide) {
             // Disable all pointer events for canvas
             canvas.style("pointer-events", "none")
             break
+        }
+
+        // Change scales
+        x = d3.scaleUtc()
+            .range([0, width])
+            .domain([new Date(1990, 1, 1), new Date(2018, 12, 1)])
+            // Redraw axes
+        xAxis = d3.axisBottom(x)
+            .tickFormat(d => d3.timeFormat("%Y")(d))
+        if (isMobile) {
+            xAxis
+                .tickValues(x.ticks(8).concat(x.domain()))
         }
 
         d3.selectAll(".x-axis path").style("opacity", 1)
@@ -1787,8 +1801,8 @@ function third_slide(no_transition = false) {
     var countryColors = d3.scaleOrdinal(d3.schemeCategory20)
 
     // Scale axis to focus on modern history
-    x.domain([new Date(1990, 1, 1), new Date(2017, 12, 1)])
-    xAxis.scale(x)
+    x.domain([new Date(1990, 1, 1), new Date(2019, 1, 1)])
+    xAxis.tickValues(x.ticks().concat(x.domain())).tickFormat(d => d3.timeFormat("%Y")(d)).scale(x)
 
     if(isMobile) xAxis.tickValues(x.ticks(8).concat(x.domain())).tickFormat(d => d3.timeFormat("%Y")(d))
 
@@ -3829,7 +3843,7 @@ function seventh_slide(no_transition = false) {
         .attr("xlink:href", "http://cawp.rutgers.edu/facts/elections/past_candidates")
         .select("text")
         .transition()
-        .text("Data: Center for American Women and Politics")
+        .text("Data: Center for American Women and Politics (correct as of June 2018)")
 
     if(no_transition) {
         var slide7Group = d3.select("#slide7-group").style("opacity", 1)
@@ -4608,7 +4622,7 @@ function handleStepEnter(response) {
                     .text("Number of Representatives")
                 chartTitle
                     .transition()
-                    .text("Representatives in Congress")
+                    .text("Representatives in the House")
 
                 slide2Group.select(".party-label").transition().text("")
                 // All MPs first
@@ -4752,7 +4766,7 @@ function handleStepEnter(response) {
 
             chartTitle
                 .transition()
-                .text("Representatives in Congress")
+                .text("Representatives in the House")
 
             slide2Group.select(".party-label").transition().text("")
 
