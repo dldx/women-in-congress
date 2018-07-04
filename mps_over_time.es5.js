@@ -2744,8 +2744,7 @@ function to_seventh_slide(current_slide) {
             chartTitle.style("opacity", 1);
             d3.selectAll(".slide5-dropdown, .slide5-search, .x-custom-axis").remove();
 
-            d3.select(".switch").style("opacity", 0);
-            style("display", "none");
+            d3.select(".switch").style("opacity", 0).style("display", "none");
             if (document.getElementById("zoom-checkbox") != null) {
                 if (document.getElementById("zoom-checkbox").checked != false) {
                     document.getElementById("zoom-checkbox").click();

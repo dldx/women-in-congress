@@ -3736,7 +3736,7 @@ function to_seventh_slide(current_slide) {
 
         d3.select(".switch")
             .style("opacity", 0)
-        style("display", "none")
+            .style("display", "none")
         if (document.getElementById("zoom-checkbox") != null) {
             if (document.getElementById("zoom-checkbox")
                 .checked != false) {
