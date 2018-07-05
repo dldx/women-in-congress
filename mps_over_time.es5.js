@@ -302,7 +302,7 @@ function initial_render() {
     gY = wrapper.append("g").attr("class", "y-axis").call(yAxis).attr("transform", "translate(" + width + ", 0)");
 
     // Add chart title
-    chartTitle = svg.append("text").attr("x", width / 2 + margin.left).attr("y", margin.top / 2).style("text-anchor", "middle").attr("class", "chart-title").text("");
+    chartTitle = svg.append("text").attr("x", (isMobile ? 0 : width / 2) + margin.left).attr("y", margin.top / 2).style("text-anchor", isMobile ? "start" : "middle").attr("class", "chart-title").text("");
 
     // Add axes labels
     credit_alink = svg.append("a").attr("target", "_blank");
@@ -310,7 +310,7 @@ function initial_render() {
 
     xLabel = svg.append("text").attr("transform", "translate(" + (margin.left + margin.right + width) / 2 + " ," + (height + margin.top + margin.bottom) + ")").attr("class", "x-label").style("text-anchor", "middle").text("");
 
-    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", width + margin.left + margin.right * 3 / 4).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").attr("dominant-baseline", "baseline").text("Number of Women Representatives");
+    yLabel = svg.append("text").attr("transform", "rotate(-90)").attr("y", width + margin.left + margin.right * 3 / 4).attr("x", 0 - (height + margin.top + margin.bottom) / 2).attr("class", "y-label").attr("dominant-baseline", "hanging").text("Number of Women Representatives");
 
     // Add zoom capabilities for the points
     zoom = d3.zoom().scaleExtent([0.95, 40]).on("zoom", zoomed);
@@ -1637,7 +1637,14 @@ function fifth_slide() {
         });
 
         // Add a dropdown to select different topics
-        d3.select("body").append("span").attr("class", "slide5-dropdown").append("select").attr("id", "topic-dropdown").attr("class", "slide5-dropdown__select").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
+        d3.select("body").append("span").attr("class", "slide5-dropdown");
+
+        d3.select(".slide5-dropdown").append("button").text("⟵").on("click", function () {
+            new_slide = 5;
+            update_state();
+        });
+
+        d3.select(".slide5-dropdown").append("select").attr("id", "topic-dropdown").attr("class", "slide5-dropdown__select").on("change", update_fifth_slide).selectAll(".topic").data(baked_positions_data.map(function (topic) {
             return topic.key;
         }).reverse()).enter().append("option").attr("selected", function (d) {
             return d == selected_topic ? "selected" : null;
@@ -2114,6 +2121,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
 
     // Remove existing annotations
     mouseover_svg.selectAll(".female-label, .male-label").remove();
+    annotate_timer.stop();
 
     if (drawMedian) {
         // Label female median dot
@@ -2131,10 +2139,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             dy: slide5_yScale(topic_medians_data[selected_topic]["female"] > topic_medians_data[selected_topic]["male"] ? 0.25 : 0.1) - slide5_yScale(topic_medians_data[selected_topic]["female"])
         }]);
 
-        d3.timeout(function () {
-            mouseover_svg.select(".timeline-wrapper").append("g").attr("class", "female-label").call(make_female_label);
-        }, 1500);
-        // Label female median dot
+        // Label male median dot
         var make_male_label = d3.annotation().type(d3.annotationCallout).annotations([{
             note: {
                 title: "Median man: " + (topic_medians_data[selected_topic]["male"] * 100).toFixed(1) + "%"
@@ -2149,7 +2154,8 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
             dy: slide5_yScale(topic_medians_data[selected_topic]["male"] > topic_medians_data[selected_topic]["female"] ? 0.25 : 0.1) - slide5_yScale(topic_medians_data[selected_topic]["male"])
         }]);
 
-        d3.timeout(function () {
+        annotate_timer = d3.timeout(function () {
+            mouseover_svg.select(".timeline-wrapper").append("g").attr("class", "female-label").call(make_female_label);
             mouseover_svg.select(".timeline-wrapper").append("g").attr("class", "male-label").call(make_male_label);
         }, 1500);
     }
@@ -2683,9 +2689,9 @@ function sixth_slide() {
             slide6Group.style("opacity", 1);
         });
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + margin.bottom).text("Discussed more by women ⟶").style("text-anchor", "end").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", width).attr("y", height + (isMobile ? margin.bottom * 2 / 3 : margin.bottom)).text("Discussed more by women" + (isMobile ? "→" : " ⟶")).style("text-anchor", "end").style("fill", colors["Female"]).style("alignment-baseline", "hanging");
 
-        wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + margin.bottom).text("⟵ Discussed more by men").style("text-anchor", "start").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
+        wrapper.append("text").attr("class", "x-custom-label").attr("x", 0).attr("y", height + (isMobile ? margin.bottom * 2 / 3 : margin.bottom)).text((isMobile ? "←" : "⟵ ") + "Discussed more by men").style("text-anchor", "start").style("fill", colors["Male"]).style("alignment-baseline", "hanging");
     }
 
     label_pos = sorted_topics.map(function (d) {
@@ -2828,7 +2834,7 @@ function seventh_slide() {
     yLabel.text("Number of Women House Candidates");
     chartTitle.text("Women House Candidates over Time");
     // Change credits
-    credit_alink.attr("xlink:href", "http://cawp.rutgers.edu/facts/elections/past_candidates").select("text").transition().text("Data: Center for American Women and Politics (correct as of June 2018)");
+    credit_alink.attr("xlink:href", "http://cawp.rutgers.edu/facts/elections/past_candidates").select("text").transition().text("Data: Center for American Women and Politics" + (isMobile ? "" : " (correct as of June 2018)"));
 
     if (no_transition) {
         var slide7Group = d3.select("#slide7-group").style("opacity", 1);
@@ -3796,7 +3802,7 @@ function draw_graph() {
     margin = {
         top: 50,
         left: 25,
-        bottom: 30,
+        bottom: 35,
         right: timeline.clientWidth < 500 ? 50 : 70
     };
     var new_width = timeline.clientWidth - margin.left - margin.right,

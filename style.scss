@@ -1064,6 +1064,20 @@ $tip-padding: .5;
     font-size: .8rem;
     width: 80%;
   }
+
+  button {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: inherit;
+    padding: .5em;
+    margin-right: 1em;
+    background-color: transparent;
+    color: #d5d5d5;
+    border-radius: 3px;
+    border: 1px solid rgb(169, 169, 169);
+    -webkit-appearance: none;
+    text-decoration: none;
+  }
 }
 
 .slide5-dropdown__select {
@@ -1080,6 +1094,7 @@ $tip-padding: .5;
   appearance: none;
   padding-right: 2.5em;
   @include phone {
+    max-width: 70%;
     padding-right: 1.5em;
   }
 }
@@ -1196,7 +1211,7 @@ input:checked + .slider:before {
 }
 
 .half-max-mps-path {
-  stroke-dasharray: 1,4;
+  stroke-dasharray: 1,13;
   stroke: $female;
   stroke-width: 2.5;
 }
@@ -1218,7 +1233,7 @@ input:checked + .slider:before {
   text-anchor: end;
   font-size: 2rem;
   @include phone {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
