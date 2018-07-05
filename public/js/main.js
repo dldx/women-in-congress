@@ -811,14 +811,14 @@ function show_mp_tooltip(nodeData, mousePos) {
 
     if (typeof (mp_base64_data) == "undefined") {
         tooltip_innerHTML += `<img class="mp-image-blurred" style="opacity: 0;"/>
-                <img class="mp-image" src="./member-images/${nodeData.id}.jpg" />
+                <img class="mp-image" src="./assets/member-images/${nodeData.id}.jpg" />
                 `
 
     } else {
         // If mp has a photo
         if (typeof (mp_base64_data[nodeData.id]) !== "undefined") {
             tooltip_innerHTML += `<img class="mp-image-blurred" src="data:image/jpeg;base64, ${mp_base64_data[nodeData.id]}"/>
-                <img class="mp-image" src="./member-images/${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
+                <img class="mp-image" src="./assets/member-images/${nodeData.id}.jpg" style="opacity: ${typeof nodeData.loaded == "undefined" ? 0 : nodeData.loaded}${nodeData.loaded = 1};" onload="this.style.opacity = 1;" />
                 `
         }
     }
@@ -830,7 +830,7 @@ function show_mp_tooltip(nodeData, mousePos) {
                     </div>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./assets/party_logos/${nodeData.party}.svg"/>` : ""}
                     `
 
     tooltip.innerHTML = tooltip_innerHTML
@@ -2989,7 +2989,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     <div class="body">
                     <div class="mp-image-parent">
                     ${typeof mp_base64_data[nodeData.id] === "undefined" ? "" : "<img class=\"mp-image-blurred\" src=\"data:image/jpeg;base64," + mp_base64_data[nodeData.id] + "\" />" +
-                    "<img class=\"mp-image\" src=\"./member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
+                    "<img class=\"mp-image\" src=\"./assets/member-images/" + nodeData.id + ".jpg\" style=\"opacity: ${typeof nodeData.loaded == 'undefined' ? 0 : nodeData.loaded;d.loaded = 1;};\" onload=\"this.style.opacity = 1;\" />"}
                     </div>
                     <div class="body-facts">
                     <div class="mp-constituency">${nodeData.district}</div>
@@ -2997,7 +2997,7 @@ function update_fifth_slide(no_transition, default_selected_topic, from_scroll, 
                     </div>
                     </div>
                     <div class="mp-party" style="opacity: ${partyLogo ? 0: 1}">${nodeData.party}</div>
-                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./party_logos/${nodeData.party}.svg"/>` : ""}
+                    ${partyLogo ? `<img class="mp-party-logo" alt="${nodeData.party} logo" style="opacity: ${partyLogo ? 1: 0}" src="./assets/party_logos/${nodeData.party}.svg"/>` : ""}
 </div>`
         // Also select the mouseover circle and move it to the right location
         mouseover_svg
@@ -3940,7 +3940,7 @@ function seventh_slide(no_transition = false) {
 // ----------------------------------------------------------------------------
 function download_data() {
     d3.queue()
-        .defer(d3.csv, "women_reps.csv", function (d) {
+        .defer(d3.csv, "data/women_reps.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
                 id: d.id,
@@ -3953,7 +3953,7 @@ function download_data() {
                 stream: +d.stream
             }
         })
-        .defer(d3.csv, "number_women_over_time.csv", function (d) {
+        .defer(d3.csv, "data/number_women_over_time.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
                 year: parseDate(d.date),
@@ -3962,7 +3962,7 @@ function download_data() {
                 democrat_women_mps: +d.dem_reps,
             }
         })
-        .defer(d3.csv, "total_members_over_time.csv", function (d) {
+        .defer(d3.csv, "data/total_members_over_time.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
                 year: parseDate(d.date),
@@ -4001,7 +4001,7 @@ function download_data() {
     // These files can download later because we don't need to wait for them
     // to load initial view
     d3.queue()
-        .defer(d3.csv, "member_base64.csv", function (d) {
+        .defer(d3.csv, "data/member_base64.csv", function (d) {
             return {
                 id: d.id,
                 base64: d.base64
@@ -4016,7 +4016,7 @@ function download_data() {
         })
 
     d3.queue()
-        .defer(d3.csv, "women_in_govt.csv", function (d) {
+        .defer(d3.csv, "data/women_in_govt.csv", function (d) {
             var parseDate = d3.timeParse("%Y-%m-%d")
             return {
                 year: parseDate(d.date),
@@ -4025,9 +4025,9 @@ function download_data() {
             }
         })
         .defer(d3.csv,
-            "baked_positions.csv"
+            "data/baked_positions.csv"
         )
-        .defer(d3.csv, "topic_medians.csv",
+        .defer(d3.csv, "data/topic_medians.csv",
             function (d) {
                 return {
                     topic: d.topic,
@@ -4035,7 +4035,7 @@ function download_data() {
                     female: Math.pow(10, +d.female)
                 }
             })
-        .defer(d3.csv, "number_women_house_candidates_over_time.csv",
+        .defer(d3.csv, "data/number_women_house_candidates_over_time.csv",
             d => {
                 return {
                     year: +d.Year,
