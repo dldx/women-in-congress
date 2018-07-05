@@ -5,7 +5,7 @@ import pandas as pd
 from functools import reduce
 from multiprocessing import Pool
 
-# Get all topics from data.csv
+# Get all topics
 topic_fractions = pd.read_csv("mp_topic_fraction.csv")
 topics = topic_fractions.columns[6:]
 
