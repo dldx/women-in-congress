@@ -11,15 +11,15 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1200mm"
-   height="650mm"
-   viewBox="0 0 4251.9685 2303.1496"
+   height="600mm"
+   viewBox="0 0 4251.9685 2125.9843"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="cover_image.svg"
-   inkscape:export-filename="/home/durand/Stuff/Data_Science/women-in-congress/cover.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/durand/Stuff/Data_Science/women-in-congress/public/assets/twitter_cover.png"
+   inkscape:export-xdpi="21.67"
+   inkscape:export-ydpi="21.67">
   <defs
      id="defs4">
     <filter
@@ -35,10 +35,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.38498691"
-     inkscape:cx="925.70292"
-     inkscape:cy="856.63505"
+     inkscape:cx="2102.9849"
+     inkscape:cy="1064.4343"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="3200"
      inkscape:window-height="1767"
@@ -56,7 +56,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -64,27 +64,28 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,1250.7874)"
+     transform="translate(0,1073.6221)"
      style="opacity:1">
     <image
-       sodipodi:absref="/home/durand/Stuff/Data_Science/women-in-congress/reps.png"
+       sodipodi:absref="/home/durand/Stuff/Data_Science/women-in-congress/public/assets/reps.png"
        xlink:href="reps.png"
-       width="4288.8662"
-       height="2791.2231"
-       preserveAspectRatio="none"
+       style="opacity:0.59500002"
+       y="-1066.7874"
+       x="0"
        id="image4274"
-       x="-19.688959"
-       y="-1277.8247"
-       style="opacity:0.59500002" />
+       preserveAspectRatio="none"
+       height="2404.6765"
+       width="4249.2446" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(0,-177.16535)">
     <g
        id="g53709"
-       transform="matrix(0.8637386,0,0,0.8637386,231.83596,339.58508)">
+       transform="matrix(0.8637386,0,0,0.8637386,231.83596,428.16788)">
       <rect
          y="325.59216"
          x="-78.064743"
