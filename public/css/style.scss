@@ -174,14 +174,16 @@ body {
   h1 {
     font-family: 'Canela Web','Publico Text Web',Georgia,Times,serif;
     color: #FCDCBF;
-    max-width: 70%;
-    margin: 2rem auto 0;
+    max-width: 50%;
+    margin: 3rem auto 0;
     text-align: center;
     font-size: 4rem;
     font-weight: lighter;
     line-height: 1.2;
+
     @include phone {
-      max-width: 50rem;
+      max-width: unset;
+      margin: 2rem 2rem;
       font-size: 2.5rem;
     }
   }
