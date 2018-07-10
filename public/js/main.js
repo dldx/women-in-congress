@@ -1458,7 +1458,7 @@ function second_slide(no_transition = false) {
             return x(d.year)
         })
         .y(function (d) {
-            return y(d.total_mps / 2)
+            return y(d.total_mps / 2 + 1)
         })
         .curve(d3.curveBundle.beta(0.2))
 
@@ -1494,7 +1494,7 @@ function second_slide(no_transition = false) {
                 .attr("y", y(425/450*y.domain()[1]))
 
             half_max_mps_line_smooth.y(function (d) {
-                return y(d.total_mps / 2)
+                return y(d.total_mps / 2 + 1)
             })
 
             slide2Group.select(".i5050-label")
@@ -1788,7 +1788,7 @@ function third_slide(no_transition = false) {
         .attr("d", half_max_mps_line)
 
     half_max_mps_line_smooth
-        .y(() => y(50))
+        .y(() => y(51))
 
     text_path_50_50
         .transition(t0)
@@ -4675,7 +4675,7 @@ function handleStepEnter(response) {
                 half_max_mps_path.transition()
                     .attr("d", half_max_mps_line)
 
-                half_max_mps_line_smooth.y(d => y(d.total_mps / 2))
+                half_max_mps_line_smooth.y(d => y(d.total_mps / 2 + 1))
                 text_path_50_50
                     .transition()
                     .attr("d", half_max_mps_line_smooth)
@@ -4741,7 +4741,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(50))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4812,7 +4812,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(50))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)
@@ -4872,7 +4872,7 @@ function handleStepEnter(response) {
             half_max_mps_path.transition()
                 .attr("d", half_max_mps_line)
 
-            half_max_mps_line_smooth.y(y(50))
+            half_max_mps_line_smooth.y(y(51))
             text_path_50_50
                 .transition()
                 .attr("d", half_max_mps_line_smooth)

@@ -1218,7 +1218,7 @@ input:checked + .slider:before {
 }
 
 .half-max-mps-path {
-  stroke-dasharray: 1,13;
+  stroke-dasharray: 1,10;
   stroke: $female;
   stroke-width: 2.5;
 }
@@ -1258,7 +1258,8 @@ input:checked + .slider:before {
 }
 
 .i5050-label {
-  alignment-baseline: middle;
+  alignment-baseline: baseline;
+  dominant-baseline: baseline;
   text-anchor: middle;
   fill: $female;
   font-size: 1.5rem;

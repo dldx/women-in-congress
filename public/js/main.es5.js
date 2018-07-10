@@ -1040,7 +1040,7 @@ function second_slide() {
     half_max_mps_line_smooth = d3.line().x(function (d) {
         return x(d.year);
     }).y(function (d) {
-        return y(d.total_mps / 2);
+        return y(d.total_mps / 2 + 1);
     }).curve(d3.curveBundle.beta(0.2));
 
     // Add path for text to follow
@@ -1055,7 +1055,7 @@ function second_slide() {
         slide2Group.select(".party-label").attr("y", y(425 / 450 * y.domain()[1]));
 
         half_max_mps_line_smooth.y(function (d) {
-            return y(d.total_mps / 2);
+            return y(d.total_mps / 2 + 1);
         });
 
         slide2Group.select(".i5050-label").transition().duration(no_transition ? 0 : 500).style("opacity", 1);
@@ -1283,7 +1283,7 @@ function third_slide() {
     half_max_mps_path.transition(t0).attr("d", half_max_mps_line);
 
     half_max_mps_line_smooth.y(function () {
-        return y(50);
+        return y(51);
     });
 
     text_path_50_50.transition(t0).attr("d", half_max_mps_line_smooth);
@@ -3552,7 +3552,7 @@ function handleStepEnter(response) {
                         half_max_mps_path.transition().attr("d", half_max_mps_line);
 
                         half_max_mps_line_smooth.y(function (d) {
-                            return y(d.total_mps / 2);
+                            return y(d.total_mps / 2 + 1);
                         });
                         text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
@@ -3602,7 +3602,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(50));
+                    half_max_mps_line_smooth.y(y(51));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3653,7 +3653,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(50));
+                    half_max_mps_line_smooth.y(y(51));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
@@ -3699,7 +3699,7 @@ function handleStepEnter(response) {
                     half_max_mps_line.y(y(50));
                     half_max_mps_path.transition().attr("d", half_max_mps_line);
 
-                    half_max_mps_line_smooth.y(y(50));
+                    half_max_mps_line_smooth.y(y(51));
                     text_path_50_50.transition().attr("d", half_max_mps_line_smooth);
 
                     total_women_mps_line.y(function (d) {
