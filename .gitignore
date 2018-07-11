@@ -4,6 +4,8 @@ speeches.h5
 speeches.bcolz
 processed_speeches*
 
+.DS_Store
+
 # member photos also too big to upload
 member_photos/
 # Ignore config which contains API KEYS
