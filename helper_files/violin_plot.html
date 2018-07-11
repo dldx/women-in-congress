@@ -34,8 +34,8 @@
 
     <body>
         <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
-        <script src="external/d3.v4.min.js"></script>
-        <script src="external/d3-tip.js"></script>
+        <script src="../public/js/external/d3.v4.min.js"></script>
+        <script src="../public/js/external/d3-tip.js"></script>
         <script>
             var margin = {
                     top: 0,
@@ -106,7 +106,7 @@
 
             svg.call(tip);
 
-            d3.csv("mp_topic_fraction.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
+            d3.csv("../data/mp_topic_fraction.csv" + '?' + Math.floor(Math.random() * 1000), function(error, data) {
                 // Convert wide data to long
                 nodes = [];
                 data.forEach(function(row) {
